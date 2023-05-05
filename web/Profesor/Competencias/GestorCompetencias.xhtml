@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:tabView activeIndex="#{competenciasController.activeIndex}">
+            <p:tab  title="Competencias">
+                <p:dataTable class="tabla-reporte" var="comp" value="#{competenciasController.competenciasXUnidad}" >
+                    <p:column headerText="Horas">
+                        #{comp.horas}
+                    </p:column>
+                    <p:column headerText="Tipo Competencia">
+                        #{comp.tipo.descripcion}
+                    </p:column>
+                    <p:column headerText="Estrategia">
+                        #{comp.estrategia}
+                    </p:column>
+                    <p:column headerText="Evidencia">
+                        #{comp.evidencia}
+                    </p:column>
+                    <p:column headerText="Bibliografia">
+                        #{comp.bibliografia}
+                    </p:column>
+                    <p:column headerText="Tipo Entregable">
+                        #{comp.tipoentregable.nombre}
+                    </p:column>
+                    <p:column headerText="">
+                        <h:commandButton title="Eliminar" value="x" action="#{competenciasController.eliminarCompetencia(comp)}" />
+                        <h:commandButton title="Consultar" value="Consultar" action="#{competenciasController.consultarCompetencia(comp)}"/>
+                        <h:commandButton title="Criterios" value="Criterios" action="#{competenciasController.seleccionarCompetencia(comp)}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:tab>
+            <p:tab  title="Criterios">
+                <ui:include src="../Evaluacion/GestorCriterios.xhtml" />
+            </p:tab>
+        </p:tabView>
+
+
+
+    </h:body>
+</html>
+

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="SgpaPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <class>com.entity.Area</class>
+    <class>com.entity.Asignatura</class>
+    <class>com.entity.Avance</class>
+    <class>com.entity.Coordinador</class>
+    <class>com.entity.Entregable</class>
+    <class>com.entity.Estudiante</class>
+    <class>com.entity.Fase</class>
+    <class>com.entity.Integrante</class>
+    <class>com.entity.Item_Proyecto</class>
+    <class>com.entity.Matricula</class>
+    <class>com.entity.Periodo</class>
+    <class>com.entity.Profesor</class>
+    <class>com.entity.ProgramaAcademico</class>
+    <class>com.entity.Proyecto_Aula</class>
+    <class>com.entity.Tipo_Entregable</class>
+    <class>com.entity.Tipo_Item</class>
+    <class>com.entity.Tutoria</class>
+    <class>com.entity.Usuario</class>
+    <class>com.entity.LiderPA</class>
+    <class>com.entity.Semestre</class>
+    <class>com.entity.Seccion</class>
+    <class>com.entity.Asistente</class>
+    <class>com.entity.Dimension</class>
+    <class>com.entity.Aspecto</class>
+    <class>com.entity.Criterio</class>
+    <class>com.entity.Evaluacion</class>
+    <class>com.entity.CriterioEvaluacion</class>
+    <class>com.entity.Valoracion</class>
+    <class>com.entity.UnidadCompetencia</class>
+    <class>com.entity.Competencia</class>
+    <class>com.entity.TipoCompetencia</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3307/sgpa?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="9911"/>
+      <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
+      <property name="hibernate.enable_lazy_load_no_trans" value="true"/>
+    </properties>
+  </persistence-unit>
+</persistence>

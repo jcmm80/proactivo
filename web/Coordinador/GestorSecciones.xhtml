@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <section class="contenido-contenedor">
+            <div class="border contenedor top">
+                <h1 class="tittle">Crear seciones</h1>
+                <p:panel rendered="#{!seccionController.mostPCsecc}">
+                    <p:dataTable class="tabla-reporte" var="prog" value="#{programaController.programas}">
+                        <p:column headerText="Codigo">
+                            #{prog.codigo}
+                        </p:column>
+                        <p:column headerText="Nombre">
+                            #{prog.nombreCompleto}
+                        </p:column>
+                        <p:column headerText="">
+                            <div class="accion">
+                                <i class="fa fa-hand-pointer" style="color: #005CB9"></i>
+                                <h:commandButton class="icono" value="+" action="#{seccionController.obtenerseccionesPeriodo(prog)}" />
+                            </div>                            
+                        </p:column>
+                    </p:dataTable>                     
+
+                </p:panel>
+                <p:panel rendered="#{seccionController.mostPCsecc}">
+                    <div class="tanone" style="justify-content: flex-start; column-gap: 1rem" >
+                        <div class="btns" style="background-color: #005CB9">
+                            <i class="uil uil-angle-left-b" ></i>
+                            Volver
+                            <h:commandButton class="btn" value="volver" action="#{seccionController.volverprogramas()}" />
+                        </div>
+
+                    </div>
+
+                    <span class="aviso">Selecciona un Semestre</span>    
+                    <p:dataGrid    columns="5" var="sem"  value="#{semestreController.semestres}">
+                        <div class="card img-negra" >
+                            <figure >
+                                <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
+                            </figure>
+                            <div class="contenido">
+                                <p>Semestre <br></br>#{sem.denominacion}</p>
+
+                            </div>
+                            <h:commandButton   class="btn" value="Abrir" action="#{seccionController.seleccionarSemestre(sem)}" />
+                        </div>
+
+                    </p:dataGrid>>
+
+
+
+
+                    <span class="aviso">Selecciona el numero de seccioens</span>
+
+
+
+
+                    <div class="tanone" style="justify-content: flex-start; column-gap: 1rem">
+                        Seccion<br></br>
+                        <p:spinner min="1" max="10" value="#{seccionController.seccion.denominacion}" />
+                        <h:commandButton class="boton" value="agregar" action="#{seccionController.registrar()}" />
+                    </div>
+
+
+
+                    <div class="csecciones">
+                        <p:dataTable class="tabla-reporte" rows="5" paginator="true" var="sec" value="#{seccionController.secciones}">
+                            <p:column headerText="Semestre">
+                                #{sec.semestre.denominacion}
+                            </p:column>
+                            <p:column headerText="Seccion">
+                                #{sec.denominacion}
+                            </p:column>
+                        </p:dataTable>                           
+                    </div>
+
+
+                </p:panel>    
+            </div>
+        </section>
+    </h:body>
+    <style>
+
+    </style>
+</html>
+

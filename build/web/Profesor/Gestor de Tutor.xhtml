@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">  
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <div>Nombre</div>
+        <div><p:inputText value="#{tipo_EntregableController.tipo_entregable.nombre}" /></div><br/>
+        <div>Descripcion</div>
+        <div><p:inputText value="#{tipo_EntregableController.tipo_entregable.descripcion}" /></div>
+
+                <h:commandButton value="agregar" action="#{tipo_EntregableController.registrarTipo_Entregable()}" />
+                <br/><br/>
+                
+                <p:dataTable class="tabla-reporte" var="per" value="#{tipo_itemController.tipo_Entregables}" >
+                    <p:column headerText="Nombre">
+                        #{per.nombre}
+                      </p:column>
+                    <p:column headerText="Descripcion">
+                        #{per.descripcion}
+                     </p:column>
+                    <p:column >
+                        <h:commandButton value="Eliminar" action="#{tipo_itemController.eliminartipo_Entregable(per)}" /><br/>
+                    </p:column>
+                </p:dataTable>
+    </h:body>
+    
+       
+
+</html>
+

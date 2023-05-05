@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+       
+            <div class="contcompasig">
+                <div class="cunid">
+                    
+                    <p:accordionPanel value="#{competenciasController.unidades}" var="unidad">
+                        <p:tab title="#{unidad.descripcion}">
+                            <p:dataTable var="comp" value="#{unidad.competencias}" >
+                                <p:column>
+                                    #{comp.tipo.descripcion}
+                                </p:column>
+                                  <p:column>
+                                    #{comp.evidencia}
+                                </p:column>
+                                  <p:column>
+                                    #{comp.estrategia}
+                                </p:column>
+                                 <p:column>
+                                    #{comp.bibliografia}
+                                </p:column>
+                            </p:dataTable>  
+                        </p:tab>
+                    </p:accordionPanel>
+                       
+                    
+                    
+                </div>
+                <div class="cinfasig">#{competenciasController.asignatura.toString()}</div>
+            </div>  
+
+    </h:body>
+
+    <style>
+        .contcompasig { display: grid; 
+                        grid-auto-columns: 1fr; 
+                        grid-template-columns: 300px 300px 300px; 
+                        grid-template-rows: 106px 1fr; 
+                        gap: 0px 0px; 
+                        grid-template-areas: 
+                            "cinfasig cinfasig cinfasig"
+                            "cunid cunid cunid"; 
+        }
+        .cunid { grid-area: cunid; }
+        .cinfasig { grid-area: cinfasig; }
+
+    </style>
+</html>
+

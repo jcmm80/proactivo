@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <section class="contenido-contenedor">
+        <div class="border contenedor top">
+             <h1 class="tittle">Gestor de programas</h1>
+             
+                <span class="aviso">Crear Programas</span>
+                <div class="contenedor-form periodos">
+                    <div class="input-form-200">
+                        Codigo
+                        <p:inputText class="iform" value="#{programaController.programa.codigo}" />
+                    </div>
+                    <div class="input-form-310">
+                        Nombre Completo
+                        <p:inputText class="iform" value="#{programaController.programa.nombreCompleto}" />
+                    </div>
+                    <div class="input-form-200">
+                        Nombre Corto
+                        <p:inputText class="iform" value="#{programaController.programa.nombre}" />
+                    </div>
+                    
+                    
+                    
+                </div>
+                 
+                <div class="ccoord">
+                    <span class="aviso">Selecciona Coordinador De Programa</span>
+                        <p:dataTable class="tabla-reporte" var="coor" value="#{coordinadorController.coordinadores}">
+                            <p:column headerText="Identificacion">
+                                #{coor.identificacion}
+                            </p:column>
+                            <p:column headerText="primer Nombre">
+                                #{coor.primerNombre}
+                            </p:column>
+                            <p:column headerText="Segundo Nombre">
+                                #{coor.segundoNombre}
+                            </p:column>
+                            <p:column headerText="Primer Apellido">
+                                #{coor.primerApellido}
+                            </p:column>
+                            <p:column headerText="Segundo Apellido">
+                                #{coor.segundoApellido}
+                            </p:column>
+                            <p:column headerText="Acciones" >
+                                <div class="Acciones">
+                                    <div class="accion">
+                                    <i class="fa fa-user-plus" style="color: darkcyan"></i><h:commandButton class="icono" value="." action="#{programaController.agregarCoordinador(coor)}" />
+                                    </div>
+                                </div>
+                                
+                                
+                            </p:column>
+                        </p:dataTable>
+               
+                    </div>
+             <span class="aviso">Coordinador Seleccionado:<span style="color: black;"> #{programaController.programa.coordinador.toString()}</span></span>
+             <div class="tanone">
+                 <h:commandButton class="boton  "  value="registrar" action="#{programaController.registrar()}" />
+             </div>
+                            
+                
+                
+            
+                <span class="aviso">Programas</span>
+                <p:dataTable class="tabla-reporte" var="pro" value="#{programaController.programas}">
+                    <p:column headerText="Codigo">
+                        #{pro.codigo}
+                    </p:column>
+                    <p:column headerText="Nombre">
+                        #{pro.nombre}
+                    </p:column>
+                    <p:column headerText="Coordinador">
+                        #{pro.coordinador.toString()}
+                    </p:column>
+                    <p:column headerText="Acciones">
+                        <div class="Acciones">
+                            <div class="accion">
+                                <i class="fa fa-pen" style="color: #005CB9"></i><h:commandButton class="icono" value="." action="#{programaController.consultarprograma(pro)}" />
+                            </div>
+    
+                        </div>
+                        
+                    </p:column>
+                </p:dataTable>
+            
+        
+        
+    
+
+        </div>
+    </section>
+        <style>
+            
+
+        </style>
+    </h:body>
+</html>
+

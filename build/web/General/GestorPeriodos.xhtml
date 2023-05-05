@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <section class="contenido-contenedor">
+        <div class="border contenedor top">
+             <h1 class="tittle">Gestor de Periodos</h1>
+             <span class="aviso">Crear Periodo</span>
+             <div class="contenedor-form periodos">
+                 
+                    <div class="input-form-200">
+                    Año
+                    <p:spinner class="iform" value="#{periodoController.periodo.anio}" min="2022" max="2040" />
+                    </div>
+                    <div class="input-form-310">
+                        Periodo
+                        <p:selectOneButton class="iform" value="#{periodoController.periodo.numero}">
+                            <f:selectItem itemLabel="I" itemValue="1"/>
+                            <f:selectItem itemLabel="II" itemValue="2"/>
+                        </p:selectOneButton>
+                    </div>
+                    <div class="input-form-200">
+                        Fecha Inicial
+                        <p:calendar class="iform" value="#{periodoController.periodo.fechaInicial}" />
+                    </div>
+                    <div class="input-form-200">
+                        Fecha Final
+                        <p:calendar class="iform" value="#{periodoController.periodo.fechaFinal}" />
+                    </div> 
+                </div>
+                 <div class="tanone">
+                     <h:commandButton class="boton" value="agregar" action="#{periodoController.registrarPeriodo()}" />
+                 </div>
+            
+               
+                
+                
+            
+               
+            
+        <span class="aviso">Periodos</span>
+        <p:dataTable class="tabla-reporte" var="per" value="#{periodoController.periodos}" >
+                    <p:column headerText="Fecha Inicial">
+                        <p:calendar id="datei" value="#{per.fechaInicial}"/>
+                    </p:column>
+                    <p:column headerText="Fecha Final">
+                        <p:calendar id="datef" value="#{per.fechaFinal}"/>   
+                    </p:column>
+                    <p:column headerText="Año">
+                        #{per.anio}
+                    </p:column>
+                    <p:column headerText="Periodo">
+                        #{per.numero}
+                    </p:column>
+                    <p:column headerText="Estado">
+                        
+                        
+                        <h:outputText rendered="#{per.actual}" value="Actual" />
+                    </p:column>
+                    <p:column headerText="Activador">
+                        <div class="accion">
+                            <i class="fa fa-toggle-on" style="color: #004F9E"></i><h:commandButton  class="icono" rendered="#{!per.actual}" action="#{periodoController.activarPeriodo(per)}" value="." />
+                        </div>
+                        
+                    </p:column>
+                </p:dataTable>
+        
+    
+
+        </div>
+    </section>
+
+        
+    </h:body>
+    <style>
+        
+    </style>
+       
+</html>
+

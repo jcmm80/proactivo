@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+       <section class="contenido-contenedor">
+        <div class="border contenedor top">
+             <h1 class="tittle">Gestor de Coordinadores</h1>
+             <span class="aviso">Crear Coordinadores</span> 
+             <div class="contenedor-form periodos">
+                 <div class="form-izq">
+                     <div class="input-form-310">
+                        Primer Nombre
+                        <p:inputText  class="iform" value="#{coordinadorController.coordinador.primerNombre}" />
+                     </div>
+                      <div class="input-form-310">
+                        Primer Apellido
+                        <p:inputText class="iform" value="#{coordinadorController.coordinador.primerApellido}" />
+                      </div>  
+                     <div class="input-form-170">
+                        Tipo Identificacion
+
+                       <p:selectOneMenu  class="iform" value="#{coordinadorController.coordinador.tipo_ide}">
+                           <f:selectItem itemLabel="Select One" itemValue=""/>
+                           <f:selectItem itemLabel="TI" itemValue="TI"/>
+                           <f:selectItem itemLabel="CC" itemValue="CC"/>
+                           <f:selectItem itemLabel="CE" itemValue="CE"/>                         
+                       </p:selectOneMenu> 
+                     </div>
+                     <div class="input-form-310">
+                        Username
+                        <p:inputText class="iform" value="#{coordinadorController.coordinador.login}" />
+                     </div>
+                     <div class="input-form-170">
+                        Genero
+                        <p:selectOneMenu  class="iform" value="#{coordinadorController.coordinador.genero}">
+                            <f:selectItem itemLabel="Select One" itemValue=""/>
+                            <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                            <f:selectItem itemLabel="Femenino" itemValue="Femenino"/>                    
+                        </p:selectOneMenu>
+                     </div>
+                      <div class="input-form-310">
+                        Email
+                        <p:inputText type="email"  class="iform" value="#{coordinadorController.coordinador.email}" />
+                      </div>
+               </div>
+                 
+                 
+              <div class="form-dere">
+                     <div class="input-form-310">
+                        Segundo Nombre
+                        <p:inputText class="iform" value="#{coordinadorController.coordinador.segundoNombre}" />
+                     </div>
+                 <div class="input-form-310">
+                     Segundo Apellido
+                     <p:inputText class="iform" value="#{coordinadorController.coordinador.segundoApellido}" />
+                 </div>
+                 <div class="input-form-310">
+                    Identificacion
+                    <p:inputText class="iform" value="#{coordinadorController.coordinador.identificacion}" /> 
+                 </div>
+                <div class="input-form-310">
+                    Password
+                    <p:inputText class="iform" value="#{coordinadorController.coordinador.password}" />
+                </div>
+                <div class="input-form-310">
+                    Telefono
+                    <p:inputText class="iform" value="#{coordinadorController.coordinador.telefono}" />
+                </div>
+                <div class="input-form-310">
+                    Direccion
+                    <p:inputText class="iform" value="#{coordinadorController.coordinador.direccion}" />
+                </div>
+                 <div class="botones">
+                     <h:commandButton class="boton" action="#{coordinadorController.registrar()}" value="Registrar" />  
+                    
+                 </div>
+                     
+                    
+              </div>
+             </div>
+         <span class="aviso">Cordinadores</span>    
+        <p:dataTable class="tabla-reporte" var="usu" value="#{coordinadorController.coordinadores}">
+            
+            <p:column  class="thead" headerText="Identificacion">
+                #{usu.identificacion}
+            </p:column>
+            <p:column headerText="Primer Nombre">
+                #{usu.primerNombre}
+            </p:column>
+            
+            <p:column headerText="Primer Apellido">
+                #{usu.primerApellido}
+            </p:column>
+                        
+            <p:column headerText="Genero">
+                #{usu.genero}
+            </p:column>
+            <p:column headerText="Telefono">
+                #{usu.telefono}
+            </p:column>
+            
+            
+            <p:column headerText="Tipo">
+                #{usu.tipo}
+            </p:column>
+            <p:column headerText="Estado">
+                #{usu.estado}
+            </p:column>
+            
+        </p:dataTable>
+    
+
+        </div>
+    </section>
+
+
+    </h:body>
+         
+</html>
+

@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <section class="contenido-contenedor">
+            <div class="border contenedor top" >
+                <p:panel>
+                    <h1 class="tittle">Mis Asignaturas</h1>
+                    <p:panel rendered="#{!competenciasController.mostPcompetencias}">
+                        <p:dataGrid class="periodos" var="asig" columns="4" rows="8" paginator="true" pageLinks="" value="#{asignaturaController.asignaturas}" >
+                            <div class="cdppa">
+                                <h:commandButton class="cdpbtn" value="seleccionar" action="#{profesorController.agregarAsignaturaCompetencia(asig)}" />
+                                <div class="id-carta"><span>#{asig.codigo}</span></div>
+                                <div class="img-nombre">
+                                    <div ><p:graphicImage value="/Imagenes/Asignaturas/iasignatura.png" style="width: 80px;height: 80px; margin-left: 5px; border-radius: 50px;"  /> </div>
+                                    <div style="margin-left: 10px;">
+                                        <h:outputText value="#{asig.nombre}" /><br></br>
+                                        <h:outputText value="Creditos: #{asig.creditos}" /><br></br>
+                                        <h:outputText value="#{asig.area.nombre}" /><br></br>
+                                        <h:outputText value="#{asig.seccion.semestre.denominacion} - #{asig.seccion.denominacion}" />
+                                    </div> 
+                                </div>
+                                <div class="contrato-carta"><span>#{asig.seccion.programa.nombre}</span></div>
+                            </div>
+                        </p:dataGrid>
+
+                        <p:panelGrid columns="1">
+                            <h:outputText value="#{competenciasController.unidad.asignatura.nombre}" />
+                            <p:panelGrid columns="2">
+                                <p:inputTextarea style="width: 700px" value="#{competenciasController.unidad.descripcion}" />
+                                <h:commandButton value="agregar" action="#{competenciasController.registrarUnidad()}" />
+                            </p:panelGrid>                
+
+                            <p:dataTable class="tabla-reporte" var="uc" value="#{competenciasController.unidadesAsignatura}">
+                                <p:column headerText="Descripcion" width="85%">
+                                    #{uc.descripcion}
+                                </p:column>
+                                <p:column headerText="">
+                                    <h:commandButton title="Eliminar" value="x" action="#{competenciasController.eliminarUnidad(uc)}" />
+                                    <h:commandButton title="Consultar" value="Consultar" action="#{competenciasController.consultarUnidad(uc)}"/>
+                                    <h:commandButton title="Competencias" value="Competencias" action="#{competenciasController.seleccionarUnidad(uc)}"/>
+                                </p:column>
+                            </p:dataTable>                
+                        </p:panelGrid>
+
+                    </p:panel>
+                    <p:panel rendered="#{competenciasController.mostPcompetencias}">
+                        <p:panelGrid columns="1">
+                            <h:outputText value="#{competenciasController.unidad.asignatura.nombre}" />
+                            <h:outputText value="#{competenciasController.unidad.descripcion}" />
+                        </p:panelGrid>
+                        <br/>
+                        <p:separator/>
+                        <br/>
+                        <p:panel>
+                            <ui:include src="GestorCompetencias.xhtml" />
+                        </p:panel>                        
+                        <p:separator/>
+                        <br/>
+                        <h:commandButton title="agregar" value="agregar" action="#{competenciasController.irCrearCompetencia()}" />
+                        <h:commandButton title="volver" value="volver" action="#{competenciasController.volverUnidadesCompetencias()}" />
+                        <p:card rendered="#{competenciasController.mostPcompetencia}" style="width: 70rem; margin-bottom: 2em">
+                            <f:facet name="title">
+                                Crear Competencia
+                            </f:facet>
+                            <p:panel>
+                                <div class="contcomp">
+                                    <div class="ctcom">
+                                        Tipo Competencia Seleccionada<br></br>
+                                        #{competenciasController.competencia.tipo.descripcion}
+                                        <p:dataTable rows="3" var="tcom" value="#{competenciasController.tiposcompetencia}">
+                                            <p:column headerText="Tipo" >
+                                                <h:commandButton value="#{tcom.descripcion}" action="#{competenciasController.seleccionaTipoCompetencia(tcom)}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </div>
+                                    <div class="chor">
+                                        Horas presenciales<br/>
+                                        <p:spinner min="1" max="10" value="#{competenciasController.competencia.horas}" />
+                                    </div>
+                                    <div class="ctent">
+                                        Tipo Entregable Relacionado<br></br>
+                                        #{competenciasController.competencia.tipoentregable.nombre}
+                                        <p:dataTable rows="3"  var="tent" value="#{tipo_EntregableController.tipos_Entregable}" >
+                                            <p:column headerText="Nombre" >
+                                                <h:commandButton title="#{tent.descripcion}" value="#{tent.nombre}" action="#{competenciasController.seleccionarTipoEntregable(tent)}" />
+                                            </p:column>
+                                        </p:dataTable> 
+                                    </div>
+                                    <div class="lestr">Estrategias</div>
+                                    <div class="cestr"><p:inputTextarea style="width: 600px" value="#{competenciasController.competencia.estrategia}" /></div>
+                                    <div class="levi">Evidencias</div>
+                                    <div class="cevi"><p:inputTextarea style="width: 600px" value="#{competenciasController.competencia.evidencia}" /></div>
+                                    <div class="lbibl">Bibliografia</div>
+                                    <div class="cbibl"><p:inputTextarea style="width: 600px" value="#{competenciasController.competencia.bibliografia}" /></div>
+                                </div>
+                            </p:panel>
+                            <h:commandButton title="atras" value="regresar" action="#{competenciasController.salirCrearCompetencia()}" />
+                            <h:commandButton title="almacenar" value="almacenar" action="#{competenciasController.registrarCompetencia()}" />
+                        </p:card>
+                    </p:panel>
+
+                </p:panel>
+            </div>
+        </section>
+    </h:body>
+
+    <style>
+        .contcomp {display: grid; 
+                   grid-auto-columns: 1fr; 
+                   grid-template-columns: 1fr 1fr 1fr 1fr 1fr; 
+                   grid-template-rows: 300px 100px 100px 100px; 
+                   gap: 0px 0px; 
+                   grid-template-areas: 
+                       "ctcom ctcom chor ctent ctent"
+                       "lestr cestr cestr cestr cestr"
+                       "levi cevi cevi cevi cevi"
+                       "lbibl cbibl cbibl cbibl cbibl"; 
+        }
+        .ctcom { grid-area: ctcom; }
+        .chor { grid-area: chor; }
+        .ctent { grid-area: ctent; }
+        .lestr { grid-area: lestr; }
+        .cestr { grid-area: cestr; }
+        .levi { grid-area: levi; }
+        .cevi { grid-area: cevi; }
+        .lbibl { grid-area: lbibl; }
+        .cbibl { grid-area: cbibl; }
+    </style>
+
+</html>
+

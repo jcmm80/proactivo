@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+
+    <section class="contenido-contenedor">
+        <div class=" contenedor top">
+            <p:card>
+            <h1 class="tittle">Gestor Profesor Lider</h1>
+            
+            <span class="aviso">Asigna Profesor Lider</span>
+            
+                
+            
+            <p:tabView>
+                <p:tab id="test" title="Profesores">
+                    
+                    <p:dataTable class="tabla-reporte" var="prof" value="#{profesorController.profesores}" >
+                        <p:column filterBy="#{prof.primerNombre}"  headerText="Primer Nombre">
+                            #{prof.primerNombre}
+                        </p:column>
+                        <p:column filterBy="#{prof.segundoNombre}" headerText="Segundo Nombre">
+                            #{prof.segundoApellido}
+                        </p:column>
+                        <p:column filterBy="#{prof.primerApellido}" headerText="Primer Apellido">
+                            #{prof.primerApellido}
+                        </p:column>
+                        <p:column filterBy="#{prof.segundoApellido}" headerText="Segundo Apellido">
+                            #{prof.segundoApellido}
+                        </p:column>
+                        <p:column headerText="Seleccionar">
+                            <div class="Acciones">
+                                <div class="accion">
+                                    <i class="fa fa-hand-pointer" style="color: #005CB9"></i>
+                                    <h:commandButton value="." class="icono" action="#{liderPAController.agregarProfesor(prof)}"/>
+                                </div>
+                            </div>
+                        </p:column>
+                    </p:dataTable>
+                </p:tab>
+                <p:tab id="tpro" title="Programa">
+
+                    <div class="plider-seleccionado">
+                        <span>Seleccionado:</span>
+                        <span>#{liderPAController.liderPA.profesor.toString()}</span>
+                    </div>
+                    <p:dataTable var="prog" class="tabla-reporte" value="#{programaController.programas}">
+
+                        <p:column headerText="Codigo">
+                            #{prog.codigo}
+                        </p:column>
+                        <p:column headerText="Nombre">
+                            #{prog.nombreCompleto}
+                        </p:column>
+                        <p:column headerText="Seleccionar">
+                            <div class="Acciones">
+                                <div class="accion">
+                                    <i class="fa fa-hand-pointer" style="color: #005CB9"></i>
+                                    <h:commandButton value="." class="icono" action="#{liderPAController.agregarPrograma(prog)}" />
+                                </div>
+                            </div>
+                        </p:column>
+                    </p:dataTable>
+
+                </p:tab>
+                <p:tab id="tper" title="Periodo">
+
+                    <div class="plider-seleccionado">
+                        <span>Seleccionado:</span>
+                        <span>#{liderPAController.liderPA.profesor.toString()}</span>
+                        <span>#{liderPAController.liderPA.seccion.programa.toString()}</span>
+                    </div>
+         
+                    <p:dataTable class="tabla-reporte" var="per" value="#{periodoController.periodos}" >
+
+                        <p:column headerText="Fecha Inicio">
+                            #{per.fechaInicial}
+                        </p:column>
+                        <p:column headerText="fecha Fin">
+                            #{per.fechaFinal}
+                        </p:column>
+                        <p:column headerText="Nombre">
+                            #{per.anio}-#{per.numero}
+                        </p:column>
+                        <p:column headerText="Seleccionar">
+                            <div class="Acciones">
+                                <div class="accion">
+                                    <i class="fa fa-hand-pointer" style="color: #005CB9"></i>
+                                    <h:commandButton value="+" class="icono" action="#{liderPAController.agregarPeriodo(per)}" />
+                                </div>
+                            </div>
+                            
+                        </p:column>
+                    </p:dataTable> 
+                </p:tab>
+
+                <p:tab id="tmat" title="Vincular">
+                        <div class="plider-seleccionado">
+                        <span>Seleccionado:</span>
+                        <span>#{liderPAController.liderPA.profesor.toString()}</span>
+                        <span>#{liderPAController.liderPA.seccion.programa.nombreCompleto}</span>
+                        <span>#{liderPAController.periodo.anio}-#{liderPAController.periodo.numero}</span>
+                    </div>
+                        
+                        <p:dataGrid columns="4" var="sec"  value="#{liderPAController.secciones}">
+                            <div class="card img-negra">
+                        <figure >
+                            <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
+                        </figure>
+                                <div class="contenido-grid " style="top: 100px;">
+                            
+                                    <span>Semestre <span style="font-weight: bold;font-size: 18px;">#{sec.semestre.denominacion}</span> </span>
+                                    <span >Seccion <span style="font-weight: bold">#{sec.denominacion}</span></span>
+                            
+                        </div>
+                        <h:commandButton   class="btn" value="Abrir" action="#{liderPAController.agregarSeccion(sec)}" />
+                    </div>
+     
+                        </p:dataGrid>
+                    <div class="tanone">
+                        <h:commandButton id="salsem" class="boton" value="Registrar" action="#{liderPAController.registrarLiderPA()}" />
+                    </div>
+                        
+                    
+
+                </p:tab>
+            </p:tabView>
+                </p:card>
+        </div>
+    </section>
+    <style>
+       
+    </style>
+</html>
+

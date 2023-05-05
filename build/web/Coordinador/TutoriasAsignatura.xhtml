@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+
+        <div class="conttutpasig">
+            <div class="cunid">
+                <p:dataTable var="tut" value="#{tutoriasController.tutorias}" >
+                    <p:column>
+                        #{tut.proyecto.codigo}
+                    </p:column>
+                    <p:column width="340">
+                        <p:dataTable style="font-size: 10pt" var="integ" value="#{tut.proyecto.integrantes}">
+                            <p:column width="40" headerText="">
+                                <p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" style="width: 40px;height: 40px "  />
+                            </p:column>
+                            <p:column width="300" headerText="Integrantes">
+                                <h:outputText  value="#{integ.matricula.estudiante.toString()}" /> 
+                            </p:column>  
+                        </p:dataTable>  
+                    </p:column>
+                    <p:column>
+                        #{tut.fechaSolicitud}
+                    </p:column>
+                    <p:column>
+                        #{tut.fechaEjecucion}
+                    </p:column>
+                    <p:column>
+                        #{tut.recomendaciones}
+                    </p:column>
+                    <p:column>
+                        #{tut.recomendaciones}
+                    </p:column>
+                    <p:column>
+                        #{tut.estado}
+                    </p:column>
+                </p:dataTable>  
+
+
+
+            </div>
+            <div class="cinfasig">#{tutoriasController.asignatura.toString()}</div>
+        </div>  
+
+    </h:body>
+
+    <style>
+        .conttutpasig { display: grid; 
+                        grid-auto-columns: 1fr; 
+                        grid-template-columns: 300px 300px 300px; 
+                        grid-template-rows: 106px 1fr; 
+                        gap: 0px 0px; 
+                        grid-template-areas: 
+                            "cinfasig cinfasig cinfasig"
+                            "cunid cunid cunid"; 
+        }
+        .cunid { grid-area: cunid; }
+        .cinfasig { grid-area: cinfasig; }
+
+    </style>
+</html>
+

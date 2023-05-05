@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+
+        <div class="contimatricula">
+            <div class="ciperfil"> <p:graphicImage value="/Imagenes/Perfiles/#{matriculaController.matricula.estudiante.imagenPerfil()}" style="max-width: 100%; height: auto"  /></div>
+            <div class="cnome"><h2 style="font-size: 14px; color: #005CB9">#{matriculaController.matricula.estudiante.toString()}</h2></div>
+            <div class="cinfe"><span style="color: #005CB9">ID #{matriculaController.matricula.estudiante.identificacion}</span></div>
+            <div class="cinfm">
+                <div >
+                    <h2>Matricula: #{matriculaController.matricula.estado}</h2>                    
+                    <h3>Fecha: #{matriculaController.matricula.fecha}</h3>
+                </div>  
+            </div>
+            <div class="cinfsec">
+                <p:panel>
+                    <div >
+                        <h2>#{matriculaController.matricula.seccion.programa.nombre}</h2>
+                        <span>Semestre #{matriculaController.matricula.seccion.semestre.denominacion} -  Seccion #{matriculaController.matricula.seccion.denominacion}</span>
+                        <h3>Año #{matriculaController.matricula.seccion.periodo.anio} - #{matriculaController.matricula.seccion.periodo.numero}</h3>
+                    </div>                    
+                </p:panel>
+            </div>
+            <div class="cop1">
+                <div class="tanone" style="justify-content: flex-start; column-gap: 1rem" >
+                    <div class="btns" style="background-color: #005CB9">
+                        <i class="uil uil-angle-left-b" ></i>
+                        Volver
+                        <h:commandButton class="btn" value="volver" action="#{matriculaController.volverEstudiantes()}" />
+                    </div>
+                </div>
+
+            </div>
+            <div class="cop2">
+                <div class="tanone" style="justify-content: flex-start; column-gap: 1rem" >
+                    <div class="btns" style="background-color: tomato">
+                        <i class="uil uil-trash-alt" ></i>
+                        Eliminar
+                        <h:commandButton class="btn" value="volver" action="#{matriculaController.eliminarMatricula()}" />
+                    </div>
+
+                </div>
+                
+            </div>
+        </div>
+    </h:body>
+    <style>
+        .contimatricula {  display: grid;
+                           grid-template-columns: 200px 368px 232px;
+                           grid-template-rows: 74px 77px 117px 142px;
+                           grid-auto-columns: 1fr;
+                           gap: 0px 0px;
+                           grid-auto-flow: row;
+                           justify-items: center;
+                           align-items: start;
+                           grid-template-areas:
+                               "ciperfil cnome cop1"
+                               "ciperfil cinfe cop2"
+                               "cinfm cinfm cinfm"
+                               "cinfsec cinfsec cinfsec";
+        }
+
+        .ciperfil { grid-area: ciperfil; }
+
+        .cnome { grid-area: cnome; }
+
+        .cinfe { grid-area: cinfe; }
+
+        .cinfm { grid-area: cinfm; }
+
+        .cinfsec { grid-area: cinfsec; }
+
+        .cop1 { grid-area: cop1; }
+
+        .cop2 { grid-area: cop2; }
+
+    </style>
+
+
+</html>
+

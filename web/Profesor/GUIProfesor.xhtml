@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:head>
+
+        <title>Facelet Title</title>
+
+
+    </h:head>
+    <h:body>
+        <header>
+
+            <div class="nav-up contenedor">
+                <a href="index.xhtml"><h:graphicImage class="logo-sgpa" value="/resources/img/logo sgpa.png"/></a>
+                <div class="buscador">
+                    <input type="search" placeholder="Search..."></input>
+                    <i class="fas fa-search input-i"></i>
+                </div>
+                <a href="https://unicolombo.edu.co/"><h:graphicImage class="logo-unico" value="/resources/img/logo unico.png"/></a>
+                <div class="perfil">
+                    <div class="informacion-perfil">
+                        <span>Profesor</span>
+                        <span>#{programaController.programa.nombre}</span>
+                        <span>#{profesorController.profesor.toString()}</span>
+                        <span>#{periodoController.periodoActual.anio}-#{periodoController.periodoActual.numero}</span>
+
+                    </div>
+                    <div class="foto-perfil">
+                        <h:commandButton action="#{profesorController.miperfil()}" class="mi-perfil" value="Perfil" />
+                        <div class="imagen-perfil">
+
+                            <h:graphicImage class="logo-unico" value="/Imagenes/Perfiles/#{profesorController.profesor.imagenPerfil()}"/>
+                            <div class="conectado"></div> 
+                        </div>
+                        <h:commandButton action="#{usuarioController.salir()}" class="log-out" value="Log out" />
+
+                    </div>
+
+
+
+                </div>
+            </div>
+
+
+            <!-- Nav horizontal -->
+            <div class="nav-horizontal">
+                <nav>
+                    <div class="op"><h:graphicImage  value="/resources/img/bombillo.png"/><h:commandLink action="#{profesorController.g_tutoria()}" value="Tutorias"  /></div>
+                    <div class="op"><h:graphicImage  value="/resources/img/motar.png"/><a href="">Estudiantes</a></div>
+                    <div class="op"><h:graphicImage  value="/resources/img/monitor.png"/><h:commandLink action="#{profesorController.gproyectosaula()}" value="Proyecto Aula"  /></div>
+                    <div class="op"><h:graphicImage  value="/resources/img/tabla.png"/><h:commandLink action="#{profesorController.asignaturasProfesor()}" value="Asignaturas"  /></div>
+                    <div class="op"><h:graphicImage  value="/resources/img/profesor.png"/><a href="">Profesores</a></div>
+                    <div class="op"><h:graphicImage  value="/resources/img/notas.png"/><a href="">Notas</a></div>     
+                </nav>
+            </div>
+
+
+            <!-- Nav vertical -->
+            <div class="nav-vertical ">
+                <nav id="nav-vertical" >
+                    <div class="menu-vertical">
+                        <div class="contenedor-mv">
+
+                            <span class="texto-menu">Menú</span>
+                        </div> 
+                    </div>
+
+                    <div class="cop ">
+                        <div class="linea"></div>
+                        <div class="op-v"><h:graphicImage  value="/resources/img/lapiz.png"/><h:commandButton value="Tipo Entregable" class="botones-v" action="#{profesorController.gtipo_Entregable()}"></h:commandButton></div>
+                    </div>                
+                    <h:panelGroup layout="block" rendered="#{profesorController.habilitarLider()}">
+                        <div class="cop">
+                            <div class="linea"></div>
+                            <div class="op-v"><h:graphicImage value="/resources/img/libro.png"/><h:commandButton value="Gestor de Grupos" class="botones-v" action="#{profesorController.ggrupos()}"></h:commandButton></div>
+                        </div>
+                        <div class="cop">
+                            <div class="linea"></div>
+                            <div class="op-v"><h:graphicImage value="/resources/img/libro.png"/><h:commandButton value="Ver Proyectos" class="botones-v" action="#{profesorController.gproyectosaula()}"></h:commandButton></div>
+                        </div>
+                        <div class="cop">
+                            <div class="linea"></div>
+                            <div class="op-v"><h:graphicImage  value="/resources/img/libro.png"/><h:commandButton value="Tipos de Item " class="botones-v" action="#{profesorController.gtipo_Item()}"></h:commandButton></div>
+                        </div>
+                        <div class="cop">
+                            <div class="linea"></div>
+                            <div class="op-v"><h:graphicImage value="/resources/img/libro.png"/><h:commandButton  value="Gestor de Evaluaciones" class="botones-v" action="#{profesorController.gEvaluaciones()}"></h:commandButton></div>
+                        </div>
+                    </h:panelGroup>            
+                    <h:panelGroup layout="block" rendered="#{not empty programaController.programa.coordinadorPA}">
+                        <div class="cop">
+                            <div class="linea"></div>
+                            <div class="op-v"><h:graphicImage value="/resources/img/libro.png"/><h:commandButton  value="Gestor de Prof Lider " class="botones-v" action="#{profesorController.gproflider()}"></h:commandButton></div>
+                        </div>
+                        <div class="cop">
+                            <div class="linea"></div>
+                            <div class="op-v"><h:graphicImage value="/resources/img/libro.png"/><h:commandButton  value="Gestor de Dimensiones" class="botones-v" action="#{profesorController.gDimensiones()}"></h:commandButton></div>
+                        </div>
+                    </h:panelGroup>   
+
+                    <div class="cop">
+                        <div class="linea"></div>
+                        <div class="op-v"><h:graphicImage  value="/resources/img/tabla.png"/><h:commandButton value="Asignaturas " class="botones-v" action="#{profesorController.asignaturasProfesor()}"></h:commandButton></div>
+                    </div>
+                    <div class="cop">
+                        <div class="linea"></div>
+                        <div class="op-v"><h:graphicImage  value="/resources/img/tabla.png"/><h:commandButton value="Competencias " class="botones-v" action="#{profesorController.gCompetenciasProfesor()}"></h:commandButton></div>
+                    </div>
+
+
+
+                </nav>
+            </div>
+            <div class="boton-menu">
+                <h:graphicImage  value="/resources/img/menu.png"/>
+            </div>
+            ***
+
+
+
+        </header>  
+
+        <ui:include src="#{profesorController.paginaActualP}" />
+
+
+
+
+        <script type="text/javascript" 
+                src="../resources/js/menu-vertical.js">
+        </script>
+
+    </h:body>
+
+</html>
+

@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <section class="contenido-contenedor">
+            <div class="border contenedor top">
+                <h1 class="tittle">Carga Masiva</h1>
+                <div >
+                    <p:panel>  
+                        <p:panelGrid columns="2">
+                            <p:fileUpload  value="#{usuarioController.archivoDatos}"  mode="simple" skinSimple="true" sizeLimit="900000" allowTypes="/(\.|\/)(txt|xls)$/"/>
+                            <h:commandButton class="boton" action="#{usuarioController.subirArchivoPlano()}" value="cargar" /> 
+                        </p:panelGrid>
+                    </p:panel>
+                    <p:dataTable class="tabla-reporte" rows="10" paginator="true" var="est" value="#{usuarioController.marchivos.estudiantes}" >
+                        <p:column headerText="Identificacion">
+                            #{est.identificacion}
+                        </p:column>
+                        <p:column headerText="Primer Apellido">
+                            #{est.primerApellido}
+                        </p:column>
+                        <p:column headerText="Segundo Apedillo">
+                            #{est.segundoApellido}
+                        </p:column>
+                        <p:column headerText="Primer Nombre">
+                            #{est.primerNombre}
+                        </p:column>
+                        <p:column headerText="Segundo Nombre">
+                            #{est.segundoNombre}
+                        </p:column>
+                        <p:column headerText="Login">
+                            #{est.login}
+                        </p:column>
+                        <p:column headerText="Password">
+                            #{est.password}
+                        </p:column>
+                        <p:column headerText="Telefono">
+                            #{est.telefono}
+                        </p:column>
+                        <p:column headerText="TIde">
+                            #{est.tipo_ide}
+                        </p:column>                       
+                    </p:dataTable> 
+                    <p:separator/>
+                    <p:dataTable class="tabla-reporte" rows="10" paginator="true" var="mat" value="#{usuarioController.marchivos.matriculas}" >
+                        <p:column headerText="id">
+                            #{mat.id}
+                        </p:column>
+                        <p:column headerText="Id_estudiante">
+                            #{mat.estudiante.id}
+                        </p:column>
+                        <p:column headerText="Estado matricula">
+                            #{mat.estado}
+                        </p:column>
+                        <p:column headerText="Fecha">
+                            #{mat.fecha}
+                        </p:column>
+                        <p:column headerText="Seccion">
+                            #{mat.seccion.id}
+                        </p:column>                       
+                    </p:dataTable>  
+                    <p:separator/>
+                    <p:dataTable class="tabla-reporte" rows="10" paginator="true" var="per" value="#{usuarioController.marchivos.periodos}" >
+                        <p:column headerText="Año">
+                            #{per.anio}
+                        </p:column>
+                        <p:column headerText="Numero">
+                            #{per.numero}
+                        </p:column>
+                        <p:column headerText="fecha Inicial">
+                            #{per.fechaInicial}
+                        </p:column>     
+                        <p:column headerText="fecha Final">
+                            #{per.fechaFinal}
+                        </p:column>  
+                    </p:dataTable>  
+                    <p:separator/>
+                    <p:dataTable class="tabla-reporte" rows="10" paginator="true" var="pro" value="#{usuarioController.marchivos.programas}" >
+                        <p:column headerText="Nombre Programa">
+                            #{pro.nombre}
+                        </p:column>
+                        <p:column headerText="Id">
+                            #{pro.id}
+                        </p:column>
+                    </p:dataTable>  
+                    <p:separator/>
+                    <p:dataTable class="tabla-reporte" rows="10" paginator="true" var="sec" value="#{usuarioController.marchivos.secciones}" >
+                        <p:column headerText="Id">
+                            #{sec.id}
+                        </p:column>
+                        <p:column headerText="Denominacion">
+                            #{sec.denominacion}
+                        </p:column>
+                         <p:column headerText="Id_Semestre">
+                            #{sec.semestre.id}
+                        </p:column>
+                         <p:column headerText="Id_Programa">
+                            #{sec.programa.id}
+                        </p:column>
+                         <p:column headerText="Id_Periodo">
+                            #{sec.periodo.id}
+                        </p:column>
+                    </p:dataTable>  
+                    <h:commandButton class="boton" action="#{usuarioController.almacenamientoMasivo()}" value="Almacenar" /> 
+                </div>
+            </div>
+        </section>
+    </h:body>
+</html>
+

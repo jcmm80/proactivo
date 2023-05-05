@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+
+        <section class="contenido-contenedor">
+            <div class="border contenedor top" >
+                <h1 class="tittle">Gestor de Evaluacion</h1>
+                <p:panel rendered="#{!profesorController.mostPanelEvaluaciones}">
+                    <p:dataGrid paginator="true"  var="sem" value="#{profesorController.semestresLider}">
+                        <div class="card img-negra">
+                            <figure >
+                                <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
+                            </figure>
+                            <div class="contenido-grid">
+                                <h2>#{sem.seccion.programa.nombre}</h2>
+                                <span>Semestre #{sem.seccion.semestre.denominacion} -  Seccion #{sem.seccion.denominacion}</span>
+                                <h3>Año #{sem.seccion.periodo.anio} - #{sem.seccion.periodo.numero}</h3>
+
+                            </div>
+                            <h:commandButton   class="btn" value="Abrir" action="#{profesorController.seleccionarSeccionLider(sem)}" />
+                        </div>  
+                    </p:dataGrid>
+                </p:panel>
+                <p:panel rendered="#{profesorController.mostPanelEvaluaciones}">              
+
+                    <div class="conteval">
+                        <div class="cdime">
+                            <p:dataGrid paginator="true" var="dim"  columns="1" value="#{evaluacionController.dimencionesPeriodo}" >
+                                <div class="card img-negra">
+                                    <figure >
+                                        <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
+                                    </figure>
+                                    <div class="contenido-grid">
+                                        <h2>#{dim.nombre}</h2>
+                                        <span>#{dim.descripcion}</span>
+                                        <h3>Porcentaje #{dim.porcentaje}%</h3>
+                                    </div>
+                                    <h:commandButton   class="btn" value="Abrir" action="#{evaluacionController.seleccionarDimension(dim)}" />
+                                </div> 
+                            </p:dataGrid>
+
+                        </div>
+                        <div class="ccrit">
+                            <br/><br/><br/>
+                            <p:panel rendered="#{evaluacionController.dimencion.esGlobal()}">
+                                Asignar: #{evaluacionController.dimencion.nombre} para las asignaturas?<br/>
+                                <p:dataGrid var="asigs" value="#{evaluacionController.asignaturasSeccion}">
+                                    <p:panel>
+                                        <div class="cdppa">
+                                            <h:commandButton class="cdpbtn" value="seleccionar" action="#{evaluacionController.seleccionarAsignatura(asigs)}" />
+                                            <div class="id-carta"><span>#{asigs.codigo}</span></div>
+                                            <div class="img-nombre">
+                                                <div ><p:graphicImage value="/Imagenes/Asignaturas/iasignatura.png" style="width: 80px;height: 80px; margin-left: 5px; border-radius: 50px;"  /> </div>
+                                                <div style="margin-left: 10px;">
+                                                    <h:outputText value="#{asigs.nombre}" /><br></br>
+                                                    <h:outputText value="Creditos: #{asigs.creditos}" /><br></br>
+                                                    <h:outputText value="#{asigs.area.nombre}" /><br></br>
+                                                    <h:outputText value="#{asigs.seccion.semestre.denominacion} - #{asigs.seccion.denominacion}" />
+                                                </div> 
+                                            </div>
+                                            <div class="contrato-carta"><span>#{asigs.seccion.programa.nombre}</span></div>
+                                        </div>
+                                    </p:panel>
+                                </p:dataGrid>
+                            </p:panel>
+                            <p:panel rendered="#{!evaluacionController.dimencion.esGlobal()}">
+                                Asignar: #{evaluacionController.dimencion.nombre} para los criterios? <br/>
+                                <p:dataTable class="tabla-reporte"  scrollable="true" scrollHeight="700" style="font-size: 7pt" var="crita" value="#{evaluacionController.criteriosSeccion}">
+                                    <p:column headerText="Asignatura">
+                                        #{crita.competencia.unidad.asignatura.nombre}
+                                    </p:column>
+                                    <p:column width="40%" headerText="Unidad de Competencia">
+                                        #{crita.competencia.unidad.descripcion}
+                                    </p:column>
+                                    <p:column headerText="Tipo de Competencia">
+                                        #{crita.competencia.tipo.descripcion}
+                                    </p:column>
+                                    <p:column width="30%" headerText="Criterio">
+                                        #{crita.descripcion}
+                                    </p:column>
+
+                                </p:dataTable>    
+                            </p:panel>
+
+                        </div>
+                    </div>
+
+                    <h:commandButton value="volver" action="#{profesorController.volverSeccionesdesdeEvaluacion()}" />
+                </p:panel>   
+            </div>
+        </section>     
+
+    </h:body>
+    <style>
+
+        .conteval {  display: grid;
+                     grid-template-columns: 300px 1fr;
+                     grid-template-rows: 1fr;
+                     grid-auto-columns: 1fr;
+                     gap: 0px 0px;
+                     grid-auto-flow: row;
+                     grid-template-areas:
+                         "cdime ccrit";
+        }
+
+        .cdime { grid-area: cdime; }
+
+        .ccrit { grid-area: ccrit; }
+
+
+
+    </style>
+</html>
+

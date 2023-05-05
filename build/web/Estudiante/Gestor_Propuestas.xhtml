@@ -1,0 +1,184 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <section class="contenido-contenedor">
+            <div class="border contenedor top">
+                <h1 class="tittle">Gestor Propuestas</h1>
+                <p:accordionPanel widgetVar="basic">
+                    <p:tab title="Informacion Basica del Proyecto">
+                        <div class="contpro">
+                            <div class="codse">
+                                <i class="uil uil-notes ic"></i>
+                                
+                                <div class="codseitem">
+                                    <h:outputText value="Codigo Proyecto" /><br></br>
+                                    <span>#{proyectoAulaController.proyecto.codigo}</span>
+                                </div>
+                                <div class="codseitem">
+                                    <h:outputText value="Semestre" /><br></br>
+                                    <span>#{proyectoAulaController.proyecto.seccion.semestre.denominacion}</span>
+                                </div>
+                            </div>
+                            <span class="aviso">Establezca la fecha del proyecto</span>
+                            <div class="fechas codse" style="gap:20px;">
+                                <div class="input-form-200">
+                                    Fecha Inicial
+                                    <p:calendar   value="#{proyectoAulaController.proyecto.fecha_inicio}" />
+                                </div>
+
+                                <div class="input-form-200">
+                                    Fecha Finalizacion
+                                    <p:calendar   value="#{proyectoAulaController.proyecto.fecha_finalizacion}" />
+                                </div>        
+                            </div>
+                            <span class="aviso ">Titulo Del proyecto</span>
+                            <div class="fechas codse" style="gap:20px;">
+                                <p:inputText placeholder="Titulo" size="100" value="#{proyectoAulaController.proyecto.titulo}"/>
+                            </div>
+                            <span class="aviso">Problematica Del proyecto</span>
+                            <div class="fechas codse" style="gap:20px;">
+                                <p:inputTextarea placeholder="Problematica" cols="100" value="#{proyectoAulaController.proyecto.problematica}" />
+                            </div>
+                        </div>
+                    </p:tab>
+                    <p:tab title="Itenes del Proyecto">
+                        <h:commandButton  class="agg" rendered="#{!estudianteController.mpanelAItems}"  value="+" action="#{estudianteController.agregarItem()}" />
+                        <p:card rendered="#{estudianteController.mpanelAItems}" >                            
+                            <p:dataTable class="tabla-reporte" style="overflow-y: scroll;height: 350px"  var="ite" value="#{tipo_itemController.tipos_Items}" >
+                                <p:column headerText="Nombre">
+                                    <h:outputText title="#{ite.descripcion}" value="#{ite.nombre}" />
+                                </p:column>                            
+                                <p:column headerText="Agregar" >
+                                    <div class="accion">
+                                        <i class="uil uil-plus" style="color: #004F9E; "></i>
+                                        <h:commandButton class="icono" value="+" action="#{estudianteController.seleccionarTItem(ite)}"  />
+                                    </div>
+                                    
+                                </p:column>
+                            </p:dataTable>
+                            <div class="tanone" style="justify-content: flex-start; column-gap: 1rem" >
+                                <div class="btns" style="background-color: #005CB9">
+                                    <i class="uil uil-angle-left-b" ></i>
+                                    Volver
+                                    <h:commandButton class="btn" value="volver" action="#{estudianteController.volverItems()}" />
+                                </div>
+                                
+                            </div>
+                            
+                            
+                        </p:card>
+                        
+                        <p:card style="margin-bottom: 2rem" rendered="#{estudianteController.mpanelItem}">
+                            
+                             
+                            <f:facet name="title">
+                               #{proyectoAulaController.item.tipo.nombre}
+                            </f:facet>
+                                
+                            <p:inputTextarea placeholder="Escribe aquí..." class="iform" value="#{proyectoAulaController.item.contenido}" rows="4" cols="70" />
+                            <div class="tanone" style="justify-content: flex-start; column-gap: 1rem" >
+                                
+                                <div class="btns" style="background-color: #1CE63F">
+                                    <i class="uil uil-check" ></i>
+                                Agregar
+                                <h:commandButton class="btn" value="." action="#{estudianteController.registrarItem()}" />
+                                </div>
+                                
+                            </div>
+                            
+                        </p:card>
+                        
+                        <p:card rendered="#{!estudianteController.mpanelAItems}">
+                            <p:dataTable class="tabla-reporte" var="items" value="#{proyectoAulaController.proyecto.itenes_Proyecto}">
+                                <p:column headerText="Tipo"> 
+                                    #{items.tipo.nombre}
+                                </p:column>
+                                <p:column headerText="Fecha Creacion"> 
+                                    #{items.fecharegistro}
+                                </p:column>
+                                <p:column headerText="Ultima Modificacion"> 
+                                    #{items.fechamodificacion}
+                                </p:column>
+                                <p:column headerText="Autor/Editor"> 
+                                    #{items.editor.estudiante.toString()}
+                                </p:column>
+                                <p:column headerText=""> 
+                                    <div class="Acciones">
+                                        <div class="accion">
+                                            <i class="uil uil-pen" style="color: #004F9E; "></i>
+                                            <h:commandButton class="icono" value="." action="#{estudianteController.seleccionarItem(items)}" />
+                                        </div>
+                                        <div class="accion">
+                                            <i class="uil uil-trash-alt" style="color: red; "></i>
+                                            <h:commandButton class="icono" value="-" action="#{estudianteController.eliminarItem(items)}" />
+                                        </div>
+                                    </div>
+                                    
+                               
+                                </p:column>
+                            </p:dataTable>
+                        </p:card>
+                    </p:tab>
+                    
+                    <p:tab title="Integrantes">
+                        <p:dataTable class="tabla-reporte" style="text-align: left !important;" var="integ" value="#{proyectoAulaController.proyecto.integrantes}">
+                            <p:column style="text-align: left !important;" headerText="Perfil">
+                                <p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" style="width: 40px;height: 40px "  />
+                            </p:column>
+                            <p:column style="text-align: left !important;" width="300" headerText="Nombre" >
+                                <h:outputText  value="#{integ.matricula.estudiante.toString()}" /> 
+                            </p:column>                            
+                        </p:dataTable>   
+                    </p:tab>
+                </p:accordionPanel>
+                 
+                <div class="tanone" >
+                    <h:commandButton class="boton" style="margin-left: 20px;" value="Cerrar" />
+                    <h:commandButton class="boton" style="margin-left: 20px;" value="Guardar" action="#{estudianteController.guardarProyectoAula()}" />
+                    <h:commandButton class="boton" style="margin-left: 20px;" value="Publicar" action="#{estudianteController.publicarProyectoAula()}" />
+                </div>
+
+               
+
+            </div>
+        </section>
+    </h:body>
+
+    <style>
+        .agg{
+            background-color: #a39e9e;
+            border: none;
+            color: white;
+            top: 23.8rem;
+            right: 9rem;
+            cursor: pointer;
+            padding: 5px 10px;
+            font-weight: 600;
+            position: absolute;
+        }
+        .agg:hover{
+            background-color: #14FF00
+        }
+        .btns{
+            font-family: sans-serif;
+            font-size: 16px;
+            position: relative;
+            display: flex;
+            align-content: center;
+            text-align: center;
+            column-gap: .2rem;
+            padding: 5px 8px;
+            color: white;
+            border-radius: 5px;
+        }
+    </style>
+
+</html>
+

@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <section class="contenido-contenedor">
+            <div class="border contenedor top" >
+                <h1 class="tittle">Tutorias</h1>
+                <p:panel rendered="#{!profesorController.mpanelTutorias}">
+                    <p:dataGrid class="periodos" var="asig" columns="4" rows="8" paginator="true" pageLinks="" value="#{asignaturaController.asignaturas}" >
+                        <div class="cdppa">
+                            <h:commandButton class="cdpbtn" value="seleccionar" action="#{profesorController.agregarAsignaturaTutoria(asig)}" />
+                            <div class="id-carta"><span>#{asig.codigo}</span></div>
+                            <div class="img-nombre">
+                                <div ><p:graphicImage value="/Imagenes/Asignaturas/iasignatura.png" style="width: 80px;height: 80px; margin-left: 5px; border-radius: 50px;"  /> </div>
+                                <div style="margin-left: 10px;">
+                                    <h:outputText value="#{asig.nombre}" /><br></br>
+                                    <h:outputText value="Creditos: #{asig.creditos}" /><br></br>
+                                    <h:outputText value="#{asig.area.nombre}" /><br></br>
+                                    <h:outputText value="#{asig.seccion.semestre.denominacion} - #{asig.seccion.denominacion}" />
+                                </div> 
+                            </div>
+                            <div class="contrato-carta"><span>#{asig.seccion.programa.nombre}</span></div>
+                        </div>
+                    </p:dataGrid>
+                </p:panel>
+                <p:panel rendered="#{profesorController.mpanelTutorias}">                   
+                    <p:panel rendered="#{!profesorController.mpanelPTutoria}">
+                        <h:commandButton value="crear"  />
+                        <h:commandButton value="asignaturas" action="#{profesorController.pvolverAsignaturardTutoria()}" />
+
+                        <p:tabView>
+                            <p:tab title="Solicitadas">
+                                <p:dataTable scrollHeight="100px" class="tabla-reporte" var="tut" value="#{tutoriasController.tutoriasAsignaturaSolicitadas}">
+                                    <p:column headerText="Fecha-Solicitud">
+                                        #{tut.fechaSolicitud}
+                                    </p:column>
+                                    <p:column headerText="Fecha-Ejecucion">
+                                        #{tut.fechaEjecucion}
+                                    </p:column>
+                                    <p:column headerText="Fecha-Asignacion">
+                                        #{tut.fechaAsignacion}
+                                    </p:column>
+                                    <p:column headerText="Compromisos">
+                                        #{tut.compromisos}
+                                    </p:column>
+                                    <p:column headerText="Recomendaciones">
+                                        #{tut.recomendaciones}
+                                    </p:column>
+                                    <p:column headerText="Estado">
+                                        #{tut.estado}
+                                    </p:column>
+                                    <p:column headerText="Solicitado Por">
+                                        #{tut.integrante.matricula.estudiante.toString()}
+                                    </p:column>
+                                    <p:column headerText="">
+                                        <h:commandButton disabled="#{tut.fueRealizada()}" value="Programar" action="#{profesorController.pprogramarTutoria(tut)}" />
+                                        <h:commandButton disabled="#{tut.fueRealizada()}" value="Realizar" action="#{profesorController.prealizarTutoria(tut)}" />
+                                    </p:column>         
+                                </p:dataTable>  
+                            </p:tab>
+                            <p:tab title="Programadas">
+                                <p:dataTable scrollHeight="100px" class="tabla-reporte" var="tut" value="#{tutoriasController.tutoriasAsignaturaProgramadas}">
+                                    <p:column headerText="Fecha-Solicitud">
+                                        #{tut.fechaSolicitud}
+                                    </p:column>
+                                    <p:column headerText="Fecha-Ejecucion">
+                                        #{tut.fechaEjecucion}
+                                    </p:column>
+                                    <p:column headerText="Fecha-Asignacion">
+                                        #{tut.fechaAsignacion}
+                                    </p:column>
+                                    <p:column headerText="Compromisos">
+                                        #{tut.compromisos}
+                                    </p:column>
+                                    <p:column headerText="Recomendaciones">
+                                        #{tut.recomendaciones}
+                                    </p:column>
+                                    <p:column headerText="Estado">
+                                        #{tut.estado}
+                                    </p:column>
+                                    <p:column headerText="Solicitado Por">
+                                        #{tut.integrante.matricula.estudiante.toString()}
+                                    </p:column>
+                                    <p:column headerText="">
+                                        <h:commandButton disabled="#{tut.fueRealizada()}" value="Programar" action="#{profesorController.pprogramarTutoria(tut)}" />
+                                        <h:commandButton disabled="#{tut.fueRealizada()}" value="Realizar" action="#{profesorController.prealizarTutoria(tut)}" />
+                                    </p:column>         
+                                </p:dataTable>  
+                            </p:tab>
+                            <p:tab title="Realizadas">
+                                <p:dataTable scrollHeight="100px" class="tabla-reporte" var="tut" value="#{tutoriasController.tutoriasAsignaturaRealizadas}">
+                                    <p:column headerText="Fecha-Solicitud">
+                                        #{tut.fechaSolicitud}
+                                    </p:column>
+                                    <p:column headerText="Fecha-Ejecucion">
+                                        #{tut.fechaEjecucion}
+                                    </p:column>
+                                    <p:column headerText="Fecha-Asignacion">
+                                        #{tut.fechaAsignacion}
+                                    </p:column>
+                                    <p:column headerText="Compromisos">
+                                        #{tut.compromisos}
+                                    </p:column>
+                                    <p:column headerText="Recomendaciones">
+                                        #{tut.recomendaciones}
+                                    </p:column>
+                                    <p:column headerText="Estado">
+                                        #{tut.estado}
+                                    </p:column>
+                                    <p:column headerText="Solicitado Por">
+                                        #{tut.integrante.matricula.estudiante.toString()}
+                                    </p:column>
+                                    <p:column headerText="">
+                                        <h:commandButton disabled="#{tut.fueRealizada()}" value="Programar" action="#{profesorController.pprogramarTutoria(tut)}" />
+                                        <h:commandButton disabled="#{tut.fueRealizada()}" value="Realizar" action="#{profesorController.prealizarTutoria(tut)}" />
+                                    </p:column>         
+                                </p:dataTable>  
+                            </p:tab>
+                        </p:tabView>
+
+
+                    </p:panel>
+                    <p:panel rendered="#{profesorController.mpanelPTutoria}">                        
+                        <ui:include src="#{profesorController.paginaTutoria}" /> 
+                    </p:panel>
+                </p:panel>
+            </div>
+        </section>
+
+    </h:body>
+</html>
+

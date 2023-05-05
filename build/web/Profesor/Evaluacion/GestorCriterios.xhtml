@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+
+        <p:panelGrid columns="1">
+            <h:outputText rendered="#{not empty criteriosController.criterio}" value="#{criteriosController.criterio.competencia.tipo.descripcion} - #{criteriosController.criterio.competencia.estrategia}" />
+            <p:panel>
+                <div class="contgcriterios">
+                    <div class="ldes">Descripcion</div>
+                    <div class="cdes"><p:inputTextarea style="width: 400px" value="#{criteriosController.criterio.descripcion}" /></div>
+                    <div class="lpor">Porcentaje</div>
+                    <div class="cpor"><p:knob min="0" max="#{criteriosController.criterio.porcentaje}" value="#{criteriosController.criterio.porcentaje}" />   </div>
+                    <div class="cop"><h:commandButton value="Agregar" action="#{criteriosController.registrarCriterio()}" /></div>
+                </div>
+            </p:panel>
+            <p:panel>
+                <p:dataTable class="tabla-reporte" value="#{criteriosController.criterios}" var="cri">
+                    <p:column headerText="Descripcion">
+                        #{cri.descripcion}
+                    </p:column>
+                    <p:column headerText="Porcentaje">
+                        #{cri.porcentaje}
+                    </p:column>
+                    <p:column headerText="Tipo">
+                        #{cri.tipo}
+                    </p:column>
+                    <p:column headerText="Opciones">
+                        <h:commandButton value="Eliminar" action="#{criteriosController.aliminarCriterio(cri)}" />
+                        <h:commandButton value="Consultar" action="#{criteriosController.seleccionarCriterio(cri)}" />
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </p:panelGrid>
+
+    </h:body>
+    <style>
+        .contgcriterios {  display: grid;
+                           grid-template-columns: 120px 500px 120px 200px 100px;
+                           grid-template-rows: 200px;
+                           grid-auto-columns: 1fr;
+                           gap: 0px 0px;
+                           grid-auto-flow: row;
+                           grid-template-areas:
+                               "ldes cdes lpor cpor cop";
+        }
+
+        .ldes { grid-area: ldes; }
+
+        .cdes { grid-area: cdes; }
+
+        .lpor { grid-area: lpor; }
+
+        .cpor { grid-area: cpor; }
+
+        .cop { grid-area: cop; }
+
+
+    </style>
+</html>
+

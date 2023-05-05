@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <div class="contRTutoria">
+            <div class="cproy">
+                <p:panelGrid columns="3">
+                    <h:outputText value="#{tutoriasController.tutoria.proyecto.toString()}" />                
+                    <h:commandButton value="volver" action="#{profesorController.pvolverdeProgramar()}" />
+                    <h:commandButton value="Crear tutoria" action="#{profesorController.palmacenarTutoria()}" />
+                </p:panelGrid>
+            </div>
+            <div class="cinteg">
+                <p:dataTable  class="tabla-reporte" style="font-size: 8pt" var="integ" value="#{tutoriasController.asistentes}">
+                    <p:column headerText="">
+                        <p:graphicImage value="/Imagenes/Perfiles/#{integ.estudiante.matricula.estudiante.imagenPerfil()}" style="width: 40px;height: 40px "  />
+                    </p:column>
+                    <p:column width="300" headerText="Integrantes">
+                        <h:outputText  value="#{integ.estudiante.matricula.estudiante.toString()}" /> 
+                    </p:column>   
+                    <p:column headerText="Asistencia">
+                        <p:selectBooleanCheckbox value="#{integ.asistio}"/>
+                    </p:column>
+                    <p:column width="300" headerText="Motivo">
+                        <p:inputText value="#{integ.motivo}" />
+                    </p:column>
+                </p:dataTable>  
+            </div>
+            <div class="crecom">
+                <p:inputTextarea style="width: 800px" placeholder="Recomendaciones" value="#{tutoriasController.tutoria.recomendaciones}" />
+            </div>
+            <div class="ccomp">
+                <p:inputTextarea style="width: 800px" placeholder="Compromisos" value="#{tutoriasController.tutoria.compromisos}" />
+            </div>
+        </div>
+
+
+        <style>
+            .contRTutoria {  display: grid;
+                             grid-template-columns: 200px 200px 200px 200px;
+                             grid-template-rows: 120px 150px 150px 150px 150px;
+                             grid-auto-columns: 1fr;
+                             gap: 0px 0px;
+                             grid-auto-flow: row;
+                             justify-items: stretch;
+                             align-items: stretch;
+                             grid-template-areas:
+                                 "cproy cproy cproy cproy"
+                                 "cinteg cinteg cinteg cinteg"
+                                 "cinteg cinteg cinteg cinteg"
+                                 "crecom crecom crecom crecom"
+                                 "ccomp ccomp ccomp ccomp";
+            }
+
+            .cproy { grid-area: cproy; }
+
+            .cinteg { grid-area: cinteg; }
+
+            .crecom { grid-area: crecom; }
+
+            .ccomp { grid-area: ccomp; }
+        </style>
+
+
+    </h:body>
+</html>
+
