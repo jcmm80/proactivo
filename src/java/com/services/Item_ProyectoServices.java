@@ -28,8 +28,8 @@ public class Item_ProyectoServices extends ImplDao<Item_Proyecto, Long> implemen
              Query qu=em.createQuery(q)
                      .setParameter(1, pa.getId());
              itenes=qu.getResultList();            
-             
-             em.close();             
+              em.getTransaction().commit();
+            System.out.println("obtenerProyectosXPeriodo_Programa");               
          }catch(Exception ex){
              ex.printStackTrace();
          } 

@@ -6,7 +6,6 @@
 package com.controller;
 
 import com.entity.Asignatura;
-import com.entity.Entregable;
 import com.entity.Integrante;
 import com.entity.LiderPA;
 import com.entity.Periodo;
@@ -75,6 +74,8 @@ public class ProfesorController implements Serializable {
     private EvaluacionController evacon;
     @ManagedProperty("#{programaController}")
     private ProgramaController progcon;
+    @ManagedProperty("#{avanceController}")
+    private AvanceController avancon;
 
     //variables de control
     private String paginaActualP = "";
@@ -150,10 +151,12 @@ public class ProfesorController implements Serializable {
         obtenerAvances(a.getSeccion());
         mostPAsignatura = true;
         mostPanelProyectoAula = true;
+        evacon.obtenerEvaluacionXSeccion(a.getSeccion());
+        evacon.obtenerValoracionesAsignatura(a);
     }
 
     public void obtenerAvances(Seccion s) {
-        proacon.getAvancon().consultarAvancesXSeccion(s);
+        avancon.consultarAvancesXSeccion(s);// la cambie por una instanciada desde proacon
     }
 
     public void volverPanelAsignaturas() {
@@ -182,23 +185,24 @@ public class ProfesorController implements Serializable {
         proacon.setLider(lider);
         proyectosXSeccion(lider.getSeccion());
         matcont.obtenerMatriculasXSeccion(lider.getSeccion());
+        avancon.consultarAvancesXSeccion(lider.getSeccion());//lo coloque porque no hay avances de proyectos
         mostPanelSemestres = false;
     }
 
     public void seleccionarSeccionLider(LiderPA lider) {
-        liderPa = lider;       
+        liderPa = lider;
         evacon.consultarDimensionesProgramaAndPeriodoAndSemestre(liderPa);
         evacon.consultarCriteriosSeccion(liderPa.getSeccion());
         asigcon.obtenerAsignaturasXSeccion(liderPa.getSeccion());
         evacon.setAsignaturasSeccion(asigcon.getAsignaturas());
-        //System.out.println(""+evacon.getAsignaturasSeccion().size());
-        mostPanelEvaluaciones=true;
+        evacon.prepararEvaluacion(liderPa.getSeccion());
+        mostPanelEvaluaciones = true;
     }
 
-    public void volverSeccionesdesdeEvaluacion(){
-        mostPanelEvaluaciones=false;
+    public void volverSeccionesdesdeEvaluacion() {
+        mostPanelEvaluaciones = false;
     }
-    
+
     public void volverSemestres() {
         mostPanelSemestres = true;
     }
@@ -223,6 +227,14 @@ public class ProfesorController implements Serializable {
                 proyectosSemestre.add(p);
             }
         }
+    }
+
+    public void evaluarProyecto(Proyecto_Aula pa) {
+        proacon.setProyecto(pa);
+        evacon.setProyectoAula(pa);
+        evacon.setAsignaturaEvaluar(asigcon.getAsignatura());
+        evacon.prepararCriteriosParaEvaluar();
+        paginaActualP = "/Profesor/Evaluacion/EvaluarProyectos.xhtml";
     }
 
     public void consultarProyecto(Proyecto_Aula pa) {
@@ -387,7 +399,9 @@ public class ProfesorController implements Serializable {
     }
 
     public void gEvaluaciones() {
-        mostPanelEvaluaciones=false;
+        mostPanelEvaluaciones = false;
+        evacon.setIndTavEvaluacion(0);
+        evacon.setCriteriosevaluacion(new LinkedList());
         paginaActualP = "/Profesor/Evaluacion/GestorEvaluacion.xhtml";
     }
 
@@ -783,6 +797,20 @@ public class ProfesorController implements Serializable {
      */
     public void setMostPanelEvaluaciones(boolean mostPanelEvaluaciones) {
         this.mostPanelEvaluaciones = mostPanelEvaluaciones;
+    }
+
+    /**
+     * @return the avancon
+     */
+    public AvanceController getAvancon() {
+        return avancon;
+    }
+
+    /**
+     * @param avancon the avancon to set
+     */
+    public void setAvancon(AvanceController avancon) {
+        this.avancon = avancon;
     }
 
 }

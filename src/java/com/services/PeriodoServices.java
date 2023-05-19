@@ -34,7 +34,8 @@ public class PeriodoServices extends ImplDao<Periodo, Long> implements IPeriodo,
             //FacesUtil.addErrorMessage("Error Inicio Session",ex.getMessage() );
         }
         finally{
-            em.close();        
+             em.getTransaction().commit();
+            System.out.println("obtenerPeriodoActual");          
         }
         
         return  per;

@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         
-        <SCRIPT LANGUAGE="JavaScript">history.forward()</SCRIPT>
+       <SCRIPT LANGUAGE="JavaScript">history.forward()</SCRIPT>
         
         <script src="https://kit.fontawesome.com/6f2a08f515.js" crossorigin="anonymous"></script>
         <h:outputStylesheet library="css" name="style.css"/>
@@ -24,7 +24,6 @@
 
             <p:panel  rendered="#{!usuarioController.mpanelLogin}">
                 <ui:include src="#{usuarioController.paginaActual}"  />
-                
             </p:panel>          
 
             <p:growl/>

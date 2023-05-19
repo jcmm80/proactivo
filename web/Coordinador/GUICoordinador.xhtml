@@ -18,12 +18,12 @@
         <header>
         
         <div class="nav-up contenedor ">
-            <a href="index.xhtml"><h:graphicImage class="logo-sgpa" value="/resources/img/logo sgpa.png"/></a>
+            <a href="index.xhtml"><h:graphicImage class="logo-sgpa" value="/resources/img/logo-rojo.png"/></a>
             <div class="buscador">
                 <input type="search" placeholder="Search..."></input>
                 <i class="fas fa-search input-i"></i>
             </div>
-            <a href="https://unicolombo.edu.co/"><h:graphicImage class="logo-unico" value="/resources/img/logo unico.png"/></a>
+            <a href="https://unicolombo.edu.co/"><h:graphicImage class="logo-unico" value="/resources/img/logo-amarillo.png"/></a>
                 <div class="perfil">
                     <div class="informacion-perfil">
                         <span>Coordinador</span>
@@ -48,7 +48,7 @@
         <div class="nav-horizontal">
             <nav>
                 <div class="op"><h:graphicImage  value="/resources/img/bombillo.png"/><a href="">Tutorias</a></div>
-                <div class="op"><h:graphicImage  value="/resources/img/motar.png"/><a href="">Estudiantes</a></div>
+                <div class="op"><h:graphicImage  value="/resources/img/motar.png"/><h:commandLink action="#{coordinadorController.matriculadosSeccion()}" value="Estudiantes"  /></div>
                 <div class="op"><h:graphicImage  value="/resources/img/monitor.png"/><a href="">Programas</a></div>
                 <div class="op"><h:graphicImage  value="/resources/img/tabla.png"/><a href="">Areas</a></div>
                 <div class="op"><h:graphicImage  value="/resources/img/profesor.png"/><a href="">Profesores</a></div>

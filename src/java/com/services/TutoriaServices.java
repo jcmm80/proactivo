@@ -39,7 +39,8 @@ public class TutoriaServices extends ImplDao<Tutoria, Long> implements ITutoria,
             ex.printStackTrace();
             //FacesUtil.addErrorMessage("Error Inicio Session",ex.getMessage() );
         } finally {
-            em.close();
+           em.getTransaction().commit();
+            System.out.println("consultarTutoriaXAsignaturaSolicitada");  
         }
 
         return tut;
@@ -72,8 +73,9 @@ public class TutoriaServices extends ImplDao<Tutoria, Long> implements ITutoria,
             Query qu = em.createQuery(q)
                     .setParameter(1, p.getId());
             tutorias = qu.getResultList();
-            em.close();
-            ImplDao.cerrarEmf("obtenerTutoriasXProfesor");
+            em.getTransaction().commit();
+            System.out.println("obtenerTutoriasXProfesor"); 
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         }

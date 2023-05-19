@@ -18,32 +18,14 @@ import javax.persistence.PersistenceException;
  */
 public class ImplDao<T, ID> implements IDao<T, ID> {
 
-    private static EntityManagerFactory emf;
-
-    static {
-        setEmf(Persistence.createEntityManagerFactory("SgpaPU"));
-    }
-
-    /**
-     * @return the emf
-     */
-    public static EntityManagerFactory getEmf() {
-        return emf;
-    }
-
-    /**
-     * @param aEmf the emf to set
-     */
-    public static void setEmf(EntityManagerFactory aEmf) {
-        emf = aEmf;
-    }
-
     public static EntityManager getEntityManagger() {
+//        return createEntityManager();
         return EntityManagedSingleton.getEntityManager();
     }
 
     public static void cerrarEmf(String bandera) {
         System.out.println("cerrare la conexion de: " + bandera);
+//        closeEntityManagerFactory();
         EntityManagedSingleton.closeEntityManager();
     }
 
@@ -56,7 +38,7 @@ public class ImplDao<T, ID> implements IDao<T, ID> {
             et.begin();
             em.merge(entity);
             et.commit();
-            FacesUtil.addInfoMessage("Se almacenó en el sistema el siguiente Elemento: " + entity.getClass().getSimpleName());
+            // FacesUtil.addInfoMessage("Se almacenó en el sistema el siguiente Elemento: " + entity.getClass().getSimpleName());
         } catch (PersistenceException pe) {
             pe.printStackTrace();
             //et.rollback();
@@ -67,9 +49,7 @@ public class ImplDao<T, ID> implements IDao<T, ID> {
                         && em.getTransaction().isActive()) {
                     em.getTransaction().rollback();
                 }
-                em.close();
-                cerrarEmf("Registrar" + entity);
-                em = null;
+
             }
         }
     }
@@ -85,8 +65,8 @@ public class ImplDao<T, ID> implements IDao<T, ID> {
         et.begin();
         T ent = em.find(entityClass, primaryKey);
         et.commit();
-        em.close();
-        cerrarEmf("Consultar" + entityClass);
+//        em.close();
+//        cerrarEmf("Consultar" + entityClass);
         return ent;
     }
 
@@ -94,7 +74,7 @@ public class ImplDao<T, ID> implements IDao<T, ID> {
         EntityManager em = getEntityManagger();
         em.getTransaction().begin();
         T ent = em.find(entityClass, primaryKey);
-        em.close();
+        em.getTransaction().commit();
 //        emf.close();
         return ent;
     }
@@ -122,7 +102,8 @@ public class ImplDao<T, ID> implements IDao<T, ID> {
             }
             FacesUtil.addErrorMessage("Error de Persistencia: " + e.getMessage());
         } finally {
-            em.close();
+//            em.getTransaction().commit();
+//            cerrarEmf("Modificar" + entity);
 //            emf.close();
         }
         return ent;
@@ -133,19 +114,18 @@ public class ImplDao<T, ID> implements IDao<T, ID> {
         EntityManager em = getEntityManagger();
         EntityTransaction et = em.getTransaction();
         try {
-            em.getTransaction().begin();
-//        et.begin();
+            et.begin();
             entity = em.merge(entity);
             em.remove(entity);
-            em.getTransaction().commit();
-//        et.commit();
+            et.commit();
         } catch (PersistenceException pe) {
-            em.getTransaction().rollback();
             FacesUtil.addErrorMessage("Error de Persistencia: " + pe.getMessage());
+            if (et.isActive()) {
+                et.rollback();
+            }
+
         } finally {
 
-            em.close();
-//            emf.close();
         }
     }
 
@@ -157,8 +137,7 @@ public class ImplDao<T, ID> implements IDao<T, ID> {
         String clase = entityClass.getSimpleName();
         //System.out.println(clase);
         entidades = em.createQuery("select t from " + clase + " t").getResultList();
-        em.close();
-        cerrarEmf("consultarTodo" + entityClass);
+        em.getTransaction().commit();
         return entidades;
     }
 

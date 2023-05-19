@@ -30,7 +30,8 @@ public class FaseServices extends ImplDao<Fase, Long> implements IFase,Serializa
                      .setParameter(1, pa.getId())
                      .setParameter(2, p.getId());
              fases=qu.getResultList();
-             em.close();             
+               em.getTransaction().commit();
+            System.out.println("obtenerFasesXPrograma");             
          }catch(Exception ex){
              ex.printStackTrace();
          } 

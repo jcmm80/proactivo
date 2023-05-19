@@ -35,7 +35,8 @@ public class SeccionServices extends ImplDao<Seccion, Long> implements ISeccion,
                      .setParameter(2, pa.getId())
                      .setParameter(3, p.getId());
              secciones=qu.getResultList();
-             em.close();             
+                em.getTransaction().commit();
+            System.out.println("obtenerSeccionesXSemestre_Periodo_Programa");               
          }catch(Exception ex){
              ex.printStackTrace();
          } 
@@ -54,7 +55,8 @@ public class SeccionServices extends ImplDao<Seccion, Long> implements ISeccion,
                      .setParameter(1, pa.getId())
                      .setParameter(2, p.getId());
              secciones=qu.getResultList();
-             em.close();             
+               em.getTransaction().commit();
+            System.out.println("obtenerSeccionesXPeriodo_Programa");            
          }catch(Exception ex){
              ex.printStackTrace();
          } 
@@ -72,7 +74,8 @@ public class SeccionServices extends ImplDao<Seccion, Long> implements ISeccion,
              Query qu=em.createQuery(q)
                      .setParameter(1, p.getId());
              secciones=qu.getResultList();
-             em.close();             
+               em.getTransaction().commit();
+            System.out.println("obtenerSeccionesXPeriodo");              
          }catch(Exception ex){
              ex.printStackTrace();
          } 
@@ -90,7 +93,8 @@ public class SeccionServices extends ImplDao<Seccion, Long> implements ISeccion,
              Query qu=em.createQuery(q)
                      .setParameter(1, p.getId());
              secciones=qu.getResultList();
-             em.close();             
+             em.getTransaction().commit();
+            System.out.println("obtenerSeccionesXProfesor");               
          }catch(Exception ex){
              ex.printStackTrace();
          } 

@@ -4,6 +4,7 @@
  */
 package com.services;
 
+import com.dao.EntityManagedSingleton;
 import com.dao.ImplDao;
 import com.entity.Dimension;
 import com.entity.Periodo;
@@ -31,8 +32,8 @@ public class DimensionServices extends ImplDao<Dimension, Long> implements IDime
                      .setParameter(1, p.getId())
                      .setParameter(2, pa.getId());
              dimensiones=qu.getResultList();
-             em.close();       
-//             EntityManagedSingleton.closeEntityManager();
+           em.getTransaction().commit();
+            System.out.println("obtenerDimensionesXProgramaPeriodo"); 
          }catch(Exception ex){
              ex.printStackTrace();
          } 
@@ -51,8 +52,8 @@ public class DimensionServices extends ImplDao<Dimension, Long> implements IDime
                      .setParameter(2, pa.getId())
                      .setParameter(3, s.getId());
              dimensiones=qu.getResultList();
-             em.close();       
-//             EntityManagedSingleton.closeEntityManager();
+              em.getTransaction().commit();
+            System.out.println("obtenerDimensionesXProgramaPeriodoSemestre");
          }catch(Exception ex){
              ex.printStackTrace();
          } 
@@ -72,7 +73,7 @@ public class DimensionServices extends ImplDao<Dimension, Long> implements IDime
                      .setParameter(3, s.getId());
              qu.executeUpdate();
              em.getTransaction().commit();
-             em.close();       
+            System.out.println("elimimarDimensiones");      
          }catch(Exception ex){
              ex.printStackTrace();
          } 

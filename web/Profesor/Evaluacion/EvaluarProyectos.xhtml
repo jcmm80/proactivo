@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <section class="contenido-contenedor">
+            <div class="border contenedor top" >
+                <h1 class="tittle">Gestor de Evaluacion</h1>
+                <p:panelGrid columns="3">
+                    <h:outputText value="Codigo: #{evaluacionController.proyectoAula.codigo}" />
+                    <h:outputText value="Titulo: #{evaluacionController.proyectoAula.titulo}" />
+                    <h:outputText value="Asignatura: #{evaluacionController.asignaturaEvaluar.toString()}" />
+                </p:panelGrid>                
+                <div class="contgeneva">
+                    <div class="ccriteva">
+                        <div class="contlcrit">
+                            <div class="clcrit">Criterios para evaluar</div>
+                            <div class="ccriteva" >
+                                <p:dataTable var="critev" value="#{evaluacionController.proyectoAula.integrantes.get(0).valoracions}">
+                                    <p:column style="height: 70px">
+                                        <div style="max-height: 70px; overflow: hidden;">
+                                            <h:outputText style="font-size: 7pt" value="#{critev.criterio.criterio.descripcion}" />
+                                        </div>                                        
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="cvalint">
+                        <p:dataGrid style="font-size: 10pt" var="integ" value="#{evaluacionController.proyectoAula.integrantes}">
+                            <div class="contintegeva">
+                                <div class="cinte">
+                                    <div class="continfinte">
+                                        <div class="cimgin"><p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" style="width: 80px;height: 80px "  /></div>
+                                        <div class="cnomint"> <h:outputText  value="#{integ.matricula.estudiante.toString()}" /> </div>
+                                    </div>
+                                </div>
+                                <div class="cval">
+
+
+
+                                    <p:dataTable var="val" value="#{integ.valoracions}">
+                                        <p:column  style="height: 70px">                                             
+                                            <p:inputNumber  title="#{val.criterio.criterio.descripcion}" value="#{val.valor}" size="6"  minValue="0" maxValue="5" />
+                                        </p:column>
+                                    </p:dataTable>
+
+                                </div>
+                                <div class="cres"></div>
+                            </div>                        
+                        </p:dataGrid> 
+                    </div>
+                    <h:commandButton value="almacenar" action="#{evaluacionController.almacenarValoraciones()}" />
+                </div>
+
+            </div>
+        </section>
+
+        <style>
+            .contintegeva {  display: grid;
+                             grid-template-columns: 300px;
+                             grid-template-rows: 108px 1fr 72px;
+                             grid-auto-columns: 1fr;
+                             gap: 0px 0px;
+                             grid-auto-flow: row;
+                             grid-template-areas:
+                                 "cinte"
+                                 "cval"
+                                 "cres";
+            }
+
+            .cinte { grid-area: cinte; align-self: center; }
+
+            .cval { grid-area: cval; }
+
+            .cres { grid-area: cres; }
+
+
+            .continfinte {  display: grid;
+                            grid-template-columns: 100px 300px;
+                            grid-template-rows: 100px;
+                            grid-auto-columns: 1fr;
+                            gap: 0px 0px;
+                            grid-auto-flow: row;
+                            grid-template-areas:
+                                "cimgin cnomint";
+
+            }
+
+            .cimgin { grid-area: cimgin; }
+
+            .cnomint { grid-area: cnomint;align-self: center;  }
+
+            .contgeneva {  display: grid;
+                           grid-template-columns: 1.2fr 1.8fr;
+                           grid-template-rows: 1fr;
+                           grid-auto-columns: 1fr;
+                           gap: 0px 0px;
+                           grid-auto-flow: row;
+                           align-content: center;
+                           grid-template-areas:
+                               "ccriteva cvalint";
+            }
+
+            .ccriteva { grid-area: ccriteva; }
+
+            .cvalint { grid-area: cvalint; }
+
+            .contlcrit {  display: grid;
+                          grid-template-columns: 1fr;
+                          grid-template-rows: 100px 1fr;
+                          grid-auto-columns: 1fr;
+                          gap: 0px 0px;
+                          grid-auto-flow: row;
+                          align-content: center;
+                          grid-template-areas:
+                              "clcrit"
+                              "ccriteva";
+            }
+
+            .clcrit { grid-area: clcrit; align-self: center; }
+
+            .ccriteva { grid-area: ccriteva; }
+
+
+        </style>
+
+    </h:body>
+</html>
+

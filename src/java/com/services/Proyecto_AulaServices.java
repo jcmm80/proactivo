@@ -33,8 +33,8 @@ public class Proyecto_AulaServices extends ImplDao<Proyecto_Aula, Long> implemen
              Query qu=em.createQuery(q)
                      .setParameter(1, s.getId());
              proyectos=qu.getResultList();            
-             
-             em.close();             
+              em.getTransaction().commit();
+            System.out.println("obtenerProyectosXPeriodo_Programa");           
          }catch(Exception ex){
              ex.printStackTrace();
          } 
@@ -51,8 +51,8 @@ public class Proyecto_AulaServices extends ImplDao<Proyecto_Aula, Long> implemen
              Query qu=em.createQuery(q)
                      .setParameter(1, s.getId());
              proyectos=qu.getResultList();            
-             
-             em.close();             
+             em.getTransaction().commit();
+            System.out.println("obtenerProyectosXProfesorLider");              
          }catch(Exception ex){
              ex.printStackTrace();
          } 
@@ -70,8 +70,8 @@ public class Proyecto_AulaServices extends ImplDao<Proyecto_Aula, Long> implemen
                      .setParameter(1, p.getId());
              proyectos=qu.getResultList();            
              
-             em.close(); 
-             ImplDao.cerrarEmf("obtenerProyectosXPeriodo");
+             em.getTransaction().commit();
+            System.out.println("obtenerProyectosXPeriodo");
          }catch(Exception ex){
              ex.printStackTrace();
          } 

@@ -53,9 +53,8 @@ public class Dimension implements Serializable {
         this.semestre = semestre;
         this.porcentaje = porcentaje;
         this.tipo = tipo;
-    }
-    
-    
+    }    
+   
 
     public Long getId() {
         return id;

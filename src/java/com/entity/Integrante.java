@@ -187,5 +187,19 @@ public class Integrante implements Serializable {
     public void setFechaUltimaModificacion(Date fechaUltimaModificacion) {
         this.fechaUltimaModificacion = fechaUltimaModificacion;
     }
+
+    /**
+     * @return the valoracions
+     */
+    public List<Valoracion> getValoracions() {
+        return valoracions;
+    }
+
+    /**
+     * @param valoracions the valoracions to set
+     */
+    public void setValoracions(List<Valoracion> valoracions) {
+        this.valoracions = valoracions;
+    }
     
 }

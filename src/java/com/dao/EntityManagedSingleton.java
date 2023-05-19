@@ -10,16 +10,22 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class EntityManagedSingleton {
-    private static final String PERSISTENCE_UNIT_NAME = "SgpaPU";
+
+    private static final String PERSISTENCE_UNIT_NAME = "SimcpaPU";
     private static EntityManagerFactory emFactory;
     private static EntityManager entityManager;
 
-    private EntityManagedSingleton() {}
+    private EntityManagedSingleton() {
+    }
+
+  
 
     public static EntityManager getEntityManager() {
         if (entityManager == null || !entityManager.isOpen()) {
             System.out.println("abrire la conexion ");
             createEntityManager();
+        } else {
+            System.out.println("Entrego la conexion : " + entityManager);
         }
         return entityManager;
     }
@@ -31,6 +37,7 @@ public class EntityManagedSingleton {
     }
 
     public static void closeEntityManager() {
+        System.out.println("cerre la conexion ");
         if (entityManager != null && entityManager.isOpen()) {
             entityManager.close();
             emFactory.close();

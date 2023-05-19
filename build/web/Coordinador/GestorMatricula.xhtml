@@ -123,7 +123,7 @@
                                 <h:commandButton   class="btn" value="Abrir" action="#{matriculaController.seleccionarSemestre(sem)}" />
                             </div>
 
-                        </p:dataGrid>>                    
+                        </p:dataGrid>                  
 
                         <p:dataViewGridItem>
 
@@ -146,6 +146,12 @@
                             <h:commandButton id="salsem" class="boton" value="Matricular" action="#{matriculaController.matricular()}" />
                         </div>
                     </p:tab>
+                    <p:tab id="tmatri" title="Matriculados en Seccion">
+                        <div class="contestsec">
+                            <div class="csecc"></div>
+                            <div class="cestud"></div>
+                        </div>
+                    </p:tab>
                 </p:tabView>
             </p:panel>
             <p:panel rendered="#{matriculaController.existematricula}">                
@@ -153,6 +159,23 @@
             </p:panel>
         </div>
     </section>
+    <style>
+        .contestsec {  display: grid;
+                       grid-template-columns: 1fr;
+                       grid-template-rows: 0.4fr 1.6fr;
+                       grid-auto-columns: 1fr;
+                       gap: 0px 0px;
+                       grid-auto-flow: row;
+                       align-content: center;
+                       grid-template-areas:
+                           "csecc"
+                           "cestud";
+        }
 
+        .csecc { grid-area: csecc; }
+
+        .cestud { grid-area: cestud; }
+
+    </style>
 </html>
 

@@ -24,12 +24,13 @@ public class Tipo_EntregableServices extends ImplDao<Tipo_Entregable, Long> impl
          try {             
              EntityManager em =getEntityManagger();
              em.getTransaction().begin();      
-             String q="select te from Tipo_Entregable te where te.asignatura.id = ?1 ";        
+             String q="select te from Tipo_Entregable te where te.asignatura.id = ?1 and te.tipo ='Especifico'";        
              System.out.println(" Consulta: "+q);
              Query qu=em.createQuery(q)
                      .setParameter(1, a.getId());
              secciones=qu.getResultList();
-             em.close();             
+              em.getTransaction().commit();
+            System.out.println("obtenerTipo_EntregableAsignaturas");            
          }catch(Exception ex){
              ex.printStackTrace();
          } 
@@ -40,13 +41,13 @@ public class Tipo_EntregableServices extends ImplDao<Tipo_Entregable, Long> impl
          try {             
              EntityManager em =getEntityManagger();
              em.getTransaction().begin();      
-             String q="select te from Tipo_Entregable te where te.asignatura.profesor.id = ?1 ";        
+             String q="select te from Tipo_Entregable te where te.asignatura.profesor.id = ?1 and te.tipo ='Especifico'";        
              System.out.println(" Consulta: "+q);
              Query qu=em.createQuery(q)
                      .setParameter(1, a.getId());
              secciones=qu.getResultList();
-             em.close(); 
-              ImplDao.cerrarEmf("obtenerTipo_EntregableProfesor");
+             em.getTransaction().commit();
+            System.out.println("obtenerTipo_EntregableProfesor"); 
          }catch(Exception ex){
              ex.printStackTrace();
          } 

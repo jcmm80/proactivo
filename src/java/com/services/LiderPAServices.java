@@ -39,8 +39,8 @@ public class LiderPAServices extends ImplDao<LiderPA, Long> implements ILiderPA,
             //FacesUtil.addErrorMessage("Error Inicio Session",ex.getMessage() );
         }
         finally{
-            em.close();    
-            ImplDao.cerrarEmf("LiderPAServices");
+            em.getTransaction().commit();
+            System.out.println("LiderPAServices");
         }
         
         return  lid;

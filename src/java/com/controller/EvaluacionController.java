@@ -11,19 +11,29 @@ import com.entity.Criterio;
 import com.entity.CriterioEvaluacion;
 import com.entity.Dimension;
 import com.entity.Evaluacion;
+import com.entity.Integrante;
 import com.entity.LiderPA;
 import com.entity.Periodo;
 import com.entity.ProgramaAcademico;
+import com.entity.Proyecto_Aula;
 import com.entity.Seccion;
 import com.entity.Semestre;
 import com.entity.TipoCompetencia;
 import com.entity.Tipo_Entregable;
 import com.entity.UnidadCompetencia;
+import com.entity.Valoracion;
+import com.services.CompetenciaServices;
 import com.services.CriterioEvaluacionServices;
 import com.services.CriterioServices;
 import com.services.DimensionServices;
 import com.services.EvaluacionServices;
+import com.services.Tipo_EntregableServices;
+import com.services.UnidadCompetenciaServices;
+import com.services.ValoracionServices;
 import java.io.Serializable;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -42,29 +52,54 @@ public class EvaluacionController implements Serializable {
     private Evaluacion evaluacion = new Evaluacion();
     private Dimension dimencion = new Dimension();
     private Semestre semestre;
+    private Seccion seccion;
+    private Proyecto_Aula proyectoAula;
+    private Asignatura asignaturaEvaluar;
 
     private List<CriterioEvaluacion> criteriosevaluacion;
+    private List<CriterioEvaluacion> criteriosevaluacionParticulares;
+    private List<CriterioEvaluacion> criteriosevaluacionGlobales;
     private List<Dimension> dimenciones;
     private List<Dimension> dimencionesPeriodo;
+    private List<Dimension> dimencionesPeriodoNoGlobales;
+    private List<Dimension> dimencionesPeriodoGlobales;
     private List<Semestre> semestres;
     private List<Semestre> semestresSeleccionados;
     private List<Evaluacion> evaluaciones;
     private List<Criterio> criteriosSeccion;
     private List<Asignatura> asignaturasSeccion;
+    private List<Asignatura> asignaturasEvaluacion;
+    private List<Valoracion> valoraciones;
+    private List<Valoracion> valoracionesAsignatura;
+    
+    Hashtable<Long, List<Valoracion>> valoracionesXdimensiones;
 
     CriterioServices criser = new CriterioServices();
     EvaluacionServices evaser = new EvaluacionServices();
     CriterioEvaluacionServices crievser = new CriterioEvaluacionServices();
     DimensionServices dimser = new DimensionServices();
+    UnidadCompetenciaServices uniser = new UnidadCompetenciaServices();
+    CompetenciaServices comser = new CompetenciaServices();
+    Tipo_EntregableServices teser = new Tipo_EntregableServices();
+    ValoracionServices valser = new ValoracionServices();
 
     private String semestresAgregados = "";
     private int maxPor = 100;
     private boolean mostPanelMod = false;
+    private int indTavEvaluacion = 0;
+    private boolean habilitarReprogramacion = false;
 
     /**
      * Creates a new instance of EvaluacionController
      */
     public EvaluacionController() {
+    }
+
+    public void generarValoracionesIntegrantes() {
+
+        for (int i = 0; i < proyectoAula.getIntegrantes().size(); i++) {
+
+        }
     }
 
     public void actualizarDimensiones() {
@@ -89,34 +124,195 @@ public class EvaluacionController implements Serializable {
 
     public void seleccionarDimension(Dimension dim) {
         dimencion = dim;
+//        asignaturasEvaluacion = new LinkedList();
     }
 
     public void seleccionarAsignatura(Asignatura a) {
-       
-       
+        if (!asignaturaSeleccionada(a)) {
+            asignaturasEvaluacion.add(a);
+        }
     }
 
-    public void generarCriterios(Asignatura a, String dimension){
-        UnidadCompetencia unidad=new UnidadCompetencia();
+    public void quitarAsignatura(Asignatura a) {
+        if (asignaturaSeleccionada(a)) {
+            asignaturasEvaluacion.remove(a);
+        }
+    }
+
+    public boolean asignaturaSeleccionada(Asignatura a) {
+        boolean asigs = false;
+        if (asignaturasEvaluacion != null) {
+            for (Asignatura asi : asignaturasEvaluacion) {
+                if (asi.getId().equals(a.getId())) {
+                    asigs = true;
+                }
+            }
+        }
+        return asigs;
+    }
+
+    public void seleccionarCriterio(Criterio criterio) {
+        if (criteriosevaluacionParticulares.size() <= 0) {
+            criteriosevaluacionParticulares = new LinkedList();
+        }
+        if (!criterioEstaSeleccionado(criterio)) {
+            if (dimencion.getId() != null) {
+                CriterioEvaluacion crie = new CriterioEvaluacion();
+                crie.setCriterio(criterio);
+                crie.setDimension(dimencion);
+                criteriosevaluacionParticulares.add(crie);
+                criteriosSeccion.remove(criterio);
+            } else {
+                FacesUtil.addErrorMessage("Debes seleccionar la dimension para clasificar el criterio");
+            }
+        }
+    }
+
+    public void quitarCriterio(Criterio criterio) {
+        for (int i = 0; i < criteriosevaluacionParticulares.size(); i++) {
+            if (criteriosevaluacionParticulares.get(i).getCriterio().getId().equals(criterio.getId())) {
+                criteriosSeccion.add(criterio);
+                criteriosevaluacionParticulares.remove(i);
+                break;
+            }
+        }
+    }
+
+    public List<CriterioEvaluacion> criteriosXDimension(Dimension dim) {
+        List<CriterioEvaluacion> criterios = new LinkedList();
+        for (CriterioEvaluacion ce : criteriosevaluacionParticulares) {
+            if (ce.getDimension().getId().equals(dim.getId())) {
+                criterios.add(ce);
+            }
+        }
+        return criterios;
+    }
+
+    public boolean criterioEstaSeleccionado(Criterio c) {
+        boolean cris = false;
+        if (criteriosevaluacionParticulares != null) {
+            for (CriterioEvaluacion ce : criteriosevaluacionParticulares) {
+                if (ce.getCriterio().getId().equals(c.getId())) {
+                    cris = true;
+                }
+            }
+        }
+        return cris;
+    }
+
+    public void irDimensiones() {
+        if (asignaturasEvaluacion.size() > 0) {
+            indTavEvaluacion = 2;
+        } else {
+            FacesUtil.addErrorMessage("Debes Seleccionar las asignaturas que evaluaran los proyectos de aula");
+        }
+    }
+
+    public void publicarEvaluacion() {
+        evaluacion.setEstado("Publicada");
+        evaluacion.setFechapublicacion(new Date());
+        evaluacion = evaser.modificar(evaluacion);
+    }
+
+    public void almacenarCriteriosEvaluacion() {
+        criteriosevaluacion = new LinkedList();
+        //cuando se consulta se estan perdiendo los criterios especificos porque se deben volver a obtener y clasificar
+        if (evaluacion.getId() != null) {
+            crievser.elimimarCriteriosEvaluacion(evaluacion);//elimina de bd los criterios de evaluacion 
+            criser.elimimarCriteriosEvaluacion(criteriosevaluacionGlobales);//elimina los criterios globales creados para ser asignados a la evaluiacion
+            comser.elimimarCompétenciasCriteriosGlobales(criteriosevaluacionGlobales);//elimina las competencias de criterios globales que se crearon en la evaluacion
+            uniser.elimimarUnidadesCompétenciasCriteriosGlobales(criteriosevaluacionGlobales);//elimina las unidades de competencia de los criterios globales que se crearon en la evaluacion
+
+        }
+
+        //obteniendo dimensiones globales
+        obtenerDimensionesProgramaAndPeriodoSemestreGlobales();
+        //adicionando criterios globales
+        for (Asignatura a : asignaturasEvaluacion) {
+            System.out.println("Asignatura: " + a.getNombre());
+
+            for (Dimension d : dimencionesPeriodoGlobales) {
+                CriterioEvaluacion ceva = generarCriterioGlobal(a, d);
+                criteriosevaluacion.add(ceva);
+                System.out.println("generando criterio global: " + ceva.getCriterio().getDescripcion() + " Dimension: " + ceva.getDimension().getNombre());
+            }
+        }
+
+        //adicionando criterios Especificos
+        for (CriterioEvaluacion cevp : getCriteriosevaluacionParticulares()) {
+            System.out.println("----------------------------------------------------");
+            System.out.println("Criterio: " + cevp.getCriterio().getDescripcion() + " Dimension: " + cevp.getDimension().getNombre());
+            criteriosevaluacion.add(cevp);
+        }
+
+        System.out.println("" + criteriosevaluacion.size());
+        //almacenando evaluacion
+        evaluacion.setEstado("Programada");
+        evaluacion.setFechacreacion(new Date());
+        evaluacion.setSeccion(getSeccion());
+        if (evaluacion.getSeccion().getId() != null) {
+            evaluacion = evaser.modificar(evaluacion);
+            System.out.println("Almacenando Evaluacion: " + evaluacion.getFechacreacion());
+            //almacenando criterios de evaluacion
+            for (CriterioEvaluacion ce : criteriosevaluacion) {
+                CriterioEvaluacion crite = new CriterioEvaluacion();
+                crite.setCriterio(ce.getCriterio());
+                crite.setEvaluacion(evaluacion);
+                crite.setDimension(ce.getDimension());
+                crievser.modificar(crite);
+                System.out.println("Almacenando Criterio de evaluacion: " + ce.getCriterio().getDescripcion());
+            }
+            indTavEvaluacion = 0;
+        }
+    }
+
+    public List<CriterioEvaluacion> quitarCriteriosGlobales(List<CriterioEvaluacion> crieva) {
+        List<CriterioEvaluacion> crg = new LinkedList();
+        System.out.println("" + crieva.size());
+        for (CriterioEvaluacion crt : crieva) {
+            System.out.println("" + crt.getCriterio().getId());
+            if (crt.getCriterio().getTipo().equals("Global")) {
+                crg.add(crt);
+            }
+        }
+//        for (CriterioEvaluacion crtg : crg) {
+//            crieva.remove(crtg);//cada ves que se elimina se pierde un indice
+//        }
+        return crg;
+    }
+
+    public CriterioEvaluacion generarCriterioGlobal(Asignatura a, Dimension dimension) {
+        UnidadCompetencia unidad = new UnidadCompetencia();
         unidad.setAsignatura(a);
-        unidad.setDescripcion(dimension);
-        
-        Competencia competencia=new Competencia();
+        unidad.setDescripcion(dimension.getNombre());
+        unidad = uniser.modificar(unidad);
+
+        Competencia competencia = new Competencia();
         competencia.setUnidad(unidad);
-        competencia.setEvidencia(dimension);
-        competencia.setEstrategia(dimension);
+        competencia.setEvidencia(dimension.getNombre());
+        competencia.setHoras(1);
+        competencia.setEstrategia(dimension.getNombre());
         competencia.setTipo(new TipoCompetencia(Long.parseLong("2"), "Generica"));
-        competencia.setTipoentregable(new Tipo_Entregable());
-        
-        Criterio criterio=new Criterio();
+        Tipo_Entregable tipoentregable = new Tipo_Entregable("Sustentacion", "Sustentacion", a);
+        tipoentregable.setTipo("Global");
+        tipoentregable = teser.modificar(tipoentregable);
+        competencia.setTipoentregable(tipoentregable);
+        competencia = comser.modificar(competencia);
+
+        Criterio criterio = new Criterio();
         criterio.setCompetencia(competencia);
-        criterio.setDescripcion(dimension);
+        criterio.setDescripcion(dimension.getNombre());
         criterio.setPorcentaje(100);
         criterio.setTipo("Global");
+        criterio = criser.modificar(criterio);
+
+        CriterioEvaluacion criterioe = new CriterioEvaluacion();
+        criterioe.setCriterio(criterio);
+        criterioe.setDimension(dimension);
+        criterioe.setEvaluacion(evaluacion);
+        return criterioe;
     }
-    
-    
-    
+
     public boolean habilitarDimensionGlobal() {
         boolean habilitar = false;
         System.out.println("" + dimencion.getTipo());
@@ -165,7 +361,207 @@ public class EvaluacionController implements Serializable {
         dimencionesPeriodo = dimser.obtenerDimensionesXProgramaPeriodoSemestre(lpa.getSeccion().getPeriodo(), lpa.getSeccion().getPrograma(), lpa.getSeccion().getSemestre());
     }
 
+    public void obtenerEvaluacionXSeccion(Seccion s) {
+        evaluacion = evaser.obtenerEvaluacionXSeccion(s);
+        obtenerValoracionesEvaluacion();
+    }
+
+    public void obtenerValoracionesAsignatura(Asignatura a) {
+        setValoracionesAsignatura(valser.obtenerValoracionesXAsignatura(a));
+        organizarValoracionesXDimension();
+        notaFIntegrante();
+    }
+
+    public void organizarValoracionesXDimension() {        
+        valoracionesXdimensiones = new Hashtable<Long, List<Valoracion>>();
+        //organizar valoraciones por dimension
+        for (Valoracion v : valoracionesAsignatura) {
+            agregarValoracionDimension(v.getCriterio().getDimension(), v, valoracionesXdimensiones);
+        }
+    }
+
+    public void notaFIntegrante(){
+        //porcentaje de dimension;
+       Enumeration<Long> keys = valoracionesXdimensiones.keys();
+        while (keys.hasMoreElements()) {
+            Long iddim=keys.nextElement();
+            List<Valoracion> valoracionesd=valoracionesXdimensiones.get(iddim);
+            double pdim=Math.round(valoracionesd.get(0).getCriterio().getDimension().getPorcentaje()/valoracionesd.size()*100)/100;
+            System.out.println("Dimencion: "+iddim+"\t"+valoracionesd.get(0).getCriterio().getDimension().getPorcentaje()+"\t"+valoracionesd.size()+"\t"+pdim);
+            
+            
+//            String clave = keys.nextElement();
+//            Integer valor = hashtable.get(clave);
+//            System.out.println("Clave: " + clave + ", Valor: " + valor);
+        }
+    }
+    
+    public void agregarValoracionDimension(Dimension d, Valoracion v, Hashtable<Long, List<Valoracion>> valoraciones) {
+        List<Valoracion> existentes = valoraciones.get(d.getId());
+
+        if (existentes != null) {
+            existentes.add(v);
+            valoraciones.put(d.getId(), existentes);
+        } else {
+            existentes=new LinkedList();
+            existentes.add(v);
+            valoraciones.put(d.getId(), existentes);
+        }
+
+        System.out.println("" + existentes + "\n");
+    }
+
+    public void prepararCriteriosParaEvaluar() {
+        criteriosevaluacion = crievser.obtenerCriterioEvaluacionXAsignatura(evaluacion, asignaturaEvaluar);
+        generarValoracionesXIntegrante();
+
+    }
+
+    public void obtenerValoracionesEvaluacion() {
+        System.out.println("consultare las valoraciones de la evaluacion: " + evaluacion.getId());
+        valoraciones = valser.obtenerValoracionesXEvaluacion(evaluacion);
+        System.out.println("" + valoraciones.size());
+    }
+
+    public void valoracionesIntegrante(Integrante i) {
+        for (Valoracion val : valoraciones) {
+
+//            System.out.println("Asignatura: "+val.getCriterio().getCriterio().getCompetencia().getUnidad().getAsignatura().getId()+"   "+asignaturaEvaluar.getId());
+            if (val.getIntegrante().getId().equals(i.getId()) && val.getCriterio().getCriterio().getCompetencia().getUnidad().getAsignatura().getId().equals(asignaturaEvaluar.getId())) {
+                i.getValoracions().add(val);
+            }
+        }
+    }
+
+    public void generarValoracionesXIntegrante() {
+        for (int i = 0; i < proyectoAula.getIntegrantes().size(); i++) {
+            proyectoAula.getIntegrantes().get(i).setValoracions(new LinkedList());
+            valoracionesIntegrante(proyectoAula.getIntegrantes().get(i));
+            if (proyectoAula.getIntegrantes().get(i).getValoracions().size() > 0) {
+                System.out.println("ya tiene valoraciones");
+            } else {
+                for (CriterioEvaluacion cev : criteriosevaluacion) {
+                    Valoracion valoracion = new Valoracion();
+                    valoracion.setCriterio(cev);
+                    valoracion.setIntegrante(proyectoAula.getIntegrantes().get(i));
+                    proyectoAula.getIntegrantes().get(i).getValoracions().add(valoracion);
+                }
+            }
+        }
+    }
+
+    public void validarNotas() {
+
+    }
+
+    public void almacenarValoraciones() {
+        for (int i = 0; i < proyectoAula.getIntegrantes().size(); i++) {
+            for (Valoracion valoracion : proyectoAula.getIntegrantes().get(i).getValoracions()) {
+                if (valoracion.getId() != null) {
+                    valser.modificar(valoracion);
+                } else {
+                    valser.crear(valoracion);
+                }
+
+//                valser.elimimarValoracionIntegrante(valoracion.getIntegrante(), valoracion.getCriterio());
+//                Valoracion valora=new Valoracion();
+//                valora.setCriterio(valoracion.getCriterio());
+//                valora.setIntegrante(valoracion.getIntegrante());
+//                valora.setValor(valoracion.getValor());
+            }
+        }
+    }
+
+    public boolean tieneValoraciones() {
+        boolean tiene = false;
+        if (valser.obtenerValoracionesXEvaluacion(evaluacion).size() > 0) {
+            tiene = true;
+        }
+        return tiene;
+    }
+
+    public void prepararEvaluacion(Seccion s) {
+        criteriosevaluacionParticulares = new LinkedList();
+        criteriosevaluacionGlobales = new LinkedList();
+        evaluacion = evaser.obtenerEvaluacionXSeccion(s);
+        if (evaluacion.getId() != null) {
+            List<CriterioEvaluacion> crits = crievser.obtenerCriterioEvaluacionXEvaluacion(evaluacion);
+            clasificarcriterios(crits);
+            setAsignaturasEvaluacion(new LinkedList());
+            asignaturasExistentes(crits);
+            criteriosNoExistentes(criteriosevaluacionParticulares);
+            habilitarReprogramacion = tieneValoraciones();//verifica si hay valoraciones en una evaluacion
+        } else {
+            setAsignaturasEvaluacion(new LinkedList());
+            setCriteriosevaluacion(new LinkedList());
+        }
+        obtenerDimensionesProgramaAndPeriodoSemestreNoGlobales();
+        setIndTavEvaluacion(1);
+    }
+
+    public void asignaturasExistentes(List<CriterioEvaluacion> ce) {
+        List<CriterioEvaluacion> criterios = new LinkedList();
+        for (CriterioEvaluacion c : ce) {
+            if (c.getCriterio().getTipo().equals("Global")) {
+                if (!existeAsignaturaEvaluacion(c.getCriterio())) {
+                    getAsignaturasEvaluacion().add(c.getCriterio().getCompetencia().getUnidad().getAsignatura());
+                }
+            }
+        }
+
+    }
+
+    public boolean existeAsignaturaEvaluacion(Criterio c) {
+        boolean existe = false;
+        for (Asignatura a : getAsignaturasEvaluacion()) {
+            if (a.getId().equals(c.getCompetencia().getUnidad().getAsignatura().getId())) {
+                existe = true;
+            }
+        }
+        return existe;
+    }
+
+    public void clasificarcriterios(List<CriterioEvaluacion> ce) {
+//        List<CriterioEvaluacion> criterios = new LinkedList();
+        setCriteriosevaluacion(new LinkedList());
+        setCriteriosevaluacionGlobales(new LinkedList());
+        setCriteriosevaluacionParticulares(new LinkedList());
+        for (CriterioEvaluacion c : ce) {
+            if (c.getCriterio().getTipo().equals("Especifico")) {
+                getCriteriosevaluacionParticulares().add(c);
+            } else {
+                getCriteriosevaluacionGlobales().add(c);
+            }
+        }
+    }
+
+    public void criteriosNoExistentes(List<CriterioEvaluacion> ce) {
+        List<Criterio> criterios = new LinkedList();
+        for (CriterioEvaluacion c : ce) {
+            criteriosSeccion.remove(c.getCriterio());
+        }
+    }
+
+    public void obtenerDimensionesProgramaAndPeriodoSemestreNoGlobales() {
+        dimencionesPeriodoNoGlobales = new LinkedList();
+        for (Dimension d : dimencionesPeriodo) {
+            if (!d.getTipo().equals("Global")) {
+                dimencionesPeriodoNoGlobales.add(d);
+            }
+        }
+    }
+
+    public void obtenerDimensionesProgramaAndPeriodoSemestreGlobales() {
+        dimencionesPeriodoGlobales = new LinkedList();
+        for (Dimension d : dimencionesPeriodo) {
+            if (d.getTipo().equals("Global")) {
+                dimencionesPeriodoGlobales.add(d);
+            }
+        }
+    }
+
     public void consultarCriteriosSeccion(Seccion s) {
+        seccion = s;
         criteriosSeccion = criser.obtenerCriteriosXSeccion(s);
     }
 
@@ -509,6 +905,176 @@ public class EvaluacionController implements Serializable {
      */
     public void setAsignaturasSeccion(List<Asignatura> asignaturasSeccion) {
         this.asignaturasSeccion = asignaturasSeccion;
+    }
+
+    /**
+     * @return the asignaturasEvaluacion
+     */
+    public List<Asignatura> getAsignaturasEvaluacion() {
+        return asignaturasEvaluacion;
+    }
+
+    /**
+     * @param asignaturasEvaluacion the asignaturasEvaluacion to set
+     */
+    public void setAsignaturasEvaluacion(List<Asignatura> asignaturasEvaluacion) {
+        this.asignaturasEvaluacion = asignaturasEvaluacion;
+    }
+
+    /**
+     * @return the dimencionesPeriodoNoGlobales
+     */
+    public List<Dimension> getDimencionesPeriodoNoGlobales() {
+        return dimencionesPeriodoNoGlobales;
+    }
+
+    /**
+     * @param dimencionesPeriodoNoGlobales the dimencionesPeriodoNoGlobales to
+     * set
+     */
+    public void setDimencionesPeriodoNoGlobales(List<Dimension> dimencionesPeriodoNoGlobales) {
+        this.dimencionesPeriodoNoGlobales = dimencionesPeriodoNoGlobales;
+    }
+
+    /**
+     * @return the indTavEvaluacion
+     */
+    public int getIndTavEvaluacion() {
+        return indTavEvaluacion;
+    }
+
+    /**
+     * @param indTavEvaluacion the indTavEvaluacion to set
+     */
+    public void setIndTavEvaluacion(int indTavEvaluacion) {
+        this.indTavEvaluacion = indTavEvaluacion;
+    }
+
+    /**
+     * @return the dimencionesPeriodoGlobales
+     */
+    public List<Dimension> getDimencionesPeriodoGlobales() {
+        return dimencionesPeriodoGlobales;
+    }
+
+    /**
+     * @param dimencionesPeriodoGlobales the dimencionesPeriodoGlobales to set
+     */
+    public void setDimencionesPeriodoGlobales(List<Dimension> dimencionesPeriodoGlobales) {
+        this.dimencionesPeriodoGlobales = dimencionesPeriodoGlobales;
+    }
+
+    /**
+     * @return the seccion
+     */
+    public Seccion getSeccion() {
+        return seccion;
+    }
+
+    /**
+     * @param seccion the seccion to set
+     */
+    public void setSeccion(Seccion seccion) {
+        this.seccion = seccion;
+    }
+
+    /**
+     * @return the criteriosevaluacionGlobales
+     */
+    public List<CriterioEvaluacion> getCriteriosevaluacionGlobales() {
+        return criteriosevaluacionGlobales;
+    }
+
+    /**
+     * @param criteriosevaluacionGlobales the criteriosevaluacionGlobales to set
+     */
+    public void setCriteriosevaluacionGlobales(List<CriterioEvaluacion> criteriosevaluacionGlobales) {
+        this.criteriosevaluacionGlobales = criteriosevaluacionGlobales;
+    }
+
+    /**
+     * @return the criteriosevaluacionParticulares
+     */
+    public List<CriterioEvaluacion> getCriteriosevaluacionParticulares() {
+        return criteriosevaluacionParticulares;
+    }
+
+    /**
+     * @param criteriosevaluacionParticulares the
+     * criteriosevaluacionParticulares to set
+     */
+    public void setCriteriosevaluacionParticulares(List<CriterioEvaluacion> criteriosevaluacionParticulares) {
+        this.criteriosevaluacionParticulares = criteriosevaluacionParticulares;
+    }
+
+    /**
+     * @return the proyectoAula
+     */
+    public Proyecto_Aula getProyectoAula() {
+        return proyectoAula;
+    }
+
+    /**
+     * @param proyectoAula the proyectoAula to set
+     */
+    public void setProyectoAula(Proyecto_Aula proyectoAula) {
+        this.proyectoAula = proyectoAula;
+    }
+
+    /**
+     * @return the asignaturaEvaluar
+     */
+    public Asignatura getAsignaturaEvaluar() {
+        return asignaturaEvaluar;
+    }
+
+    /**
+     * @param asignaturaEvaluar the asignaturaEvaluar to set
+     */
+    public void setAsignaturaEvaluar(Asignatura asignaturaEvaluar) {
+        this.asignaturaEvaluar = asignaturaEvaluar;
+    }
+
+    /**
+     * @return the habilitarReprogramacion
+     */
+    public boolean isHabilitarReprogramacion() {
+        return habilitarReprogramacion;
+    }
+
+    /**
+     * @param habilitarReprogramacion the habilitarReprogramacion to set
+     */
+    public void setHabilitarReprogramacion(boolean habilitarReprogramacion) {
+        this.habilitarReprogramacion = habilitarReprogramacion;
+    }
+
+    /**
+     * @return the valoraciones
+     */
+    public List<Valoracion> getValoraciones() {
+        return valoraciones;
+    }
+
+    /**
+     * @param valoraciones the valoraciones to set
+     */
+    public void setValoraciones(List<Valoracion> valoraciones) {
+        this.valoraciones = valoraciones;
+    }
+
+    /**
+     * @return the valoracionesAsignatura
+     */
+    public List<Valoracion> getValoracionesAsignatura() {
+        return valoracionesAsignatura;
+    }
+
+    /**
+     * @param valoracionesAsignatura the valoracionesAsignatura to set
+     */
+    public void setValoracionesAsignatura(List<Valoracion> valoracionesAsignatura) {
+        this.valoracionesAsignatura = valoracionesAsignatura;
     }
 
 }

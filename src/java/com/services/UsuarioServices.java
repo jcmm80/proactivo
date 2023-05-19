@@ -32,7 +32,8 @@ public class UsuarioServices extends ImplDao<Usuario, Long> implements IUsuario,
             ex.printStackTrace();
             //FacesUtil.addErrorMessage("Error Inicio Session",ex.getMessage() );
         }finally{
-            em.close();        
+            em.getTransaction().commit();
+            System.out.println("ingresar");       
         }
         
         return  usu;

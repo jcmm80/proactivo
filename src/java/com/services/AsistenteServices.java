@@ -28,7 +28,8 @@ public class AsistenteServices extends ImplDao<Asistente, Long> implements IAsis
              Query qu=em.createQuery(q)
                      .setParameter(1, i.getId());
              asistencias=qu.getResultList();
-             em.close();             
+                         em.getTransaction().commit();
+            System.out.println("obtenerAsistenciasXProyecto");            
          }catch(Exception ex){
              ex.printStackTrace();
          } 

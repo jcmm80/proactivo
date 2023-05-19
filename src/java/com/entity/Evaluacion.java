@@ -39,7 +39,8 @@ public class Evaluacion implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fecharealizacion;//fecha en que sealiza la evaluacion
     private String estado;//programada-realizada-creada
-    
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date fechapublicacion;
 
     public Long getId() {
         return id;
@@ -72,6 +73,30 @@ public class Evaluacion implements Serializable {
     @Override
     public String toString() {
         return "com.entity.Evaluacion[ id=" + getId() + " ]";
+    }
+
+    public boolean habilitarEvaluacion() {
+        boolean habilitar = false;
+        try {
+            if (this.estado.equals("Publicada")) {
+                habilitar = true;
+            }
+        } catch (java.lang.NullPointerException npe) {
+            habilitar = false;
+        }
+        return habilitar;
+    }
+
+    public boolean habilitarPublicacion() {
+        boolean habilitar = false;
+        try {
+            if (this.estado.equals("Programada")) {
+                habilitar = true;
+            }
+        } catch (java.lang.NullPointerException npe) {
+            habilitar = false;
+        }
+        return habilitar;
     }
 
     /**
@@ -157,5 +182,19 @@ public class Evaluacion implements Serializable {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
+
+    /**
+     * @return the fechapublicacion
+     */
+    public Date getFechapublicacion() {
+        return fechapublicacion;
+    }
+
+    /**
+     * @param fechapublicacion the fechapublicacion to set
+     */
+    public void setFechapublicacion(Date fechapublicacion) {
+        this.fechapublicacion = fechapublicacion;
+    }
+
 }

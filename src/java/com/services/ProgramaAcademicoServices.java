@@ -31,7 +31,8 @@ public class ProgramaAcademicoServices extends ImplDao<ProgramaAcademico, Long> 
         Query qu = em.createQuery(q)
                 .setParameter(1, c.getId());
         programa = qu.getResultList();
-        em.close();
+           em.getTransaction().commit();
+            System.out.println("listarProgramasXCoordinador");   
         return programa;
     }
     
@@ -54,8 +55,9 @@ public class ProgramaAcademicoServices extends ImplDao<ProgramaAcademico, Long> 
             //FacesUtil.addErrorMessage("Error Inicio Session",ex.getMessage() );
         }
         finally{
-            em.close(); 
-            ImplDao.cerrarEmf("obtenerProgramaAcademicoxCoordinadorPA");
+            em.getTransaction().commit();
+            System.out.println("obtenerProgramaAcademicoxCoordinadorPA");
+//            ImplDao.cerrarEmf("obtenerProgramaAcademicoxCoordinadorPA");
         }
         
         return  pro;

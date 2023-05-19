@@ -30,7 +30,8 @@ public class EstudianteServices extends ImplDao<Estudiante, Long> implements IEs
                      .setParameter(1, pa.getId())
                      .setParameter(2, p.getId());
              estudiantes=qu.getResultList();
-             em.close();             
+             em.getTransaction().commit();
+            System.out.println("obtenerEstudiantesMatriculados");             
          }catch(Exception ex){
              ex.printStackTrace();
          } 

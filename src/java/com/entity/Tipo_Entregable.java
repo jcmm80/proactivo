@@ -30,6 +30,7 @@ public class Tipo_Entregable implements Serializable {
     private Long id;
     private String descripcion;
     private String nombre;
+    private String tipo;
     @ManyToOne
     private Asignatura asignatura;
     @OneToMany(mappedBy = "tipoentregable")
@@ -46,6 +47,12 @@ public class Tipo_Entregable implements Serializable {
 
     public Tipo_Entregable(Long id, String descripcion, String nombre, Asignatura asignatura) {       
         this.id = id;
+        this.descripcion = descripcion;
+        this.nombre = nombre;
+        this.asignatura = asignatura;
+    }
+
+      public Tipo_Entregable(String descripcion, String nombre, Asignatura asignatura) { 
         this.descripcion = descripcion;
         this.nombre = nombre;
         this.asignatura = asignatura;
@@ -151,6 +158,20 @@ public class Tipo_Entregable implements Serializable {
      */
     public void setAsignatura(Asignatura asignatura) {
         this.asignatura = asignatura;
+    }
+
+    /**
+     * @return the tipo
+     */
+    public String getTipo() {
+        return tipo;
+    }
+
+    /**
+     * @param tipo the tipo to set
+     */
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
     
 }

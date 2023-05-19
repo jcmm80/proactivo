@@ -7,9 +7,7 @@ package com.controller;
 
 import com.entity.Asignatura;
 import com.entity.Competencia;
-import com.entity.Periodo;
 import com.entity.Profesor;
-import com.entity.ProgramaAcademico;
 import com.entity.TipoCompetencia;
 import com.entity.Tipo_Entregable;
 import com.entity.UnidadCompetencia;

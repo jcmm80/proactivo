@@ -39,6 +39,7 @@ public class Tipo_EntregableController implements Serializable {
 
     public void registrarTipo_Entregable() {
         tipo_entregable.setAsignatura(asignatura);
+        tipo_entregable.setTipo("Especifico");
         if (tipo_entregable.validar()) {
             tipo_entregable = tipenser.modificar(tipo_entregable);
             consultarTipos_Entregable(asignatura.getProfesor());

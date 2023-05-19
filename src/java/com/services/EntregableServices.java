@@ -28,7 +28,8 @@ public class EntregableServices extends ImplDao<Entregable, Long> implements IEn
              Query qu=em.createQuery(q)
                      .setParameter(1, p.getId());
              avances=qu.getResultList();
-             em.close();             
+                        em.getTransaction().commit();
+            System.out.println("obtenerEntregablesXProyecto");             
          }catch(Exception ex){
              ex.printStackTrace();
          } 

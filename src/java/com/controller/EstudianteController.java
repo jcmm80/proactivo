@@ -143,10 +143,6 @@ public class EstudianteController implements Serializable {
         }
     }
 
-//    public void seleccionarAsignatura(Asignatura a) {
-//        asigcon.setAsignatura(a);
-//        
-//    }
     public void agregarItem() {
         mpanelAItems = true;
     }

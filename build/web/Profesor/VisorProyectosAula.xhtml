@@ -33,7 +33,11 @@
                         <div class="accion">
                             <i class="uil uil-file-search-alt" style="color: #005CB9; font-size: 25px"></i><h:commandButton class="icono" value="." action="#{profesorController.consultarProyecto(proa)}" />
                         </div>
-                    </div>  
+                    
+                         <div class="accion" >
+                             <i class="uil uil-file-search-alt" style="color: #005CB9; font-size: 25px"></i><h:commandButton class="icono" value="." disabled="#{!evaluacionController.evaluacion.habilitarEvaluacion()}"  action="#{profesorController.evaluarProyecto(proa)}" />
+                        </div>
+                    </div> 
                 </p:column>  
             </p:dataTable> 
         </p:panel>

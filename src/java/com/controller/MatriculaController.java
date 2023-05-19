@@ -35,6 +35,7 @@ public class MatriculaController implements Serializable {
     private Matricula matricula = new Matricula();
     private Semestre semestre = new Semestre();
     private Periodo periodo = new Periodo();
+    private Seccion seccion=new Seccion();
     private ProgramaAcademico programa = new ProgramaAcademico();
 
     //servicios
@@ -50,6 +51,7 @@ public class MatriculaController implements Serializable {
 
     //variables de control
     private int activeIndex = 0;
+    private int activeIcest = 0;
     private boolean existematricula=false;
     
     
@@ -113,8 +115,29 @@ public class MatriculaController implements Serializable {
     public void agregarPrograma(ProgramaAcademico pa) {
         setPrograma(pa);
         activeIndex = 2;
+        activeIcest = 1;
     }
 
+    public void seleccionarPeriodo(Periodo p){
+        setPeriodo(p);
+        consultarMatriculasXPeriodoYPrograma(getPrograma(),  p);
+        activeIcest = 2;
+    }
+    
+    public void obtenerMatriculadosSeccion(Seccion s){
+        seccion=s;
+        obtenerMatriculasXSeccion(s); 
+        activeIcest = 3;
+    }
+    
+    public void regresarProgramas(){
+        activeIcest = 0;
+        matriculas=null;
+        secciones=null;
+//        semestres=null;
+        
+    }
+    
     public void agregarPeriodo(Periodo p) {
         setPeriodo(p);
         activeIndex = 3;
@@ -129,7 +152,7 @@ public class MatriculaController implements Serializable {
         matricula.setSeccion(s);
     }
     
-    
+  
     public void eliminarMatricula(){
         System.out.println(""+matricula.getId());
         Integrante integrante=intser.obtenerIntegranteXMatricula(matricula);
@@ -294,6 +317,34 @@ public class MatriculaController implements Serializable {
      */
     public void setExistematricula(boolean existematricula) {
         this.existematricula = existematricula;
+    }
+
+    /**
+     * @return the seccion
+     */
+    public Seccion getSeccion() {
+        return seccion;
+    }
+
+    /**
+     * @param seccion the seccion to set
+     */
+    public void setSeccion(Seccion seccion) {
+        this.seccion = seccion;
+    }
+
+    /**
+     * @return the activeIcest
+     */
+    public int getActiveIcest() {
+        return activeIcest;
+    }
+
+    /**
+     * @param activeIcest the activeIcest to set
+     */
+    public void setActiveIcest(int activeIcest) {
+        this.activeIcest = activeIcest;
     }
 
 }

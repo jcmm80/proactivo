@@ -72,6 +72,10 @@ public class CoordinadorController implements Serializable {
         paginaActualC = "/Coordinador/AsignarCoordinacionPA.xhtml";
     }
 
+    public void matriculadosSeccion() {
+        paginaActualC = "/Coordinador/MatriculadosSeccion.xhtml";
+    }
+    
     public void gsecciones() {
         paginaActualC = "/Coordinador/GestorSecciones.xhtml";
     }
