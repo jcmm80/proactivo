@@ -7,6 +7,7 @@ package com.controller;
 
 import com.entity.Asignatura;
 import com.entity.Estudiante;
+import com.entity.Integrante;
 import com.entity.Item_Proyecto;
 import com.entity.Matricula;
 import com.entity.Periodo;
@@ -39,6 +40,7 @@ public class EstudianteController implements Serializable {
 
     //objetos de negocio
     private Estudiante estudiante = new Estudiante();
+   
     private Periodo periodo = new Periodo();//para almacenar el el periodo actual
 
     //controlladores
@@ -88,9 +90,13 @@ public class EstudianteController implements Serializable {
 
     }
 
+
+    
     public void consultarProyectoXMatricula() {
         try {
             proacon.obtenerProyectoAulaXMatricula(matcont.getMatricula());
+            matcont.setIntegrante(proacon.getIntegrante());
+            matcont.consultarResultadosXIntegrante();
         } catch (java.lang.NullPointerException npe) {
             paginaActualE = "";
             FacesUtil.addWarnMessage("Usuario, no tiene proyecto de aula asignado en el periodo");
@@ -152,10 +158,14 @@ public class EstudianteController implements Serializable {
     }
 
     public void seleccionarTItem(Tipo_Item ip) {
-        //tipicon.setTipo_item(ip);
+        //tipicon.setTipo_item(ip);       
+        try{
         proacon.getItem().setTipo(ip);
         mpanelItem = true;
         mpanelAItems = false;
+        }catch(java.lang.NullPointerException npe){
+            npe.printStackTrace();
+        }
     }
 
     public void registrarItem() {
@@ -230,18 +240,32 @@ public class EstudianteController implements Serializable {
         }
     }
 
+    public void verAsignaturas(){
+          paginaActualE = "/Estudiante/AsignaturasSeccion.xhtml";
+    }
+    
     public void g_proyecto() {
         if (!proacon.getProyecto().getCodigo().trim().equals("")) {
             paginaActualE = "/Estudiante/Gestor_Proyecto_Aula.xhtml";
         }
     }
+    
+      public void verResultados() {
+        if (!proacon.getProyecto().getCodigo().trim().equals("")) {
+            paginaActualE = "/Estudiante/ResultadosAprendizaje.xhtml";
+        }
+    }
 
     public void g_tutoria() {
+        try{
         if (!proacon.getProyecto().getCodigo().trim().equals("")) {
             tutcon.setProyecto(proacon.getProyecto());
             tutcon.setIntegrante(proacon.getIntegrante());
             System.out.println("Proyecto:" + tutcon.getProyecto().getCodigo() + " " + "Integrante: " + tutcon.getIntegrante().getMatricula().getEstudiante().toString());
             paginaActualE = "/Estudiante/GestorTutorias.xhtml";
+        }
+        }catch(NullPointerException npe){
+            FacesUtil.addErrorMessage("Estudiante no tiene proyecto de aula asignado");
         }
     }
 
@@ -494,5 +518,7 @@ public class EstudianteController implements Serializable {
     public void setAvancon(AvanceController avancon) {
         this.avancon = avancon;
     }
+
+
 
 }

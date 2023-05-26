@@ -21,7 +21,8 @@
                                     <h:outputText value="#{asig.nombre}" /><br></br>
                                     <h:outputText value="Creditos: #{asig.creditos}" /><br></br>
                                     <h:outputText value="#{asig.area.nombre}" /><br></br>
-                                    <h:outputText value="#{asig.seccion.semestre.denominacion} - #{asig.seccion.denominacion}" />
+                                    <h:outputText value="#{asig.seccion.semestre.denominacion} - #{asig.seccion.denominacion}" /><br></br>
+                                    <h:outputText value="#{asig.profesor.toString()}" />
                                 </div> 
                             </div>
                             <div class="contrato-carta"><span>#{asig.seccion.programa.nombre}</span></div>
@@ -29,7 +30,7 @@
                     </p:dataGrid>
                 </p:panel>
                 <p:panel rendered="#{estudianteController.mpanelTutorias}">                    
-                    
+                    <h1 class="tittle">#{tutoriasController.asignatura.nombre} #{tutoriasController.asignatura.profesor.toString()}</h1>
                     <h:commandButton value="solicitar" action="#{estudianteController.pcrearTutoria()}" />
                     <h:commandButton value="asignaturas" action="#{estudianteController.pvolverAsignaturardTutoria()}" />
                     <p:dataTable scrollHeight="100px" class="tabla-reporte" var="tut" value="#{tutoriasController.tutorias}">
@@ -53,7 +54,7 @@
                             <p:separator/>
                             #{tutoriasController.asistenciaEstudiante(tut).infoAsistencia()}
                         </p:column>
-                         <p:column headerText="Solicitado Por">
+                        <p:column headerText="Solicitado Por">
                             #{tut.integrante.matricula.estudiante.toString()}
                         </p:column>
                         <p:column headerText="">

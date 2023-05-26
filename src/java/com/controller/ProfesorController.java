@@ -95,13 +95,13 @@ public class ProfesorController implements Serializable {
      */
     public ProfesorController() {
     }
-
+    
     public void agregarAsignaturaTutoria(Asignatura a) {
         getTutcon().setAsignatura(a);
         getTutcon().consultarTutoriasXAsignaturaProfesor();
         mpanelTutorias = true;
     }
-
+    
     public void agregarAsignaturaCompetencia(Asignatura a) {
         getCompcon().setUnidad(new UnidadCompetencia());
         getCompcon().setAsignatura(a);
@@ -110,40 +110,40 @@ public class ProfesorController implements Serializable {
         tipecon.setAsignatura(a);
         tipecon.consultarTipos_Entregable();
     }
-
+    
     public void pvolverAsignaturardTutoria() {
         mpanelTutorias = false;
     }
-
+    
     public void pprogramarTutoria(Tutoria t) {
         mpanelPTutoria = true;
         tutcon.setTutoria(t);
         paginaTutoria = "Tutorias/ProgramarTutoria.xhtml";
     }
-
+    
     public void prealizarTutoria(Tutoria t) {
         mpanelPTutoria = true;
         tutcon.setTutoria(t);
         tutcon.armarAsistentes();
         paginaTutoria = "Tutorias/RealizarTutoria.xhtml";
     }
-
+    
     public void palmacenarTutoria() {
         tutcon.realizarTutoria();
         tutcon.consultarTutoriasXProfesor(profesor);
         tutcon.consultarTutoriasXAsignaturaProfesor();
         pvolverdeProgramar();
     }
-
+    
     public void programarTutoria() {
         tutcon.programarTutoria();
         pvolverdeProgramar();
     }
-
+    
     public void pvolverdeProgramar() {
         mpanelPTutoria = false;
     }
-
+    
     public void seleccionarAsignatura(Asignatura a) {
         asigcon.setAsignatura(a);
         proyectosXSeccion(a.getSeccion());
@@ -154,24 +154,24 @@ public class ProfesorController implements Serializable {
         evacon.obtenerEvaluacionXSeccion(a.getSeccion());
         evacon.obtenerValoracionesAsignatura(a);
     }
-
+    
     public void obtenerAvances(Seccion s) {
         avancon.consultarAvancesXSeccion(s);// la cambie por una instanciada desde proacon
     }
-
+    
     public void volverPanelAsignaturas() {
         asigcon.setAsignatura(new Asignatura());
         mostPAsignatura = false;
     }
-
+    
     public void volverProyectos() {
         mostPanelProyectoAula = true;
     }
-
+    
     public void consultarProfesores() {
         setProfesores(profser.consultarTodo(Profesor.class));
     }
-
+    
     public void limpiarDatos() {
         paginaActualP = "";
         asigcon.limpiarDatos();
@@ -179,7 +179,7 @@ public class ProfesorController implements Serializable {
         tipecon.limpiarDatos();
         profesor = null;
     }
-
+    
     public void seleccionarLider(LiderPA lider) {
         liderPa = lider;
         proacon.setLider(lider);
@@ -188,7 +188,7 @@ public class ProfesorController implements Serializable {
         avancon.consultarAvancesXSeccion(lider.getSeccion());//lo coloque porque no hay avances de proyectos
         mostPanelSemestres = false;
     }
-
+    
     public void seleccionarSeccionLider(LiderPA lider) {
         liderPa = lider;
         evacon.consultarDimensionesProgramaAndPeriodoAndSemestre(liderPa);
@@ -198,15 +198,15 @@ public class ProfesorController implements Serializable {
         evacon.prepararEvaluacion(liderPa.getSeccion());
         mostPanelEvaluaciones = true;
     }
-
+    
     public void volverSeccionesdesdeEvaluacion() {
         mostPanelEvaluaciones = false;
     }
-
+    
     public void volverSemestres() {
         mostPanelSemestres = true;
     }
-
+    
     public void obtenerAsignaturasXProfesor() {
         asigcon.obtenerAsignaturasXProfesor(periodo, profesor);
         compcon.consultarUnidadesCOmpetencia(profesor);
@@ -214,21 +214,22 @@ public class ProfesorController implements Serializable {
         tipecon.consultarTipos_Entregable(profesor);
         compcon.consultarCompetenciasProfesor(profesor);
     }
-
+    
     public void obtenerTutoriasXProfesor() {
+        System.out.println("Consultare las tutorias");
         tutcon.consultarTutoriasXProfesor(profesor);
     }
-
+    
     public void proyectosXSeccion(Seccion s) {
         proyectosSemestre = new LinkedList();
-        System.out.println("" + proacon.getProyectos().size());
+//        System.out.println("" + proacon.getProyectos().size());
         for (Proyecto_Aula p : proacon.getProyectos()) {
             if (p.getSeccion().getId().equals(s.getId())) {
                 proyectosSemestre.add(p);
             }
         }
     }
-
+    
     public void evaluarProyecto(Proyecto_Aula pa) {
         proacon.setProyecto(pa);
         evacon.setProyectoAula(pa);
@@ -236,14 +237,14 @@ public class ProfesorController implements Serializable {
         evacon.prepararCriteriosParaEvaluar();
         paginaActualP = "/Profesor/Evaluacion/EvaluarProyectos.xhtml";
     }
-
+    
     public void consultarProyecto(Proyecto_Aula pa) {
         proacon.setProyecto(pa);
         proacon.getAvancon().obtenerAvancesProyecto(pa);
 //        System.out.println("" + proacon.getProyecto().validarProyectoParaAprobar());
         mostPanelProyectoAula = false;
     }
-
+    
     public void esLiderPA() {
         semestresLider = null;
         semestresLider = lidpaser.obtenersemestresLiderPAXProfesor(profesor, periodo);
@@ -256,16 +257,17 @@ public class ProfesorController implements Serializable {
 //            proacon.obtenerIntegrantesXProyectos(profesor);
         }
     }
-
+    
     public void consultarFases(ProgramaAcademico pa) {
         fascon.obtenerFasesXPrograma(pa, periodo);
     }
-
+    
     public void consultarProyectosAulaPeriodo() {
+        proacon.setProyecto(new Proyecto_Aula());
         proacon.consultarProyectosXPeriodo(periodo);
         proacon.obtenerIntegrantesXProyectos(periodo);
     }
-
+    
     public boolean habilitarLider() {
         if (semestresLider.size() > 0) {
             return true;
@@ -273,11 +275,11 @@ public class ProfesorController implements Serializable {
             return false;
         }
     }
-
+    
     public void consultarMatriculasXPeriodo() {
         matcont.consultarEstudiantesMatriculadosXPeriodo(periodo);
     }
-
+    
     public void registrarprofesor() {
         profesor.setTipo("Profesor");
         profesor.setEstado("Activo");
@@ -287,44 +289,46 @@ public class ProfesorController implements Serializable {
             obtenerProfesores();
         }
     }
-
+    
     public void actualizarprofesor() {
         profesor.setEstado("Activo");
         if (profesor.validarUsuario()) {
             profesor = profser.modificar(profesor);
         }
     }
-
+    
     public void guardarProyectoAula() {
         proacon.getProyecto().setSeccion(liderPa.getSeccion());
         proacon.crearPA();
         proyectosXSeccion(liderPa.getSeccion());
     }
-
+    
     public void aprobarProyectoAula() {
         if (proacon.getProyecto().validarProyectoParaAprobar()) {
             proacon.getProyecto().setFecha_aprobacion(new Date());
             proacon.aprobarPA();
         }
     }
-
+    
     public void aplazarProyectoAula() {
         proacon.getProyecto().setFecha_aprobacion(new Date());
         proacon.aplazarPA();
     }
-
+    
     public void desvincularIntegrante(Integrante inte, Proyecto_Aula pa) {
         proacon.eliminarIntegrante(inte, pa);
         matcont.consultarEstudiantesMatriculadosXPeriodo(periodo);
     }
-
+    
     public void eliminarProyectoAula(Proyecto_Aula pa) {
-        proacon.eliminarProyecto(pa);
-        matcont.consultarEstudiantesMatriculadosXPeriodo(periodo);
-        proacon.consultarProyectosXProfesorLider(profesor);
-        proyectosXSeccion(liderPa.getSeccion());
+        if (!proacon.tieneProcesos(pa)) {
+            proacon.eliminarProyecto(pa);
+            matcont.consultarEstudiantesMatriculadosXPeriodo(periodo);
+            proacon.consultarProyectosXProfesorLider(profesor);
+            proyectosXSeccion(liderPa.getSeccion());
+        }
     }
-
+    
     public void subirImagenProfesor() {
         try {
 //               File destFile= new File(event.getFile().getFileName());           
@@ -338,34 +342,36 @@ public class ProfesorController implements Serializable {
             Logger.getLogger(ProfesorController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     public void gtipo_Entregable() {
         paginaActualP = "/Profesor/GestorTipo_Entregable.xhtml";
     }
-
+    
     public void gtipo_Item() {
         paginaActualP = "/Profesor/GestorTipo_Item.xhtml";
     }
-
+    
     public void ggrupos() {
         mostPanelSemestres = true;
         paginaActualP = "/Profesor/GestorGrupos.xhtml";
     }
-
+    
     public void gproyectosaula() {
         mostPanelSemestres = true;
         mostPanelProyectoAula = true;
         paginaActualP = "/Profesor/GUIProyectosAula.xhtml";
     }
-
+    
     public void g_tutoria() {
+        mpanelTutorias = false;
         paginaActualP = "/Profesor/GestorTutorias.xhtml";
     }
-
+    
     public void asignaturasProfesor() {
+        mostPAsignatura = false;
         paginaActualP = "/Profesor/AsignaturasProfesor.xhtml";
     }
-
+    
     public void gCompetenciasProfesor() {
         paginaActualP = "/Profesor/Competencias/GestorUnidadesCompetencia.xhtml";
     }
@@ -377,15 +383,15 @@ public class ProfesorController implements Serializable {
     public void gCompetencias() {
         paginaActualC = "/Profesor/Competencias/GestorCompetencias.xhtml";
     }
-
+    
     public void gTiposCompetencia() {
         paginaActualC = "/Profesor/Competencias/GestorTiposCompetencias.xhtml";
     }
-
+    
     public void gproflider() {
         paginaActualP = "/Profesor/GestorProfesorLider.xhtml";
     }
-
+    
     public void gDimensiones() {
         evacon.setPeriodo(periodo);
         evacon.setPrograma(progcon.getPrograma());
@@ -397,14 +403,14 @@ public class ProfesorController implements Serializable {
         evacon.consultarDimensionesProgramaAndPeriodo();
         paginaActualP = "/Profesor/Evaluacion/GestorDimensiones.xhtml";
     }
-
+    
     public void gEvaluaciones() {
         mostPanelEvaluaciones = false;
         evacon.setIndTavEvaluacion(0);
         evacon.setCriteriosevaluacion(new LinkedList());
         paginaActualP = "/Profesor/Evaluacion/GestorEvaluacion.xhtml";
     }
-
+    
     public void miperfil() {
         paginaActualP = "/Profesor/PerfilProfesor.xhtml";
     }
@@ -415,7 +421,7 @@ public class ProfesorController implements Serializable {
     public void obtenerPrtofesor(Long id) {
         profesor = profser.consultar(Profesor.class, id);
     }
-
+    
     public void obtenerProfesores() {
         profesores = profser.consultarTodo(Profesor.class);
     }
@@ -538,11 +544,11 @@ public class ProfesorController implements Serializable {
     public void setLiderPa(LiderPA liderPa) {
         this.liderPa = liderPa;
     }
-
+    
     public ProgramaAcademico getCoordinadorPa() {
         return coordinadorPa;
     }
-
+    
     public void setCoordinadorPa(ProgramaAcademico coordinadorPa) {
         this.coordinadorPa = coordinadorPa;
     }
@@ -812,5 +818,5 @@ public class ProfesorController implements Serializable {
     public void setAvancon(AvanceController avancon) {
         this.avancon = avancon;
     }
-
+    
 }

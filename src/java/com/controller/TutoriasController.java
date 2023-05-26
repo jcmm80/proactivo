@@ -54,7 +54,7 @@ public class TutoriasController implements Serializable {
         tutoria.setIntegrante(integrante);
         tutoria.setProyecto(proyecto);
         tutoria.setFechaSolicitud(new Date());
-        tutoria.setEstado("Solicitud");
+        tutoria.setEstado("Solicitada");
         if (tutoria.validarTutoria()) {
             tutoria = tutser.modificar(tutoria);
         }
@@ -75,10 +75,12 @@ public class TutoriasController implements Serializable {
     public void programarTutoria() {
         tutoria.setEstado("Programada");
         tutoria = tutser.modificar(tutoria);
+        consultarTutoriasXProfesor(tutoria.getAsignatura().getProfesor());
+        consultarTutoriasXAsignaturaProfesor();
     }
 
     public void eliminarTutoria(Tutoria t) {
-        if (t.getEstado().equals("Solicitud")) {
+        if (t.getEstado().equals("Solicitada")) {
             tutser.eliminar(t);
         } else {
             FacesUtil.addErrorMessage("No se puede Eliminar: La tutoria ya ha sido programada o realizada");
@@ -110,6 +112,10 @@ public class TutoriasController implements Serializable {
         }
     }
 
+    public void obtenerTutoriasProyecto(Proyecto_Aula pa){
+        tutorias=tutser.obtenerTutoriasXProyecto(pa);
+    }
+    
     public void armarAsistentes() {
         asistentes = new LinkedList();
         for (Integrante i : tutoria.getProyecto().getIntegrantes()) {
@@ -149,6 +155,7 @@ public class TutoriasController implements Serializable {
         tutoriasAsignaturaRealizadas = new LinkedList();
         tutoriasAsignaturaSolicitadas = new LinkedList();
         for (Tutoria t : tutorias) {
+            System.out.println("clasificare las tutorias "+t.getFechaSolicitud()+"  "+t.getEstado()+" \t"+asignatura.getId()+" \t"+t.getAsignatura().getId()+"\t"+t.getAsignatura().getNombre());
             if (t.getAsignatura().getId().equals(asignatura.getId())) {
                 if (t.getEstado().equals("Realizada")) {
                     tutoriasAsignaturaRealizadas.add(t);

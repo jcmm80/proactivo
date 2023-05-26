@@ -75,4 +75,22 @@ public class ValoracionServices extends ImplDao<Valoracion, Long> implements IVa
         }
         return secciones;
     }
+  public List<Valoracion> obtenerValoracionesXIntegrante(Integrante i) {
+        List<Valoracion> secciones = new LinkedList();
+        try {
+            EntityManager em = getEntityManagger();
+            em.getTransaction().begin();
+            String q = "select u from Valoracion u where u.integrante.id = ?1";
+            System.out.println(" Consulta: " + q);
+            Query qu = em.createQuery(q)
+                    .setParameter(1, i.getId());
+            secciones = qu.getResultList();
+            em.getTransaction().commit();
+            System.out.println("obtenerValoracionesXEvaluacion");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return secciones;
+    }
 }

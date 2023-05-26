@@ -30,6 +30,7 @@ import com.services.EvaluacionServices;
 import com.services.Tipo_EntregableServices;
 import com.services.UnidadCompetenciaServices;
 import com.services.ValoracionServices;
+import com.utilidades.ResultadosAsignatura;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Enumeration;
@@ -49,7 +50,7 @@ public class EvaluacionController implements Serializable {
 
     private Periodo periodo = new Periodo();
     private ProgramaAcademico programa = new ProgramaAcademico();
-    private Evaluacion evaluacion = new Evaluacion();
+    private Evaluacion evaluacion;
     private Dimension dimencion = new Dimension();
     private Semestre semestre;
     private Seccion seccion;
@@ -71,7 +72,7 @@ public class EvaluacionController implements Serializable {
     private List<Asignatura> asignaturasEvaluacion;
     private List<Valoracion> valoraciones;
     private List<Valoracion> valoracionesAsignatura;
-    
+
     Hashtable<Long, List<Valoracion>> valoracionesXdimensiones;
 
     CriterioServices criser = new CriterioServices();
@@ -178,6 +179,10 @@ public class EvaluacionController implements Serializable {
         }
     }
 
+    public void consultarEvaluacion(Seccion s){
+        evaluacion=evaser.obtenerEvaluacionXSeccion(s);
+    }
+    
     public List<CriterioEvaluacion> criteriosXDimension(Dimension dim) {
         List<CriterioEvaluacion> criterios = new LinkedList();
         for (CriterioEvaluacion ce : criteriosevaluacionParticulares) {
@@ -230,7 +235,6 @@ public class EvaluacionController implements Serializable {
         //adicionando criterios globales
         for (Asignatura a : asignaturasEvaluacion) {
             System.out.println("Asignatura: " + a.getNombre());
-
             for (Dimension d : dimencionesPeriodoGlobales) {
                 CriterioEvaluacion ceva = generarCriterioGlobal(a, d);
                 criteriosevaluacion.add(ceva);
@@ -261,7 +265,9 @@ public class EvaluacionController implements Serializable {
                 crite.setDimension(ce.getDimension());
                 crievser.modificar(crite);
                 System.out.println("Almacenando Criterio de evaluacion: " + ce.getCriterio().getDescripcion());
+
             }
+
             indTavEvaluacion = 0;
         }
     }
@@ -367,35 +373,90 @@ public class EvaluacionController implements Serializable {
     }
 
     public void obtenerValoracionesAsignatura(Asignatura a) {
-        setValoracionesAsignatura(valser.obtenerValoracionesXAsignatura(a));
+//        setValoracionesAsignatura(valser.obtenerValoracionesXAsignatura(a));
+        obtenerEvaluacionXSeccion(a.getSeccion());
         organizarValoracionesXDimension();
-        notaFIntegrante();
+
     }
 
-    public void organizarValoracionesXDimension() {        
+    public void organizarValoracionesXDimension() {
         valoracionesXdimensiones = new Hashtable<Long, List<Valoracion>>();
         //organizar valoraciones por dimension
-        for (Valoracion v : valoracionesAsignatura) {
+        for (Valoracion v : valoraciones) {
             agregarValoracionDimension(v.getCriterio().getDimension(), v, valoracionesXdimensiones);
         }
     }
 
-    public void notaFIntegrante(){
+    public double notaFIntegrante(Integrante inte) {
         //porcentaje de dimension;
-       Enumeration<Long> keys = valoracionesXdimensiones.keys();
+
+        Enumeration<Long> keys = valoracionesXdimensiones.keys();
+        double nfinal = 0;
+        System.out.println("Integrante: " + inte.getMatricula().getEstudiante().toString());
         while (keys.hasMoreElements()) {
-            Long iddim=keys.nextElement();
-            List<Valoracion> valoracionesd=valoracionesXdimensiones.get(iddim);
-            double pdim=Math.round(valoracionesd.get(0).getCriterio().getDimension().getPorcentaje()/valoracionesd.size()*100)/100;
-            System.out.println("Dimencion: "+iddim+"\t"+valoracionesd.get(0).getCriterio().getDimension().getPorcentaje()+"\t"+valoracionesd.size()+"\t"+pdim);
-            
-            
-//            String clave = keys.nextElement();
-//            Integer valor = hashtable.get(clave);
-//            System.out.println("Clave: " + clave + ", Valor: " + valor);
+            List<Valoracion> valoracionesd = new LinkedList();
+            Long iddim = keys.nextElement();
+            for (Valoracion v : valoracionesXdimensiones.get(iddim)) {
+                if (v.getIntegrante().getId().equals(inte.getId())) {
+                    valoracionesd.add(v);
+                }
+            }
+            double pdim = valoracionesd.get(0).getCriterio().getDimension().getPorcentaje() / valoracionesd.size();
+            System.out.println("Dimencion: " + iddim + "\t" + valoracionesd.get(0).getCriterio().getDimension().getPorcentaje() + "\t" + valoracionesd.size() + "\t" + pdim);
+            for (Valoracion val : valoracionesd) {
+                nfinal = nfinal + (val.getValor() * pdim / 100);
+                System.out.println("calculando: " + val.getValor() + " * " + pdim + " / 100 =" + nfinal);
+            }
+            System.out.println("Nota: " + nfinal);
         }
+        return nfinal;
     }
-    
+
+    public void consultarValoracionesXIntegrante(Integrante i) {
+        valoraciones = valser.obtenerValoracionesXIntegrante(i);
+    }
+
+    public List<ResultadosAsignatura> organizarResultadosIntegrante() {
+        List<ResultadosAsignatura> resultados = new LinkedList();
+        Hashtable<Long, Asignatura> asignaturasEvaluadas = new Hashtable<Long, Asignatura>();
+
+        for (Valoracion v : valoraciones) {
+            asignaturasEvaluadas.put(v.getCriterio().getCriterio().getCompetencia().getUnidad().getAsignatura().getId(), v.getCriterio().getCriterio().getCompetencia().getUnidad().getAsignatura());
+            System.out.println("" + v.getCriterio().getCriterio().getCompetencia().getUnidad().getAsignatura().getNombre());
+        }
+        Enumeration<Long> keys = asignaturasEvaluadas.keys();
+        while (keys.hasMoreElements()) {
+            Long idasi = keys.nextElement();
+            ResultadosAsignatura ra = new ResultadosAsignatura();
+            Asignatura asig = asignaturasEvaluadas.get(idasi);
+            ra.setAsignatura(asig);
+            ra.setValoraciones(agregarValoracionesAsignatura(valoraciones, asig));
+            resultados.add(ra);
+        }
+        return resultados;
+    }
+
+    public List<Valoracion> agregarValoracionesAsignatura(List<Valoracion> valors,Asignatura asig) {
+       List<Valoracion> valoras=new LinkedList();
+        for (Valoracion va : valors) {
+            if (va.getCriterio().getCriterio().getCompetencia().getUnidad().getAsignatura().getId().equals(asig.getId())) {
+                System.out.println("" + va.getCriterio().getCriterio().getDescripcion());
+              valoras.add(va);
+            }
+        }
+        return valoras;
+    }
+
+    public boolean existeAsignatura(List<ResultadosAsignatura> resultados, Asignatura a) {
+        boolean existe = false;
+        for (ResultadosAsignatura ra : resultados) {
+            if (ra.getAsignatura().getId().equals(a.getId())) {
+                existe = true;
+            }
+        }
+        return existe;
+    }
+
     public void agregarValoracionDimension(Dimension d, Valoracion v, Hashtable<Long, List<Valoracion>> valoraciones) {
         List<Valoracion> existentes = valoraciones.get(d.getId());
 
@@ -403,7 +464,7 @@ public class EvaluacionController implements Serializable {
             existentes.add(v);
             valoraciones.put(d.getId(), existentes);
         } else {
-            existentes=new LinkedList();
+            existentes = new LinkedList();
             existentes.add(v);
             valoraciones.put(d.getId(), existentes);
         }
@@ -463,13 +524,9 @@ public class EvaluacionController implements Serializable {
                     valser.crear(valoracion);
                 }
 
-//                valser.elimimarValoracionIntegrante(valoracion.getIntegrante(), valoracion.getCriterio());
-//                Valoracion valora=new Valoracion();
-//                valora.setCriterio(valoracion.getCriterio());
-//                valora.setIntegrante(valoracion.getIntegrante());
-//                valora.setValor(valoracion.getValor());
             }
         }
+        obtenerValoracionesAsignatura(asignaturaEvaluar);
     }
 
     public boolean tieneValoraciones() {

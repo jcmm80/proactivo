@@ -36,8 +36,25 @@ public class Item_Proyecto implements Serializable {
     private Matricula editor;
     @ManyToOne
     private Proyecto_Aula proyecto;
+
+    public Item_Proyecto() {
+        this.tipo=new Tipo_Item();
+    }
+
+    public Item_Proyecto(Long id, Tipo_Item tipo, String contenido, Date fecharegistro, Date fechamodificacion, Matricula editor, Proyecto_Aula proyecto) {
+        this.id = id;
+        this.tipo = tipo;
+        this.contenido = contenido;
+        this.fecharegistro = fecharegistro;
+        this.fechamodificacion = fechamodificacion;
+        this.editor = editor;
+        this.proyecto = proyecto;
+    }
     
 
+    
+    
+    
     public Long getId() {
         return id;
     }

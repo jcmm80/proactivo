@@ -52,8 +52,8 @@
                 <nav>
                     <div class="op"><h:graphicImage  value="/resources/img/bombillo.png"/><h:commandLink action="#{estudianteController.g_tutoria()}" value="Tutorias"  /></div>
                     <div class="op"><h:graphicImage  value="/resources/img/motar.png"/><a href="">Estudiantes</a></div>
-                    <div class="op"><h:graphicImage  value="/resources/img/monitor.png"/><a href="">Proyecto Aula</a></div>
-                    <div class="op"><h:graphicImage  value="/resources/img/tabla.png"/><a href="">Asignaturas</a></div>
+                    <div class="op"><h:graphicImage  value="/resources/img/monitor.png" rendered="#{proyectoAulaController.proyecto.estadoProyecto()}"/><h:commandLink rendered="#{proyectoAulaController.proyecto.estadoProyecto()}" value="Proyecto de Aula" action="#{estudianteController.g_proyecto()}" /></div>
+                    <div class="op"><h:graphicImage  value="/resources/img/tabla.png"/><h:commandLink value="Asignaturas" action="#{estudianteController.verAsignaturas()}" /></div>
                     <div class="op"><h:graphicImage  value="/resources/img/profesor.png"/><a href="">Profesores</a></div>
                     <div class="op"><h:graphicImage  value="/resources/img/notas.png"/><a href="">Notas</a></div>     
                 </nav>
@@ -81,6 +81,13 @@
                             <div class="linea"></div>
                             <div class="op-v"><h:graphicImage  value="/resources/img/libro.png"/><h:commandButton value="Gestionar Proyecto" class="botones-v" action="#{estudianteController.g_proyecto()}"></h:commandButton></div>
                         </div>
+                        <div class="cop">
+                            <div class="linea"></div>
+                            <div class="op-v"><h:graphicImage  value="/resources/img/libro.png"/><h:commandButton value="Resultados de Aprendizaje" class="botones-v" action="#{estudianteController.verResultados()}"></h:commandButton></div>
+                        </div>
+                        
+                        <ui:include src="../General/ProgramacionProyectos.xhtml" />
+                        
                     </h:panelGroup>
                     <!--
                     

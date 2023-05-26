@@ -81,10 +81,12 @@ public class UsuarioController implements Serializable {
                     procon.consultarProgramasXCoordinador(coorcon.getCoordinador());
                     coorcon.consultarAreas();
                     seccon.setPeriodo(percon.getPeriodoActual());
+                    coorcon.setPeriodo(percon.getPeriodoActual());
                     seccon.obtenerseccionesPeriodo();
                     semcon.obtenerSemestres();
                     coorcon.consultarAsignaturas(percon.getPeriodoActual());
                     coorcon.consultarMatriculasXPeriodo(percon.getPeriodoActual());
+                    coorcon.consultarProyectosAulaPeriodo();
                     paginaActual = "/Coordinador/GUICoordinador.xhtml";
 
                 }

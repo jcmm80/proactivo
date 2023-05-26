@@ -152,7 +152,7 @@
                                 </p:panel>
                             </p:tab>
                             <p:tab title="Programar Evaluacion">
-                                <p:panelGrid columns="3">
+                                <p:panelGrid columns="3" rendered="#{not empty evaluacionController.evaluacion}">
                                     <p:calendar value="#{evaluacionController.evaluacion.fechaprogramada}" />
                                     <h:commandButton value="almacenar" rendered="#{!evaluacionController.evaluacion.habilitarEvaluacion()}" action="#{evaluacionController.almacenarCriteriosEvaluacion()}" />
                                     <h:commandButton value="publicar" rendered="#{evaluacionController.evaluacion.habilitarPublicacion()}" action="#{evaluacionController.publicarEvaluacion()}" />

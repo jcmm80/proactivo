@@ -36,11 +36,11 @@ public class Seccion implements Serializable {
     @ManyToOne
     private Periodo periodo;
     @ManyToOne
-    private ProgramaAcademico programa;    
-    
+    private ProgramaAcademico programa;
+
     @OneToMany(mappedBy = "seccion", fetch = FetchType.LAZY)
     private List<Asignatura> asignaturas;
-    
+
     public Long getId() {
         return id;
     }
@@ -48,8 +48,6 @@ public class Seccion implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
-   
 
     @Override
     public String toString() {
@@ -125,9 +123,15 @@ public class Seccion implements Serializable {
     public void setAsignaturas(List<Asignatura> asignaturas) {
         this.asignaturas = asignaturas;
     }
-    
-    public String getSeccion(){
-        return this.semestre.getDenominacion()+"-"+this.denominacion;
+
+    public String getSeccion() {
+        String sec = "";
+        try {
+            sec = this.semestre.getDenominacion() + "-" + this.denominacion;
+        } catch (NullPointerException npe) {
+            sec = "";
+        }
+        return sec;
     }
-    
+
 }

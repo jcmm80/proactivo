@@ -32,6 +32,7 @@ public class Tipo_Item implements Serializable {
 
     public Tipo_Item() {
     }
+    
     public Long getId() {
         return id;
     }
