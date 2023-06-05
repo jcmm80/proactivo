@@ -33,6 +33,7 @@
     <class>com.entity.UnidadCompetencia</class>
     <class>com.entity.Competencia</class>
     <class>com.entity.TipoCompetencia</class>
+    <class>com.entity.Nucleo</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/simcpa?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

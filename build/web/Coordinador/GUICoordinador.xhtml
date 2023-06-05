@@ -50,9 +50,9 @@
             <!-- Nav horizontal -->
             <div class="nav-horizontal">
                 <nav>
-                    <div class="op"><i class="ri-lightbulb-fill"></i><a href="">Tutorias</a></div>
-                    <div class="op"><i class="fa fa-user-graduate"></i><a href="">Estudiantes</a></div>
-                    <div class="op"><i class="ri-article-fill"></i><a href="">Proyecto Aula</a></div>
+                    <div class="op"><i class="ri-lightbulb-fill"></i><h:commandLink action="#{coordinadorController.verTutorias()}" value="Tutorias"  /></div>
+                    <div class="op"><i class="fa fa-user-graduate"></i><h:commandLink action="#{coordinadorController.matriculadosSeccion()}" value="Estudiantes"  /></div>
+                    <div class="op"><i class="ri-article-fill"></i><h:commandLink action="#{coordinadorController.verProyectos()}" value="Proyectos de Aula"  /></div>
                     <div class="op"><i class="ri-slideshow-fill"></i><a href="">Asignaturas</a></div>
                     <div class="op"><i class="fa fa-user-tie"></i><a href="">Profesores</a></div>
                     <div class="op"><i class="ri-booklet-fill"></i><a href="">Notas</a></div>    
@@ -72,47 +72,47 @@
 
                     <div class="cop ">
                         <div class="linea"></div>
-                        <div class="op-v"><h:commandButton value="gestionar Profesores" class="botones-v" action="#{coordinadorController.gprofesores()}"></h:commandButton></div>
+                        <div class="op-v"><h:commandButton value="Gestionar Profesores" class="botones-v" action="#{coordinadorController.gprofesores()}"></h:commandButton></div>
                     </div>
+                    
                     <div class="cop">
                         <div class="linea"></div>
-                        <div class="op-v"><h:commandButton value="Matricular Estudiante" class="botones-v" action="#{coordinadorController.gmatriculas()}"></h:commandButton></div>
+                        <div class="op-v"><h:commandButton value="Matricular Estudiante" class="botones-v" action="#{coordinadorController.gmatriculas()}"></h:commandButton></div>          
                     </div>
-
+                    
                     <div class="cop">
-                        <div class="linea "></div>
+                        <div class="linea"></div>
                         <div class="op-v"><h:commandButton value="Gestionar Areas" class="botones-v" action="#{coordinadorController.gareas()}"></h:commandButton></div>
                     </div>
+
 
                     <div class="cop">
                         <div class="linea "></div>
                         <div class="op-v"><h:commandButton value="Asignar Coordinador PA" class="botones-v" action="#{coordinadorController.gcoordinadorPA()}"></h:commandButton></div>
                     </div>
+                    
                     <div class="cop">
                         <div class="linea "></div>
-                        <div class="op-v"><h:commandButton value="Crear Asignaturas" class="botones-v" action="#{coordinadorController.gasignaturas()}"></h:commandButton></div>
+                        <div class="op-v"><h:commandButton value="Gestionar Asignaturas" class="botones-v" action="#{coordinadorController.gasignaturas()}"></h:commandButton></div>            
                     </div>
-
                     <div class="cop">
                         <div class="linea "></div>
-                        <div class="op-v"><h:commandButton value="Crear Seciones" class="botones-v" action="#{coordinadorController.gsecciones()}"></h:commandButton></div>
+                        <div class="op-v"><h:commandButton value="Gestionar Seciones" class="botones-v" action="#{coordinadorController.gsecciones()}"></h:commandButton></div>
                     </div>
 
                     <div class="cop">
                         <div class="linea "></div>
                         <div class="op-v"><h:commandButton value="Asignacion Academica" class="botones-v" action="#{coordinadorController.gasignacionA()}"></h:commandButton></div>
+                    </div>       
+                    <div class="cop">
+                        <div class="linea "></div>
+                        <div class="op-v"><h:commandButton value="Resultados de Aprendizaje" class="botones-v" action="#{coordinadorController.gresultadosA()}"></h:commandButton></div>
                     </div>
-
-
                 </nav>
             </div>
             <div class="boton-menu">
                 <h:graphicImage  value="/resources/img/menu.png"/>
             </div>
-            
-
-
-
         </header>  
 
         <ui:include src="#{coordinadorController.paginaActualC}" />
@@ -150,6 +150,4 @@
 
 
     </style>
-
-
 </html>

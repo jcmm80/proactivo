@@ -51,9 +51,11 @@
                                             <p:inputNumber  title="#{val.criterio.criterio.descripcion}" value="#{val.valor}" size="6"  minValue="0" maxValue="5" />
                                         </p:column>
                                     </p:dataTable>
-
+                                   
                                 </div>
-                                <div class="cres"></div>
+                                <div class="cres">
+                                    <h:outputText value="Nota final: #{evaluacionController.notaFIntegrante(integ)}" />
+                                </div>
                             </div>                        
                         </p:dataGrid> 
                     </div>

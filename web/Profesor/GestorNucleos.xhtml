@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <section class="contenido-contenedor">
+            <div class="border contenedor top" >
+                <h1 class="tittle">Gestor de nucleos problemicos</h1>
+                <div class="contnucleos">
+                    <div class="cdatnu">
+                        <div class="contcnucleo">
+                            <div class="lsem">Seleccionar Semestre: </div>
+                            <div class="csemestres">
+                                <p:dataGrid columns="11" var="sem" value="#{semestreController.semestres}">
+                                    <p:panel>
+                                        <h:commandButton value="#{sem.denominacion}" action="#{programaController.agregarSemestreANucleo(sem)}" />
+                                    </p:panel>
+                                </p:dataGrid>
+                                
+                            </div>
+                            <div class="csem">
+                                <h:commandButton value="#{programaController.nucleo.semestre.denominacion}" />
+                            </div>
+                            <div class="cdes">
+                                <p:inputTextarea value="#{programaController.nucleo.descripcion}" cols="60" />
+                                
+                            </div>
+                            <div class="cacc">
+                                <h:commandButton value="agregar" action="#{programaController.almacenarNucleo()}" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="cnucleos">
+                        <p:dataTable var="nuc" value="#{programaController.nucleos}">
+                            <p:column headerText="Semestre">
+                                #{nuc.semestre.denominacion}
+                            </p:column>
+                            <p:column headerText="Descripcion">
+                                #{nuc.descripcion}
+                            </p:column>
+                            <p:column headerText="Opciones">
+
+                            </p:column>
+                        </p:dataTable>
+
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+
+        </section>
+
+    </h:body>
+    <style>
+        .contnucleos {  display: grid;
+                        grid-template-columns: 1fr;
+                        grid-template-rows: 180px 1.4fr;
+                        grid-auto-columns: 1fr;
+                        gap: 0px 0px;
+                        grid-auto-flow: row;
+                        align-content: center;
+                        grid-template-areas:
+                            "cdatnu"
+                            "cnucleos";
+        }
+
+        .cdatnu { grid-area: cdatnu; }
+
+        .cnucleos { grid-area: cnucleos; }
+
+        .contcnucleo {  display: grid;
+                        grid-template-columns: 0.6fr 1.9fr 0.5fr;
+                        grid-template-rows: 50px 180px;
+                        grid-auto-columns: 1fr;
+                        gap: 0px 0px;
+                        grid-auto-flow: row;
+                        align-content: center;
+                        grid-template-areas:
+                            "lsem csemestres csemestres"
+                            "csem cdes cacc";
+        }
+
+        .lsem { grid-area: lsem; }
+
+        .csemestres { grid-area: csemestres; }
+
+        .csem { grid-area: csem; }
+
+        .cdes { grid-area: cdes; }
+
+        .cacc { grid-area: cacc; }
+
+
+
+    </style>
+</html>
+

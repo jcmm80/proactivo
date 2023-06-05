@@ -65,60 +65,60 @@
                                 </p:dataTable>  
                             </p:tab>
                             <p:tab title="Programadas">
-                                <p:dataTable scrollHeight="100px" class="tabla-reporte" var="tut" value="#{tutoriasController.tutoriasAsignaturaProgramadas}">
+                                <p:dataTable scrollHeight="100px" class="tabla-reporte" var="tuto" value="#{tutoriasController.tutoriasAsignaturaProgramadas}">
                                     <p:column headerText="Fecha-Solicitud">
-                                        #{tut.fechaSolicitud}
+                                        #{tuto.fechaSolicitud}
                                     </p:column>
                                     <p:column headerText="Fecha-Ejecucion">
-                                        #{tut.fechaEjecucion}
+                                        #{tuto.fechaEjecucion}
                                     </p:column>
                                     <p:column headerText="Fecha-Asignacion">
-                                        #{tut.fechaAsignacion}
+                                        #{tuto.fechaAsignacion}
                                     </p:column>
                                     <p:column headerText="Compromisos">
-                                        #{tut.compromisos}
+                                        #{tuto.compromisos}
                                     </p:column>
                                     <p:column headerText="Recomendaciones">
-                                        #{tut.recomendaciones}
+                                        #{tuto.recomendaciones}
                                     </p:column>
                                     <p:column headerText="Estado">
-                                        #{tut.estado}
+                                        #{tuto.estado}
                                     </p:column>
                                     <p:column headerText="Solicitado Por">
-                                        #{tut.integrante.matricula.estudiante.toString()}
+                                        #{tuto.integrante.matricula.estudiante.toString()}
                                     </p:column>
                                     <p:column headerText="">
-                                        <h:commandButton disabled="#{tut.fueRealizada()}" value="Programar" action="#{profesorController.pprogramarTutoria(tut)}" />
-                                        <h:commandButton disabled="#{tut.fueRealizada()}" value="Realizar" action="#{profesorController.prealizarTutoria(tut)}" />
+                                        <h:commandButton disabled="#{tuto.fueRealizada()}" value="Programar" action="#{profesorController.pprogramarTutoria(tuto)}" />
+                                        <h:commandButton disabled="#{tuto.fueRealizada()}" value="Realizar" action="#{profesorController.prealizarTutoria(tuto)}" />
                                     </p:column>         
                                 </p:dataTable>  
                             </p:tab>
                             <p:tab title="Realizadas">
-                                <p:dataTable scrollHeight="100px" class="tabla-reporte" var="tut" value="#{tutoriasController.tutoriasAsignaturaRealizadas}">
+                                <p:dataTable scrollHeight="100px" class="tabla-reporte" var="tutr" value="#{tutoriasController.tutoriasAsignaturaRealizadas}">
                                     <p:column headerText="Fecha-Solicitud">
-                                        #{tut.fechaSolicitud}
+                                        #{tutr.fechaSolicitud}
                                     </p:column>
                                     <p:column headerText="Fecha-Ejecucion">
-                                        #{tut.fechaEjecucion}
+                                        #{tutr.fechaEjecucion}
                                     </p:column>
                                     <p:column headerText="Fecha-Asignacion">
-                                        #{tut.fechaAsignacion}
+                                        #{tutr.fechaAsignacion}
                                     </p:column>
                                     <p:column headerText="Compromisos">
-                                        #{tut.compromisos}
+                                        #{tutr.compromisos}
                                     </p:column>
                                     <p:column headerText="Recomendaciones">
-                                        #{tut.recomendaciones}
+                                        #{tutr.recomendaciones}
                                     </p:column>
                                     <p:column headerText="Estado">
-                                        #{tut.estado}
+                                        #{tutr.estado}
                                     </p:column>
                                     <p:column headerText="Solicitado Por">
-                                        #{tut.integrante.matricula.estudiante.toString()}
+                                        #{tutr.integrante.matricula.estudiante.toString()}
                                     </p:column>
                                     <p:column headerText="">
-                                        <h:commandButton disabled="#{tut.fueRealizada()}" value="Programar" action="#{profesorController.pprogramarTutoria(tut)}" />
-                                        <h:commandButton disabled="#{tut.fueRealizada()}" value="Realizar" action="#{profesorController.prealizarTutoria(tut)}" />
+                                        <h:commandButton disabled="#{tut.fueRealizada()}" value="Programar" action="#{profesorController.pprogramarTutoria(tutr)}" />
+                                        <h:commandButton disabled="#{tut.fueRealizada()}" value="Realizar" action="#{profesorController.prealizarTutoria(tutr)}" />
                                     </p:column>         
                                 </p:dataTable>  
                             </p:tab>

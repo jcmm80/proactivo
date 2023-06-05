@@ -37,7 +37,7 @@ public class ProyectoAulaController implements Serializable {
     private Proyecto_Aula proyecto = new Proyecto_Aula();
     private LiderPA lider = new LiderPA();
     private Item_Proyecto item = new Item_Proyecto();
-    private Integrante integrante=new Integrante();
+    private Integrante integrante = new Integrante();
 
     //colecciones
     private List<Item_Proyecto> itenes = new LinkedList();
@@ -52,7 +52,9 @@ public class ProyectoAulaController implements Serializable {
 
     @ManagedProperty("#{avanceController}")
     private AvanceController avancon;
-    
+    @ManagedProperty("#{tutoriasController}")
+    private TutoriasController tutcon;
+
     /**
      * Creates a new instance of ProyectoAulaController
      */
@@ -68,17 +70,17 @@ public class ProyectoAulaController implements Serializable {
         proyectos = proaser.obtenerProyectosXPeriodo(p);
         //System.out.println(""+proyectos.size());
     }
-    
-    public void obtenerProyectosNoGuardados(){
-        for(Proyecto_Aula p:proyectos){
-            if(!p.getEstado().equals("Guardado")){
+
+    public void obtenerProyectosNoGuardados() {
+        for (Proyecto_Aula p : proyectos) {
+            if (!p.getEstado().equals("Guardado")) {
                 proyectosNoGuardados.add(p);
             }
         }
     }
-    
-    public void obtenerProyectoAulaXMatricula(Matricula m) { 
-        integrante=inteser.obtenerIntegranteXMatricula(m);        
+
+    public void obtenerProyectoAulaXMatricula(Matricula m) {
+        integrante = inteser.obtenerIntegranteXMatricula(m);
         proyecto = proaser.consultar(Proyecto_Aula.class, integrante.getProyecto().getId());
         proyecto.setIntegrantes(inteser.obtenerIntegrantesProyecto(proyecto));
         proyecto.setItenes_Proyecto(itemser.obtenerProyectosXPeriodo_Programa(proyecto));
@@ -106,15 +108,16 @@ public class ProyectoAulaController implements Serializable {
         proyecto.setEstado("Guardado");
         proyecto = proaser.modificar(proyecto);
     }
+
     public void aprobarPA() {
         proyecto.setEstado("Produccion");
         proyecto = proaser.modificar(proyecto);
     }
+
     public void aplazarPA() {
         proyecto.setEstado("Aplazado");
         proyecto = proaser.modificar(proyecto);
     }
-
 
     public void publicarPA() {
         proyecto.setEstado("Propuesta");
@@ -150,7 +153,23 @@ public class ProyectoAulaController implements Serializable {
 
     public void seleccionarProyecto(Proyecto_Aula pa) {
         proyecto = pa;
+
         integrantes = pa.getIntegrantes();
+    }
+
+    public boolean tieneProcesos(Proyecto_Aula pa) {
+        boolean tiene = false;
+        avancon.consultarAvances(pa);
+        if (avancon.getAvances().size() > 0) {
+            tiene = true;
+            FacesUtil.addErrorMessage("EL proyecto que desea eliminar ya tiene avances registrados");
+        }
+        tutcon.obtenerTutoriasProyecto(pa);
+        if (tutcon.getTutorias().size() > 0) {
+            tiene = true;
+            FacesUtil.addErrorMessage("EL proyecto que desea eliminar ya tiene tutorias establecidas");
+        }
+        return tiene;
     }
 
     public void eliminarProyecto(Proyecto_Aula pa) {
@@ -175,7 +194,7 @@ public class ProyectoAulaController implements Serializable {
 
     public void obtenerIntegrantesXProyectos(Profesor p) {
         try {
-            integrantes = inteser.obtenerIntegrantesProyectosXProfesorLider(p);            
+            integrantes = inteser.obtenerIntegrantesProyectosXProfesorLider(p);
             for (int i = 0; i < proyectos.size(); i++) {
                 ListIterator it = integrantes.listIterator();
                 proyectos.get(i).setIntegrantes(new LinkedList());
@@ -192,9 +211,27 @@ public class ProyectoAulaController implements Serializable {
         }
     }
 
-     public void obtenerIntegrantesXProyectos(Periodo p) {
+    public Integrante integranteMatricula(Matricula m){
+        Integrante inte=new Integrante();
+        for(Integrante i:integrantes){
+            if(i.getMatricula().getId().equals(m.getId())){
+//                 System.out.println("Encontre la matricula: "+m.getEstudiante().getPrimerApellido());
+                inte=i;break;
+            }
+        }
+        return inte;
+    }
+    
+    
+//    public void consultarIntegrantesXperiodo(Periodo p){
+//         integrantes = inteser.obtenerIntegrantesProyectosXPeriodo(p);
+//    }
+    
+    public void obtenerIntegrantesXProyectos(Periodo p) {
         try {
             integrantes = inteser.obtenerIntegrantesProyectosXPeriodo(p);
+//            System.out.println("Numero de integrantes: "+ integrantes.size()+ "Periodo: "+p.getAnio());
+            
             for (int i = 0; i < proyectos.size(); i++) {
                 ListIterator it = integrantes.listIterator();
                 proyectos.get(i).setIntegrantes(new LinkedList());
@@ -202,15 +239,16 @@ public class ProyectoAulaController implements Serializable {
                     Integrante inte = (Integrante) it.next();
                     if (inte.getProyecto().getId().equals(proyectos.get(i).getId())) {
                         proyectos.get(i).getIntegrantes().add(inte);
-                        it.remove();
+//                        it.remove();
                     }
                 }
             }
+//             System.out.println("Numero de integrantes: "+ integrantes.size()+ "Periodo: "+p.getAnio());
         } catch (java.util.ConcurrentModificationException cme) {
             cme.printStackTrace();
         }
     }
-    
+
     public void datosPeriodoPrograma() {
         proyecto.setSeccion(lider.getSeccion());
         proyecto.setProfesorLider(lider);
@@ -407,6 +445,20 @@ public class ProyectoAulaController implements Serializable {
      */
     public void setIntegrante(Integrante integrante) {
         this.integrante = integrante;
+    }
+
+    /**
+     * @return the tutcon
+     */
+    public TutoriasController getTutcon() {
+        return tutcon;
+    }
+
+    /**
+     * @param tutcon the tutcon to set
+     */
+    public void setTutcon(TutoriasController tutcon) {
+        this.tutcon = tutcon;
     }
 
 }

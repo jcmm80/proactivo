@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <div class="contprogramacion">
+            <div class="cfases">
+                <p:dataGrid rendered="#{not empty fasesController.fases}" columns="1" var="fas" value="#{fasesController.fases}"  >
+                    <p:card header="Corte: ##{fas.numero}">
+
+                        <h:outputText value="Inicia: #{fas.fechaInicial}" /><br/>
+                        <h:outputText value="Finaliza: #{fas.fechaFinal}" />
+                    </p:card>
+                </p:dataGrid>
+
+            </div>
+            <div class="ceval">
+                <p:card rendered="#{not empty evaluacionController.evaluacion}" header="Evaluacion">                        
+                    <h:outputText value="Sustentacion: #{evaluacionController.evaluacion.fechaprogramada}" />                        
+                </p:card>
+
+            </div>
+        </div>
+    </h:body>
+    <style>
+
+        .contprogramacion {  display: grid;
+                             grid-template-columns: 100%;
+                             grid-template-rows: 1fr 1fr;
+                             grid-auto-columns: 1fr;
+                             gap: 0px 0px;
+                             grid-auto-flow: row;
+                             align-content: center;
+                             grid-template-areas:
+                                 "cfases"
+                                 "ceval";
+        }
+
+        .cfases { grid-area: cfases; }
+
+        .ceval { grid-area: ceval; }
+
+    </style>
+</html>
+

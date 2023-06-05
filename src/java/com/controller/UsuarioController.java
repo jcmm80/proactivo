@@ -6,6 +6,7 @@
 package com.controller;
 
 import com.dao.EntityManagedSingleton;
+import com.entity.ProgramaAcademico;
 import com.entity.Usuario;
 import com.services.UsuarioServices;
 import com.utilidades.ImageUtils;
@@ -18,6 +19,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 import org.primefaces.model.file.UploadedFile;
 
 /**
@@ -69,6 +71,7 @@ public class UsuarioController implements Serializable {
 
     public void iniciar() {
         try {
+
             setUsuario(ususer.ingresar(getUsuario().getLogin(), getUsuario().getPassword()));
             if (!getUsuario().getIdentificacion().equals("")) {
                 percon.establecerPeriodoActual();
@@ -81,10 +84,13 @@ public class UsuarioController implements Serializable {
                     procon.consultarProgramasXCoordinador(coorcon.getCoordinador());
                     coorcon.consultarAreas();
                     seccon.setPeriodo(percon.getPeriodoActual());
+                    coorcon.setPeriodo(percon.getPeriodoActual());
                     seccon.obtenerseccionesPeriodo();
                     semcon.obtenerSemestres();
                     coorcon.consultarAsignaturas(percon.getPeriodoActual());
                     coorcon.consultarMatriculasXPeriodo(percon.getPeriodoActual());
+                    coorcon.consultarProyectosAulaPeriodo();
+                    coorcon.consultarTutoriasPeriodo();
                     paginaActual = "/Coordinador/GUICoordinador.xhtml";
 
                 }
@@ -100,18 +106,32 @@ public class UsuarioController implements Serializable {
 
                 }
                 if (getUsuario().getTipo().equals("Profesor")) {
+//                    limpiarDatosProfesor();
                     profcon.obtenerPrtofesor(getUsuario().getId());
                     profcon.setPeriodo(percon.getPeriodoActual());
                     procon.obtenerProgramaCoordinadorPA(profcon.getProfesor());
-                    profcon.consultarMatriculasXPeriodo();
-                    profcon.consultarProfesores();//ojo porque consulta profesores
-                    procon.consultarProgramas();
-                    percon.obtenerPeriodos();
                     profcon.esLiderPA();
+                    try {
+                        if (procon.getPrograma().getId() > 0) {//si es coordinador de proyectos del programa
+                            System.out.println("El profesor es coordinador de PA");
+                            profcon.setPrograma(procon.getPrograma());
+                            profcon.consultarFases(procon.getPrograma());
+                            profcon.consultarMatriculasXPeriodo();
+                            profcon.consultarProfesores();//ojo porque consulta profesores
+                            procon.consultarProgramas();
+                            percon.obtenerPeriodos();
+                            semcon.obtenerSemestres();
+                            profcon.consultarTutoriasPeriodo();
+                        } else {
+                            procon.setPrograma(null);
+                        }
+                    } catch (NullPointerException npe) {
+
+//                        System.out.println(""+procon.getPrograma().getCoordinadorPA().toString());
+                    }
                     profcon.consultarProyectosAulaPeriodo();
                     profcon.obtenerAsignaturasXProfesor();
                     profcon.obtenerTutoriasXProfesor();
-                    semcon.obtenerSemestres();
                     profcon.getEvacon().setSemestres(semcon.getSemestres());
                     paginaActual = "/Profesor/GUIProfesor.xhtml";
 
@@ -126,6 +146,7 @@ public class UsuarioController implements Serializable {
                 mpanelLogin = false;
             }
         } catch (java.lang.NullPointerException npe) {
+            npe.printStackTrace();
             FacesUtil.addErrorMessage("Usuario, tipo de usuario o matricula inexistente");
         }
 
@@ -155,14 +176,18 @@ public class UsuarioController implements Serializable {
 
     public void salir() {
         paginaActual = "";
-        mpanelLogin = true;       
-        limpiarDatosEstudiante();
-        limpiarDatosProfesor();
-        limpiarDatosCoordinador();
-        procon.setPrograma(null);
-        percon.setPeriodo(null);
+        mpanelLogin = true;
+//        limpiarDatosEstudiante();
+//        limpiarDatosProfesor();
+//        limpiarDatosCoordinador();
+//        procon.setPrograma(null);
+//        percon.setPeriodo(null);
         usuario = new Usuario();
         EntityManagedSingleton.closeEntityManager();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+// Invalida la sesión y elimina todas las variables almacenadas en ella
+        session.invalidate();
     }
 
     public void limpiarDatosEstudiante() {
@@ -228,12 +253,8 @@ public class UsuarioController implements Serializable {
 
     public void limpiarDatosProfesor() {
         profcon.setPaginaActualP("");
-//        profcon.setProfesor(null);
-//        profcon.setPeriodo(null);
-//        procon.setPrograma(null);
-//        profcon.setLiderPa(null);
         profcon.setProfesores(null);
-        procon.consultarProgramas();
+//        procon.getPrograma().setCoordinadorPA(null);
         percon.setPeriodos(null);
         profcon.setSemestresLider(null);
         profcon.getProacon().setProyectos(null);
@@ -243,6 +264,8 @@ public class UsuarioController implements Serializable {
 //        profcon.getAsigcon().setAsignatura(null);
         profcon.getAsigcon().setSecciones(null);
         profcon.getTutcon().liberarObjetos();
+        procon.setPrograma(new ProgramaAcademico());
+        percon.setPeriodo(null);
     }
 
     public void subirArchivoPlano() {

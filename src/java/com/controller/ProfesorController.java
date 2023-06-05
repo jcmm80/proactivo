@@ -13,10 +13,12 @@ import com.entity.Profesor;
 import com.entity.ProgramaAcademico;
 import com.entity.Proyecto_Aula;
 import com.entity.Seccion;
+import com.entity.Semestre;
 import com.entity.Tutoria;
 import com.entity.UnidadCompetencia;
 import com.services.LiderPAServices;
 import com.services.ProfesorServices;
+import com.services.SeccionServices;
 import com.utilidades.ImageUtils;
 import java.io.IOException;
 import java.io.Serializable;
@@ -45,15 +47,18 @@ public class ProfesorController implements Serializable {
     private Periodo periodo = new Periodo();//para almacenar el el periodo actual
     private LiderPA liderPa;// para conocer si el profesor es lider
     private ProgramaAcademico coordinadorPa;// para conocer si el profesor es coordinador
-    ProfesorServices profser = new ProfesorServices();
-
+    private ProgramaAcademico programa = new ProgramaAcademico();
+    private Seccion seccion = new Seccion();
     //Colecciones
     private List<Profesor> profesores = new LinkedList();
     private List<LiderPA> semestresLider = new LinkedList();//semestres en la cual un profesor es lider
     private List<Proyecto_Aula> proyectosSemestre = new LinkedList();
+    private List<Seccion> secciones = new LinkedList();//para consultar resultados cuando es coordinador de proyectos
 
     //Servicios
     LiderPAServices lidpaser = new LiderPAServices();
+    ProfesorServices profser = new ProfesorServices();
+    private SeccionServices secser = new SeccionServices();
 
     //controladores
     @ManagedProperty("#{proyectoAulaController}")
@@ -77,6 +82,11 @@ public class ProfesorController implements Serializable {
     @ManagedProperty("#{avanceController}")
     private AvanceController avancon;
 
+    @ManagedProperty("#{semestreController}")
+    private SemestreController semcon;
+    @ManagedProperty("#{reportesController}")
+    private ReportesController repcon;
+
     //variables de control
     private String paginaActualP = "";
     private String paginaTutoria = "";
@@ -89,11 +99,52 @@ public class ProfesorController implements Serializable {
     private boolean mpanelPTutoria;
     private boolean mpanelPCompetencias;//mostrar obciones del modulo de competencias
     private boolean mostPanelEvaluaciones;
+    private int activeIRes = 0;
+    private int activeIproy = 0;
+    private int activeItut = 0;
 
     /**
      * Creates a new instance of ProfesorController
      */
     public ProfesorController() {
+    }
+
+    public void seleccionarSemestrepTResultados(Semestre s) {
+
+        setSecciones(getSecser().obtenerSeccionesXSemestre_Periodo_Programa(s, getPrograma(), getPeriodo()));
+
+    }
+
+    public void seleccionarSemestreVProyectos(Semestre s) {
+        setSecciones(getSecser().obtenerSeccionesXSemestre_Periodo_Programa(s, getPrograma(), getPeriodo()));
+        getRepcon().createBarModel();
+        getRepcon().createBarModelSemestre(s);
+
+    }
+
+    public void obtenerProyectosSeccion(Seccion s) {
+        proyectosXSeccion(s);
+        activeIproy = 1;
+    }
+
+    public void consultarProyectoR(Proyecto_Aula pa) {
+        proacon.setProyecto(pa);
+        activeIproy = 2;
+    }
+
+    public void obtenerResultadosSeccion(Seccion s) {
+        matcont.setSeccion(s);
+        matcont.obtenerMatriculasXSeccion(s);
+        activeIRes = 1;
+    }
+
+    public void verResultados(Integrante i) {
+        matcont.seleccionarMatricula(i);
+        activeIRes = 2;
+    }
+
+    public void volverEstudiantesSeccion() {
+        activeIRes = 1;
     }
 
     public void agregarAsignaturaTutoria(Asignatura a) {
@@ -216,12 +267,19 @@ public class ProfesorController implements Serializable {
     }
 
     public void obtenerTutoriasXProfesor() {
+        System.out.println("Consultare las tutorias");
         tutcon.consultarTutoriasXProfesor(profesor);
+    }
+    
+    public void consultarTutoriasPeriodo() {
+        tutcon.obtenerTutoriasXPeriodo(periodo);
+        repcon.setSemestres(semcon.getSemestres());
+        repcon.setTutorias(tutcon.getTutorias());
     }
 
     public void proyectosXSeccion(Seccion s) {
         proyectosSemestre = new LinkedList();
-        System.out.println("" + proacon.getProyectos().size());
+//        System.out.println("" + proacon.getProyectos().size());
         for (Proyecto_Aula p : proacon.getProyectos()) {
             if (p.getSeccion().getId().equals(s.getId())) {
                 proyectosSemestre.add(p);
@@ -249,7 +307,7 @@ public class ProfesorController implements Serializable {
         semestresLider = lidpaser.obtenersemestresLiderPAXProfesor(profesor, periodo);
         if (semestresLider.size() > 0) {
             mostPanelSemestres = true;
-
+            System.out.println("El profesor el lider");
 //            proacon.consultarProyectosXPeriodo(periodo);
 //            proacon.obtenerIntegrantesXProyectos(periodo);
 //            proacon.consultarProyectosXProfesorLider(profesor);
@@ -262,8 +320,28 @@ public class ProfesorController implements Serializable {
     }
 
     public void consultarProyectosAulaPeriodo() {
+        proacon.setProyecto(new Proyecto_Aula());
         proacon.consultarProyectosXPeriodo(periodo);
         proacon.obtenerIntegrantesXProyectos(periodo);
+        evacon.obtenerValoracionesdelPeriodo(periodo);
+        repcon.setProyectos(getProacon().getProyectos());
+        repcon.setSemestres(getSemcon().getSemestres());
+
+    }
+
+    public void obtenerTutoriasSeccion(Seccion s) {
+        seccion = s;
+        repcon.createBarTutoriasSeccion(s);
+        tutcon.setTutoriasAsignatura(new LinkedList());
+        asigcon.obtenerAsignaturasXSeccion(s);
+        //  proyectosXSeccion(seccion);
+        activeItut = 1;
+    }
+
+    public void seleccionarSemestrepTRTutorias(Semestre s) {
+        setSecciones(secser.obtenerSeccionesXSemestre_Periodo_Programa(s, getPrograma(), getPeriodo()));
+        repcon.createBarTutorias();
+        repcon.createBarTutoriasSemestre(s);
     }
 
     public boolean habilitarLider() {
@@ -275,7 +353,8 @@ public class ProfesorController implements Serializable {
     }
 
     public void consultarMatriculasXPeriodo() {
-        matcont.consultarEstudiantesMatriculadosXPeriodo(periodo);
+        matcont.consultarMatriculasXPeriodoYPrograma(programa, periodo);
+//        matcont.consultarEstudiantesMatriculadosXPeriodo(periodo);
     }
 
     public void registrarprofesor() {
@@ -319,10 +398,12 @@ public class ProfesorController implements Serializable {
     }
 
     public void eliminarProyectoAula(Proyecto_Aula pa) {
-        proacon.eliminarProyecto(pa);
-        matcont.consultarEstudiantesMatriculadosXPeriodo(periodo);
-        proacon.consultarProyectosXProfesorLider(profesor);
-        proyectosXSeccion(liderPa.getSeccion());
+        if (!proacon.tieneProcesos(pa)) {
+            proacon.eliminarProyecto(pa);
+            matcont.consultarEstudiantesMatriculadosXPeriodo(periodo);
+            proacon.consultarProyectosXProfesorLider(profesor);
+            proyectosXSeccion(liderPa.getSeccion());
+        }
     }
 
     public void subirImagenProfesor() {
@@ -359,10 +440,12 @@ public class ProfesorController implements Serializable {
     }
 
     public void g_tutoria() {
+        mpanelTutorias = false;
         paginaActualP = "/Profesor/GestorTutorias.xhtml";
     }
 
     public void asignaturasProfesor() {
+        mostPAsignatura = false;
         paginaActualP = "/Profesor/AsignaturasProfesor.xhtml";
     }
 
@@ -398,6 +481,30 @@ public class ProfesorController implements Serializable {
         paginaActualP = "/Profesor/Evaluacion/GestorDimensiones.xhtml";
     }
 
+    public void gNucleos() {
+        paginaActualP = "/Profesor/GestorNucleos.xhtml";
+    }
+
+    public void gRproyectos() {
+        activeIproy = 0;
+        paginaActualP = "/Profesor/ProyectosAulaPrograma.xhtml";
+    }
+
+    public void gResultadosA() {
+        activeIRes = 0;
+        paginaActualP = "/Profesor/ResultadosAprendizaje.xhtml";
+    }
+
+    public void gRtutorias() {
+        activeItut = 0;
+        paginaActualP = "/Profesor/TutoriasPrograma.xhtml";
+    }
+
+    public void gFases() {
+       
+        paginaActualP = "/Profesor/GestorFases.xhtml";
+    }
+    
     public void gEvaluaciones() {
         mostPanelEvaluaciones = false;
         evacon.setIndTavEvaluacion(0);
@@ -811,6 +918,132 @@ public class ProfesorController implements Serializable {
      */
     public void setAvancon(AvanceController avancon) {
         this.avancon = avancon;
+    }
+
+    /**
+     * @return the programa
+     */
+    public ProgramaAcademico getPrograma() {
+        return programa;
+    }
+
+    /**
+     * @param programa the programa to set
+     */
+    public void setPrograma(ProgramaAcademico programa) {
+        this.programa = programa;
+    }
+
+    /**
+     * @return the secciones
+     */
+    public List<Seccion> getSecciones() {
+        return secciones;
+    }
+
+    /**
+     * @param secciones the secciones to set
+     */
+    public void setSecciones(List<Seccion> secciones) {
+        this.secciones = secciones;
+    }
+
+    /**
+     * @return the activeIRes
+     */
+    public int getActiveIRes() {
+        return activeIRes;
+    }
+
+    /**
+     * @param activeIRes the activeIRes to set
+     */
+    public void setActiveIRes(int activeIRes) {
+        this.activeIRes = activeIRes;
+    }
+
+    /**
+     * @return the activeIproy
+     */
+    public int getActiveIproy() {
+        return activeIproy;
+    }
+
+    /**
+     * @param activeIproy the activeIproy to set
+     */
+    public void setActiveIproy(int activeIproy) {
+        this.activeIproy = activeIproy;
+    }
+
+    /**
+     * @return the activeItut
+     */
+    public int getActiveItut() {
+        return activeItut;
+    }
+
+    /**
+     * @param activeItut the activeItut to set
+     */
+    public void setActiveItut(int activeItut) {
+        this.activeItut = activeItut;
+    }
+
+    /**
+     * @return the repcon
+     */
+    public ReportesController getRepcon() {
+        return repcon;
+    }
+
+    /**
+     * @param repcon the repcon to set
+     */
+    public void setRepcon(ReportesController repcon) {
+        this.repcon = repcon;
+    }
+
+    /**
+     * @return the secser
+     */
+    public SeccionServices getSecser() {
+        return secser;
+    }
+
+    /**
+     * @param secser the secser to set
+     */
+    public void setSecser(SeccionServices secser) {
+        this.secser = secser;
+    }
+
+    /**
+     * @return the seccion
+     */
+    public Seccion getSeccion() {
+        return seccion;
+    }
+
+    /**
+     * @param seccion the seccion to set
+     */
+    public void setSeccion(Seccion seccion) {
+        this.seccion = seccion;
+    }
+
+    /**
+     * @return the semcon
+     */
+    public SemestreController getSemcon() {
+        return semcon;
+    }
+
+    /**
+     * @param semcon the semcon to set
+     */
+    public void setSemcon(SemestreController semcon) {
+        this.semcon = semcon;
     }
 
 }

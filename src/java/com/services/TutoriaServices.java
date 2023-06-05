@@ -6,6 +6,7 @@ package com.services;
 
 import com.dao.ImplDao;
 import com.entity.Asignatura;
+import com.entity.Periodo;
 import com.entity.Profesor;
 import com.entity.Proyecto_Aula;
 import com.entity.Tutoria;
@@ -36,7 +37,7 @@ public class TutoriaServices extends ImplDao<Tutoria, Long> implements ITutoria,
             tut = (Tutoria) qu.getSingleResult();
 //        System.out.println(" Usuario: "+usu.getTipo());
         } catch (Exception ex) {
-            ex.printStackTrace();
+           // ex.printStackTrace();
             //FacesUtil.addErrorMessage("Error Inicio Session",ex.getMessage() );
         } finally {
            em.getTransaction().commit();
@@ -57,7 +58,8 @@ public class TutoriaServices extends ImplDao<Tutoria, Long> implements ITutoria,
                     .setParameter(1, a.getId())
                     .setParameter(2, p.getId());
             tutorias = qu.getResultList();
-            em.close();
+             em.getTransaction().commit();
+            System.out.println("obtenerTutoriasXAsignaturaProyecto");  
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -92,11 +94,48 @@ public class TutoriaServices extends ImplDao<Tutoria, Long> implements ITutoria,
             Query qu = em.createQuery(q)
                     .setParameter(1, a.getId());
             tutorias = qu.getResultList();
-            em.close();
+            em.getTransaction().commit();
+            System.out.println("obtenerTutoriasXAsignatura"); 
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return tutorias;
+    }
+       public List<Tutoria> obtenerTutoriasXProyecto(Proyecto_Aula p) {
+        List<Tutoria> tutorias = new LinkedList();
+        try {
+            EntityManager em = getEntityManagger();
+            em.getTransaction().begin();
+            String q = "select t from Tutoria t where t.proyecto.id = ?1";
+            System.out.println(" Consulta: " + q);
+            Query qu = em.createQuery(q)
+                    .setParameter(1, p.getId());
+            tutorias = qu.getResultList();
+            em.getTransaction().commit();
+            System.out.println("obtenerTutoriasXProyecto"); 
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return tutorias;
     }
      
+            public List<Tutoria> obtenerTutoriasXPeriodo(Periodo p) {
+        List<Tutoria> tutorias = new LinkedList();
+        try {
+            EntityManager em = getEntityManagger();
+            em.getTransaction().begin();
+            String q = "select t from Tutoria t where t.asignatura.seccion.periodo.id = ?1";
+            System.out.println(" Consulta: " + q);
+            Query qu = em.createQuery(q)
+                    .setParameter(1, p.getId());
+            tutorias = qu.getResultList();
+            em.getTransaction().commit();
+            System.out.println("obtenerTutoriasXPeriodo"); 
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return tutorias;
+    }
+       
 }

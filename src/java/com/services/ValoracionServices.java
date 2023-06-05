@@ -9,6 +9,7 @@ import com.entity.Asignatura;
 import com.entity.CriterioEvaluacion;
 import com.entity.Evaluacion;
 import com.entity.Integrante;
+import com.entity.Periodo;
 import com.entity.Valoracion;
 import com.implDao.IValoracion;
 import java.io.Serializable;
@@ -69,6 +70,43 @@ public class ValoracionServices extends ImplDao<Valoracion, Long> implements IVa
             secciones = qu.getResultList();
             em.getTransaction().commit();
             System.out.println("obtenerValoracionesXEvaluacion");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return secciones;
+    }
+  public List<Valoracion> obtenerValoracionesXIntegrante(Integrante i) {
+        List<Valoracion> secciones = new LinkedList();
+        try {
+            EntityManager em = getEntityManagger();
+            em.getTransaction().begin();
+            String q = "select u from Valoracion u where u.integrante.id = ?1";
+            System.out.println(" Consulta: " + q);
+            Query qu = em.createQuery(q)
+                    .setParameter(1, i.getId());
+            secciones = qu.getResultList();
+            em.getTransaction().commit();
+            System.out.println("obtenerValoracionesXEvaluacion");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return secciones;
+    }
+  
+  public List<Valoracion> obtenerValoracionesXPeriodo(Periodo p) {
+        List<Valoracion> secciones = new LinkedList();
+        try {
+            EntityManager em = getEntityManagger();
+            em.getTransaction().begin();
+            String q = "select u from Valoracion u where u.integrante.proyecto.seccion.periodo.id = ?1";
+            System.out.println(" Consulta: " + q);
+            Query qu = em.createQuery(q)
+                    .setParameter(1, p.getId());
+            secciones = qu.getResultList();
+            em.getTransaction().commit();
+            System.out.println("obtenerValoracionesXPeriodo");
 
         } catch (Exception ex) {
             ex.printStackTrace();

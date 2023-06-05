@@ -52,6 +52,7 @@ public class Tipo_itemController implements Serializable{
     }
         
        public void consultarTipos_Items(){
+           System.out.println("consulte los tipos de item");
            setTipos_Items(getTipiser().consultarTodo(Tipo_Item.class));
     }
 

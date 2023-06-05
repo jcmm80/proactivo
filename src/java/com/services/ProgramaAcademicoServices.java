@@ -48,7 +48,7 @@ public class ProgramaAcademicoServices extends ImplDao<ProgramaAcademico, Long> 
         pro=(ProgramaAcademico)qu.getSingleResult();
 //        System.out.println(" Usuario: "+usu.getTipo());
         }catch(javax.persistence.NoResultException ner){
-            
+            pro=new ProgramaAcademico();
         }
         catch(Exception ex){
             ex.printStackTrace();

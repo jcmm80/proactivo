@@ -36,7 +36,8 @@ public class IntegranteServices extends ImplDao<Integrante, Long> implements IIn
                     .setParameter(1, s.getId());
             integrantes = qu.getResultList();
 
-            em.close();
+             em.getTransaction().commit();
+             System.out.println("obtenerIntegrantesProyectosXPeriodo_Programa");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -54,7 +55,8 @@ public class IntegranteServices extends ImplDao<Integrante, Long> implements IIn
                     .setParameter(1, p.getId());
             integrantes = qu.getResultList();
 
-            em.close();
+             em.getTransaction().commit();
+             System.out.println("obtenerIntegrantesProyectosXProfesorLider");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -72,7 +74,8 @@ public class IntegranteServices extends ImplDao<Integrante, Long> implements IIn
                     .setParameter(1, pr.getId());
             integrantes = qu.getResultList();
 
-            em.close();
+             em.getTransaction().commit();
+             System.out.println("obtenerIntegrantesProyecto");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -93,7 +96,8 @@ public class IntegranteServices extends ImplDao<Integrante, Long> implements IIn
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            em.close();
+            em.getTransaction().commit();
+            System.out.println("obtenerIntegranteXMatricula");
         }
         return inte;
     }
