@@ -7,97 +7,168 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <section class="contenido-contenedor">
-        <div class="border contenedor top">
-             <h1 class="tittle">Gestor de programas</h1>
-             
-                <span class="aviso">Crear Programas</span>
-                <div class="contenedor-form periodos">
-                    <div class="input-form-200">
-                        Codigo
-                        <p:inputText class="iform" value="#{programaController.programa.codigo}" />
+        <section class="contenido-contenedor overflow-x-hidden">
+            <div class="contenedor top ">
+                <div class="card mb-4">
+                    <div class="relative pb-2">
+                        <h3 class="text-2xl ">Crea Programas</h3>
+                        <small class="block mb-4 text-gray-600">Un programa académico se refiere a una estructura educativa diseñada para impartir conocimientos y habilidades en un área de estudio específica. </small>   
+                        <div class="espaceador"></div>
                     </div>
-                    <div class="input-form-310">
-                        Nombre Completo
-                        <p:inputText class="iform" value="#{programaController.programa.nombreCompleto}" />
+
+
+                    <div class="form">
+                        <div>
+                            <h4>Codigo</h4>
+                            <div>
+                                <p:inputText  value="#{programaController.programa.codigo}" placeholder="001"/>
+                                <small class="flex align-items-center gap-1 text-gray-600"><i class="ri-question-fill " ></i><p></p>ingresa el código único para tu programa académico. Este código debe estar compuesto por números </small>
+                            </div>
+                        </div>
+                        <div>
+                            <h4>Nombre Corto</h4>
+                            <p:inputText  value="#{programaController.programa.nombreCompleto}" placeholder="Tecgnologia en sistema" />
+                            <small class="flex align-items-center gap-1 text-gray-600"><i class="ri-question-fill " ></i><p></p>proporciona un nombre abreviado o acrónimo para tu programa académico.</small>
+                        </div>
+                        <div>  
+                            <h4>Nombre Completo</h4>
+                            <p:inputText  style="max-width: 600px" value=""  placeholder="Tecgnología de Desarrollo de Software e información"/>
+                            <small class="flex align-items-center gap-1 text-gray-600"><i class="ri-question-fill " ></i><p></p>ingresa el nombre completo del programa académico.</small>
+                        </div>
+
+
+
                     </div>
-                    <div class="input-form-200">
-                        Nombre Corto
-                        <p:inputText class="iform" value="#{programaController.programa.nombre}" />
-                    </div>
-                    
-                    
-                    
                 </div>
-                 
-                <div class="ccoord">
-                    <span class="aviso">Selecciona Coordinador De Programa</span>
-                        <p:dataTable class="tabla-reporte" var="coor" value="#{coordinadorController.coordinadores}">
-                            <p:column headerText="Identificacion">
-                                #{coor.identificacion}
-                            </p:column>
-                            <p:column headerText="primer Nombre">
-                                #{coor.primerNombre}
-                            </p:column>
-                            <p:column headerText="Segundo Nombre">
-                                #{coor.segundoNombre}
-                            </p:column>
-                            <p:column headerText="Primer Apellido">
-                                #{coor.primerApellido}
-                            </p:column>
-                            <p:column headerText="Segundo Apellido">
-                                #{coor.segundoApellido}
-                            </p:column>
-                            <p:column headerText="Acciones" >
-                                <div class="Acciones">
-                                    <div class="accion">
-                                    <i class="fa fa-user-plus" style="color: darkcyan"></i><h:commandButton class="icono" value="." action="#{programaController.agregarCoordinador(coor)}" />
+
+
+                <div class="card">
+                    <div class="relative pb-4">
+                        <h3 class="text-2xl ">Selecciona Coordinador</h3>
+                        <div class="espaceador"></div>
+                    </div>
+                    <div class="w-full">
+                        <p:carousel      var="coor"  value="#{coordinadorController.coordinadores}">
+                            <p:tab>
+                                <div class="bg-white flex flex-column p-3rem border-round-3xl gap-2">
+                                    <div class="flex justify-content-center m-2 w-3rem m-auto border-circle overflow-hidden">
+                                        <h:graphicImage class="img" value="/Imagenes/Perfiles/iperfilh.jpg"/>
+                                    </div>
+                                    <div class="text-center">
+                                        <h3>#{coor.toString()}</h3>
+                                        <p class="text-red-500">id : #{coor.id}</p>
+                                        <div class="btn-agregar inline-block m-2 align-items-content">
+                                            <i class="ri-add-line flex font-bold"></i>
+                                            <h:commandButton class="btn" action="#{programaController.agregarCoordinador(coor)}" />
+                                        </div>
                                     </div>
                                 </div>
-                                
-                                
-                            </p:column>
-                        </p:dataTable>
-               
-                    </div>
-             <span class="aviso">Coordinador Seleccionado:<span style="color: black;"> #{programaController.programa.coordinador.toString()}</span></span>
-             <div class="tanone">
-                 <h:commandButton class="boton  "  value="registrar" action="#{programaController.registrar()}" />
-             </div>
-                            
-                
-                
-            
-                <span class="aviso">Programas</span>
-                <p:dataTable class="tabla-reporte" var="pro" value="#{programaController.programas}">
-                    <p:column headerText="Codigo">
-                        #{pro.codigo}
-                    </p:column>
-                    <p:column headerText="Nombre">
-                        #{pro.nombre}
-                    </p:column>
-                    <p:column headerText="Coordinador">
-                        #{pro.coordinador.toString()}
-                    </p:column>
-                    <p:column headerText="Acciones">
-                        <div class="Acciones">
-                            <div class="accion">
-                                <i class="fa fa-pen" style="color: #005CB9"></i><h:commandButton class="icono" value="." action="#{programaController.consultarprograma(pro)}" />
-                            </div>
-    
-                        </div>
-                        
-                    </p:column>
-                </p:dataTable>
-            
-        
-        
-    
 
-        </div>
-    </section>
+                            </p:tab>
+
+                        </p:carousel>
+                    </div>
+
+                    <div class="bg-white p-2 flex justify-content-between">
+                        <div class="flex gap-2 align-items-center">
+                            <i class="ri-focus-3-line"></i>
+                            Coordinador seleccionado :
+                        </div>
+                        <div>#{programaController.programa.coordinador.toString()}</div>
+
+                    </div>
+                </div>
+
+
+                <div class="btns-container justify-content-end">
+                    <div class="btn-s">
+                        <label>Registrar</label>
+                        <h:commandButton class="btn"  value="registrar" action="#{programaController.registrar()}" />
+                    </div>
+                </div>
+
+
+                <div class="card mb-4">
+                    <div class="relative pb-4">
+                        <h3 class="text-2xl ">Programas Creados</h3>
+                        <div class="espaceador"></div>
+                    </div>
+                    <p:dataTable  scrollable="true" class="mb-4" var="pro" value="#{programaController.programas}">
+                        <p:column headerText="Codigo">
+                            #{pro.codigo}
+                        </p:column>
+                        <p:column headerText="Nombre">
+                            #{pro.nombre}
+                        </p:column>
+                        <p:column headerText="Coordinador">
+                            #{pro.coordinador.toString()}
+                        </p:column>
+                        <p:column headerText="Acciones">
+                            <div class="Acciones">
+                                <div class="accion">
+                                    <i class="fa fa-pen" style="color: #005CB9"></i><h:commandButton class="icono" value="." action="#{programaController.consultarprograma(pro)}" />
+                                </div>
+
+                            </div>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+
+            </div>
+        </section>
         <style>
-            
+            body .ui-button{
+                border-radius: 20px !important;
+                border: 1px solid var(--first-color-s) !important;
+                transition: background-color .3s ease-out !important;
+                color: var(--first-color-s);
+                background-color: transparent !important;
+            }
+            body .ui-button:hover{
+                color: #fff;
+                background-color: var(--first-color-s) !important;
+            }
+            body .ui-wizard .ui-wizard-step-titles .ui-wizard-step-title.ui-state-highlight{
+                background: var(--first-color-s) !important;
+                color: #fff !important;  
+            }
+            .ui-wizard-step-title{
+                padding: 3px 6px !important;
+                font-size: 12px;
+                border: 1px solid var(--first-color-s) !important;
+                color: var(--first-color-s) !important};
+            border-radius: 6px ;
+            background: #fff !important;
+            }
+            .guia-form{
+                display: flex;
+                align-items: center;
+            }
+            body .ui-carousel .ui-carousel-header{
+                background: none !important;
+                border:none !important;
+                padding: 0px 0px 3px  !important;
+
+            }
+            body .ui-carousel .ui-carousel-page-links .ui-carousel-page-link.ui-icon-radio-on{
+                display: none !important;
+            }
+            .ui-carousel .ui-carousel-viewport .ui-carousel-items .ui-carousel-item{
+                padding: 1rem !important;
+                border: none;
+            }
+            body .ui-carousel .ui-carousel-viewport{
+                border: none;
+                background: none;
+            }
+            @media screen and (max-width: 767px) {
+            .form{
+                display: grid;
+                grid-template-columns: repeat(1, 1fr);
+                gap: 1rem;
+                position: relative;
+                padding-bottom: 2rem;
+            }
 
         </style>
     </h:body>

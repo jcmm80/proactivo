@@ -7,24 +7,23 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <h:head>
-
         <title>Facelet Title</title>
-
-
-
-
     </h:head>
     <h:body>
         <header>
-
             <div class="nav-up contenedor ">
-                <a href="index.xhtml"><h:graphicImage class="logo-sgpa" value="/resources/img/logo-rojo.png"/></a>
-                <div class="buscador">
-                    <input type="search" placeholder="Search..."></input>
-                    <i class="fas fa-search input-i"></i>
+                <div class="logo-search">
+                    <a href="index.xhtml" class="logo-proac-container">
+                        <h:graphicImage class="img logo-proac" value="/resources/img/logo-azul.png"/>
+                        <p><span>Pro</span>activo</p>
+                    </a>
+
+                    <div class="buscador">
+                        <input type="search" placeholder="Search..."></input>
+                        <i class="fas fa-search input-i"></i>
+                    </div>  
                 </div>
-                <a href="https://unicolombo.edu.co/"><h:graphicImage class="logo-unico" value="/resources/img/logo-verde.png"/></a>
-                <div class="perfil">
+                <div class="perfil ">
                     <div class="informacion-perfil">
                         <span>Estudiante</span>
                         <span>#{programaController.programa.nombre}</span>
@@ -50,12 +49,12 @@
             <!-- Nav horizontal -->
             <div class="nav-horizontal">
                 <nav>
-                    <div class="op"><h:graphicImage  value="/resources/img/bombillo.png"/><h:commandLink action="#{estudianteController.g_tutoria()}" value="Tutorias"  /></div>
-                    <div class="op"><h:graphicImage  value="/resources/img/motar.png"/><a href="">Estudiantes</a></div>
-                    <div class="op"><h:graphicImage  value="/resources/img/monitor.png"/><a href="">Proyecto Aula</a></div>
-                    <div class="op"><h:graphicImage  value="/resources/img/tabla.png"/><a href="">Asignaturas</a></div>
-                    <div class="op"><h:graphicImage  value="/resources/img/profesor.png"/><a href="">Profesores</a></div>
-                    <div class="op"><h:graphicImage  value="/resources/img/notas.png"/><a href="">Notas</a></div>     
+                    <div class="op"><i class="ri-lightbulb-fill"></i><h:commandLink action="#{estudianteController.g_tutoria()}" value="Tutorias"  /></div>
+                    <div class="op"><i class="fa fa-user-graduate"></i><a href="">Estudiantes</a></div>
+                    <div class="op"><i class="ri-article-fill"></i><a href="">Proyecto Aula</a></div>
+                    <div class="op"><i class="ri-slideshow-fill"></i><a href="">Asignaturas</a></div>
+                    <div class="op"><i class="fa fa-user-tie"></i><a href="">Profesores</a></div>
+                    <div class="op"><i class="ri-booklet-fill"></i><a href="">Notas</a></div>     
                 </nav>
             </div>
 
@@ -63,47 +62,31 @@
             <!-- Nav vertical -->
             <div class="nav-vertical ">
                 <nav id="nav-vertical" >
-                    <div class="menu-vertical">
+                    <div class="menu-vertical ">
                         <div class="contenedor-mv">
 
                             <span class="texto-menu">Menú</span>
                         </div> 
                     </div>
                     <h:panelGroup layout="block" rendered="#{!proyectoAulaController.proyecto.estadoProyecto()}">
-                    <div class="cop ">
-                        <div class="linea"></div>
-                        <div class="op-v"><h:graphicImage rendered="#{matriculaController.matricula.habilitarProyecto()}" value="/resources/img/motar.png"/><h:commandButton rendered="#{matriculaController.matricula.habilitarProyecto()}" value="Gestionar propuesta" class="botones-v" action="#{estudianteController.g_propuesta()}"></h:commandButton></div>
-                    </div>
+                        <div class="cop ">
+                            <div class="linea"></div>
+                            <div class="op-v"><h:commandButton rendered="#{matriculaController.matricula.habilitarProyecto()}" value="Gestionar propuesta" class="botones-v" action="#{estudianteController.g_propuesta()}"></h:commandButton></div>
+                        </div>
                     </h:panelGroup>
-                    
+
                     <h:panelGroup layout="block" rendered="#{proyectoAulaController.proyecto.estadoProyecto()}">
                         <div class="cop">
                             <div class="linea"></div>
-                            <div class="op-v"><h:graphicImage  value="/resources/img/libro.png"/><h:commandButton value="Gestionar Proyecto" class="botones-v" action="#{estudianteController.g_proyecto()}"></h:commandButton></div>
+                            <div class="op-v"><h:commandButton value="Gestionar Proyecto" class="botones-v" action="#{estudianteController.g_proyecto()}"></h:commandButton></div>
                         </div>
                     </h:panelGroup>
-                    <!--
-                    
-                    <div class="cop">
-                        <div class="linea "></div>
-                        <div class="op-v"><h:graphicImage  value="/resources/img/plus.png"/><h:commandButton value="Gestionar Periodos" class="botones-v" action="#{usuarioController.gperiodos()}"></h:commandButton></div>
-                    </div>-->
-
-
-
-
-
-
 
                 </nav>
             </div>
             <div class="boton-menu">
-                <h:graphicImage  value="/resources/img/menu.png"/>
+                <i class="ri-menu-line"></i>
             </div>
-            ***
-
-
-
         </header>  
 
         <ui:include src="#{estudianteController.paginaActualE}" />
@@ -113,12 +96,38 @@
 
         <script type="text/javascript" 
                 src="../resources/js/menu-vertical.js">
-    </script>
+        </script>
         <script type="text/javascript" 
                 src="../resources/js/DFView.js">
-    </script>
+        </script>
 
     </h:body>
+    <style>
+        .linea,
+        .nav-horizontal,
+        .menu-vertical,
+        .tabla-reporte thead,
+        .boton-menu{
+            background-color: var(--first-color-e);
+        }
+        body .ui-tabs.ui-tabs-top > .ui-tabs-nav li.ui-tabs-header.ui-state-active{
+            border-color: var(--first-color-e);
+        }
+
+        .ui-accordion-header{
+            color: var(--first-color-e) !important;
+        }
+
+        .logo-proac-container span,
+        body .ui-tabs .ui-tabs-nav li.ui-tabs-header.ui-state-active a
+        {
+            color: var(--first-color-e);
+        }
+
+
+
+
+    </style>
 
 </html>
 

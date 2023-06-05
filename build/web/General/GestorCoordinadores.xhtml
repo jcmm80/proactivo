@@ -8,119 +8,196 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-       <section class="contenido-contenedor">
-        <div class="border contenedor top">
-             <h1 class="tittle">Gestor de Coordinadores</h1>
-             <span class="aviso">Crear Coordinadores</span> 
-             <div class="contenedor-form periodos">
-                 <div class="form-izq">
-                     <div class="input-form-310">
-                        Primer Nombre
-                        <p:inputText  class="iform" value="#{coordinadorController.coordinador.primerNombre}" />
-                     </div>
-                      <div class="input-form-310">
-                        Primer Apellido
-                        <p:inputText class="iform" value="#{coordinadorController.coordinador.primerApellido}" />
-                      </div>  
-                     <div class="input-form-170">
-                        Tipo Identificacion
+        <section class="contenido-contenedor">
+            <div class="contenedor mt-4">
 
-                       <p:selectOneMenu  class="iform" value="#{coordinadorController.coordinador.tipo_ide}">
-                           <f:selectItem itemLabel="Select One" itemValue=""/>
-                           <f:selectItem itemLabel="TI" itemValue="TI"/>
-                           <f:selectItem itemLabel="CC" itemValue="CC"/>
-                           <f:selectItem itemLabel="CE" itemValue="CE"/>                         
-                       </p:selectOneMenu> 
-                     </div>
-                     <div class="input-form-310">
-                        Username
-                        <p:inputText class="iform" value="#{coordinadorController.coordinador.login}" />
-                     </div>
-                     <div class="input-form-170">
-                        Genero
-                        <p:selectOneMenu  class="iform" value="#{coordinadorController.coordinador.genero}">
-                            <f:selectItem itemLabel="Select One" itemValue=""/>
-                            <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
-                            <f:selectItem itemLabel="Femenino" itemValue="Femenino"/>                    
-                        </p:selectOneMenu>
-                     </div>
-                      <div class="input-form-310">
-                        Email
-                        <p:inputText type="email"  class="iform" value="#{coordinadorController.coordinador.email}" />
-                      </div>
-               </div>
-                 
-                 
-              <div class="form-dere">
-                     <div class="input-form-310">
-                        Segundo Nombre
-                        <p:inputText class="iform" value="#{coordinadorController.coordinador.segundoNombre}" />
-                     </div>
-                 <div class="input-form-310">
-                     Segundo Apellido
-                     <p:inputText class="iform" value="#{coordinadorController.coordinador.segundoApellido}" />
-                 </div>
-                 <div class="input-form-310">
-                    Identificacion
-                    <p:inputText class="iform" value="#{coordinadorController.coordinador.identificacion}" /> 
-                 </div>
-                <div class="input-form-310">
-                    Password
-                    <p:inputText class="iform" value="#{coordinadorController.coordinador.password}" />
+                <div class="card">
+                    <div class="relative pb-2 mb-1">
+                        <h3 class="text-2xl mb-4">Crea Coordinadores</h3>
+                        <div class="espaceador"></div>
+                    </div>
+                    <div class="form">
+                        <div>
+                            <h4>Primer Nombre</h4>
+                            <p:inputText   value="#{coordinadorController.coordinador.primerNombre}" />
+                        </div>
+                        <div>
+                            <h4>Primer Apelldio</h4>
+                            <p:inputText  value="#{coordinadorController.coordinador.primerApellido}" />
+                        </div>
+                        <div>  
+                            <h4>Segundo Nombre</h4>
+                            <p:inputText  value="#{coordinadorController.coordinador.segundoNombre}" />
+                        </div>
+                        <div>
+                            <h4>Segundo Apellido</h4>
+                            <p:inputText  value="#{coordinadorController.coordinador.segundoApellido}" />
+                        </div>
+                        <div>
+                            <h4>Genero</h4>
+                            <p:selectOneRadio  value="#{coordinadorController.coordinador.genero}">
+                                <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                                <f:selectItem itemLabel="Femenino" itemValue="Femenino"/>
+                            </p:selectOneRadio>
+                        </div>
+                        <div></div>
+                        <div>
+                            <h4>Tipo Identificacion</h4>
+                            <p:selectOneRadio  value="#{coordinadorController.coordinador.tipo_ide}">
+                                <f:selectItem itemLabel="TI" itemValue="TI"/>
+                                <f:selectItem itemLabel="CC" itemValue="CC"/>
+                                <f:selectItem itemLabel="CE" itemValue="CE"/>     
+                            </p:selectOneRadio>
+                        </div>
+                        <div>
+                            <h4>Identificacion</h4>
+                            <p:inputText  value="#{coordinadorController.coordinador.identificacion}" /> 
+                        </div>
+                        <div>
+                            <h4>Email</h4>
+                            <p:inputText   value="#{coordinadorController.coordinador.email}" />
+                        </div>
+                        <div>
+                            <h4>Telefono</h4>
+                            <p:inputText  value="#{coordinadorController.coordinador.telefono}" />
+                        </div>
+                        <div>
+                            <h4>Direccion</h4>
+                            <p:inputText  value="#{coordinadorController.coordinador.direccion}" />
+                        </div>  
+
+                    </div>
+                </div>    
+                <p:card style="margin-top: 0.5rem;">
+                    <h3 style="margin-bottom: 1rem">Configura El usuario y contraseña</h3>
+                    <div class="form" style="padding-bottom: 0">
+                        <div class="ui-inputgroup">
+                            <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
+                            <p:inputText value="#{coordinadorController.coordinador.login}" placeholder="Username"/>
+                        </div>
+                        <div class="ui-inputgroup">
+                            <div class="ui-inputgroup-addon"><i class="pi pi-lock"></i></div>
+                            <p:inputText value="#{coordinadorController.coordinador.password}" placeholder="Password"/>
+                        </div>
+                    </div>
+                </p:card>
+
+
+                <div class="btns-container" style="justify-content: right">
+                    <div class="btn-s">
+                        <label>Registrar</label>
+                        <h:commandButton class="btn" action="#{coordinadorController.registrar()}" value="Registrar" />  
+                    </div>
                 </div>
-                <div class="input-form-310">
-                    Telefono
-                    <p:inputText class="iform" value="#{coordinadorController.coordinador.telefono}" />
+
+
+                <div class="card mb-4">
+                    <div class="relative pb-2">
+                        <h3 class="text-2xl mb-4">Coordinadores Creados</h3>
+                        <div class="espaceador"></div>
+                    </div>
+                    <p:dataTable    scrollable="true"   var="product" value="#{coordinadorController.coordinadores}" editable="true">
+
+                        <p:column headerText="Identificacion" >
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{product.identificacion}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="modelInput" value="#{product.identificacion}" style="width:100%"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Nombre" field="identificacion">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{product.primerNombre}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{product.primerNombre}"  label="Name"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Apellido">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{product.primerApellido}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{product.primerApellido}" style="width:100%" label="Name"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Genero">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{product.genero}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{product.genero}" style="width:100%" label="Name"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Telefono">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{product.telefono}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{product.telefono}" style="width:100%" label="Name"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Tipo">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{product.tipo}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{product.tipo}" style="width:100%" label="Name"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Estado" field="identificacion">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{product.estado}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{product.estado}" style="width:100%" label="Name"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+
+                        <p:column style="width:20px">
+                            <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
+                        </p:column>
+                    </p:dataTable>
+
+
+
+
                 </div>
-                <div class="input-form-310">
-                    Direccion
-                    <p:inputText class="iform" value="#{coordinadorController.coordinador.direccion}" />
-                </div>
-                 <div class="botones">
-                     <h:commandButton class="boton" action="#{coordinadorController.registrar()}" value="Registrar" />  
-                    
-                 </div>
-                     
-                    
-              </div>
-             </div>
-         <span class="aviso">Cordinadores</span>    
-        <p:dataTable class="tabla-reporte" var="usu" value="#{coordinadorController.coordinadores}">
-            
-            <p:column  class="thead" headerText="Identificacion">
-                #{usu.identificacion}
-            </p:column>
-            <p:column headerText="Primer Nombre">
-                #{usu.primerNombre}
-            </p:column>
-            
-            <p:column headerText="Primer Apellido">
-                #{usu.primerApellido}
-            </p:column>
-                        
-            <p:column headerText="Genero">
-                #{usu.genero}
-            </p:column>
-            <p:column headerText="Telefono">
-                #{usu.telefono}
-            </p:column>
-            
-            
-            <p:column headerText="Tipo">
-                #{usu.tipo}
-            </p:column>
-            <p:column headerText="Estado">
-                #{usu.estado}
-            </p:column>
-            
-        </p:dataTable>
-    
-
-        </div>
-    </section>
 
 
+            </div>
+        </section>
     </h:body>
-         
+    <style>
+
+        body .ui-radiobutton .ui-radiobutton-box.ui-state-active.ui-state-hover{
+            background: var(--first-color-s) !important;
+        }
+        body .ui-radiobutton .ui-radiobutton-box.ui-state-active{
+            border-color: var(--first-color-s) !important;
+        }
+    </style>
 </html>
 

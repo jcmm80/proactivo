@@ -1,0 +1,63 @@
+.ui-g-12{
+    width: 17% !important; 
+}
+.ui-datagrid-column {
+    padding: 0 !important;
+
+}       
+.ui-datagrid-content{
+    padding: 0 !important;
+    max-width: 250px;
+
+}
+body .ui-datatable thead th{
+    background: #004F9E !important;
+    color:white !important;
+}
+.ui-widget-header .ui-inputfield{
+    color: white !important;
+}
+.ui-datatable tr:nth-child(even){
+    background-color: #ddd!important;
+}
+
+
+
+body .ui-button{
+    margin: initial !important;
+    background: #888888 !important;
+    border: none;
+    font-size: 12px;
+    font-weight: 600;
+}
+body .ui-inputfield{
+    color: white ;
+    background: none !important;
+    padding: 0 0 0 60px ;
+    border-radius: none !important;
+
+}
+body .ui-panel .ui-panel-content{
+    padding: 0 !important;
+}
+body .ui-datagrid .ui-datagrid-content{
+    border: none !important;
+}
+
+body .ui-inplace .ui-inplace-display {
+    padding: 0 !important;
+}
+.inplace-h3 .ui-inplace-display{
+    color: var(--text-color);
+    font-weight: var(--font-semi-bold);
+    font-size: var(--h3-font-size);
+}
+.inplace-p .ui-inplace-display{
+    font-size: var(--small-font-size);
+}
+body .ui-widget{
+    font-size: 12px !important;
+}
+body .ui-tabs .ui-tabs-nav li.ui-tabs-header a{
+    font-size: 13px;
+}

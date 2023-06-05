@@ -5,110 +5,170 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    
+
     <h:head>
-        
         <title>Facelet Title</title>
-        
-        
-        
-        
+
     </h:head>
     <h:body>
-        <header>
-        
-        <div class="nav-up contenedor ">
-            <a href="index.xhtml"><h:graphicImage class="logo-sgpa" value="/resources/img/logo sgpa.png"/></a>
-            <div class="buscador">
-                <input type="search" placeholder="Search..."></input>
-                <i class="fas fa-search input-i"></i>
-            </div>
-            <a href="https://unicolombo.edu.co/"><h:graphicImage class="logo-unico" value="/resources/img/logo unico.png"/></a>
-                <div class="perfil">
-                    <div class="informacion-perfil">
-                        <span>SuperUsuario</span>
-                        <span>#{usuarioController.usuario.primerNombre}-#{usuarioController.usuario.primerApellido}</span>
-                        <span>#{usuarioController.usuario.identificacion}</span>
+        <header class="header" id="header">
+            <nav class="nav-up container-menu">
+                <div class="nav-toggle" id="nav_toggle">
+                    <i class="ri-menu-line"></i>
+                </div>
+                <a href="index.xhtml" class="logo-proac-container">
+                    <h:graphicImage class="img logo-proac" value="/resources/img/logo-rojo.png"/>
+                    <p><span>Pro</span>activo</p>
+                </a>
+                <div class="nav-search">
+                    <input type="search" placeholder="Buscar...."></input>
+                    <i class="ri-search-line"></i>
+                </div>
+                <div class="nav-unicolombo">
+                     
+                </div>
+                <div class="nav-profile">
+                    <div class="profile-data">
+                        SuperUsuario<br></br>
+                        #{usuarioController.usuario.primerNombre}-#{usuarioController.usuario.primerApellido}<br></br>
+                        #{usuarioController.usuario.identificacion}
                     </div>
-                    <div class="foto-perfil">
-                        <div class="imagen-perfil">
-                            <h:graphicImage class="logo-unico" value="/resources/img/imagen-perfil.jpg"/>
-                            <div class="conectado"></div>
+                    <div class="profile-img-btn">
+                        <div class="profile-img">
+                            <h:graphicImage class="img " value="/resources/img/imagen-perfil.jpg"/>
                         </div>
                         <h:commandButton action="#{usuarioController.salir()}" class="log-out" value="Log out" />
                     </div>
+
+
                 </div>
-        </div>
-
-
-        <!-- Nav horizontal -->
-        <div class="nav-horizontal">
-            <nav>
-                <div class="op"><h:graphicImage  value="/resources/img/bombillo.png"/><a href="">Tutorias</a></div>
-                <div class="op"><h:graphicImage  value="/resources/img/motar.png"/><a href="">Estudiantes</a></div>
-                <div class="op"><h:graphicImage  value="/resources/img/monitor.png"/><a href="">Proyecto Aula</a></div>
-                <div class="op"><h:graphicImage  value="/resources/img/tabla.png"/><a href="">Asignaturas</a></div>
-                <div class="op"><h:graphicImage  value="/resources/img/profesor.png"/><a href="">Profesores</a></div>
-                <div class="op"><h:graphicImage  value="/resources/img/notas.png"/><a href="">Notas</a></div>     
             </nav>
-        </div>
+            <nav class="nav-menu" id="nav_menu">
+                <div class="nav-logos-close">
+                    <div class="nav-close" id="nav_close">
+                        <i class="ri-close-line"></i>
+                    </div>
+                    <div class="nav-search w-3">
+                        <input type="search" placeholder="Buscar...."></input>
+                        <i class="ri-search-line"></i>
+                    </div>
+                </div>
+                <div class="nav-menu-container">
+                    <div class="nav-menu-horizontal">
+                        <h4 class="menu-tittle">Principal</h4>
+                        <ul class="nav-list-horizontal grids">
+                            <li class="nav-horizontal-item">
+                                <i class="ri-lightbulb-fill"></i>
+                                <a href="" class="nav-down-link">Tutorias</a>
+                            </li>
+                            <li class="nav-horizontal-item">
+                                <i class="fa fa-user-graduate"></i>
+                                <a href="" class="nav-down-link">Estudiantes</a>
+                            </li>
+                            <li class="nav-horizontal-item">
+                                <i class="ri-article-fill"></i>
+                                <a href="" class="nav-down-link">Proyecto aula</a>
+                            </li>
+                            <li class="nav-horizontal-item">
+                                <i class="ri-slideshow-fill"></i>
+                                <a href="" class="nav-down-link">Asignaturas</a>
+                            </li>
+                            <li class="nav-horizontal-item">
+                                <i class="fa fa-user-tie"></i>
+                                <a href="" class="nav-down-link">Profesores</a>
+                            </li>
+                            <li class="nav-horizontal-item">
+                                <i class="ri-booklet-fill"></i>
+                                <a href="" class="nav-down-link">Notas</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="nav-menu-vertical">
+                        <h4 class="menu-tittle2">Menú</h4>
+                        <ul class="nav-list-vertical grids">
+                            <li class="nav-vertical-item">
+                                <h:commandButton value="Gestionar Cordinadores" class="nav-vertical-link" action="#{usuarioController.gcoordinadores()}"></h:commandButton>
+                            </li>
+                            <li class="nav-vertical-item">
+                                <h:commandButton value="Gestionar Programas" class="nav-vertical-link" action="#{usuarioController.gprogramas()}"></h:commandButton>
+                            </li>
+                            <li class="nav-vertical-item">
+                                <h:commandButton value="Gestionar Periodos" class="nav-vertical-link" action="#{usuarioController.gperiodos()}"></h:commandButton>
+                            </li>
+                            <li class="nav-vertical-item">
+                                <h:commandButton value="Carga masiva" class="nav-vertical-link" action="#{usuarioController.gcargamasiva()}"></h:commandButton>
+                            </li>
+                        </ul>
 
+                    </div>
+                </div>
 
-        <!-- Nav vertical -->
-        <div class="nav-vertical ">
-            <nav id="nav-vertical" >
-                <div class="menu-vertical">
-                    <div class="contenedor-mv">
-                        
-                        <span class="texto-menu">Menú</span>
-                    </div> 
-                </div>
-                
-                <div class="cop ">
-                    <div class="linea"></div>
-                    <div class="op-v"><h:graphicImage  value="/resources/img/lapiz.png"/><h:commandButton value="Gestionar Cordinadores" class="botones-v" action="#{usuarioController.gcoordinadores()}"></h:commandButton></div>
-                </div>
-                <div class="cop">
-                    <div class="linea"></div>
-                    <div class="op-v"><h:graphicImage  value="/resources/img/libro.png"/><h:commandButton value="Gestionar Programas" class="botones-v" action="#{usuarioController.gprogramas()}"></h:commandButton></div>
-                </div>
-                
-                <div class="cop">
-                    <div class="linea "></div>
-                    <div class="op-v"><h:graphicImage  value="/resources/img/plus.png"/><h:commandButton value="Gestionar Periodos" class="botones-v" action="#{usuarioController.gperiodos()}"></h:commandButton></div>
-                </div>
-                
-                 <div class="cop">
-                    <div class="linea "></div>
-                    <div class="op-v"><h:graphicImage  value="/resources/img/plus.png"/><h:commandButton value="Carga masiva" class="botones-v" action="#{usuarioController.gcargamasiva()}"></h:commandButton></div>
-                </div>
-                
-                
-                
-                
-                
-                  
             </nav>
-        </div>
-        <div class="boton-menu">
-            <h:graphicImage  value="/resources/img/menu.png"/>
-        </div>
-        ***
-        
-        
-            
-    </header>  
-        
-             <ui:include src="#{usuarioController.paginaSU}" />
+        </header>
 
-       
-         
-    <script type="text/javascript" 
-            src="../resources/js/menu-vertical.js">
-    </script>
-        
+        <ui:include src="#{usuarioController.paginaSU}" />
+
+        <script type="text/javascript" 
+                src="../resources/js/menu.js">
+        </script>
+
     </h:body>
-    
+    <style>
+        .nav-logos-close,
+        .nav-vertical-item:before,
+        .tabla-reporte thead,
+        body .ui-datatable thead th{
+            background-color: var(--first-color-s) !important;
+        }
+        body .ui-tabs.ui-tabs-top > .ui-tabs-nav li.ui-tabs-header.ui-state-active{
+            border-color: var(--first-color-s);
+        }
+       
+        .ui-accordion-header{
+            color: var(--first-color-s) !important;
+        }
+
+        .logo-proac-container span,
+        body .ui-tabs .ui-tabs-nav li.ui-tabs-header.ui-state-active a
+        {
+            color: var(--first-color-s);
+        }
+        @media screen and (max-width: 1005px) {
+            .nav-horizontal-item i{
+                color: var(--first-color-s) !important;
+            }
+            .nav-horizontal-item a{
+                color: var(--first-color-s) !important;
+            }
+            .menu-tittle2{
+                background-color: #fff;
+            }
+            .header{
+                background-color: var(--first-color-s);
+            }
+            .nav-vertical-link{
+                color: var(--first-color-s);
+            }
+            .menu-tittle, .menu-tittle2{
+                color: var(--first-color-s) !important;
+            }
+            
+        }
+        @media screen and (min-width: 1005px) {
+            .nav-list-horizontal{
+                background-color: var(--first-color-s);
+            }
+            .menu-tittle2{
+                background-color: var(--first-color-s);
+            }
+        }
+        
+
+
+
+
+    </style>
+
 </html>
 
 

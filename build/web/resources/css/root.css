@@ -1,0 +1,131 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Lemon&family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+    
+    
+    
+    --header-height: 3rem;
+
+    --first-color-e: #5086c1;
+    --first-color-p: #5dc460;
+    --first-color-c: #ffa44d;  
+    --first-color-s: #ff6961;
+    
+    --color-second-e: #b2dafa;
+    --color-second-p: #a5eea0;
+    --color-second-c: #FFDC82;
+    --color-second-s: #ff6961;
+
+    --text-color: #0F0F0F;
+    --text-color-light: #606060;
+
+
+    /*========== Font and typography ==========*/
+    --body-font: 'Poppins', sans-serif;
+    --second-font: 'Lemon', cursive;
+ 
+
+    /* .5rem = 8px, 1rem = 16px, 1.5rem = 24px ... */
+    --big-font-size: 2rem;
+    --h1-font-size: 1.5rem;
+    --h2-font-size: 1.25rem;
+    --h3-font-size: 1.125rem;
+    --normal-font-size: 0.75rem;
+    --small-font-size: .813rem;
+    --smaller-font-size: .75rem;
+
+    /*========== Font weight ==========*/
+    --font-medium: 500;
+    --font-semi-bold: 600;
+
+    /*========== z index ==========*/
+    --z-tooltip: 10;
+    --z-fixed: 100;
+    --z-modal: 1000;
+}
+.estudiante-color{
+    background-color: var(--first-color-e);
+}
+.profesor-color{
+    background-color: var(--first-color-p);
+}
+.coordinador-color{
+    background-color: var(--first-color-c);
+}
+/* Font size for large devices */
+@media screen and (min-width: 968px) {
+    :root {
+        --big-font-size: 3rem;
+        --h1-font-size: 2.25rem;
+        --h2-font-size: 1.5rem;
+        --h3-font-size: 1.25rem;
+        --normal-font-size: 0.75rem;
+        --small-font-size: .875rem;
+        --smaller-font-size: .813rem;
+    }
+}
+
+
+/*==================== BASE ====================*/
+* {
+    font-family: var(--body-font);
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    
+}
+
+body {
+    
+    font-size: var(--normal-font-size);
+    color: var(--text-color);
+    
+}
+
+h1, h2, h3, h4 {
+    color: var(--text-color);
+    font-weight: var(--font-semi-bold);
+}
+.h3{
+    font-size: var(--h3-font-size);
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.img {
+    max-width: 100%;
+    height: auto;
+}
+
+/*==================== REUSABLE CSS CLASSES ====================*/
+.section {
+    padding: 2rem 0 4rem;
+}
+
+
+.section__title, 
+.section__subtitle {
+    text-align: center;
+}
+
+/*==================== LAYOUT ====================*/
+
+
+.grids {
+    display: grid;
+    gap: 2rem;
+}
+
+
+
