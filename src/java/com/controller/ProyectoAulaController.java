@@ -211,9 +211,27 @@ public class ProyectoAulaController implements Serializable {
         }
     }
 
+    public Integrante integranteMatricula(Matricula m){
+        Integrante inte=new Integrante();
+        for(Integrante i:integrantes){
+            if(i.getMatricula().getId().equals(m.getId())){
+//                 System.out.println("Encontre la matricula: "+m.getEstudiante().getPrimerApellido());
+                inte=i;break;
+            }
+        }
+        return inte;
+    }
+    
+    
+//    public void consultarIntegrantesXperiodo(Periodo p){
+//         integrantes = inteser.obtenerIntegrantesProyectosXPeriodo(p);
+//    }
+    
     public void obtenerIntegrantesXProyectos(Periodo p) {
         try {
             integrantes = inteser.obtenerIntegrantesProyectosXPeriodo(p);
+//            System.out.println("Numero de integrantes: "+ integrantes.size()+ "Periodo: "+p.getAnio());
+            
             for (int i = 0; i < proyectos.size(); i++) {
                 ListIterator it = integrantes.listIterator();
                 proyectos.get(i).setIntegrantes(new LinkedList());
@@ -221,10 +239,11 @@ public class ProyectoAulaController implements Serializable {
                     Integrante inte = (Integrante) it.next();
                     if (inte.getProyecto().getId().equals(proyectos.get(i).getId())) {
                         proyectos.get(i).getIntegrantes().add(inte);
-                        it.remove();
+//                        it.remove();
                     }
                 }
             }
+//             System.out.println("Numero de integrantes: "+ integrantes.size()+ "Periodo: "+p.getAnio());
         } catch (java.util.ConcurrentModificationException cme) {
             cme.printStackTrace();
         }

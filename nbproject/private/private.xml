@@ -3,56 +3,46 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/CompetenciaServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/DimensionServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/controller/MatriculaController.java</file>
             <file>file:/C:/Proyectos/Proactivo/web/Profesor/Evaluacion/GestorDimensiones.xhtml</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/EvaluacionServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/MatriculaServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/controller/ProyectoAulaController.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/UnidadCompetenciaServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/controller/UsuarioController.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/dao/ImplDao.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/controller/EvaluacionController.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/entity/Estudiante.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/UsuarioServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/web/index.xhtml</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/AvanceServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/web/Profesor/Evaluacion/EvaluarProyectos.xhtml</file>
-            <file>file:/C:/Proyectos/Proactivo/web/Profesor/GUIProfesor.xhtml</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/IntegranteServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/FaseServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/ValoracionServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/Proyecto_AulaServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/CriterioServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/LiderPAServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/SeccionServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/EntregableServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/TipoCompetenciaServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/dao/IDao.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/PeriodoServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/utilidades/MArchivos.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/AspectoServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/AreaServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/AsistenteServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/Tipo_EntregableServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/EstudianteServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/SemestreServices.java</file>
+            <file>file:/C:/Proyectos/Proactivo/src/java/com/controller/TutoriasController.java</file>
+            <file>file:/C:/Proyectos/Proactivo/web/General/ProgramacionProyectos.xhtml</file>
+            <file>file:/C:/Proyectos/Proactivo/src/java/com/controller/EstudianteController.java</file>
+            <file>file:/C:/Proyectos/Proactivo/web/Estudiante/GestorTutorias.xhtml</file>
+            <file>file:/C:/Proyectos/Proactivo/src/java/com/entity/Nucleo.java</file>
+            <file>file:/C:/Proyectos/Proactivo/src/java/com/controller/ProgramaController.java</file>
+            <file>file:/C:/Proyectos/Proactivo/web/Estudiante/AsignaturasSeccion.xhtml</file>
+            <file>file:/C:/Proyectos/Proactivo/web/Coordinador/MatriculadosSeccion.xhtml</file>
+            <file>file:/C:/Proyectos/Proactivo/web/Profesor/AsignaturasProfesor.xhtml</file>
             <file>file:/C:/Proyectos/Proactivo/src/java/com/services/TutoriaServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/Item_ProyectoServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/web/Profesor/Evaluacion/GestorEvaluacion.xhtml</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/controller/CoordinadorController.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/ProfesorServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/AsignaturaServices.java</file>
+            <file>file:/C:/Proyectos/Proactivo/web/Estudiante/GUIEstudiante.xhtml</file>
+            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/NucleoServices.java</file>
+            <file>file:/C:/Proyectos/Proactivo/web/Estudiante/Gestor_Avances.xhtml</file>
             <file>file:/C:/Proyectos/Proactivo/src/java/com/controller/CompetenciasController.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/entity/Dimension.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/ProgramaAcademicoServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/entity/Matricula.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/controller/ProfesorController.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/Tipo_ItemServices.java</file>
             <file>file:/C:/Proyectos/Proactivo/src/java/com/dao/EntityManagedSingleton.java</file>
-            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/CoordinadorServices.java</file>
-            <file>file:/C:/Proyectos/Proactivo/web/PlantillaInicial.xhtml</file>
+            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/AsistenteServices.java</file>
+            <file>file:/C:/Proyectos/Proactivo/web/Profesor/GestorGrupos.xhtml</file>
+            <file>file:/C:/Proyectos/Proactivo/src/java/com/controller/EvaluacionController.java</file>
+            <file>file:/C:/Proyectos/Proactivo/web/Profesor/Evaluacion/EvaluarProyectos.xhtml</file>
+            <file>file:/C:/Proyectos/Proactivo/src/java/com/controller/MatriculaController.java</file>
+            <file>file:/C:/Proyectos/Proactivo/web/Profesor/VisorProyectosAula.xhtml</file>
+            <file>file:/C:/Proyectos/Proactivo/web/Profesor/Evaluacion/GestorEvaluacion.xhtml</file>
+            <file>file:/C:/Proyectos/Proactivo/src/java/com/entity/Fase.java</file>
+            <file>file:/C:/Proyectos/Proactivo/web/Coordinador/CompetenciasAsignatura.xhtml</file>
+            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/FaseServices.java</file>
+            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/MatriculaServices.java</file>
+            <file>file:/C:/Proyectos/Proactivo/src/java/com/entity/Dimension.java</file>
+            <file>file:/C:/Proyectos/Proactivo/src/java/com/dao/IDao.java</file>
+            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/UnidadCompetenciaServices.java</file>
+            <file>file:/C:/Proyectos/Proactivo/web/Coordinador/GUIMallaCurricular.xhtml</file>
+            <file>file:/C:/Proyectos/Proactivo/web/Profesor/GestorNucleos.xhtml</file>
+            <file>file:/C:/Proyectos/Proactivo/src/java/com/dao/ImplDao.java</file>
+            <file>file:/C:/Proyectos/Proactivo/src/java/com/entity/Semestre.java</file>
+            <file>file:/C:/Proyectos/Proactivo/src/java/com/implDao/INucleo.java</file>
+            <file>file:/C:/Proyectos/Proactivo/web/index.xhtml</file>
+            <file>file:/C:/Proyectos/Proactivo/web/Profesor/GUIProfesor.xhtml</file>
+            <file>file:/C:/Proyectos/Proactivo/src/java/com/controller/ProfesorController.java</file>
+            <file>file:/C:/Proyectos/Proactivo/src/java/com/controller/UsuarioController.java</file>
+            <file>file:/C:/Proyectos/Proactivo/src/java/com/services/DimensionServices.java</file>
         </group>
     </open-files>
 </project-private>

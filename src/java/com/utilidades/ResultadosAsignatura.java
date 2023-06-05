@@ -7,13 +7,14 @@ package com.utilidades;
 
 import com.entity.Asignatura;
 import com.entity.Valoracion;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author JCMM
  */
-public class ResultadosAsignatura {
+public class ResultadosAsignatura implements Serializable{
     private Asignatura asignatura;
     private List<Valoracion> valoraciones;
 

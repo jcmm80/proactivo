@@ -8,6 +8,7 @@ package com.controller;
 import com.entity.Asignatura;
 import com.entity.Asistente;
 import com.entity.Integrante;
+import com.entity.Periodo;
 import com.entity.Profesor;
 import com.entity.Proyecto_Aula;
 import com.entity.Tutoria;
@@ -35,6 +36,7 @@ public class TutoriasController implements Serializable {
     private Tutoria tutoria = new Tutoria();
 
     private List<Tutoria> tutorias = new LinkedList();
+    private List<Tutoria> tutoriasAsignatura = new LinkedList();
     private List<Tutoria> tutoriasAsignaturaProgramadas = new LinkedList();
     private List<Tutoria> tutoriasAsignaturaRealizadas = new LinkedList();
     private List<Tutoria> tutoriasAsignaturaSolicitadas = new LinkedList();
@@ -112,10 +114,10 @@ public class TutoriasController implements Serializable {
         }
     }
 
-    public void obtenerTutoriasProyecto(Proyecto_Aula pa){
-        tutorias=tutser.obtenerTutoriasXProyecto(pa);
+    public void obtenerTutoriasProyecto(Proyecto_Aula pa) {
+        tutorias = tutser.obtenerTutoriasXProyecto(pa);
     }
-    
+
     public void armarAsistentes() {
         asistentes = new LinkedList();
         for (Integrante i : tutoria.getProyecto().getIntegrantes()) {
@@ -155,7 +157,7 @@ public class TutoriasController implements Serializable {
         tutoriasAsignaturaRealizadas = new LinkedList();
         tutoriasAsignaturaSolicitadas = new LinkedList();
         for (Tutoria t : tutorias) {
-            System.out.println("clasificare las tutorias "+t.getFechaSolicitud()+"  "+t.getEstado()+" \t"+asignatura.getId()+" \t"+t.getAsignatura().getId()+"\t"+t.getAsignatura().getNombre());
+            System.out.println("clasificare las tutorias " + t.getFechaSolicitud() + "  " + t.getEstado() + " \t" + asignatura.getId() + " \t" + t.getAsignatura().getId() + "\t" + t.getAsignatura().getNombre());
             if (t.getAsignatura().getId().equals(asignatura.getId())) {
                 if (t.getEstado().equals("Realizada")) {
                     tutoriasAsignaturaRealizadas.add(t);
@@ -172,7 +174,20 @@ public class TutoriasController implements Serializable {
 
     public void consultarTutoriasXAsignatura(Asignatura a) {
         this.asignatura = a;
-        tutorias = tutser.obtenerTutoriasXAsignatura(a);
+        obtenerTutoriasAsignatura(a);
+    }
+
+    public void obtenerTutoriasAsignatura(Asignatura a){
+        tutoriasAsignatura=new LinkedList();
+        for(Tutoria t:tutorias){
+            if(t.getAsignatura().getId().equals(a.getId())){
+                tutoriasAsignatura.add(t);
+            }
+        }
+    }
+    
+    public void obtenerTutoriasXPeriodo(Periodo p) {
+        tutorias = tutser.obtenerTutoriasXPeriodo(p);
     }
 
     /**
@@ -302,6 +317,20 @@ public class TutoriasController implements Serializable {
      */
     public void setTutoriasAsignaturaProgramadas(List<Tutoria> tutoriasAsignaturaProgramadas) {
         this.tutoriasAsignaturaProgramadas = tutoriasAsignaturaProgramadas;
+    }
+
+    /**
+     * @return the tutoriasAsignatura
+     */
+    public List<Tutoria> getTutoriasAsignatura() {
+        return tutoriasAsignatura;
+    }
+
+    /**
+     * @param tutoriasAsignatura the tutoriasAsignatura to set
+     */
+    public void setTutoriasAsignatura(List<Tutoria> tutoriasAsignatura) {
+        this.tutoriasAsignatura = tutoriasAsignatura;
     }
 
 }

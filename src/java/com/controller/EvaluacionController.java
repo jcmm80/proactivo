@@ -179,10 +179,10 @@ public class EvaluacionController implements Serializable {
         }
     }
 
-    public void consultarEvaluacion(Seccion s){
-        evaluacion=evaser.obtenerEvaluacionXSeccion(s);
+    public void consultarEvaluacion(Seccion s) {
+        evaluacion = evaser.obtenerEvaluacionXSeccion(s);
     }
-    
+
     public List<CriterioEvaluacion> criteriosXDimension(Dimension dim) {
         List<CriterioEvaluacion> criterios = new LinkedList();
         for (CriterioEvaluacion ce : criteriosevaluacionParticulares) {
@@ -376,10 +376,9 @@ public class EvaluacionController implements Serializable {
 //        setValoracionesAsignatura(valser.obtenerValoracionesXAsignatura(a));
         obtenerEvaluacionXSeccion(a.getSeccion());
         organizarValoracionesXDimension();
-
     }
 
-    public void organizarValoracionesXDimension() {
+    public void organizarValoracionesXDimension() { //metodo que organiza valoraciones por dimension
         valoracionesXdimensiones = new Hashtable<Long, List<Valoracion>>();
         //organizar valoraciones por dimension
         for (Valoracion v : valoraciones) {
@@ -387,27 +386,46 @@ public class EvaluacionController implements Serializable {
         }
     }
 
+    public void obtenerValoracionesdelPeriodo(Periodo p) {
+        valoraciones = valser.obtenerValoracionesXPeriodo(p);
+        organizarValoracionesXDimension();
+    }
+
     public double notaFIntegrante(Integrante inte) {
         //porcentaje de dimension;
 
         Enumeration<Long> keys = valoracionesXdimensiones.keys();
         double nfinal = 0;
-        System.out.println("Integrante: " + inte.getMatricula().getEstudiante().toString());
-        while (keys.hasMoreElements()) {
-            List<Valoracion> valoracionesd = new LinkedList();
-            Long iddim = keys.nextElement();
-            for (Valoracion v : valoracionesXdimensiones.get(iddim)) {
-                if (v.getIntegrante().getId().equals(inte.getId())) {
-                    valoracionesd.add(v);
+        try {
+            if (inte.getId() > 0) {
+                System.out.println("Integrante: " + inte.getMatricula().getEstudiante().toString());
+                while (keys.hasMoreElements()) {
+                    List<Valoracion> valoracionesd = new LinkedList();
+                    Long iddim = keys.nextElement();
+
+                    for (Valoracion v : valoracionesXdimensiones.get(iddim)) {
+                        if (v.getIntegrante().getId().equals(inte.getId())) {
+                            valoracionesd.add(v);
+                        }
+                    }
+                    try {
+                        double pdim = valoracionesd.get(0).getCriterio().getDimension().getPorcentaje() / valoracionesd.size();
+                        System.out.println("Dimencion: " + iddim + "\t" + valoracionesd.get(0).getCriterio().getDimension().getPorcentaje() + "\t" + valoracionesd.size() + "\t" + pdim);
+
+                        for (Valoracion val : valoracionesd) {
+                            nfinal = nfinal + (val.getValor() * pdim / 100);
+                            System.out.println("calculando: " + val.getValor() + " * " + pdim + " / 100 =" + nfinal);
+                        }
+                        System.out.println("Nota: " + nfinal);
+                    } catch (java.lang.IndexOutOfBoundsException iobe) {
+                        System.out.println("" + iobe.getMessage() + " " + iobe.getCause());
+                    }
                 }
+            } else {
+                nfinal = 0;
             }
-            double pdim = valoracionesd.get(0).getCriterio().getDimension().getPorcentaje() / valoracionesd.size();
-            System.out.println("Dimencion: " + iddim + "\t" + valoracionesd.get(0).getCriterio().getDimension().getPorcentaje() + "\t" + valoracionesd.size() + "\t" + pdim);
-            for (Valoracion val : valoracionesd) {
-                nfinal = nfinal + (val.getValor() * pdim / 100);
-                System.out.println("calculando: " + val.getValor() + " * " + pdim + " / 100 =" + nfinal);
-            }
-            System.out.println("Nota: " + nfinal);
+        } catch (java.lang.NullPointerException npe) {
+            nfinal = 0;
         }
         return nfinal;
     }
@@ -416,7 +434,7 @@ public class EvaluacionController implements Serializable {
         valoraciones = valser.obtenerValoracionesXIntegrante(i);
     }
 
-    public List<ResultadosAsignatura> organizarResultadosIntegrante() {
+    public List<ResultadosAsignatura> organizarResultadosIntegrante() {//metodo que organiza los resultados de un integrante por asignatura
         List<ResultadosAsignatura> resultados = new LinkedList();
         Hashtable<Long, Asignatura> asignaturasEvaluadas = new Hashtable<Long, Asignatura>();
 
@@ -436,12 +454,12 @@ public class EvaluacionController implements Serializable {
         return resultados;
     }
 
-    public List<Valoracion> agregarValoracionesAsignatura(List<Valoracion> valors,Asignatura asig) {
-       List<Valoracion> valoras=new LinkedList();
+    public List<Valoracion> agregarValoracionesAsignatura(List<Valoracion> valors, Asignatura asig) {
+        List<Valoracion> valoras = new LinkedList();
         for (Valoracion va : valors) {
             if (va.getCriterio().getCriterio().getCompetencia().getUnidad().getAsignatura().getId().equals(asig.getId())) {
                 System.out.println("" + va.getCriterio().getCriterio().getDescripcion());
-              valoras.add(va);
+                valoras.add(va);
             }
         }
         return valoras;
@@ -469,7 +487,7 @@ public class EvaluacionController implements Serializable {
             valoraciones.put(d.getId(), existentes);
         }
 
-        System.out.println("" + existentes + "\n");
+//        System.out.println("" + existentes + "\n");
     }
 
     public void prepararCriteriosParaEvaluar() {

@@ -24,7 +24,7 @@
                     </div>
                     <div class="ccriterios">
                         <p:dataGrid var="asi" columns="1" value="#{matriculaController.resultados}">
-                            <p:panel header="#{asi.asignatura.nombre}">                                
+                            <p:panel header="Asignatura: #{asi.asignatura.nombre} - Profesor: #{asi.asignatura.profesor.toString()}">                                
                                 <p:dataTable var="val" value="#{asi.valoraciones}">
                                     <p:column  style="height: 70px">                                             
                                         <h:outputText  title="#{val.criterio.criterio.descripcion}" value="#{val.criterio.criterio.descripcion}"  />
@@ -35,8 +35,6 @@
                                 </p:dataTable>
                             </p:panel>
                         </p:dataGrid>
-
-
 
                     </div>
                 </div>

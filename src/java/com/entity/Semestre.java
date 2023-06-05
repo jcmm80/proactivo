@@ -89,5 +89,7 @@ public class Semestre implements Serializable {
     public void setDimensions(List<Dimension> dimensions) {
         this.dimensions = dimensions;
     }
+
+ 
     
 }

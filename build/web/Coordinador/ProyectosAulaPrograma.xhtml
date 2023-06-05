@@ -10,7 +10,7 @@
     <h:body>
         <section class="contenido-contenedor">
             <div class="border contenedor top">
-                <h1 class="tittle">Estudiantes Matriculados</h1>
+                <h1 class="tittle">Proyectos de Aula</h1>
 
                 <p:tabView activeIndex="#{coordinadorController.activeIproy}">
                     <p:tab title="Programa">
@@ -45,20 +45,27 @@
                             </div>
 
                         </p:dataGrid> 
-                        <p:dataGrid var="sec" value="#{coordinadorController.secciones}">
-                            <div class="card img-negra">
-                                <figure >
-                                    <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
-                                </figure>
-                                <div class="contenido-grid">
-                                    <h2>#{sec.programa.nombre}</h2>
-                                    <span>Semestre #{sec.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
-                                    <h3>Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
+                        <p:panelGrid columns="2">
+                            <p:dataGrid var="sec" value="#{coordinadorController.secciones}">
+                                <div class="card img-negra">
+                                    <figure >
+                                        <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
+                                    </figure>
+                                    <div class="contenido-grid">
+                                        <h2>#{sec.programa.nombre}</h2>
+                                        <span>Semestre #{sec.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
+                                        <h3>Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
 
-                                </div>
-                                <h:commandButton   class="btn" value="Abrir" action="#{coordinadorController.obtenerProyectosSeccion(sec)}" />
-                            </div> 
-                        </p:dataGrid>
+                                    </div>
+                                    <h:commandButton   class="btn" value="Abrir" action="#{coordinadorController.obtenerProyectosSeccion(sec)}" />
+                                </div> 
+                            </p:dataGrid>
+                            <p:panel header="Proyectos por Seccion">
+                                <p:chart type="bar"  model="#{reportesController.barMProyectosxSeccion}" />
+                            </p:panel>
+                            
+                        </p:panelGrid>
+
 
                     </p:tab>
                     <p:tab rendered="#{not empty coordinadorController.seccion}" title="Proyectos de Aula, Seccion: #{coordinadorController.seccion.getSeccion()}">
@@ -90,7 +97,7 @@
                             </p:column>  
                         </p:dataTable> 
                     </p:tab>
-                    <p:tab >
+                    <p:tab title="Proyecto Seleccionado">
 
 
                         <p:panel header="Informacion Basica del Proyecto">
@@ -148,6 +155,13 @@
                             </p:dataTable>
 
                         </p:panel>
+                    </p:tab>
+
+                    <p:tab title="Proyectos Por Semestre">
+                        <p:chart type="bar"  model="#{reportesController.barMProyectos}">
+
+                        </p:chart>
+
                     </p:tab>
                 </p:tabView>
 

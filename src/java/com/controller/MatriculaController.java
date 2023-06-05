@@ -79,14 +79,31 @@ public class MatriculaController implements Serializable {
 
     public Matricula obtenerMatriculaEstudiante(Estudiante e) {
         Matricula mat = new Matricula();
+        try{
         for (Matricula m : matriculas) {
             if (m.getEstudiante().getId().equals(e.getId())) {
                 mat = m;
             }
         }
+        }catch(java.lang.NullPointerException npe){
+            
+        }
         return mat;
     }
 
+    
+    public void seleccionarMatricula(Integrante m){
+        matricula=m.getMatricula();
+        integrante=m;
+        consultarResultadosXIntegrante(integrante);
+    }
+    
+    public void consultarResultadosXIntegrante(Integrante i) {
+        evacon.consultarValoracionesXIntegrante(i);
+        resultados = evacon.organizarResultadosIntegrante();
+//        evacon.organizarValoracionesXDimension();
+    }
+    
     public void consultarResultadosXIntegrante() {
         evacon.consultarValoracionesXIntegrante(integrante);
         resultados = evacon.organizarResultadosIntegrante();

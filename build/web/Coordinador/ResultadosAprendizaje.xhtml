@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <section class="contenido-contenedor">
+            <div class="border contenedor top">
+                <h1 class="tittle">Resultados de Aprendizaje</h1>
+                <p:tabView activeIndex="#{coordinadorController.activeIRes}">
+                    <p:tab title="Programa">
+                        <p:dataTable class="tabla-reporte" var="prog" value="#{programaController.programas}">
+                            <p:column headerText="Codigo">
+                                #{prog.codigo}
+                            </p:column>
+                            <p:column headerText="Nombre">
+                                #{prog.nombreCompleto}
+                            </p:column>
+                            <p:column headerText="Seleccionar">
+                                <div class="Acciones">
+                                    <div class="accion">
+                                        <i class="fa fa-hand-pointer" style="color: #005CB9"></i>
+                                        <h:commandButton class="icono" value="+" action="#{coordinadorController.seleccionarProgramaparaResultados(prog)}" />
+                                    </div>
+                                </div>
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>                
+                    <p:tab title="Semestre - Seccion">
+                        <p:dataGrid    columns="5" var="sem"  value="#{semestreController.semestres}">
+                            <div class="card img-negra" >
+                                <figure >
+                                    <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
+                                </figure>
+                                <div class="contenido">
+                                    <p>Semestre <br></br>#{sem.denominacion}</p>
+
+                                </div>
+                                <h:commandButton   class="btn" value="Abrir" action="#{coordinadorController.seleccionarSemestrepTResultados(sem)}" />
+                            </div>
+
+                        </p:dataGrid> 
+                        <p:panelGrid columns="2">
+                            <p:dataGrid var="sec" value="#{coordinadorController.secciones}">
+                                <div class="card img-negra">
+                                    <figure >
+                                        <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
+                                    </figure>
+                                    <div class="contenido-grid">
+                                        <h2>#{sec.programa.nombre}</h2>
+                                        <span>Semestre #{sec.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
+                                        <h3>Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
+
+                                    </div>
+                                    <h:commandButton   class="btn" value="Abrir" action="#{coordinadorController.obtenerResultadosSeccion(sec)}" />
+                                </div> 
+                            </p:dataGrid>                          
+
+                        </p:panelGrid>
+
+                    </p:tab>
+                    <p:tab rendered="#{not empty matriculaController.seccion.semestre}" title="Estudiantes de la Seccion:#{matriculaController.seccion.getSeccion()} ">
+
+                        <p:dataTable paginator="true" rows="10" class="tabla-reporte" style="font-size: 10pt" var="est" value="#{matriculaController.matriculasXSeccion}">
+                            <p:column headerText="Tipo de Identificacion">
+                                #{est.estudiante.tipo_ide}
+                            </p:column>
+                            <p:column filterBy="#{est.estudiante.identificacion}" headerText="Identificacion">
+                                #{est.estudiante.identificacion}
+                            </p:column>
+                            <p:column filterBy="#{est.estudiante.primerNombre}" headerText="Primer Nombre">
+                                #{est.estudiante.primerNombre}
+                            </p:column>
+                            <p:column filterBy="#{est.estudiante.segundoNombre}" headerText="Segundo Nombre">
+                                #{est.estudiante.segundoNombre}
+                            </p:column>
+                            <p:column filterBy="#{est.estudiante.primerApellido}" headerText="Primer Apellido">
+                                #{est.estudiante.primerApellido}
+                            </p:column>
+                            <p:column filterBy="#{est.estudiante.segundoApellido}" headerText="Segundo Apellido">
+                                #{est.estudiante.segundoApellido}
+                            </p:column>
+                            <p:column headerText="Valoracion General">
+                                <p:inputNumber  disabled="true" value="#{evaluacionController.notaFIntegrante(proyectoAulaController.integranteMatricula(est))}" size="4"  minValue="0" maxValue="5" />
+
+                            </p:column>
+                            <p:column headerText="Resultados">
+
+
+                                <h:commandButton value="ver" action="#{coordinadorController.verResultados(proyectoAulaController.integranteMatricula(est))}"  />
+
+
+                            </p:column>
+                        </p:dataTable>                        
+                    </p:tab>
+                    <p:tab title="Resultados de Aprendizaje: ">
+                        <div class="contresapre">
+                            <div class="cinfoes">
+                                <div class="contportres">
+                                    <div class="cinest">
+
+                                        <p:graphicImage value="/Imagenes/Perfiles/#{matriculaController.matricula.estudiante.imagenPerfil()}" style="width: 80px;height: 80px "  />
+                                        <h:outputText  value="#{matriculaController.matricula.estudiante.toString()}" />
+
+                                    </div>
+                                    <div class="cvgen">
+                                        Nota General:
+                                        <p:inputNumber  disabled="true" value="#{evaluacionController.notaFIntegrante(matriculaController.integrante)}" size="4"  minValue="0" maxValue="5" />
+
+                                        
+                                    </div>
+                                    <div class="cvol">
+                                        <h:commandButton value="volver" action="#{coordinadorController.volverEstudiantesSeccion()}" />
+
+                                        
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="cres">
+                                <p:dataGrid var="asi" columns="1" value="#{matriculaController.resultados}">
+                                    <p:panel header="Asignatura: #{asi.asignatura.nombre} - Profesor: #{asi.asignatura.profesor.toString()}">                                
+                                        <p:dataTable var="val" value="#{asi.valoraciones}">
+                                            <p:column  style="height: 70px">                                             
+                                                <h:outputText  title="#{val.criterio.criterio.descripcion}" value="#{val.criterio.criterio.descripcion}"  />
+                                            </p:column>
+                                            <p:column  style="height: 70px">                                             
+                                                <h:outputText  title="#{val.criterio.criterio.descripcion}" value="#{val.valor}"  />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:panel>
+                                </p:dataGrid>
+
+
+                            </div>
+                        </div>
+
+                    </p:tab>
+                </p:tabView>
+
+            </div>
+        </section>
+
+        <style>
+            .contresapre {  display: grid;
+                            grid-template-columns: 1fr;
+                            grid-template-rows: 150px 1.4fr;
+                            grid-auto-columns: 1fr;
+                            gap: 0px 0px;
+                            grid-auto-flow: row;
+                            align-content: center;
+                            grid-template-areas:
+                                "cinfoes"
+                                "cres";
+            }
+
+            .cinfoes { grid-area: cinfoes; }
+
+            .cres { grid-area: cres; }
+
+            .contportres {  display: grid;
+                            grid-template-columns: 80% 10% 10%;
+                            grid-template-rows: 1fr;
+                            grid-auto-columns: 1fr;
+                            gap: 0px 0px;
+                            grid-auto-flow: row;
+                            align-content: center;
+                            grid-template-areas:
+                                "cinest cvgen cvol";
+            }
+
+            .cinest { grid-area: cinest; }
+
+            .cvgen { grid-area: cvgen; }
+
+            .cvol { grid-area: cvol; }
+
+
+        </style>
+
+    </h:body>
+</html>
+

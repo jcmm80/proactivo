@@ -7,6 +7,7 @@ package com.controller;
 
 import com.entity.Area;
 import com.entity.Coordinador;
+import com.entity.Integrante;
 import com.entity.Periodo;
 import com.entity.ProgramaAcademico;
 import com.entity.Proyecto_Aula;
@@ -57,11 +58,20 @@ public class CoordinadorController implements Serializable {
     private MatriculaController matcont;
     @ManagedProperty("#{proyectoAulaController}")
     private ProyectoAulaController proacon;
+    @ManagedProperty("#{reportesController}")
+    private ReportesController repcon;
+    @ManagedProperty("#{semestreController}")
+    private SemestreController semcon;
+    @ManagedProperty("#{tutoriasController}")
+    private TutoriasController tutcon;
+     @ManagedProperty("#{evaluacionController}")
+    private EvaluacionController evacon;
 
     //variables de control
     private String paginaActualC = "";
     private int activeIproy = 0;
-   
+    private int activeItut = 0;
+    private int activeIRes = 0;
 
     /**
      * Creates a new instance of CoordinadorController
@@ -74,27 +84,89 @@ public class CoordinadorController implements Serializable {
         activeIproy = 1;
     }
 
+    public void seleccionarProgramaparaTutorias(ProgramaAcademico pa) {
+        setPrograma(pa);
+        activeItut = 1;
+    }
+
+    public void seleccionarProgramaparaResultados(ProgramaAcademico pa) {
+        setPrograma(pa);
+        matcont.consultarMatriculasXPeriodoYPrograma(pa, periodo);
+        
+        activeIRes = 1;
+    }
+
 //    public void seleccionarPeriodo(Periodo p) {
 //        setPeriodo(p);
 ////        consultarMatriculasXPeriodoYPrograma(getPrograma(),  p);
 //        activeIproy = 2;
 //    }
-
     public void seleccionarSemestre(Semestre s) {
+        setSemestre(s);
+        setSecciones(secser.obtenerSeccionesXSemestre_Periodo_Programa(getSemestre(), getPrograma(), getPeriodo()));
+        repcon.createBarModel();
+        repcon.createBarModelSemestre(s);
+
+    }
+
+    public void seleccionarSemestrepTRTutorias(Semestre s) {
+        setSemestre(s);
+        setSecciones(secser.obtenerSeccionesXSemestre_Periodo_Programa(getSemestre(), getPrograma(), getPeriodo()));
+        repcon.createBarTutorias();
+        repcon.createBarTutoriasSemestre(s);
+    }
+
+    public void seleccionarSemestrepTResultados(Semestre s) {
         setSemestre(s);
         setSecciones(secser.obtenerSeccionesXSemestre_Periodo_Programa(getSemestre(), getPrograma(), getPeriodo()));
     }
 
+   
+    
     public void obtenerProyectosSeccion(Seccion s) {
         seccion = s;
         proyectosXSeccion(seccion);
         activeIproy = 2;
     }
 
+    public void obtenerTutoriasSeccion(Seccion s) {
+        seccion = s;
+        repcon.createBarTutoriasSeccion(s);
+        tutcon.setTutoriasAsignatura(new LinkedList());
+        asigcon.obtenerAsignaturasXSeccion(s);
+        //  proyectosXSeccion(seccion);
+        activeItut = 2;
+    }
+
+    public void obtenerResultadosSeccion(Seccion s) {
+        seccion = s;
+        matcont.setSeccion(seccion);
+        matcont.obtenerMatriculasXSeccion(s);
+        activeIRes = 2;
+    }
+
+    public void verResultados(Integrante i){
+        matcont.seleccionarMatricula(i);
+        activeIRes = 3;
+    }
+    
+    public void volverEstudiantesSeccion(){
+        activeIRes = 2;
+    }
+    
     public void consultarProyectosAulaPeriodo() {
-//        System.out.println("consultare los proyectos por periodo");
         getProacon().consultarProyectosXPeriodo(periodo);
         getProacon().obtenerIntegrantesXProyectos(periodo);
+        evacon.obtenerValoracionesdelPeriodo(periodo);
+        repcon.setProyectos(getProacon().getProyectos());
+        repcon.setSemestres(semcon.getSemestres());
+        repcon.mostrarNproyectosXSemestre();
+    }
+
+    public void consultarTutoriasPeriodo() {
+        tutcon.obtenerTutoriasXPeriodo(periodo);
+        repcon.setSemestres(semcon.getSemestres());
+        repcon.setTutorias(tutcon.getTutorias());
     }
 
     public void proyectosXSeccion(Seccion s) {
@@ -112,7 +184,7 @@ public class CoordinadorController implements Serializable {
         //proacon.getAvancon().obtenerAvancesProyecto(pa);
         activeIproy = 3;
     }
-    
+
     public void gprofesores() {
         paginaActualC = "/Profesor/GestorProfesores.xhtml";
     }
@@ -138,12 +210,21 @@ public class CoordinadorController implements Serializable {
         paginaActualC = "/Coordinador/ProyectosAulaPrograma.xhtml";
     }
 
+    public void verTutorias() {
+        paginaActualC = "/Coordinador/TutoriasPrograma.xhtml";
+    }
+
     public void gsecciones() {
         paginaActualC = "/Coordinador/GestorSecciones.xhtml";
     }
 
     public void gasignacionA() {
         paginaActualC = "/Coordinador/AsignacionAcademica.xhtml";
+    }
+
+    public void gresultadosA() {
+        activeIRes=0;
+        paginaActualC = "/Coordinador/ResultadosAprendizaje.xhtml";
     }
 
     public void gasignaturas() {
@@ -379,6 +460,90 @@ public class CoordinadorController implements Serializable {
      */
     public void setProyectosSeccion(List<Proyecto_Aula> proyectosSeccion) {
         this.proyectosSeccion = proyectosSeccion;
+    }
+
+    /**
+     * @return the repcon
+     */
+    public ReportesController getRepcon() {
+        return repcon;
+    }
+
+    /**
+     * @param repcon the repcon to set
+     */
+    public void setRepcon(ReportesController repcon) {
+        this.repcon = repcon;
+    }
+
+    /**
+     * @return the semcon
+     */
+    public SemestreController getSemcon() {
+        return semcon;
+    }
+
+    /**
+     * @param semcon the semcon to set
+     */
+    public void setSemcon(SemestreController semcon) {
+        this.semcon = semcon;
+    }
+
+    /**
+     * @return the tutcon
+     */
+    public TutoriasController getTutcon() {
+        return tutcon;
+    }
+
+    /**
+     * @param tutcon the tutcon to set
+     */
+    public void setTutcon(TutoriasController tutcon) {
+        this.tutcon = tutcon;
+    }
+
+    /**
+     * @return the activeItut
+     */
+    public int getActiveItut() {
+        return activeItut;
+    }
+
+    /**
+     * @param activeItut the activeItut to set
+     */
+    public void setActiveItut(int activeItut) {
+        this.activeItut = activeItut;
+    }
+
+    /**
+     * @return the activeIRes
+     */
+    public int getActiveIRes() {
+        return activeIRes;
+    }
+
+    /**
+     * @param activeIRes the activeIRes to set
+     */
+    public void setActiveIRes(int activeIRes) {
+        this.activeIRes = activeIRes;
+    }
+
+    /**
+     * @return the evacon
+     */
+    public EvaluacionController getEvacon() {
+        return evacon;
+    }
+
+    /**
+     * @param evacon the evacon to set
+     */
+    public void setEvacon(EvaluacionController evacon) {
+        this.evacon = evacon;
     }
 
 }
