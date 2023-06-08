@@ -757,9 +757,10 @@
     align-content: center;
     justify-content: center;
     position: absolute;
-    top: 80px;
-    left: 10px;
+    bottom: 0px;
+    left: 0px;
     color: white;
+    padding: 1rem;
 }
 .contenido-grid{
     display: flex;
@@ -952,11 +953,7 @@
 }
 
 .periodos{
-    padding: 10px;
-    border: solid #C5BCBC 1px;
-    border-bottom-right-radius: 40px;
-    border-bottom-left-radius: 40px;
-
+   
 }
 
 .codseitem{

@@ -28,8 +28,8 @@
                 </p:panel>
             </div>
             <div class="cop1">
-                <div class="tanone" style="justify-content: flex-start; column-gap: 1rem" >
-                    <div class="btns" style="background-color: #005CB9">
+                <div class="btns-container" style="justify-content: flex-start; column-gap: 1rem" >
+                    <div class="btn-normal" style="background-color: #005CB9">
                         <i class="uil uil-angle-left-b" ></i>
                         Volver
                         <h:commandButton class="btn" value="volver" action="#{matriculaController.volverEstudiantes()}" />
@@ -38,8 +38,8 @@
 
             </div>
             <div class="cop2">
-                <div class="tanone" style="justify-content: flex-start; column-gap: 1rem" >
-                    <div class="btns" style="background-color: tomato">
+                <div class="btns-container" style="justify-content: flex-start" >
+                    <div class="btn-delete" >
                         <i class="uil uil-trash-alt" ></i>
                         Eliminar
                         <h:commandButton class="btn" value="volver" action="#{matriculaController.eliminarMatricula()}" />

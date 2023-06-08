@@ -7,8 +7,9 @@
 }       
 .ui-datagrid-content{
     padding: 0 !important;
-    max-width: 250px;
-
+}
+body .ui-datagrid .ui-datagrid-content{
+    border: none !important;
 }
 body .ui-datatable thead th{
     background: #004F9E !important;
@@ -40,9 +41,7 @@ body .ui-inputfield{
 body .ui-panel .ui-panel-content{
     padding: 0 !important;
 }
-body .ui-datagrid .ui-datagrid-content{
-    border: none !important;
-}
+
 
 body .ui-inplace .ui-inplace-display {
     padding: 0 !important;

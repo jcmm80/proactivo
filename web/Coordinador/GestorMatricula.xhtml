@@ -111,14 +111,13 @@
                         </div>
 
 
-                        <p:dataGrid    columns="5" var="sem"  value="#{semestreController.semestres}">
-                            <div class="card img-negra" >
-                                <figure >
-                                    <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
-                                </figure>
+                        <p:dataGrid     columns="5" var="sem"  value="#{semestreController.semestres}">
+                            <div class="relative img-negra bg-black" >
+                                <div class="w-full h-full">
+                                    <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
+                                </div>
                                 <div class="contenido">
                                     <p>Semestre <br></br>#{sem.denominacion}</p>
-
                                 </div>
                                 <h:commandButton   class="btn" value="Abrir" action="#{matriculaController.seleccionarSemestre(sem)}" />
                             </div>

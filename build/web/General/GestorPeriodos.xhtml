@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<xhtml xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -54,66 +54,31 @@
                         <div class="espaceador"></div>
                     </div>
                     <div >
-                        <p:dataTable    scrollable="true"   var="per" value="#{periodoController.periodos}" editable="true">
-
-                            <p:column headerText="Fecha Inicial" >
-                                <p:cellEditor>
-                                    <f:facet name="output">
-                                        <h:outputText value="#{per.fechaInicial}"/>
-                                    </f:facet>
-                                    <f:facet name="input">
-                                        <p:calendar id="datei" value="#{per.fechaInicial}" style="width: 100%"/>
-                                    </f:facet>
-                                </p:cellEditor>
+                        <p:dataTable  scrollable="true" var="per" value="#{periodoController.periodos}" >
+                            <p:column headerText="Fecha Inicial">
+                                <p:calendar id="datei" value="#{per.fechaInicial}"/>
                             </p:column>
-
-                            <p:column headerText="Fecha Final" >
-                                <p:cellEditor>
-                                    <f:facet name="output">
-                                        <h:outputText value="#{per.fechaFinal}"/>
-                                    </f:facet>
-                                    <f:facet name="input">
-                                        <p:calendar id="datei" value="#{per.fechaFinal}" style="width: 100%"/>
-                                    </f:facet>
-                                </p:cellEditor>
+                            <p:column headerText="Fecha Final">
+                                <p:calendar id="datef" value="#{per.fechaFinal}"/>   
                             </p:column>
-
                             <p:column headerText="Año">
-                                <p:cellEditor>
-                                    <f:facet name="output">
-                                        <h:outputText value="#{per.anio}"/>
-                                    </f:facet>
-                                    <f:facet name="input">
-                                        <p:inputText value="#{per.anio}" style="width:100%" label="Name"/>
-                                    </f:facet>
-                                </p:cellEditor>
+                                #{per.anio}
                             </p:column>
-
                             <p:column headerText="Periodo">
-                                <p:cellEditor>
-                                    <f:facet name="output">
-                                        <h:outputText value="#{per.numero}"/>
-                                    </f:facet>
-                                    <f:facet name="input">
-                                        <p:inputText value="#{per.numero}" style="width:100%" label="Name"/>
-                                    </f:facet>
-                                </p:cellEditor>
+                                #{per.numero}
                             </p:column>
-
                             <p:column headerText="Estado">
+
+
                                 <h:outputText rendered="#{per.actual}" value="Actual" />
                             </p:column>
-
                             <p:column headerText="Activador">
                                 <div class="accion">
-                                    <i class="fa fa-toggle-on"></i><h:commandButton  class="icono" rendered="#{!per.actual}" action="#{periodoController.activarPeriodo(per)}" value="." />
+                                    <i class="fa fa-toggle-on" ></i><h:commandButton  class="icono" rendered="#{!per.actual}" action="#{periodoController.activarPeriodo(per)}" value="." />
                                 </div>
 
                             </p:column>
-                            <p:column style="width:20px">
-                                <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
-                            </p:column>
-                        </p:dataTable>
+                        </p:dataTable> 
                     </div>
                 </div>
             </div>
@@ -125,5 +90,5 @@
 
     </style>
 
-</html>
+</xhtml>
 

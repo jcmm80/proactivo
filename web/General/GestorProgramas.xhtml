@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+<xhtml xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -27,12 +27,12 @@
                         </div>
                         <div>
                             <h4>Nombre Corto</h4>
-                            <p:inputText  value="#{programaController.programa.nombreCompleto}" placeholder="Tecgnologia en sistema" />
+                            <p:inputText  value="#{programaController.programa.nombre}" placeholder="Tecgnologia en sistema" />
                             <small class="flex align-items-center gap-1 text-gray-600"><i class="ri-question-fill " ></i><p></p>proporciona un nombre abreviado o acrónimo para tu programa académico.</small>
                         </div>
                         <div>  
                             <h4>Nombre Completo</h4>
-                            <p:inputText  style="max-width: 600px" value=""  placeholder="Tecgnología de Desarrollo de Software e información"/>
+                            <p:inputText  style="max-width: 600px" value="#{programaController.programa.nombreCompleto}"  placeholder="Tecgnología de Desarrollo de Software e información"/>
                             <small class="flex align-items-center gap-1 text-gray-600"><i class="ri-question-fill " ></i><p></p>ingresa el nombre completo del programa académico.</small>
                         </div>
 
@@ -104,12 +104,9 @@
                             #{pro.coordinador.toString()}
                         </p:column>
                         <p:column headerText="Acciones">
-                            <div class="Acciones">
-                                <div class="accion">
-                                    <i class="fa fa-pen" style="color: #005CB9"></i><h:commandButton class="icono" value="." action="#{programaController.consultarprograma(pro)}" />
-                                </div>
-
-                            </div>
+                            <div class="btn-normal">
+                                <i class="fa fa-pen" ></i><h:commandButton class="btn" value="." action="#{programaController.consultarprograma(pro)}" />
+                            </div>   
                         </p:column>
                     </p:dataTable>
                 </div>
@@ -162,15 +159,16 @@
                 background: none;
             }
             @media screen and (max-width: 767px) {
-            .form{
-                display: grid;
-                grid-template-columns: repeat(1, 1fr);
-                gap: 1rem;
-                position: relative;
-                padding-bottom: 2rem;
+                .form{
+                    display: grid;
+                    grid-template-columns: repeat(1, 1fr);
+                    gap: 1rem;
+                    position: relative;
+                    padding-bottom: 2rem;
+                }
             }
 
         </style>
     </h:body>
-</html>
+</xhtml>
 
