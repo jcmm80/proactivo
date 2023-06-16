@@ -31,7 +31,7 @@
                         #{cri.tipo}
                     </p:column>
                     <p:column headerText="Opciones">
-                        <h:commandButton value="Eliminar" action="#{criteriosController.aliminarCriterio(cri)}" />
+                        <h:commandButton disabled="#{criteriosController.criterioVinculado(cri)}" value="Eliminar" action="#{criteriosController.aliminarCriterio(cri)}" />
                         <h:commandButton value="Consultar" action="#{criteriosController.seleccionarCriterio(cri)}" />
                     </p:column>
                 </p:dataTable>

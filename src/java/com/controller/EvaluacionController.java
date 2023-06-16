@@ -180,7 +180,11 @@ public class EvaluacionController implements Serializable {
     }
 
     public void consultarEvaluacion(Seccion s) {
-        evaluacion = evaser.obtenerEvaluacionXSeccion(s);
+        try {
+            evaluacion = evaser.obtenerEvaluacionXSeccion(s);
+        } catch (java.lang.NullPointerException npe) {
+            evaluacion = new Evaluacion();
+        }
     }
 
     public List<CriterioEvaluacion> criteriosXDimension(Dimension dim) {
@@ -265,7 +269,6 @@ public class EvaluacionController implements Serializable {
                 crite.setDimension(ce.getDimension());
                 crievser.modificar(crite);
                 System.out.println("Almacenando Criterio de evaluacion: " + ce.getCriterio().getDescripcion());
-
             }
 
             indTavEvaluacion = 0;

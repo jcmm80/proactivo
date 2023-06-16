@@ -1,0 +1,280 @@
+
+/*=============== REUSABLE CSS CLASSES ===============*/
+.container-menu {
+    max-width: 1300px;
+    margin-inline: 1.5rem;
+
+}
+
+.header {
+    z-index: var(--z-fixed);
+    width: 100%;
+    background-color: #fff;
+
+}
+
+.nav-up {
+    display: flex;
+    padding: 0.5rem 0;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+
+.nav-unicolombo {
+    /**width: 198px;**/
+}
+
+.profile-img {
+    width: 30px;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    background-color: #C5BCBC;
+
+}
+
+
+.nav-profile {
+    display: flex;
+    column-gap: .5rem;
+
+}
+
+.profile-data {
+    font-size: 10px;
+    text-align: right;
+}
+
+.profile-img-btn {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.btn-log-out {
+    font-size: 12px;
+    background: none;
+    color: red;
+    margin-top: 5px;
+}
+
+.nav-search {
+    width: 400px;
+    height: 40px;
+    position: relative;
+}
+
+.nav-search input {
+    width: 100%;
+    height: 40px;
+    background-color: #EEEEEE;
+    border: 0;
+    border-radius: 25px;
+    padding: 15px 15px 15px 55px;
+}
+
+.nav-search input::placeholder {
+    color: #878787;
+}
+
+.nav-search i {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+}
+
+
+@media screen and (max-width: 1005px) {
+    .contenido-contenedor{
+        width: 100%;
+        margin-left: 0;
+    }
+    .nav-menu-vertical{
+        background-color: #fff;
+        width: 100%;
+        height: 100vh;
+        z-index: 10000;
+    }
+
+    
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        background-color: #C5BCBC;
+        width: 100%;
+        min-height: 100vh;
+        transition: all .2s ease-out;
+        z-index: var(--z-fixed);
+
+    }
+    
+    .header{
+        background-color: #004F9E;
+    }
+    .nav-search,
+    .nav-unicolombo,
+    .logo-proac-container {
+        display: none;
+    }
+    .profile-data,.nav-toggle{
+        color: #fff;
+    }
+    .nav-menu-container{
+        background-color: #fff;
+        display: flex;
+        column-gap: 2rem;
+        padding: 1rem 1.5rem;
+
+    }
+
+}
+
+
+.nav-logos-close{
+    background-color: #004F9E;
+    width: 100%;
+    height: 69px;
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+    justify-content: space-between;
+
+}
+.nav-toggle {
+    display: block;
+}
+
+.nav-horizontal-item,
+.nav-vertical-item {
+    display: flex;
+    align-items: center;
+}
+
+.nav-horizontal-item i{
+    color: #004F9E;
+    font-size: 15px;
+    margin-right: 1rem;
+}
+
+.nav-horizontal-item a{
+    color: #f8f5f5;
+    font-size: 15px;
+    margin-right: 1rem;
+}
+.nav-vertical-link{
+    color: var(--text-color);
+    font-size: 15px;
+}
+
+.nav-toggle,
+.nav-close {
+    font-size: 1.25rem;
+    cursor: pointer;
+}
+
+.menu-tittle,.menu-tittle2 {
+    display: block;
+    color: #004F9E;
+    margin-bottom: 2rem;
+}
+
+
+
+.nav_questions {
+    display: block;
+    margin-top: 2rem;
+}
+
+.nav-close {
+    font-size: 25px;
+    display: inline-flex;
+    color: #fff;
+}
+
+.show_menu {
+    left: 0;
+}
+
+.nav-logos-close .nav-search{
+    display: block;
+}
+.nav-logos-close .nav-search{
+    min-width: max-content;
+}
+
+.nav-vertical-link{
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+    }
+
+@media screen and (min-width: 1005px){
+
+    .nav-close,.nav-toggle,.menu-tittle{
+        display: none;
+    }
+    .nav-list-horizontal{
+        display: flex;
+        
+        height: 49px;
+        justify-content: space-between;
+        padding: 0 3rem;
+    }
+    .nav-horizontal-item i{
+        color: #fff;
+    }
+    .nav-vertical-item{
+        position: relative;
+        padding: 5px 0;
+        
+        
+    }
+    .nav-list-vertical{
+        margin-left: 1rem;
+        padding: 1rem 0;
+        
+        
+    }
+    .nav-vertical-link{
+        color: var(--first-color);
+        font-size: 15px;
+        font-weight: var(--font-medium);
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+    }
+    .nav-menu-vertical{
+        margin-top: 2px;
+        width: 263px;
+        background-color: #fff;
+        border-bottom-right-radius: 40px;
+        position: absolute;
+        min-height: 100vh;
+    }
+    .menu-tittle2{
+        background-color: #004F9E;
+        text-align: center;
+        color: #fff;
+        font-weight: var(--font-medium);
+        padding: 10px 0;
+        margin-bottom: 0;
+    }
+    .nav-vertical-item::before{
+        content: '';
+        width: 4px;
+        height: 100%;
+        background-color: #004F9E;
+        position: absolute;
+        left: -16px;
+
+    }
+    .nav-logos-close{
+        display: none;
+    }
+
+}

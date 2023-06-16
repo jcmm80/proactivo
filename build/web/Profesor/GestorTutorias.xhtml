@@ -31,9 +31,12 @@
                 </p:panel>
                 <p:panel rendered="#{profesorController.mpanelTutorias}">                   
                     <p:panel rendered="#{!profesorController.mpanelPTutoria}">
-                        <h:commandButton value="crear"  />
+                        
+                        <p:panel rendered="#{!profesorController.mpanelPCTutoria}">
+                            
+                        
+                        <h:commandButton value="crear"  action="#{profesorController.crearTutoria()}" />
                         <h:commandButton value="asignaturas" action="#{profesorController.pvolverAsignaturardTutoria()}" />
-
                         <p:tabView>
                             <p:tab title="Solicitadas">
                                 <p:dataTable scrollHeight="100px" class="tabla-reporte" var="tut" value="#{tutoriasController.tutoriasAsignaturaSolicitadas}">
@@ -117,15 +120,21 @@
                                         #{tutr.integrante.matricula.estudiante.toString()}
                                     </p:column>
                                     <p:column headerText="">
-                                        <h:commandButton disabled="#{tut.fueRealizada()}" value="Programar" action="#{profesorController.pprogramarTutoria(tutr)}" />
-                                        <h:commandButton disabled="#{tut.fueRealizada()}" value="Realizar" action="#{profesorController.prealizarTutoria(tutr)}" />
+                                        <h:commandButton value="Consultar"/>                                       
                                     </p:column>         
                                 </p:dataTable>  
                             </p:tab>
                         </p:tabView>
-
-
+                        
+                        </p:panel>
+                        <p:panel rendered="#{profesorController.mpanelPCTutoria}">
+                            <ui:include src="#{profesorController.paginaTutoria}" />
+                        </p:panel>
+                        
                     </p:panel>
+                    
+                    
+                    
                     <p:panel rendered="#{profesorController.mpanelPTutoria}">                        
                         <ui:include src="#{profesorController.paginaTutoria}" /> 
                     </p:panel>

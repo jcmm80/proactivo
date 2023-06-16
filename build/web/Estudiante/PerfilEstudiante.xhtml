@@ -25,7 +25,7 @@
                      <p:fileUpload  value="#{estudianteController.iestudiante}"  mode="simple" skinSimple="true"/>
                   <div class="btn-delete"> 
                      <i class="uil uil-image-times"></i>
-                     Delete
+                     Cargar
                      <h:commandButton class="btn" action="#{estudianteController.subirImagenEstudiante()}" value="" /> 
                   </div>
                 </div>
@@ -36,7 +36,7 @@
 
             </div>
             <div class="contenedor-form ">
-                 <div class="form-izq">
+                 <div class="form-izq">git
                      <div class="input-form-310">
                         Primer Nombre
                         <p:inputText  class="iform" value="#{estudianteController.estudiante.primerNombre}" />
@@ -105,7 +105,7 @@
                     <p:inputText class="iform" value="#{estudianteController.estudiante.direccion}" />
                 </div>
                  <div class="botones ">
-                     <h:commandButton class="boton"  value="Actualizar" />  
+                     <h:commandButton class="boton"  value="Actualizar" action="#{estudianteController.actualizarEstudiante()}" />  
                     
                  </div>
                      

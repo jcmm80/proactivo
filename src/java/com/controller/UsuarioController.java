@@ -32,6 +32,7 @@ public class UsuarioController implements Serializable {
 
     //Objetos de Negocio
     private Usuario usuario;
+    private Usuario usuarioTemp;
 
     //Colecciones
     private List<Usuario> usuarios;
@@ -67,6 +68,7 @@ public class UsuarioController implements Serializable {
      */
     public UsuarioController() {
         usuario = new Usuario();
+        usuarioTemp = new Usuario();
     }
 
     public void iniciar() {
@@ -85,8 +87,9 @@ public class UsuarioController implements Serializable {
                     coorcon.consultarAreas();
                     seccon.setPeriodo(percon.getPeriodoActual());
                     coorcon.setPeriodo(percon.getPeriodoActual());
-                    seccon.obtenerseccionesPeriodo();
                     semcon.obtenerSemestres();
+                    seccon.setSemestres(semcon.getSemestres());
+                    seccon.obtenerseccionesPeriodo();
                     coorcon.consultarAsignaturas(percon.getPeriodoActual());
                     coorcon.consultarMatriculasXPeriodo(percon.getPeriodoActual());
                     coorcon.consultarProyectosAulaPeriodo();
@@ -98,10 +101,13 @@ public class UsuarioController implements Serializable {
                     estcon.obtenerEstudiante(getUsuario().getId());
                     estcon.setPeriodo(percon.getPeriodoActual());
                     estcon.consultarMatriculaEstudiante();
-                    estcon.consultarProyectoXMatricula();
-                    estcon.consultarFases();
-                    estcon.consultarTiposEntregable();
-                    estcon.consultarAsignaturas();
+                    
+                    if (estcon.getEstudiantehabilitado()) {
+                        estcon.consultarProyectoXMatricula();
+                        estcon.consultarFases();
+                        estcon.consultarTiposEntregable();
+                        estcon.consultarAsignaturas();
+                    }
                     paginaActual = "/Estudiante/GUIEstudiante.xhtml";
 
                 }
@@ -140,16 +146,23 @@ public class UsuarioController implements Serializable {
                     coorcon.consultarCoordinadores();
                     procon.consultarProgramas();
                     percon.obtenerPeriodos();
+                    usuarios = ususer.consultarTodo(Usuario.class);
                     paginaActual = "/GUISuperUsuario.xhtml";
 
                 }
                 mpanelLogin = false;
             }
-        } catch (java.lang.NullPointerException npe) {
-            npe.printStackTrace();
+        } catch(javax.persistence.NoResultException nre){
+            FacesUtil.addErrorMessage("Usuario no existe");
+        }catch (java.lang.NullPointerException npe) {
+//            npe.printStackTrace();
             FacesUtil.addErrorMessage("Usuario, tipo de usuario o matricula inexistente");
-        }
+        } 
 
+    }
+
+    public void almacenarUsuario() {
+        usuarioTemp = ususer.modificar(usuarioTemp);
     }
 
     public void gregistroEstudiantes() {
@@ -170,6 +183,10 @@ public class UsuarioController implements Serializable {
         paginaSU = "/General/GestorPeriodos.xhtml";
     }
 
+    public void gusuarios() {
+        paginaSU = "/General/GestorUsuarios.xhtml";
+    }
+
     public void gcargamasiva() {
         paginaSU = "/General/CargaMasiva.xhtml";
     }
@@ -188,6 +205,10 @@ public class UsuarioController implements Serializable {
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
 // Invalida la sesión y elimina todas las variables almacenadas en ella
         session.invalidate();
+    }
+
+    public void seleccionarUsuario(Usuario u) {
+        usuarioTemp = u;
     }
 
     public void limpiarDatosEstudiante() {
@@ -479,6 +500,20 @@ public class UsuarioController implements Serializable {
      */
     public void setMarchivos(MArchivos marchivos) {
         this.marchivos = marchivos;
+    }
+
+    /**
+     * @return the usuarioTemp
+     */
+    public Usuario getUsuarioTemp() {
+        return usuarioTemp;
+    }
+
+    /**
+     * @param usuarioTemp the usuarioTemp to set
+     */
+    public void setUsuarioTemp(Usuario usuarioTemp) {
+        this.usuarioTemp = usuarioTemp;
     }
 
 }

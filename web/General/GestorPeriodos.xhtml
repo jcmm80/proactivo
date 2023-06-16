@@ -9,14 +9,14 @@
     </h:head>
     <h:body>
         <section class="contenido-contenedor">
-        <div class="border contenedor top">
-             <h1 class="tittle">Gestor de Periodos</h1>
-             <span class="aviso">Crear Periodo</span>
-             <div class="contenedor-form periodos">
-                 
+            <div class="border contenedor top">
+                <h1 class="tittle">Gestor de Periodos</h1>
+                <span class="aviso">Crear Periodo</span>
+                <div class="contenedor-form periodos">
+
                     <div class="input-form-200">
-                    Año
-                    <p:spinner class="iform" value="#{periodoController.periodo.anio}" min="2022" max="2040" />
+                        Año
+                        <p:spinner class="iform" value="#{periodoController.periodo.anio}" min="2022" max="2040" />
                     </div>
                     <div class="input-form-310">
                         Periodo
@@ -34,18 +34,18 @@
                         <p:calendar class="iform" value="#{periodoController.periodo.fechaFinal}" />
                     </div> 
                 </div>
-                 <div class="tanone">
-                     <h:commandButton class="boton" value="agregar" action="#{periodoController.registrarPeriodo()}" />
-                 </div>
-            
-               
-                
-                
-            
-               
-            
-        <span class="aviso">Periodos</span>
-        <p:dataTable class="tabla-reporte" var="per" value="#{periodoController.periodos}" >
+                <div class="tanone">
+                    <h:commandButton class="boton" value="agregar" action="#{periodoController.registrarPeriodo()}" />
+                </div>
+
+
+
+
+
+
+
+                <span class="aviso">Periodos</span>
+                <p:dataTable class="tabla-reporte" var="per" value="#{periodoController.periodos}" >
                     <p:column headerText="Fecha Inicial">
                         <p:calendar id="datei" value="#{per.fechaInicial}"/>
                     </p:column>
@@ -59,28 +59,32 @@
                         #{per.numero}
                     </p:column>
                     <p:column headerText="Estado">
-                        
-                        
+
+
                         <h:outputText rendered="#{per.actual}" value="Actual" />
                     </p:column>
                     <p:column headerText="Activador">
                         <div class="accion">
                             <i class="fa fa-toggle-on" style="color: #004F9E"></i><h:commandButton  class="icono" rendered="#{!per.actual}" action="#{periodoController.activarPeriodo(per)}" value="." />
                         </div>
-                        
+
+                    </p:column>
+                    <p:column headerText="opciones">
+                        <h:commandButton value="consultar" action="#{periodoController.seleccionarPeriodo(per)}" /> 
+                        <h:commandButton value="x" action="#{periodoController.aliminar(per)}" /> 
                     </p:column>
                 </p:dataTable>
-        
-    
 
-        </div>
-    </section>
 
-        
+
+            </div>
+        </section>
+
+
     </h:body>
     <style>
-        
+
     </style>
-       
+
 </html>
 

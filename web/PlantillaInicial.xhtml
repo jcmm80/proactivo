@@ -1,45 +1,86 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<xhtml xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
-    
+
 
     <h:head>
         <h:outputStylesheet library="css" name="style.css"/>
-        <link rel="stylesheet" href="Estilos/style.css"></link>
-        <script src="https://kit.fontawesome.com/6f2a08f515.js" crossorigin="anonymous"></script>
+        <h:outputStylesheet library="css" name="root.css"/>
+        <h:outputStylesheet library="css" name="PrimeFaces.css"/>
+        <h:outputStylesheet library="css" name="botones.css"/>
+        <h:outputStylesheet library="css" name="login.css"/>
+        <h:outputStylesheet library="css" name="style-menu.css"/>
+        <link rel="stylesheet" href="https://unpkg.com/primeflex@^3/primeflex.css"></link>
+
+        
         <title>Facelet Title</title>
-        
-        
+
+
+
     </h:head>
-    <h:body>
-        <div class="inicio">
-        <div class="lado-izquierdo">
-            
-            <h:graphicImage class="logo-sgpa-inicio" value="/resources/img/logo-rojo.png"/>
-        </div>
-        <div class="lado-derecho">
-            <div class="cont-login">
-                <h3 class="loginh3">Login</h3>
-                <div class="nickname">
-                    <p:inputText  placeholder="Nickname" value="#{usuarioController.usuario.login}"   class=" inputs-login" /><i class="uil uil-user input-i"></i>
-                </div>
-                <div class="password ">
-                    <p:password  toggleMask="true" id="pwd1"  placeholder="Password" value="#{usuarioController.usuario.password}"  class=" inputs-login"  /><i class="uil uil-key-skeleton-alt input-i"></i>
-                </div>
-                <a href=""><span class="forgot">Forgot password?</span></a>
-                
+    <h:body style="overflow: hidden;">
+        <h:graphicImage class="wave-down" value="/resources/img/wave-down.svg"/>
+        <h:graphicImage class="wave-up" value="/resources/img/wave-up.svg"/>
+        <div class="container-login">
+            <div class="img-login">
+                <h:graphicImage class="img img-bg" value="/resources/img/ulustracion-login.svg"/>
             </div>
-            
-            <h:commandButton action="#{usuarioController.iniciar()}" value="Login" class="boton-login" />
-            <span class="registrarme">Aún no tienes Cuenta? :<h:commandButton action="#{usuarioController.gregistroEstudiantes()}" value="Registrarme" class="registrarme-boton" /></span>
-            <h:graphicImage class="wave-down" value="/resources/img/wave-down.svg"/>
-            <h:graphicImage class="wave-up" value="/resources/img/wave-up.svg"/>
-            
+            <div class="login-content">
+                <div class="form-container">
+                    <a href="index.xhtml" class="logo-proac-container">
+                        <h:graphicImage class="img logo-proac" value="/resources/img/logo-azul.png"/>
+                        <p><span>Proactivo</span></p>
+                    </a>
+                    
+                    <div class="input-div one">
+                        <div class="i-login">
+                            <i class="ri-user-line "></i>
+                        </div>
+                        <div>
+
+                            <p:inputText placeholder="Username" value="#{usuarioController.usuario.login}"   class="input-login" />
+
+                        </div>
+                    </div>
+                    <div class="input-div pass">
+                        <div class="i-login"> 
+                            <i class="ri-key-2-line"></i>
+                        </div>
+                        <div>
+
+                            <p:password placeholder="Password" id="pwd1"   value="#{usuarioController.usuario.password}"  class="input-login"  />
+                        </div>
+                    </div>
+                    <a class="a-login">Forgot Password?</a>
+                    <div class="btn-login">
+                        <label>Login</label>
+                        <h:commandButton action="#{usuarioController.iniciar()}" value="Login" class="btn" />
+                    </div>
+                    
+                    <span class="registrarme">Aún no tienes Cuenta? :<h:commandButton action="#{usuarioController.gregistroEstudiantes()}" value="Registrarme" class="registrarme-boton" /></span>
+                </div>
+            </div>
         </div>
-    </div>
-        
+
+
     </h:body>
-    
-</html>
+    <style>
+        .logo-proac-container span{
+            -webkit-background-clip: text !important;
+            color: transparent;  
+            background: linear-gradient(90deg, rgba(80,134,193,1) 18%, rgba(93,196,96,1) 41%, rgba(255,164,77,1) 68%, rgba(255,105,97,1) 100%);
+        }
+        .ui-inputfield.ui-state-focus{
+            box-shadow: none !important;
+        }
+        .ui-password ui-inputfield ui-widget ui-state-default ui-corner-all input-login ui-state-filled{
+            background-color: none !important;
+        }
+        input:-internal-autofill-selected{
+            background-color: none !important;
+        }
+    </style>
+
+</xhtml>

@@ -33,17 +33,21 @@ public class UnidadCompetencia implements Serializable {
     private String descripcion;
     @ManyToOne
     private Asignatura asignatura;
-    
 
-     public boolean validarUnidadCompetencia() {
-        boolean valido = true;       
-        if(this.asignatura.getId()<0){
-            FacesUtil.addErrorMessage("la unidad de competencia debe estar asociada a una asignatura");
+    public boolean validarUnidadCompetencia() {
+        boolean valido = true;
+        try {
+            if (this.asignatura.getId() < 0) {
+                FacesUtil.addErrorMessage("la unidad de competencia debe estar asociada a una asignatura");
+                valido = false;
+            }
+        } catch (java.lang.NullPointerException npe) {
             valido = false;
+            FacesUtil.addErrorMessage("la unidad de competencia debe estar asociada a una asignatura");
         }
         return valido;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -132,5 +136,5 @@ public class UnidadCompetencia implements Serializable {
     public void setCompetencias(List<Competencia> competencias) {
         this.competencias = competencias;
     }
-    
+
 }

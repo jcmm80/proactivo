@@ -38,7 +38,7 @@
                     </div>
 
                     <span class="aviso">Selecciona un Semestre</span>    
-                    <p:dataGrid    columns="5" var="sem"  value="#{semestreController.semestres}">
+                    <p:dataGrid  columns="5" var="sem"  value="#{semestreController.semestres}">
                         <div class="card img-negra" >
                             <figure >
                                 <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
@@ -69,12 +69,18 @@
 
 
                     <div class="csecciones">
-                        <p:dataTable class="tabla-reporte" rows="5" paginator="true" var="sec" value="#{seccionController.secciones}">
-                            <p:column headerText="Semestre">
-                                #{sec.semestre.denominacion}
+                        <p:dataTable class="tabla-reporte" rows="10" paginator="true" var="sems" value="#{seccionController.semestres}">
+                            <p:column headerText="Semestre" width="10%">
+                                #{sems.denominacion}
                             </p:column>
-                            <p:column headerText="Seccion">
-                                #{sec.denominacion}
+                            <p:column headerText="Secciones" width="90%">
+                                <p:dataGrid columns="6" var="sec" value="#{sems.secciones}">
+                                    <p:panel>
+                                        <h:commandButton value="#{sec.denominacion}" />
+                                        <h:commandButton value="x" action="#{seccionController.eliminar(sec)}" />
+                                    </p:panel>
+                                </p:dataGrid>                               
+                                
                             </p:column>
                         </p:dataTable>                           
                     </div>

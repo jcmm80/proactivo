@@ -30,7 +30,7 @@
                         #{comp.tipoentregable.nombre}
                     </p:column>
                     <p:column headerText="">
-                        <h:commandButton title="Eliminar" value="x" action="#{competenciasController.eliminarCompetencia(comp)}" />
+                        <h:commandButton disabled="#{criteriosController.competenciaVinculada(comp)}" title="Eliminar" value="x" action="#{competenciasController.eliminarCompetencia(comp)}" />
                         <h:commandButton title="Consultar" value="Consultar" action="#{competenciasController.consultarCompetencia(comp)}"/>
                         <h:commandButton title="Criterios" value="Criterios" action="#{competenciasController.seleccionarCompetencia(comp)}"/>
                     </p:column>

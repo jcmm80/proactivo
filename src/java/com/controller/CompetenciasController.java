@@ -7,6 +7,7 @@ package com.controller;
 
 import com.entity.Asignatura;
 import com.entity.Competencia;
+import com.entity.Criterio;
 import com.entity.Profesor;
 import com.entity.TipoCompetencia;
 import com.entity.Tipo_Entregable;
@@ -39,6 +40,7 @@ public class CompetenciasController implements Serializable {
     private List<TipoCompetencia> tiposcompetencia = new LinkedList();
     private List<Competencia> competencias = new LinkedList();
     private List<Competencia> competenciasXUnidad = new LinkedList();
+    List<Criterio> criteriosGlobales = new LinkedList();
 
     UnidadCompetenciaServices uncoser = new UnidadCompetenciaServices();
     TipoCompetenciaServices tcser = new TipoCompetenciaServices();
@@ -85,11 +87,25 @@ public class CompetenciasController implements Serializable {
         unidadesAsignatura = new LinkedList();
         for (UnidadCompetencia uc : unidades) {
             if (uc.getAsignatura().getId().equals(asignatura.getId())) {
+                if(!esglobal(uc)){
                 unidadesAsignatura.add(uc);
+                }
             }
         }
     }
 
+    public boolean esglobal(UnidadCompetencia uc){
+        boolean global=false;
+        for(Criterio c:criteriosGlobales){
+            if(c.getCompetencia().getUnidad().getId().equals(uc.getId())){
+                global=true;break;
+                
+            }
+//            System.out.println(uc.getId()+"  "+c.getCompetencia().getUnidad().getId()+" Es Global: "+global);
+        }
+        return global;
+    }
+    
     public void consultarCompetenciasUnidad() {
         competenciasXUnidad = new LinkedList();
         for (Competencia c : competencias) {
@@ -116,7 +132,9 @@ public class CompetenciasController implements Serializable {
         unidades = uncoser.obtenerUnidadCompetenciaXAsignatura(a);
     }
 
-  
+  public void consultarCriteriosGlobalesProfesor(Profesor p){
+      criteriosGlobales=cricon.obtenerCriteriosGlobalesProfesor(p);
+  }
 
     public void eliminarUnidad(UnidadCompetencia uni) {
         uncoser.eliminar(uni);

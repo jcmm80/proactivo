@@ -102,9 +102,6 @@ public class ImplDao<T, ID> implements IDao<T, ID> {
             }
             FacesUtil.addErrorMessage("Error de Persistencia: " + e.getMessage());
         } finally {
-//            em.getTransaction().commit();
-//            cerrarEmf("Modificar" + entity);
-//            emf.close();
         }
         return ent;
     }

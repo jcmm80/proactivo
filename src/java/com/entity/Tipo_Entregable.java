@@ -5,6 +5,7 @@
  */
 package com.entity;
 
+import com.controller.FacesUtil;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
@@ -45,21 +46,19 @@ public class Tipo_Entregable implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Tipo_Entregable(Long id, String descripcion, String nombre, Asignatura asignatura) {       
+    public Tipo_Entregable(Long id, String descripcion, String nombre, Asignatura asignatura) {
         this.id = id;
         this.descripcion = descripcion;
         this.nombre = nombre;
         this.asignatura = asignatura;
     }
 
-      public Tipo_Entregable(String descripcion, String nombre, Asignatura asignatura) { 
+    public Tipo_Entregable(String descripcion, String nombre, Asignatura asignatura) {
         this.descripcion = descripcion;
         this.nombre = nombre;
         this.asignatura = asignatura;
     }
 
-   
-    
     public Long getId() {
         return id;
     }
@@ -87,17 +86,24 @@ public class Tipo_Entregable implements Serializable {
         }
         return true;
     }
-     public boolean validar(){
-         boolean valido=true;
-        if(this.getNombre().equals("")||this.descripcion.equals("") ){
-            valido=false;
-          
-        }if(this.asignatura.getId()<=0){
-            valido=false;
+
+    public boolean validar() {
+        boolean valido = true;
+        try {
+            if (this.getNombre().equals("") || this.descripcion.equals("")) {
+                valido = false;
+                FacesUtil.addErrorMessage("Debe asignar un nombre al tipo de entregable");
+            }
+            if (this.asignatura.getId() <= 0) {
+                valido = false;
+                FacesUtil.addErrorMessage("Debe seleccionar una asignatura ");
+            }
+        } catch (java.lang.NullPointerException npe) {
+            valido = false;
+            FacesUtil.addErrorMessage("Debe seleccionar una asignatura ");
         }
         return valido;
-     }
-
+    }
 
     @Override
     public String toString() {
@@ -173,5 +179,5 @@ public class Tipo_Entregable implements Serializable {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    
+
 }

@@ -40,7 +40,7 @@ public class EstudianteController implements Serializable {
 
     //objetos de negocio
     private Estudiante estudiante = new Estudiante();
-   
+
     private Periodo periodo = new Periodo();//para almacenar el el periodo actual
 
     //controlladores
@@ -74,6 +74,7 @@ public class EstudianteController implements Serializable {
     private boolean mpanelAItems = false;
     private boolean mpanelItem = false;
     private boolean mpanelTutorias = false;
+    private boolean estudiantehabilitado;
 
     /**
      * Creates a new instance of EstudianteController
@@ -84,14 +85,21 @@ public class EstudianteController implements Serializable {
     public void consultarMatriculaEstudiante() {
         try {
             matcont.consultarMatriculaXEstudianteEnPeriodo(estudiante, periodo);
+            if (matcont.getMatricula().getId() > 0) {
+//                System.out.println("existe la matricula");
+                estudiantehabilitado = true;
+            } else {
+                estudiantehabilitado = false;
+                FacesUtil.addWarnMessage("Usuario, tipo de usuario o matricula inexistente");
+            }
         } catch (java.lang.NullPointerException npe) {
+            estudiantehabilitado = false;
+//            System.out.println("no existe la matricula");
             FacesUtil.addWarnMessage("Usuario, tipo de usuario o matricula inexistente");
         }
 
     }
 
-
-    
     public void consultarProyectoXMatricula() {
         try {
             proacon.obtenerProyectoAulaXMatricula(matcont.getMatricula());
@@ -99,12 +107,26 @@ public class EstudianteController implements Serializable {
             matcont.consultarResultadosXIntegrante();
         } catch (java.lang.NullPointerException npe) {
             paginaActualE = "";
+
             FacesUtil.addWarnMessage("Usuario, no tiene proyecto de aula asignado en el periodo");
         }
     }
 
+    public void actualizarEstudiante() {
+        if (estudiante.getId() > 0) {
+            estudiante = estser.modificar(estudiante);
+        }
+    }
+
     public void consultarFases() {
-        fascon.obtenerFasesXPrograma(matcont.getMatricula().getSeccion().getPrograma(), periodo);
+        try {
+            fascon.setPeriodo(periodo);
+            fascon.setPrograma(matcont.getMatricula().getSeccion().getPrograma());
+            fascon.obtenerFasesXPrograma(matcont.getMatricula().getSeccion().getPrograma(), periodo);
+        } catch (java.lang.NullPointerException npe) {
+            paginaActualE = "";
+            FacesUtil.addWarnMessage("Usuario, no esta matriculado en el periodo");
+        }
     }
 
     public void consultarTiposEntregable() {
@@ -112,7 +134,12 @@ public class EstudianteController implements Serializable {
     }
 
     public void consultarAsignaturas() {
-        asigcon.obtenerAsignaturasXEstudiante(matcont.getMatricula().getSeccion());
+        try {
+            asigcon.obtenerAsignaturasXEstudiante(matcont.getMatricula().getSeccion());
+        } catch (java.lang.NullPointerException npe) {
+            paginaActualE = "";
+            FacesUtil.addWarnMessage("Usuario, no tiene asignaturas ");
+        }
     }
 
     public void agregarAsignaturaTutoria(Asignatura a) {
@@ -159,11 +186,11 @@ public class EstudianteController implements Serializable {
 
     public void seleccionarTItem(Tipo_Item ip) {
         //tipicon.setTipo_item(ip);       
-        try{
-        proacon.getItem().setTipo(ip);
-        mpanelItem = true;
-        mpanelAItems = false;
-        }catch(java.lang.NullPointerException npe){
+        try {
+            proacon.getItem().setTipo(ip);
+            mpanelItem = true;
+            mpanelAItems = false;
+        } catch (java.lang.NullPointerException npe) {
             npe.printStackTrace();
         }
     }
@@ -236,35 +263,40 @@ public class EstudianteController implements Serializable {
                 paginaActualE = "/Estudiante/Gestor_Propuestas.xhtml";
             }
         } catch (java.lang.NullPointerException npe) {
-
+            FacesUtil.addWarnMessage("Estudiante no posee Proyecto ");
         }
     }
 
-    public void verAsignaturas(){
-          paginaActualE = "/Estudiante/AsignaturasSeccion.xhtml";
+    public void verAsignaturas() {
+        if (matcont.getMatricula().getId() > 0) {
+            paginaActualE = "/Estudiante/AsignaturasSeccion.xhtml";
+        } else {
+            FacesUtil.addWarnMessage("Estudiante no posee matricula ");
+        }
+
     }
-    
+
     public void g_proyecto() {
         if (!proacon.getProyecto().getCodigo().trim().equals("")) {
             paginaActualE = "/Estudiante/Gestor_Proyecto_Aula.xhtml";
         }
     }
-    
-      public void verResultados() {
+
+    public void verResultados() {
         if (!proacon.getProyecto().getCodigo().trim().equals("")) {
             paginaActualE = "/Estudiante/ResultadosAprendizaje.xhtml";
         }
     }
 
     public void g_tutoria() {
-        try{
-        if (!proacon.getProyecto().getCodigo().trim().equals("")) {
-            tutcon.setProyecto(proacon.getProyecto());
-            tutcon.setIntegrante(proacon.getIntegrante());
-            System.out.println("Proyecto:" + tutcon.getProyecto().getCodigo() + " " + "Integrante: " + tutcon.getIntegrante().getMatricula().getEstudiante().toString());
-            paginaActualE = "/Estudiante/GestorTutorias.xhtml";
-        }
-        }catch(NullPointerException npe){
+        try {
+            if (!proacon.getProyecto().getCodigo().trim().equals("")) {
+                tutcon.setProyecto(proacon.getProyecto());
+                tutcon.setIntegrante(proacon.getIntegrante());
+                System.out.println("Proyecto:" + tutcon.getProyecto().getCodigo() + " " + "Integrante: " + tutcon.getIntegrante().getMatricula().getEstudiante().toString());
+                paginaActualE = "/Estudiante/GestorTutorias.xhtml";
+            }
+        } catch (NullPointerException npe) {
             FacesUtil.addErrorMessage("Estudiante no tiene proyecto de aula asignado");
         }
     }
@@ -519,6 +551,18 @@ public class EstudianteController implements Serializable {
         this.avancon = avancon;
     }
 
+    /**
+     * @return the estudiantehabilitado
+     */
+    public boolean getEstudiantehabilitado() {
+        return estudiantehabilitado;
+    }
 
+    /**
+     * @param estudiantehabilitado the estudiantehabilitado to set
+     */
+    public void setEstudiantehabilitado(boolean estudiantehabilitado) {
+        this.estudiantehabilitado = estudiantehabilitado;
+    }
 
 }
