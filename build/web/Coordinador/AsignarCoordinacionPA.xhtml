@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<xhtml xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
@@ -9,68 +9,93 @@
     </h:head>
     <h:body>
         <section class="contenido-contenedor">
-            <div class="border contenedor top">
-                <h1 class="tittle">Asignar Coordinador de Proyectos de Aula</h1>
-
-
-                <span class="aviso">Programas</span>                   
-                <p:dataTable class="tabla-reporte" var="pro" value="#{programaController.programas}" >
-                    <p:column headerText="Codigo">
-                        #{pro.codigo}
-                    </p:column>
-                    <p:column headerText="Nombre">
-                        #{pro.nombre}
-                    </p:column>
-                    <p:column headerText="Coordinador Proyectos de Aula">
-                        #{pro.coordinadorPA.toString()}
-                    </p:column>
-                    <p:column headerText="Seleccionar">
-                        <div class="Acciones">
-                            <div class="accion">
-                                <i class="fa fa-hand-pointer" style="color: #005CB9"></i><h:commandButton class="icono" value="." action="#{programaController.consultarprograma(pro)}" />
-                            </div>
-                        </div>    
-                    </p:column>
-                </p:dataTable>
-                <span class="aviso">Programa Seleccionado</span>  
-                <div class="cdc" >
-                    <div >
-                        #{programaController.programa.nombreCompleto}
-                    </div>
-                    <div >
-                        #{programaController.programa.coordinadorPA.toString()}
-                    </div>       
-                </div>
-
-                <span class="aviso">Seleccionar Coordinador PA</span> 
-                <p:dataGrid class=" periodos" var="prof" columns="4" rows="4" paginator="true" value="#{profesorController.profesores}" >
-                    <div class="cdppa">
-                        <h:commandButton class="cdpbtn" value="seleccionar" action="#{programaController.seleccionarCoordinadorPA(prof)}" />
-                        <div class="id-carta"><span>#{prof.identificacion}</span></div>
-                        <div class="img-nombre">
-                            <div ><p:graphicImage value="/Imagenes/Perfiles/#{prof.imagenPerfil()}" style="width: 80px;height: 80px; margin-left: 5px; border-radius: 50px;"  /> </div>
-                            <div style="margin-left: 10px;">
-                                <h:outputText value="#{prof.primerNombre} #{prof.segundoNombre}" /><br></br>
-                                <h:outputText value="#{prof.primerApellido} #{prof.segundoApellido}" />
-                            </div> 
+            <div class=" contenedor top">
+                <div class="relative pb-2 mb-2">
+                    <h3 class="text-lg ">Asigna Coordinador de Proyecto</h3>
+                    <small class="block mb-4 text-gray-600">El coordinador de proyectos de un programa académico desempeña un papel fundamental en la supervisión, gestión y coordinación de los proyectos educativos.</small>  
+                    <div class="espaceador"></div>
+                </div>        
+                <div class="card mb-4">
+                    <div class="relative pb-2 mb-2 flex justify-content-between align-items-center">
+                        <small class=" text-gray-600 mb-2">Pulsa en seleccionar para Asignar o Editar Coordinador de PA</small>
+                        <div class="espaceador"></div>
+                        <div class="flex  gap-2 align-items-center mb-2">
+                            <i class="ri-focus-3-line"></i>
+                            <p>#{programaController.programa.nombreCompleto}</p>
+                            <p>#{programaController.programa.coordinadorPA.toString()}</p>
                         </div>
-                        <div class="contrato-carta"><span>#{prof.tipocontrato}</span></div>
-                        <!--<div>
-                            <h:outputText value="" />
-                         </div> !-->
-                    </div>
-
-                </p:dataGrid>
-
-                <div class="tanone">
-                    <h:commandButton class="boton  " action="#{programaController.asignarCoordinadorPA()}" value="Asignar" rendered="#{not empty programaController.programa.coordinadorPA}" />
+                    </div>     
+                    <p:dataTable scrollable="true" var="pro" value="#{programaController.programas}" >
+                        <p:column headerText="Codigo">
+                            #{pro.codigo}
+                        </p:column>
+                        <p:column headerText="Nombre">
+                            #{pro.nombre}
+                        </p:column>
+                        <p:column headerText="Coordinador Proyectos de Aula">
+                            #{pro.coordinadorPA.toString()}
+                        </p:column>
+                        <p:column headerText="Seleccionar">
+                            <div class="btn-normal">
+                                <i class="fa fa-hand-pointer"></i>
+                                <h:commandButton class="btn" value="." action="#{programaController.consultarprograma(pro)}" />
+                            </div>    
+                        </p:column>
+                    </p:dataTable>
                 </div>
 
-            </div>
+
+                <div class="card">
+                    <div class="relative pb-2 mb-2 flex justify-content-between align-items-center">
+                        <small class=" text-gray-600 mb-2">Selecciona un coordinador</small>
+                        <div class="espaceador"></div> 
+                    </div>
+                    <p:dataView  multiViewState="true" gridIcon="pi pi-th-large" listIcon="pi pi-bars"  var="prof" value="#{profesorController.profesores}">
+                        <p:dataViewGridItem  columns="4"  >
+                            <div class="cdppa">
+                                <h:commandButton class="cdpbtn" value="seleccionar" action="#{programaController.seleccionarCoordinadorPA(prof)}" />
+                                <div class="id-carta"><span>#{prof.identificacion}</span></div>
+                                <div class="img-nombre">
+                                    <div ><p:graphicImage value="/Imagenes/Perfiles/#{prof.imagenPerfil()}" style="width: 80px;height: 80px; margin-left: 5px; border-radius: 50px;"  /> </div>
+                                    <div style="margin-left: 10px;">
+                                        <h:outputText value="#{prof.primerNombre} #{prof.segundoNombre}" /><br></br>
+                                        <h:outputText value="#{prof.primerApellido} #{prof.segundoApellido}" />
+                                    </div> 
+                                </div>
+                                <div class="contrato-carta"><span>#{prof.tipocontrato}</span></div>
+                            </div>
+                        </p:dataViewGridItem>
+                        <p:dataViewListItem >
+                            <div class="cdppa">
+                                <h:commandButton class="cdpbtn" value="seleccionar" action="#{programaController.seleccionarCoordinadorPA(prof)}" />
+                                <div class="id-carta"><span>#{prof.identificacion}</span></div>
+                                <div class="img-nombre">
+                                    <div ><p:graphicImage value="/Imagenes/Perfiles/#{prof.imagenPerfil()}" style="width: 80px;height: 80px; margin-left: 5px; border-radius: 50px;"  /> </div>
+                                    <div style="margin-left: 10px;">
+                                        <h:outputText value="#{prof.primerNombre} #{prof.segundoNombre}" /><br></br>
+                                        <h:outputText value="#{prof.primerApellido} #{prof.segundoApellido}" />
+                                    </div> 
+                                </div>
+                                <div class="contrato-carta"><span>#{prof.tipocontrato}</span></div>
+                            </div>
+                        </p:dataViewListItem>
+                    </p:dataView>
+                </div>
+                <div class="btns-container justify-content-end">
+                    <div class="btn-c">
+                        <label>Asignar</label>
+                        <h:commandButton class="btn" action="#{programaController.asignarCoordinadorPA()}" value="Asignar" rendered="#{not empty programaController.programa.coordinadorPA}" />
+                    </div>
+                </div>
+            </div>   
         </section>
 
     </h:body>
+    <style>
+         .id-carta{
+            background-color: var(--first-color-c) !important;
+        }
+    </style>
 
-
-</html>
+</xhtml>
 

@@ -398,8 +398,7 @@
     margin-left: 263px;
     display: flex;
     align-items: center;
-    overflow-x: scroll;
-    
+    min-height: 100vh;
 
 }
 .border{ 
@@ -763,12 +762,15 @@
     padding: 1rem;
 }
 .contenido-grid{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
     display: flex;
     flex-direction: column;
     column-gap: 0.5rem;
     text-align: left;
-    color: white;
-
+    color: white !important;
+    padding: 1rem;
 }
 .card{
     position: relative;
@@ -1078,9 +1080,11 @@
     padding: 5px;
     display: flex;
     gap: .5rem;
-    padding-bottom: 1rem;
+    padding-bottom: .5rem;
     position: relative;
     font-weight: 500;
+    flex-wrap: wrap;
+    width: 100%;
 }
 .progress-tittle{
     display: flex;

@@ -1,87 +1,82 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+<xhtml xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
 
-        <div class="contimatricula">
-            <div class="ciperfil"> <p:graphicImage value="/Imagenes/Perfiles/#{matriculaController.matricula.estudiante.imagenPerfil()}" style="max-width: 100%; height: auto"  /></div>
-            <div class="cnome"><h2 style="font-size: 14px; color: #005CB9">#{matriculaController.matricula.estudiante.toString()}</h2></div>
-            <div class="cinfe"><span style="color: #005CB9">ID #{matriculaController.matricula.estudiante.identificacion}</span></div>
-            <div class="cinfm">
-                <div >
-                    <h2>Matricula: #{matriculaController.matricula.estado}</h2>                    
-                    <h3>Fecha: #{matriculaController.matricula.fecha}</h3>
-                </div>  
+        <div class="p-5  card">
+            <div class="btn-normal inline-block border-none" title="Volver">
+                <i class="ri-arrow-left-line text-xl"></i>
+                <h:commandButton class="btn" value="volver" action="#{matriculaController.volverEstudiantes()}" />
             </div>
-            <div class="cinfsec">
-                <p:panel>
-                    <div >
-                        <h2>#{matriculaController.matricula.seccion.programa.nombre}</h2>
-                        <span>Semestre #{matriculaController.matricula.seccion.semestre.denominacion} -  Seccion #{matriculaController.matricula.seccion.denominacion}</span>
-                        <h3>Año #{matriculaController.matricula.seccion.periodo.anio} - #{matriculaController.matricula.seccion.periodo.numero}</h3>
-                    </div>                    
-                </p:panel>
-            </div>
-            <div class="cop1">
-                <div class="btns-container" style="justify-content: flex-start; column-gap: 1rem" >
-                    <div class="btn-normal" style="background-color: #005CB9">
-                        <i class="uil uil-angle-left-b" ></i>
-                        Volver
-                        <h:commandButton class="btn" value="volver" action="#{matriculaController.volverEstudiantes()}" />
+            <header class="m-auto" >
+
+                <h4 class="text-center">Matricula</h4>
+                <div class="flex flex-grow-0 w-1"></div>
+            </header>
+            <main class="text-center">
+                <div class="flex flex-column align-items-center justify-content-center">
+                    <div class="w-2 text-center"> <p:graphicImage value="/Imagenes/Perfiles/#{matriculaController.matricula.estudiante.imagenPerfil()}" class="img"  /></div>
+                    <h2>#{matriculaController.matricula.estudiante.toString()}</h2>
+                    <p>#{matriculaController.matricula.seccion.programa.nombre}</p>
+                </div>
+                <div class="flex justify-content-center gap-5 mt-4">
+                    <div class="text-center">
+                        <h3>#{matriculaController.matricula.seccion.semestre.denominacion}</h3>
+                        <p>Semestre</p>
+                    </div>
+                    <div class="text-center">
+                        <h3>#{matriculaController.matricula.seccion.denominacion}</h3>
+                        <p>Sección</p>
+                    </div >
+                    <div class="text-center">
+                        <h3>#{matriculaController.matricula.seccion.periodo.numero}</h3>
+                        <p>Periodo</p>
+                    </div>
+                    <div class="text-center">
+                        <h3>#{matriculaController.matricula.seccion.periodo.anio}</h3>
+                        <p>Año</p>
                     </div>
                 </div>
 
-            </div>
-            <div class="cop2">
-                <div class="btns-container" style="justify-content: flex-start" >
-                    <div class="btn-delete" >
+                <h3 class="mt-4 mb-2 ">Más Información</h3>
+
+                <div class="flex gap-4 justify-content-center mt-4">
+                    <div class=" card" style="background-color: #C5BCBC">
+                        <i class="ri-slideshow-fill p-2 text-white  border-circle" style="background-color: black"></i>
+                        <div class="mt-4" >
+                            <p>Tipo de matricula</p>
+                            <h3>#{matriculaController.matricula.estado}</h3>
+                            <i class="ri-arrow-up-line"></i>
+                        </div>
+                    </div>
+                    <div class=" card " style="background-color: var(--first-color-c)">
+                        <i class="ri-stack-fill p-2 text-white border-circle" style="background-color: black"></i>
+                        <div class="mt-4">
+                            <p >Estado de Proyecto aula</p>
+                            <h3>#{matriculaController.matricula.estadoPA}</h3>
+                            <i class="ri-arrow-up-line"></i>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="flex justify-content-center py-2 px-1 mt-4 gap-5" style="background-color: #EEEEEE">
+                    <h4>Fecha :</h4>
+                    <h4>#{matriculaController.matricula.fecha}</h4>
+                </div>
+                <div class="btns-container" style="justify-content: flex-end" >
+                    <div class="btn-c" >
                         <i class="uil uil-trash-alt" ></i>
-                        Eliminar
+                        Eliminar Matricula
                         <h:commandButton class="btn" value="volver" action="#{matriculaController.eliminarMatricula()}" />
                     </div>
-
                 </div>
-                
-            </div>
+            </main>
         </div>
     </h:body>
-    <style>
-        .contimatricula {  display: grid;
-                           grid-template-columns: 200px 368px 232px;
-                           grid-template-rows: 74px 77px 117px 142px;
-                           grid-auto-columns: 1fr;
-                           gap: 0px 0px;
-                           grid-auto-flow: row;
-                           justify-items: center;
-                           align-items: start;
-                           grid-template-areas:
-                               "ciperfil cnome cop1"
-                               "ciperfil cinfe cop2"
-                               "cinfm cinfm cinfm"
-                               "cinfsec cinfsec cinfsec";
-        }
-
-        .ciperfil { grid-area: ciperfil; }
-
-        .cnome { grid-area: cnome; }
-
-        .cinfe { grid-area: cinfe; }
-
-        .cinfm { grid-area: cinfm; }
-
-        .cinfsec { grid-area: cinfsec; }
-
-        .cop1 { grid-area: cop1; }
-
-        .cop2 { grid-area: cop2; }
-
-    </style>
-
-
-</html>
+</xhtml>
 

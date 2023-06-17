@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<xhtml xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
@@ -90,52 +90,56 @@
                     </div>
                 </p:card>
                 <div class="btns-container" style="justify-content: right">
-                    <div class="btn-s">
+                    <div class="btn-c">
                         <label>Registrar</label>
                         <h:commandButton class="btn" action="#{profesorController.registrarprofesor()}" value="Registrar" />  
                     </div>
                 </div>
-                <span class="aviso">Profesores</span>
-                <p:dataView var="prof" value="#{profesorController.profesores}" multiViewState="true" 
-                            
-                            gridIcon="pi pi-th-large" listIcon="pi pi-bars">
-                    <p:dataViewGridItem>
-                        <div>
-                            <div class="id-carta"><span>#{prof.identificacion}</span></div>
 
-                            <div class="img-nombre">
-                                <div ><p:graphicImage value="/Imagenes/Perfiles/#{prof.imagenPerfil()}" style="width: 80px;height: 80px; margin-left: 5px; border-radius: 50px;"  /> </div>
-                                <div style="margin-left: 10px;">
-                                    <h:outputText value="#{prof.primerNombre} #{prof.segundoNombre}" /><br></br>
-                                    <h:outputText value="#{prof.primerApellido} #{prof.segundoApellido}" />
-                                </div> 
+                <div class="card mb-4">
+                    <div class="relative pb-2 mb-1">
+                        <h3 class="text-2xl mb-4">Tabla de Profesores</h3>
+                        <div class="espaceador"></div>
+                    </div>
+                    <p:dataView var="prof" value="#{profesorController.profesores}" multiViewState="true" 
+
+                                gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+                        <p:dataViewGridItem columns="4"  >
+                            <div>
+                                <div class="id-carta"><span>#{prof.identificacion}</span></div>
+
+                                <div class="img-nombre">
+                                    <div ><p:graphicImage value="/Imagenes/Perfiles/#{prof.imagenPerfil()}" style="width: 80px;height: 80px; margin-left: 5px; border-radius: 50px;"  /> </div>
+                                    <div style="margin-left: 10px;">
+                                        <h:outputText value="#{prof.primerNombre} #{prof.segundoNombre}" /><br></br>
+                                        <h:outputText value="#{prof.primerApellido} #{prof.segundoApellido}" />
+                                    </div> 
+                                </div>
+
+                                <div class="contrato-carta"><span>#{prof.tipocontrato}</span></div>
+                                <!--<div>
+                                    <h:outputText value="" />
+                                 </div> !-->
                             </div>
+                        </p:dataViewGridItem>
+                        <p:dataViewListItem>
+                            <div >
+                                <div class="id-carta"><span>#{prof.identificacion}</span></div>
 
-                            <div class="contrato-carta"><span>#{prof.tipocontrato}</span></div>
-                            <!--<div>
-                                <h:outputText value="" />
-                             </div> !-->
-                        </div>
-                    </p:dataViewGridItem>
-                    <p:dataViewListItem>
-                        <div>
-                            <div class="id-carta"><span>#{prof.identificacion}</span></div>
+                                <div class="img-nombre">
+                                    <div ><p:graphicImage value="/Imagenes/Perfiles/#{prof.imagenPerfil()}" style="width: 80px;height: 80px; margin-left: 5px; border-radius: 50px;"  /> </div>
+                                    <div style="margin-left: 10px;">
+                                        <h:outputText value="#{prof.primerNombre} #{prof.segundoNombre}" /><br></br>
+                                        <h:outputText value="#{prof.primerApellido} #{prof.segundoApellido}" />
+                                    </div> 
+                                </div>
 
-                            <div class="img-nombre">
-                                <div ><p:graphicImage value="/Imagenes/Perfiles/#{prof.imagenPerfil()}" style="width: 80px;height: 80px; margin-left: 5px; border-radius: 50px;"  /> </div>
-                                <div style="margin-left: 10px;">
-                                    <h:outputText value="#{prof.primerNombre} #{prof.segundoNombre}" /><br></br>
-                                    <h:outputText value="#{prof.primerApellido} #{prof.segundoApellido}" />
-                                </div> 
+                                <div class="contrato-carta"><span>#{prof.tipocontrato}</span></div>
                             </div>
+                        </p:dataViewListItem>
+                    </p:dataView>
+                </div>
 
-                            <div class="contrato-carta"><span>#{prof.tipocontrato}</span></div>
-                            <!--<div>
-                                <h:outputText value="" />
-                             </div> !-->
-                        </div>
-                    </p:dataViewListItem>
-                </p:dataView>
 
             </div>
         </section>
@@ -146,10 +150,13 @@
             .form{
                 grid-template-columns: repeat(1, 1fr);
             }
-        }    
+        }  
+        .id-carta{
+            background-color: var(--first-color-c);
+        }
     </style>
 
 
 
-</html>
+</xhtml>
 
