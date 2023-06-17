@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<xhtml xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
@@ -9,128 +9,154 @@
     </h:head>
     <h:body>
         <section class="contenido-contenedor">
-        <div class="border contenedor top">
-             <h1 class="tittle">Gestionar Profesores</h1>
-             <span class="aviso">Registrar Profesor</span>
-             <div class="contenedor-form periodos">
-                 <div class="form-izq">
-                     <div class="input-form-310">
-                        Primer Nombre
-                        <p:inputText rendered="#{not empty profesorController.profesor}"  class="iform" value="#{profesorController.profesor.primerNombre}" />
-                     </div>
-                      <div class="input-form-310">
-                        Primer Apellido
-                        <p:inputText class="iform" rendered="#{not empty profesorController.profesor}"  value="#{profesorController.profesor.primerApellido}" />
-                      </div>  
-                     <div class="input-form-170">
-                        Tipo Identificacion
-
-                       <p:selectOneMenu  class="iform" rendered="#{not empty profesorController.profesor}"  value="#{profesorController.profesor.tipo_ide}">
-                           <f:selectItem itemLabel="Select One" itemValue=""/>
-                           <f:selectItem itemLabel="TI" itemValue="TI"/>
-                           <f:selectItem itemLabel="CC" itemValue="CC"/>
-                           <f:selectItem itemLabel="CE" itemValue="CE"/>                         
-                       </p:selectOneMenu> 
-                     </div>
-                     <div class="input-form-310">
-                        Username
-                        <p:inputText class="iform" rendered="#{not empty profesorController.profesor}"  value="#{profesorController.profesor.login}" />
-                     </div>
-                     <div class="input-form-170">
-                        Genero
-                        <p:selectOneMenu  class="iform" rendered="#{not empty profesorController.profesor}"  value="#{profesorController.profesor.genero}">
-                            <f:selectItem itemLabel="Select One" itemValue=""/>
-                            <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
-                            <f:selectItem itemLabel="Femenino" itemValue="Femenino"/>                    
-                        </p:selectOneMenu>
-                     </div>
-                      <div class="input-form-310">
-                        Email
-                        <p:inputText type="email" rendered="#{not empty profesorController.profesor}"  class="iform" value="#{profesorController.profesor.email}" />
-                      </div>
-                     <div class="input-form-170">
-                        Tipo de Contrato
-
-                       <p:selectOneMenu rendered="#{not empty profesorController.profesor}"  class="iform" value="#{profesorController.profesor.tipocontrato}">
-                           <f:selectItem itemLabel="Select One" itemValue=""/>
-                           <f:selectItem itemLabel="Tiempo Completo" itemValue="Tiempo Completo"/>
-                           <f:selectItem itemLabel="Medio Tiempo" itemValue="Medio Tiempo"/>
-                           <f:selectItem itemLabel="3/4 de Tiempo" itemValue="3/4 de Tiempo"/> 
-                           <f:selectItem itemLabel="Catedra" itemValue="Catedra"/>                           
-                       </p:selectOneMenu>
+            <div class=" contenedor top">
+                <div class="card">
+                    <div class="relative pb-2 mb-1">
+                        <h3 class="text-2xl mb-4">Crea Profesores</h3>
+                        <div class="espaceador"></div>
                     </div>
-               </div>
-                 
-                 
-              <div class="form-dere">
-                     <div class="input-form-310">
-                        Segundo Nombre
-                        <p:inputText class="iform" rendered="#{not empty profesorController.profesor}"  value="#{profesorController.profesor.segundoNombre}" />
-                     </div>
-                 <div class="input-form-310">
-                     Segundo Apellido
-                     <p:inputText class="iform" rendered="#{not empty profesorController.profesor}"  value="#{profesorController.profesor.segundoApellido}" />
-                 </div>
-                 <div class="input-form-310">
-                    Identificacion
-                    <p:inputText class="iform" rendered="#{not empty profesorController.profesor}"   value="#{profesorController.profesor.identificacion}" /> 
-                 </div>
-                <div class="input-form-310">
-                    Password
-                    <p:inputText class="iform" rendered="#{not empty profesorController.profesor}"  value="#{profesorController.profesor.password}" />
-                </div>
-                <div class="input-form-310">
-                    Telefono
-                    <p:inputText class="iform" rendered="#{not empty profesorController.profesor}"  value="#{profesorController.profesor.telefono}" />
-                </div>
-                <div class="input-form-310">
-                    Direccion
-                    <p:inputText class="iform" rendered="#{not empty profesorController.profesor}"  value="#{profesorController.profesor.direccion}" />
-                </div>
-                 <div class="botones ">
-                     <h:commandButton class="boton" action="#{profesorController.registrarprofesor()}" value="Registrar" />  
-                    
-                 </div>
-                     
-                    
-              </div>
-             </div>
-                 
-                
-               
-                 
-                 
-       
-             <span class="aviso">Profesores</span>
-             <p:dataGrid class="periodos" var="prof" columns="4" rows="8" paginator="true" pageLinks="" value="#{profesorController.profesores}" >
-            <div>
-                <div class="id-carta"><span>#{prof.identificacion}</span></div>
-                
-                <div class="img-nombre">
-                    <div ><p:graphicImage value="/Imagenes/Perfiles/#{prof.imagenPerfil()}" style="width: 80px;height: 80px; margin-left: 5px; border-radius: 50px;"  /> </div>
-                    <div style="margin-left: 10px;">
-                        <h:outputText value="#{prof.primerNombre} #{prof.segundoNombre}" /><br></br>
-                        <h:outputText value="#{prof.primerApellido} #{prof.segundoApellido}" />
-                    </div> 
-                </div>
-                 
-                <div class="contrato-carta"><span>#{prof.tipocontrato}</span></div>
-                <!--<div>
-                    <h:outputText value="" />
-                 </div> !-->
-            </div>
-            
-            
-        </p:dataGrid>
-    
+                    <div class="form">
+                        <div>
+                            <h4>Primer Nombre</h4>
+                            <p:inputText   value="#{profesorController.profesor.primerNombre}" />
+                        </div>
+                        <div>
+                            <h4>Primer Apelldio</h4>
+                            <p:inputText  value="#{profesorController.profesor.primerApellido}" />
+                        </div>
+                        <div>  
+                            <h4>Segundo Nombre</h4>
+                            <p:inputText  value="#{profesorController.profesor.segundoNombre}" />
+                        </div>
+                        <div>
+                            <h4>Segundo Apellido</h4>
+                            <p:inputText  value="#{profesorController.profesor.segundoApellido}" />
+                        </div>
+                        <div>
+                            <h4>Genero</h4>
+                            <p:selectOneRadio  value="#{profesorController.profesor.genero}">
+                                <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                                <f:selectItem itemLabel="Femenino" itemValue="Femenino"/>
+                            </p:selectOneRadio>
+                        </div>
+                        <div>
+                            <h4>Tipo de contrado</h4>
+                            <p:selectOneRadio  value="#{profesorController.profesor.tipocontrato}">
+                                <f:selectItem itemLabel="Tiempo Completo" itemValue="Tiempo Completo"/>
+                                <f:selectItem itemLabel="Medio Tiempo" itemValue="Medio Tiempo"/>
+                                <f:selectItem itemLabel="3/4 de Tiempo" itemValue="3/4 de Tiempo"/> 
+                                <f:selectItem itemLabel="Catedra" itemValue="Catedra"/>
+                            </p:selectOneRadio>
+                        </div>
+                        <div>
+                            <h4>Tipo Identificacion</h4>
+                            <p:selectOneRadio  rendered="#{not empty profesorController.profesor}" value="#{coordinadorController.coordinador.tipo_ide}">
+                                <f:selectItem itemLabel="TI" itemValue="TI"/>
+                                <f:selectItem itemLabel="CC" itemValue="CC"/>
+                                <f:selectItem itemLabel="CE" itemValue="CE"/>
+                            </p:selectOneRadio>
+                        </div>
+                        <div>
+                            <h4>Identificacion</h4>
+                            <p:inputText  value="#{profesorController.profesor.identificacion}" /> 
+                        </div>
+                        <div>
+                            <h4>Email</h4>
+                            <p:inputText   value="#{profesorController.profesor.email}" />
+                        </div>
+                        <div>
+                            <h4>Telefono</h4>
+                            <p:inputText  value="#{profesorController.profesor.telefono}" />
+                        </div>
+                        <div>
+                            <h4>Direccion</h4>
+                            <p:inputText  value="#{profesorController.profesor.direccion}" />
+                        </div>  
 
-        </div>
-    </section>
+                    </div>
+                </div>  
+
+                <p:card style="margin-top: 0.5rem;">
+                    <h3 style="margin-bottom: 1rem">Configura El usuario y contraseña</h3>
+                    <div class="form" style="padding-bottom: 0">
+                        <div class="ui-inputgroup">
+                            <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
+                            <p:inputText value="#{profesorController.profesor.login}" placeholder="Username"/>
+                        </div>
+                        <div class="ui-inputgroup">
+                            <div class="ui-inputgroup-addon"><i class="pi pi-lock"></i></div>
+                            <p:inputText value="#{profesorController.profesor.password}" placeholder="Password"/>
+                        </div>
+                    </div>
+                </p:card>
+                <div class="btns-container" style="justify-content: right">
+                    <div class="btn-c">
+                        <label>Registrar</label>
+                        <h:commandButton class="btn" action="#{profesorController.registrarprofesor()}" value="Registrar" />  
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="relative pb-2 mb-1">
+                        <h3 class="text-2xl mb-4">Tabla de Profesores</h3>
+                        <div class="espaceador"></div>
+                    </div>
+                    <p:dataView var="prof" value="#{profesorController.profesores}" multiViewState="true" 
+
+                                gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+                        <p:dataViewGridItem columns="4"  >
+                            <div>
+                                <div class="id-carta"><span>#{prof.identificacion}</span></div>
+
+                                <div class="img-nombre">
+                                    <div ><p:graphicImage value="/Imagenes/Perfiles/#{prof.imagenPerfil()}" style="width: 80px;height: 80px; margin-left: 5px; border-radius: 50px;"  /> </div>
+                                    <div style="margin-left: 10px;">
+                                        <h:outputText value="#{prof.primerNombre} #{prof.segundoNombre}" /><br></br>
+                                        <h:outputText value="#{prof.primerApellido} #{prof.segundoApellido}" />
+                                    </div> 
+                                </div>
+
+                                <div class="contrato-carta"><span>#{prof.tipocontrato}</span></div>
+                                <!--<div>
+                                    <h:outputText value="" />
+                                 </div> !-->
+                            </div>
+                        </p:dataViewGridItem>
+                        <p:dataViewListItem>
+                            <div >
+                                <div class="id-carta"><span>#{prof.identificacion}</span></div>
+
+                                <div class="img-nombre">
+                                    <div ><p:graphicImage value="/Imagenes/Perfiles/#{prof.imagenPerfil()}" style="width: 80px;height: 80px; margin-left: 5px; border-radius: 50px;"  /> </div>
+                                    <div style="margin-left: 10px;">
+                                        <h:outputText value="#{prof.primerNombre} #{prof.segundoNombre}" /><br></br>
+                                        <h:outputText value="#{prof.primerApellido} #{prof.segundoApellido}" />
+                                    </div> 
+                                </div>
+
+                                <div class="contrato-carta"><span>#{prof.tipocontrato}</span></div>
+                            </div>
+                        </p:dataViewListItem>
+                    </p:dataView>
+                </div>
+
+
+            </div>
+        </section>
 
     </h:body>
-    
-        
+    <style>
+        @media screen and (max-width: 1005px) {
+            .form{
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }  
+        .id-carta{
+            background-color: var(--first-color-c);
+        }
+    </style>
 
-        
-</html>
+
+
+</xhtml>
 

@@ -1,19 +1,27 @@
-.ui-g-12{
-    width: 17% !important; 
-}
+
 .ui-datagrid-column {
     padding: 0 !important;
 
 }       
 .ui-datagrid-content{
     padding: 0 !important;
-    max-width: 250px;
-
+}
+body .ui-datagrid .ui-datagrid-content{
+    border: none !important;
 }
 body .ui-datatable thead th{
     background: #004F9E !important;
     color:white !important;
 }
+
+body .ui-datatable thead th{
+    text-align: center !important;
+}
+
+body .ui-datatable .ui-datatable-data > tr > td{
+    text-align: center;
+}
+
 .ui-widget-header .ui-inputfield{
     color: white !important;
 }
@@ -40,9 +48,7 @@ body .ui-inputfield{
 body .ui-panel .ui-panel-content{
     padding: 0 !important;
 }
-body .ui-datagrid .ui-datagrid-content{
-    border: none !important;
-}
+
 
 body .ui-inplace .ui-inplace-display {
     padding: 0 !important;

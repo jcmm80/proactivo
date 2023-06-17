@@ -1,76 +1,89 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<xhtml xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
-        
-    </h:head>
-   <h:body> 
-       <section class="contenido-contenedor">
-        <div class="border contenedor top">
-             <h1 class="tittle">Gestor de Areas</h1>
-             <span class="aviso">Crea Nueva Area</span>
-             <div class="contenedor-form periodos" >
-                 <div class="form-izq">
-                     <div class="input-form-310">
-                         Nombre
-                         <p:inputText class="iform" rendered="#{not empty coordinadorController.area}"  value="#{coordinadorController.area.nombre}" />
-                     </div>
-                     <div class="input-form-310">
-                         Nombre Corto
-                         <p:inputText class="iform" rendered="#{not empty coordinadorController.area}" value="#{coordinadorController.area.nombreCorto}" />
-                     </div>
-                     
-                 </div>
-                 <div class="form-dere">
-                     <div class="input-form-410">
-                         Descripcion
-                         <p:inputTextarea class="iform" rendered="#{not empty coordinadorController.area}" value="#{coordinadorController.area.descripcion}" />
-                     </div>
-                     
-                 </div>
-                 
-             </div>
-              
-             <div class="tanone">
-                 <h:commandButton value="Crear" class="boton" action="#{coordinadorController.registrarArea()}" />
-             </div>
-        
-             
-            
-        <p:dataTable var="ara" class="tabla-reporte" value="#{coordinadorController.areas}">
-            <p:column headerText="Nombre">
-                #{ara.nombre}
-            </p:column>
-            <p:column headerText="Nombre Corto">
-                #{ara.nombreCorto}
-            </p:column>
-            <p:column headerText="Descripcion">
-                #{ara.descripcion}
-            </p:column>
-            <p:column headerText="Estado">
-                #{ara.estado}
-            </p:column>
-            <p:column headerText="Eliminar">
-                <div class="Acciones">
-                            <div class="accion">
-                            <i class="uil uil-trash-alt" style="color: red; font-size: 25px"></i>
-                            <h:commandButton class="icono" value="Eliminar" action="#{coordinadorController.EliminarArea(ara)}" />
-                        </div>
-                        </div>
-                
-            </p:column>
-           
-        </p:dataTable>
-    
 
-        </div>
-    </section>
-         
+    </h:head>
+    <h:body> 
+        <section class="contenido-contenedor">
+            <div class=" contenedor top">
+                <div class="card">
+                    <div class="relative pb-2 mb-2">
+                        <h3 class="text-2xl ">Crea Nueva Area</h3>
+                        <small class="block mb-4 text-gray-600">un área de conocimiento se refiere a una disciplina académica o campo de estudio específico que abarca un conjunto de conocimientos, métodos y enfoques relacionados.</small>  
+                        <div class="espaceador"></div>
+                    </div>
+                    <div class="form">
+                        <div>
+                            <h4>Nombre</h4>
+                            <div>
+                                <p:inputText  rendered="#{not empty coordinadorController.area}"  value="#{coordinadorController.area.nombre}" placeholder="001"/>
+                                <small class="flex align-items-center gap-1 text-gray-600"><i class="ri-question-fill " ></i><p></p>ingresa el nombre completo del Area académica.</small>
+                            </div>
+                        </div>
+                        <div>
+                            <h4>Nombre Corto</h4>
+                            <p:inputText  rendered="#{not empty coordinadorController.area}" value="#{coordinadorController.area.nombreCorto}" placeholder="Tecgnologia en sistema" />
+                            <small class="flex align-items-center gap-1 text-gray-600"><i class="ri-question-fill " ></i><p></p>proporciona un nombre abreviado o acrónimo para tu Area académica.</small>
+                        </div>
+                        <div>  
+                            <h4>Descripcion</h4>
+                            <p:inputTextarea  class="w-full" rendered="#{not empty coordinadorController.area}" value="#{coordinadorController.area.descripcion}"  placeholder="Tecgnología de Desarrollo de Software e información"/>
+                            <small class="flex align-items-center gap-1 text-gray-600"><i class="ri-question-fill " ></i><p></p>Agrega un breve descripcion sobre el Area académica</small>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="btns-container justify-content-end">
+                    <div class="btn-c ">
+                        <label>Crear</label>
+                        <h:commandButton value="Crear" class="btn" action="#{coordinadorController.registrarArea()}" />
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="relative pb-4 mb-2">
+                        <h3 class="text-2xl ">Areas Existentes</h3>
+                        <div class="espaceador"></div>
+                    </div>
+                    <p:dataTable var="ara" scrollable="true" value="#{coordinadorController.areas}">
+                        <p:column headerText="Nombre">
+                        #{ara.nombre}
+                        </p:column>
+                        <p:column headerText="Nombre Corto">
+                        #{ara.nombreCorto}
+                        </p:column>
+                        <p:column headerText="Descripcion">
+                        #{ara.descripcion}
+                        </p:column>
+                        <p:column headerText="Estado">
+                        #{ara.estado}
+                        </p:column>
+                        <p:column  headerText="Eliminar">
+                                <div class="btn-normal">
+                                    <i class="uil uil-trash-alt"></i>
+                                    <h:commandButton class="btn" value="Eliminar" action="#{coordinadorController.EliminarArea(ara)}" />
+                                </div>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+
+
+            </div>
+        </section>
+
     </h:body>
-</html>
+</xhtml>
 

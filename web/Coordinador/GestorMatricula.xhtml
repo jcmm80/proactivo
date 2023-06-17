@@ -1,165 +1,247 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<xhtml xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
 
     <section class="contenido-contenedor">
-        <div class="border contenedor top">
-            <h1 class="tittle">GESTOR MATRICULAS</h1>
-            <span class="aviso">Matricula Estudiante</span>
+        <div class=" contenedor top">
+            <div class="relative pb-2 mb-2">
+                <h3 class="text-lg ">Matricula Estudiante</h3>
+                <small class="block mb-4 text-gray-600">La matrícula académica se refiere al proceso mediante el cual un estudiante se registra oficialmente en la institución educativa, para cursar un programa académico específico. </small>  
+                <div class="espaceador"></div>
+            </div>
+
+
             <p:panel rendered="#{!matriculaController.existematricula}">
-                <p:tabView activeIndex="#{matriculaController.activeIndex}">
-                    <p:tab id="test" title="Estudiante">
-                        <p:dataTable paginator="true" rows="10" class="tabla-reporte" style="font-size: 10pt" var="est" value="#{estudianteController.estudiantes}">
-                            <p:column headerText="Tipo de Identificacion">
-                                #{est.tipo_ide}
-                            </p:column>
-                            <p:column filterBy="#{est.identificacion}" headerText="Identificacion">
-                                #{est.identificacion}
-                            </p:column>
-                            <p:column filterBy="#{est.primerNombre}" headerText="Primer Nombre">
-                                #{est.primerNombre}
-                            </p:column>
-                            <p:column filterBy="#{est.segundoNombre}" headerText="Segundo Nombre">
-                                #{est.segundoNombre}
-                            </p:column>
-                            <p:column filterBy="#{est.primerApellido}" headerText="Primer Apellido">
-                                #{est.primerApellido}
-                            </p:column>
-                            <p:column filterBy="#{est.segundoApellido}" headerText="Segundo Apellido">
-                                #{est.segundoApellido}
-                            </p:column>                  
-
-                            <p:column headerText="Seleccionar">
-                                <div class="Acciones">
-                                    <div class="accion">
-                                        <i class="fa fa-hand-pointer" style="color: #005CB9"></i>
-                                        <h:commandButton value="+" class="icono" action="#{matriculaController.agregarEstudiante(est)}" />
-                                    </div>
-                                </div>                            
-                            </p:column>
-                        </p:dataTable>
-                    </p:tab>
-                    <p:tab id="tpro" title="Programa">
-                        <div class="plider-seleccionado">
-                            <span>Seleccionado:</span>
-                            <span>#{matriculaController.matricula.estudiante.toString()}</span>
-                        </div>
-
-                        <p:dataTable class="tabla-reporte" var="prog" value="#{programaController.programas}">
-                            <p:column headerText="Codigo">
-                                #{prog.codigo}
-                            </p:column>
-                            <p:column headerText="Nombre">
-                                #{prog.nombreCompleto}
-                            </p:column>
-                            <p:column headerText="Seleccionar">
-                                <div class="Acciones">
-                                    <div class="accion">
-                                        <i class="fa fa-hand-pointer" style="color: #005CB9"></i>
-                                        <h:commandButton class="icono" value="+" action="#{matriculaController.agregarPrograma(prog)}" />
-                                    </div>
-                                </div>
-
-                            </p:column>
-                        </p:dataTable>
-
-                    </p:tab>
-                    <p:tab id="tper" title="Periodo">
-
-                        <div class="plider-seleccionado">
-                            <span>Seleccionado:</span>
-                            <span>#{matriculaController.matricula.estudiante.toString()}</span>
-                            <span>#{matriculaController.matricula.seccion.programa.nombreCompleto}</span>
-                        </div>
-
-                        <p:dataTable class="tabla-reporte" var="per" value="#{periodoController.periodos}" >
-
-                            <p:column headerText="Fecha Inicio">
-                                #{per.fechaInicial}
-                            </p:column>
-                            <p:column headerText="fecha Fin">
-                                #{per.fechaFinal}
-                            </p:column>
-                            <p:column headerText="Nombre">
-                                #{per.anio}-#{per.numero}
-                            </p:column>
-                            <p:column headerText="Seleccionar">
-                                <div class="Acciones">
-                                    <div class="accion">
-                                        <i class="fa fa-hand-pointer" style="color: #005CB9"></i>
-                                        <h:commandButton class="icono" value="+" action="#{matriculaController.agregarPeriodo(per)}" />
-                                    </div>
-                                </div>
-
-                            </p:column>
-                        </p:dataTable> 
-                    </p:tab>
-                    <p:tab id="tmat" title="Matricular">
-
-
-                        <div class="plider-seleccionado">
-                            <span>Seleccionado:</span>
-                            <span>#{matriculaController.matricula.estudiante.toString()}</span>
-                            <span>#{matriculaController.matricula.seccion.programa.nombreCompleto}</span>
-                            <span>#{matriculaController.matricula.seccion.periodo.anio}-#{matriculaController.matricula.seccion.periodo.numero}</span>
-                        </div>
-
-
-                        <p:dataGrid    columns="5" var="sem"  value="#{semestreController.semestres}">
-                            <div class="card img-negra" >
-                                <figure >
-                                    <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
-                                </figure>
-                                <div class="contenido">
-                                    <p>Semestre <br></br>#{sem.denominacion}</p>
-
-                                </div>
-                                <h:commandButton   class="btn" value="Abrir" action="#{matriculaController.seleccionarSemestre(sem)}" />
+                <div class="card">
+                    <p:tabView activeIndex="#{matriculaController.activeIndex}">
+                        <p:tab id="test" title="Estudiante">
+                            <div class="relative pb-2 mb-2">
+                                <h3 class="text-lg ">Tabla de Estudiantes</h3>
+                                <small class="block mb-4 text-gray-600">Selecciona el Estudiante a matricular, si ya está matriculado se mostrará la informacion de la matricula.</small>  
+                                <div class="espaceador"></div>
                             </div>
 
-                        </p:dataGrid>                  
+                            <p:dataTable  paginator="true" rows="10" scrollable="true"  var="est" value="#{estudianteController.estudiantes}">
+                                <p:column headerText="Tipo de Identificacion">
+                                    #{est.tipo_ide}
+                                </p:column>
+                                <p:column headerText="estado">
+                                    #{est.estado}
+                                </p:column>
+                                <p:column filterBy="#{est.identificacion}" sortBy="#{est.identificacion}" headerText="Identificacion">
+                                    #{est.identificacion}
+                                </p:column>
+                                <p:column filterBy="#{est.primerNombre}" sortBy="#{est.primerNombre}" headerText="Primer Nombre">
+                                    #{est.primerNombre}
+                                </p:column>
+                                <p:column filterBy="#{est.segundoNombre}" sortBy="#{est.segundoNombre}" headerText="Segundo Nombre">
+                                    #{est.segundoNombre}
+                                </p:column>
+                                <p:column filterBy="#{est.primerApellido}" sortBy="#{est.primerApellido}" headerText="Primer Apellido">
+                                    #{est.primerApellido}
+                                </p:column>
+                                <p:column filterBy="#{est.segundoApellido}" sortBy="#{est.identificacion}" headerText="Segundo Apellido">
+                                    #{est.segundoApellido}
+                                </p:column>                  
 
-                        <p:dataViewGridItem>
-
-                            <p:dataGrid var="sec" value="#{matriculaController.secciones}">
-                                <div class="card img-negra">
-                                    <figure >
-                                        <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
-                                    </figure>
-                                    <div class="contenido-grid">
-                                        <h2>#{sec.programa.nombre}</h2>
-                                        <span>Semestre #{sec.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
-                                        <h3>Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
-
+                                <p:column headerText="Seleccionar">
+                                    <div class="btn-normal" title="seleccionar">
+                                        <i class="fa fa-hand-pointer"></i>
+                                        <h:commandButton class="btn" value="+" action="#{matriculaController.agregarEstudiante(est)}" />
                                     </div>
-                                    <h:commandButton   class="btn" value="Abrir" action="#{matriculaController.seleccionarSeccion(sec)}" />
-                                </div> 
-                            </p:dataGrid>
-                        </p:dataViewGridItem>
-                        <div class="tanone">
-                            <h:commandButton id="salsem" class="boton" value="Matricular" action="#{matriculaController.matricular()}" />
-                        </div>
-                    </p:tab>
-                    <p:tab id="tmatri" title="Matriculados en Seccion">
-                        <div class="contestsec">
-                            <div class="csecc"></div>
-                            <div class="cestud"></div>
-                        </div>
-                    </p:tab>
-                </p:tabView>
+                                </p:column>
+                            </p:dataTable>
+                        </p:tab>
+                        <p:tab id="tpro" title="Programa">
+                            <div class="relative pb-2 mb-2">
+                                <h3 class="text-lg ">Selecciona programa a matricular </h3>
+                                <small class="block mb-4 text-gray-600">Un programa académico se refiere a una estructura de estudio y aprendizaje diseñada para cumplir con ciertos objetivos educativos específicos.</small>  
+                                <div class="espaceador"></div>
+                                <div class="progress-bar">
+                                    <div class="progress-tittle">
+                                        <i class="ri-focus-3-line"></i>
+                                        Seleccionado :
+                                    </div>
+                                    <i class="ri-user-add-fill"></i>
+                                    <div>
+                                        #{matriculaController.matricula.estudiante.toString()}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p:dataTable scrollable="true" var="prog" value="#{programaController.programas}">
+                                <p:column headerText="Codigo">
+                                    #{prog.codigo}
+                                </p:column>
+                                <p:column headerText="Nombre">
+                                    #{prog.nombreCompleto}
+                                </p:column>
+                                <p:column headerText="Seleccionar">
+                                    <div class="btn-normal" title="seleccionar">
+                                        <i class="fa fa-hand-pointer"></i>
+                                        <h:commandButton class="btn" value="+" action="#{matriculaController.agregarPrograma(prog)}" />
+                                    </div>
+                                </p:column>
+                            </p:dataTable>
+
+                        </p:tab>
+                        <p:tab id="tper" title="Periodo">
+                            <div class="relative pb-2 mb-2">
+                                <h3 class="text-lg ">Selecciona un periodo</h3>
+                                <small class="block mb-4 text-gray-600">Un periodo es un espacio de tiempo en la cual se realizan las actividades académicas entorno al desarrollo de los proyectos de aula y el curso de todas las asignaturas que pertenecen a un semestre académico.</small>  
+                                <div class="espaceador"></div>
+                                <div class="progress-bar">
+                                    <div class="progress-tittle">
+                                        <i class="ri-focus-3-line"></i>
+                                        Seleccionado :
+                                    </div>
+                                    <i class="ri-user-add-fill"></i>
+                                    <div>
+                                        #{matriculaController.matricula.estudiante.toString()}
+                                    </div>
+                                    <i class="ri-bookmark-fill"></i>
+                                    <div>
+                                        #{matriculaController.matricula.seccion.programa.nombre}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p:dataTable scrollable="true" var="per" value="#{periodoController.periodos}" >
+
+                                <p:column headerText="Fecha Inicio">
+                                    #{per.fechaInicial}
+                                </p:column>
+                                <p:column headerText="fecha Fin">
+                                    #{per.fechaFinal}
+                                </p:column>
+                                <p:column headerText="Nombre">
+                                    #{per.anio}-#{per.numero}
+                                </p:column>
+                                <p:column headerText="Seleccionar">
+                                    <div class="btn-normal">
+                                        <i class="fa fa-hand-pointer"></i>
+                                        <h:commandButton class="btn" value="+" action="#{matriculaController.agregarPeriodo(per)}" />
+                                    </div>
+                                </p:column>
+                            </p:dataTable> 
+                        </p:tab>
+                        <p:tab id="tmat" title="Matricular">
+
+                            <div class="relative pb-2 mb-2">
+                                <h3 class="text-lg ">Selecciona el semestre</h3>
+                                <small class="block mb-4 text-gray-600">Un semestre académico es un período de tiempo en el que se llevan a cabo cursos y actividades académicas en una institución educativa superior.</small>  
+                                <div class="espaceador"></div>
+                                <div class="progress-bar">
+                                    <div class="progress-tittle">
+                                        <i class="ri-focus-3-line"></i>
+                                        Seleccionado :
+                                    </div>
+                                    <i class="ri-user-add-fill"></i>
+                                    <div>
+                                        #{matriculaController.matricula.estudiante.toString()}
+                                    </div>
+                                    <i class="ri-bookmark-fill"></i>
+                                    <div>
+                                        #{matriculaController.matricula.seccion.programa.nombre}
+                                    </div>
+                                    <i class="ri-calendar-fill"></i>
+                                    <div>
+                                        #{matriculaController.matricula.seccion.periodo.anio}-#{matriculaController.matricula.seccion.periodo.numero}
+                                    </div>
+                                </div>
+                            </div>
+                            <p:dataView  multiViewState="true" gridIcon="pi pi-th-large" listIcon="pi pi-bars"  var="sem"  value="#{semestreController.semestres}">
+                                <p:dataViewGridItem  columns="4"  >
+                                    <div class="relative img-negra bg-black" >
+                                        <div class="w-full h-full">
+                                            <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
+                                        </div>
+                                        <div class="contenido">
+                                            <p>Semestre <br></br>#{sem.denominacion}</p>
+                                        </div>
+                                        <h:commandButton   class="btn" value="Abrir" action="#{matriculaController.seleccionarSemestre(sem)}" />
+                                    </div>
+                                </p:dataViewGridItem>
+                                <p:dataViewListItem >
+                                    <div class="relative img-negra bg-black" >
+                                        <div class="w-full h-full">
+                                            <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
+                                        </div>
+                                        <div class="contenido">
+                                            <p>Semestre <br></br>#{sem.denominacion}</p>
+                                        </div>
+                                        <h:commandButton   class="btn" value="Abrir" action="#{matriculaController.seleccionarSemestre(sem)}"/>
+                                    </div>
+                                </p:dataViewListItem>
+                            </p:dataView>
+                            <div class="mt-4">
+                                <div class="relative pb-2 mb-2">
+                                    <h3 class="text-lg ">Secciones</h3>
+                                    <small class="block mb-4 text-gray-600">una sección o curso se refiere a un grupo específico de estudiantes que cursan unas asignaturas alrededor de un núcleo problémico.</small>  
+                                    <div class="espaceador"></div>
+                                </div>   
+                                <p:dataView  multiViewState="true" gridIcon="pi pi-th-large" listIcon="pi pi-bars" var="sec" value="#{matriculaController.secciones}">
+                                    <p:dataViewGridItem  columns="3"  >
+                                        <div class="relative img-negra bg-black">
+                                            <div class="w-full h-full">
+                                                <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
+                                            </div>
+                                            <div class="contenido-grid">
+                                                <h2 class="text-white">#{sec.programa.nombre}</h2>
+                                                <span>Semestre #{sec.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
+                                                <h3 class="text-white">Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
+                                            </div>
+                                            <h:commandButton   class="btn" value="Abrir" action="#{matriculaController.seleccionarSeccion(sec)}" />
+                                        </div> 
+                                    </p:dataViewGridItem>
+                                    <p:dataViewListItem >
+                                        <div class="relative img-negra bg-black">
+                                            <div class="w-full h-full">
+                                                <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
+                                            </div>
+                                            <div class="contenido-grid">
+                                                <h2 class="text-white">#{sec.programa.nombre}</h2>
+                                                <span>Semestre #{sec.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
+                                                <h3 class="text-white">Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
+                                            </div>
+                                            <h:commandButton   class="btn" value="Abrir" action="#{matriculaController.seleccionarSeccion(sec)}"/>
+                                        </div> 
+                                    </p:dataViewListItem>
+                                </p:dataView>
+                            </div>
+                            <div class="btns-container justify-content-end">
+                                <div class="btn-c">
+                                    <label>Matricular</label>
+                                    <h:commandButton id="salsem" class="btn" value="Matricular" action="#{matriculaController.matricular()}" />
+                                </div>
+                            </div>
+                        </p:tab>
+                        <p:tab id="tmatri" title="Matriculados en Seccion">
+                            <div class="contestsec">
+                                <div class="csecc"></div>
+                                <div class="cestud"></div>
+                            </div>
+                        </p:tab>
+                    </p:tabView>
+                </div>
             </p:panel>
+
             <p:panel rendered="#{matriculaController.existematricula}">                
                 <ui:include src="GUIMatricula.xhtml" />
             </p:panel>
         </div>
     </section>
     <style>
+        body .ui-dataview .ui-dataview-header{
+            background: none;         
+            border: none;
+        }
         .contestsec {  display: grid;
                        grid-template-columns: 1fr;
                        grid-template-rows: 0.4fr 1.6fr;
@@ -177,5 +259,5 @@
         .cestud { grid-area: cestud; }
 
     </style>
-</html>
+</xhtml>
 
