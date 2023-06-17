@@ -5,6 +5,7 @@
  */
 package com.entity;
 
+import com.controller.FacesUtil;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -54,9 +55,23 @@ public class Fase implements Serializable {
         boolean valido = true;
         if (this.fechaInicial.toString().equals("") || this.fechaFinal.toString().equals("") || this.numero==0) {
             valido = false;
+            FacesUtil.addErrorMessage("La fase que desea ingresar no tienen fechas de inicio o fin");
         }
-        if (this.programa.equals("") || this.periodo.equals("") || this.avances.equals("")) {
+        if (this.programa.getId() < 0 || this.periodo.getId() < 0) {
             valido = false;
+            FacesUtil.addErrorMessage("la fase que desea ingresar no tienen cargado el programa a la cual pertenece o el periodo");
+        }
+        if(this.fechaInicial.after(this.fechaFinal)){
+            valido = false;
+            FacesUtil.addErrorMessage("la fecha inicial no puede ser inferior a la fecha final");
+        }if(this.fechaInicial.equals(this.fechaFinal)){
+            valido = false;
+            FacesUtil.addErrorMessage("la fecha inicial no puede ser igual a la fecha final");
+        }
+        long dias=(this.fechaFinal.getTime()-this.fechaInicial.getTime())/(24*60*60*1000);
+        if(dias<8){
+            valido = false;
+            FacesUtil.addErrorMessage("Rango de fechas muy corto para una fase o ciclo: (Dias: "+dias+")");
         }
         return valido;
     }

@@ -116,6 +116,7 @@ public class MatriculaController implements Serializable {
 
     public void consultarMatriculaXEstudianteEnPeriodo(Estudiante e, Periodo p) {
         matricula = matser.obtenerMatriculaXPeriodo(p, e);
+        
         consultarEvaluacion();
     }
 

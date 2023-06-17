@@ -5,6 +5,7 @@
  */
 package com.entity;
 
+import com.controller.FacesUtil;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
@@ -52,6 +53,20 @@ public class Seccion implements Serializable {
     @Override
     public String toString() {
         return "com.entity.Seccion[ id=" + id + " ]";
+    }
+
+    public boolean validarSeccion() {
+        boolean habilitar = true;
+        try {
+            if (this.getPeriodo().getId() < 0 || this.getPrograma().getId() < 0 || this.getSemestre().getId() < 0) {
+                habilitar = false;
+                FacesUtil.addErrorMessage("Falta informacion para registrar una sección");
+            }
+        } catch (java.lang.NullPointerException npe) {
+            habilitar = false;
+            FacesUtil.addErrorMessage("Falta informacion para registrar una sección");
+        }
+        return habilitar;
     }
 
     /**

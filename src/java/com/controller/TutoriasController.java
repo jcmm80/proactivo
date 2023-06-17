@@ -103,13 +103,15 @@ public class TutoriasController implements Serializable {
         if (tutoria.validarTutoria()) {
             if (tutoria.getRecomendaciones().trim().length() > 0 && tutoria.getCompromisos().trim().length() > 0) {
                 tutoria = tutser.modificar(tutoria);
-                registrarAsistencia();
+                registrarAsistencia(tutoria);
             }
         }
     }
 
-    public void registrarAsistencia() {
+    public void registrarAsistencia(Tutoria t) {
         for (Asistente a : asistentes) {
+            a.setTutoria(tutoria);
+            System.out.println(a.getEstudiante().getId()+" "+a.infoAsistencia()+" -> "+a.getTutoria().getId()+": "+a.getTutoria().getAsignatura().getNombre() );
             asisser.crear(a);
         }
     }

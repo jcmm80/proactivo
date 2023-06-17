@@ -5,10 +5,14 @@
  */
 package com.controller;
 
+import com.entity.Asignatura;
+import com.entity.Matricula;
 import com.entity.Periodo;
 import com.entity.ProgramaAcademico;
 import com.entity.Seccion;
 import com.entity.Semestre;
+import com.services.AsignaturaServices;
+import com.services.MatriculaServices;
 import com.services.SeccionServices;
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -26,11 +30,13 @@ public class SeccionController implements Serializable {
 
     private Seccion seccion = new Seccion();
     private Periodo periodo = new Periodo();
-//    ProgramaAcademico programa=new ProgramaAcademico();
-
+    private List<Semestre> semestres = new LinkedList();
+    ProgramaAcademico programa = new ProgramaAcademico();
     private List<Seccion> secciones = new LinkedList();
 
     SeccionServices secser = new SeccionServices();
+    AsignaturaServices asigser = new AsignaturaServices();
+    MatriculaServices matser = new MatriculaServices();
 
     private boolean mostPCsecc = false;
 
@@ -43,17 +49,45 @@ public class SeccionController implements Serializable {
     public void obtenerseccionesPeriodo(ProgramaAcademico pa) {
         mostPCsecc = true;
         secciones = secser.obtenerSeccionesXPeriodo_Programa(pa, periodo);
+        organizarSecciones();
+        programa = pa;
         seccion.setPrograma(pa);
     }
 
-     public void obtenerseccionesPeriodo() {
-       // mostPCsecc = true;
-        secciones = secser.obtenerSeccionesXPeriodo(periodo);
-        //seccion.setPrograma(pa);
+    public void organizarSecciones() {
+        for (Semestre sem : semestres) {
+            sem.setSecciones(new LinkedList());
+            for (Seccion s : secciones) {
+                if (s.getSemestre().getId().equals(sem.getId())) {
+                    sem.getSecciones().add(s);
+                }
+            }
+        }
     }
 
-    
-    
+    public void eliminar(Seccion sec) {
+        if (!tieneProcesos(sec)) {
+            secser.eliminar(sec);
+            obtenerseccionesPeriodo(programa);
+        }
+    }
+
+    public boolean tieneProcesos(Seccion sec) {
+        boolean tiene = false;
+        List<Asignatura> asignaturas = asigser.obtenerAsignaturasXSeccion(sec);
+        List<Matricula> matriculas = matser.obtenerMatriculasXSeccion(sec);
+        if (asignaturas.size() > 0 || matriculas.size() > 0) {
+            tiene = true;
+            FacesUtil.addErrorMessage("La seccion no se puede eliminar debido a que ya tiene procesos activos (Matriculas o asignaturas)");
+        }
+        return tiene;
+    }
+
+    public void obtenerseccionesPeriodo() {
+        secciones = secser.obtenerSeccionesXPeriodo(periodo);
+//        organizarSecciones();
+    }
+
     public void volverprogramas() {
         mostPCsecc = false;
     }
@@ -64,12 +98,15 @@ public class SeccionController implements Serializable {
 
     public void registrar() {
         seccion.setPeriodo(periodo);
-        if(!existeSeccion(seccion)) {
-            secser.modificar(seccion);
-            obtenerseccionesPeriodo(seccion.getPrograma());
-            seccion = new Seccion();
-        }else{
-            FacesUtil.addErrorMessage("La seccion ya esta registrada");
+        if (seccion.validarSeccion()) {
+            if (!existeSeccion(seccion)) {
+                secser.modificar(seccion);
+                obtenerseccionesPeriodo(seccion.getPrograma());
+                seccion = new Seccion();
+                seccion.setPrograma(programa);
+            } else {
+                FacesUtil.addErrorMessage("La seccion ya esta registrada");
+            }
         }
     }
 
@@ -85,6 +122,7 @@ public class SeccionController implements Serializable {
         return existe;
     }
 
+   
     /**
      * @return the seccion
      */
@@ -139,6 +177,20 @@ public class SeccionController implements Serializable {
      */
     public void setMostPCsecc(boolean mostPCsecc) {
         this.mostPCsecc = mostPCsecc;
+    }
+
+    /**
+     * @return the semestres
+     */
+    public List<Semestre> getSemestres() {
+        return semestres;
+    }
+
+    /**
+     * @param semestres the semestres to set
+     */
+    public void setSemestres(List<Semestre> semestres) {
+        this.semestres = semestres;
     }
 
 }

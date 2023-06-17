@@ -43,7 +43,7 @@
                                     #{uc.descripcion}
                                 </p:column>
                                 <p:column headerText="">
-                                    <h:commandButton title="Eliminar" value="x" action="#{competenciasController.eliminarUnidad(uc)}" />
+                                    <h:commandButton disabled="#{criteriosController.unidadVinculada(uc)}" title="Eliminar" value="x" action="#{competenciasController.eliminarUnidad(uc)}" />
                                     <h:commandButton title="Consultar" value="Consultar" action="#{competenciasController.consultarUnidad(uc)}"/>
                                     <h:commandButton title="Competencias" value="Competencias" action="#{competenciasController.seleccionarUnidad(uc)}"/>
                                 </p:column>

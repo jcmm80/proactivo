@@ -72,9 +72,9 @@ public class Tutoria implements Serializable {
         if (this.proyecto.getId() <= 0) {
             valido = false;
         }
-        if (this.integrante.getId() <= 0) {
-            valido = false;
-        }
+//        if (this.integrante.getId() <= 0) { se quitó esta validacion para los casos en los que se crea una tutoria directamente por el profesor
+//            valido = false;
+//        }
         return valido;
     }
 

@@ -133,7 +133,8 @@
                               #{asig.seccion.semestre.denominacion} - #{asig.seccion.denominacion}
                             </p:column>
                             <p:column headerText="Opciones">
-                              
+                                <h:commandButton action="#{asignaturaController.consultarAsignatura(asig)}" value="consultar" />
+                                <h:commandButton action="#{asignaturaController.eliminar(asig)}" value="x" />
                             </p:column>
                         </p:dataTable>
                         </p:panel>

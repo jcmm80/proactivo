@@ -74,5 +74,21 @@ public class CriterioEvaluacionServices extends ImplDao<CriterioEvaluacion, Long
         }
         return criteriose;
     }
-    
+      public List<CriterioEvaluacion> obtenerCriterioEvaluacionXAsignatura(Asignatura a) {
+        List<CriterioEvaluacion> criteriose = new LinkedList();
+        try {
+            EntityManager em = getEntityManagger();
+            em.getTransaction().begin();
+            String q = "select cr from CriterioEvaluacion cr where cr.criterio.competencia.unidad.asignatura.id = ?1";
+            System.out.println(" Consulta: " + q);
+            Query qu = em.createQuery(q)
+                    .setParameter(1, a.getId());
+            criteriose = qu.getResultList();
+            em.getTransaction().commit();
+            System.out.println("obtenerCriterioEvaluacionXAsignatura");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return criteriose;
+    }
 }

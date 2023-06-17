@@ -30,7 +30,7 @@ public class EvaluacionServices extends ImplDao<Evaluacion, Long> implements IEv
             
         }
         catch(Exception ex){
-            ex.printStackTrace();
+//            ex.printStackTrace();
         }finally{
             em.getTransaction().commit();
             System.out.println("obtenerEvaluacionXSeccion");        

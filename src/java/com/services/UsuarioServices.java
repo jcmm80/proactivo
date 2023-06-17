@@ -4,6 +4,7 @@
  */
 package com.services;
 
+import com.controller.FacesUtil;
 import com.dao.ImplDao;
 import com.entity.Usuario;
 import com.implDao.IUsuario;
@@ -29,8 +30,8 @@ public class UsuarioServices extends ImplDao<Usuario, Long> implements IUsuario,
         usu=(Usuario)qu.getSingleResult();
 //        System.out.println(" Usuario: "+usu.getTipo());
         }catch(Exception ex){
-            ex.printStackTrace();
-            //FacesUtil.addErrorMessage("Error Inicio Session",ex.getMessage() );
+//            ex.printStackTrace();
+            FacesUtil.addErrorMessage("Error Inicio Session",ex.getMessage() );
         }finally{
             em.getTransaction().commit();
             System.out.println("ingresar");       

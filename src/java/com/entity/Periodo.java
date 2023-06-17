@@ -7,6 +7,7 @@ package com.entity;
 
 import com.controller.FacesUtil;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
@@ -51,22 +52,23 @@ public class Periodo implements Serializable {
         this.anio = anio;
     }
 
-    public boolean validar(){
-        boolean valido=true;        
-        if(this.fechaInicial.after(this.fechaFinal)){
+    public boolean validar() {
+        boolean valido = true;
+        if (this.fechaInicial.after(this.fechaFinal)) {
             FacesUtil.addErrorMessage("La fecha inicial no puede ser inferior a la fecha final");
-            valido=false;
-        }if(this.anio<2022){
+            valido = false;
+        }
+        if (this.anio < 2022) {
             FacesUtil.addErrorMessage("El año correspondiente al periodo esta fuera de rango");
-            valido=false;
-        }if(this.numero<1 || this.numero>2){
+            valido = false;
+        }
+        if (this.numero < 1 || this.numero > 2) {
             FacesUtil.addErrorMessage("El periodo asignado esta fuera de rango");
-            valido=false;
-        }        
+            valido = false;
+        }
         return valido;
     }
-    
-    
+
     public Long getId() {
         return id;
     }
@@ -97,7 +99,7 @@ public class Periodo implements Serializable {
 
     @Override
     public String toString() {
-        return ""+this.anio+"-"+this.numero;
+        return "" + this.anio + "-" + this.numero;
     }
 
     /**
@@ -133,6 +135,21 @@ public class Periodo implements Serializable {
      */
     public Date getFechaInicial() {
         return fechaInicial;
+    }
+
+    public String getFormattedFechaInicial() {
+        Date fechaInicial = getFechaInicial();
+        return formatDate(fechaInicial);
+    }
+
+    public String getFormattedFechaFinal() {
+        Date fechaFinal = getFechaFinal();
+        return formatDate(fechaFinal);
+    }
+
+    private String formatDate(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(date);
     }
 
     /**
@@ -197,5 +214,5 @@ public class Periodo implements Serializable {
     public void setActual(boolean actual) {
         this.actual = actual;
     }
-    
+
 }

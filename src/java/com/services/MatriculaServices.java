@@ -9,6 +9,7 @@ import com.entity.Estudiante;
 import com.entity.Matricula;
 import com.entity.Periodo;
 import com.entity.ProgramaAcademico;
+import com.entity.Seccion;
 import com.implDao.IMatricula;
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -67,6 +68,27 @@ public class MatriculaServices extends ImplDao<Matricula, Long> implements IMatr
         return matriculas;
     }
 
+     public List<Matricula> obtenerMatriculasXSeccion(Seccion p) {
+        List<Matricula> matriculas = new LinkedList();
+        try {
+            EntityManager em = getEntityManagger();
+            em.getTransaction().begin();
+            String q = "select m from Matricula m where m.seccion.id = ?1";
+//             System.out.println(" Consulta: "+q);
+            Query qu = em.createQuery(q)
+                    .setParameter(1, p.getId());
+            matriculas = qu.getResultList();
+
+            em.getTransaction().commit();
+            System.out.println("obtenerMatriculasXSeccion");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return matriculas;
+    }
+
+    
     public List<Matricula> obtenerMatriculasXperiodoYPrograma(Periodo p, ProgramaAcademico pa) {
         List<Matricula> matriculas = new LinkedList();
         try {

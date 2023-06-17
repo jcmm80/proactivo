@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -10,39 +11,78 @@
         <section class="contenido-contenedor">
             <div class="border contenedor top" >
                 <h1 class="tittle">Gestor de Fases (Ciclos)</h1>
-                <p:panelGrid columns="1" >
-                    <p:panel>
+                <h:outputText value="Periodo: desde: #{fasesController.periodo.formattedFechaInicial} - Hasta: #{fasesController.periodo.formattedFechaFinal}" />
 
+                <p:panelGrid columns="1" >
+                    <p:panel rendered="#{fasesController.habilitarCreacion()}">
+                        <p:panelGrid columns="3">
+                            <p:panel id="panfi" header="Fecha Inicial" footer="Fecha Seleccionada: #{fasesController.formattedfechaIfase}">
+                                <p:calendar value="#{fasesController.fechaIfase}"  pages="1"  navigator="true" mode="online"
+                                            mindate="#{fasesController.fechaInicialdisponible}" maxdate="#{fasesController.fechaFinaldisponible}">
+                                    <p:ajax event="dateSelect"  update="panfi" />
+
+                                </p:calendar> 
+                            </p:panel>
+                            <p:panel id="panff" header="Fecha Final" footer="Fecha Seleccionada: #{fasesController.formattedfechaFfase}" >
+                                <p:calendar value="#{fasesController.fechaFfase}" title="Fecha Final" pages="1"  navigator="true" mode="online"
+                                            mindate="#{fasesController.fechaInicialdisponible}" maxdate="#{fasesController.fechaFinaldisponible}">
+                                    <p:ajax event="dateSelect"  update="panff" /></p:calendar>  
+                            </p:panel>
+
+                            <p:panelGrid columns="1">
+                                <p:panel>
+                                    Numero de Fase Disponible: #{fasesController.numero}
+                                </p:panel>
+                                <h:commandButton value="aceptar" action="#{fasesController.agregar()}" />
+                            </p:panelGrid>
+                            
+                        </p:panelGrid>
 
                     </p:panel>
+
                     <p:panel>
                         <p:dataTable var="fas" value="#{fasesController.fases}">
                             <p:column>
                                 #{fas.numero}
                             </p:column>
                             <p:column>
-                                #{fas.fechaInicial}
+                                <p:calendar value="#{fas.fechaInicial}" readonly="true"  />
                             </p:column>
                             <p:column>
-                                #{fas.fechaFinal}
+                                <p:calendar value="#{fas.fechaFinal}" readonly="true" />
                             </p:column>
                             <p:column>
-
+                                <h:commandButton value="seleccionar" action="#{fasesController.seleccionar(fas)}" />
+                                <h:commandButton value="eliminar" action="#{fasesController.eliminarFase(fas)}" rendered="#{fasesController.habilitarELiminar(fas)}" />
                             </p:column>
                         </p:dataTable>
 
                     </p:panel>
-
 
                 </p:panelGrid>
 
             </div>
         </section>
 
+        <script>
+            // Obtén las referencias de los calendarios y el slider
+            var cal6 = PF('cal6');
+            var cal7 = PF('cal7');
+            var slider = PF('slider');
 
+            // Función para actualizar los valores de los calendarios cuando cambia el slider
+            function updateCalendarValues() {
+                var sliderValues = slider.getValues();
+                var minValue = new Date(sliderValues[0]);
+                var maxValue = new Date(sliderValues[1]);
 
+                cal6.setDate(minValue);
+                cal7.setDate(maxValue);
+            }
 
+            // Agrega un listener para el evento slideEnd del slider
+            slider.addEventListener('slideEnd', updateCalendarValues);
+        </script>
 
     </h:body>
 </html>
-

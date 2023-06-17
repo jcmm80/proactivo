@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        
+         <div class="btns" style="background-color: #005CB9">
+                                    <i class="uil uil-angle-left-b" ></i>
+                                    Volver
+                                    <h:commandButton class="btn" value="volver" action="#{profesorController.volverTutorias()}" />
+                                </div>
+        
+        <span class="aviso">Proyectos Existentes</span>
+        <p:dataTable class="tabla-reporte" var="proa" value="#{profesorController.proyectosSemestre}">
+            <p:column headerText="Codigo">
+                #{proa.codigo}
+            </p:column>
+            <p:column headerText="Fecha Ingreso">
+                #{proa.fecha_ingreso}
+            </p:column>                             
+            <p:column width="500" headerText="Integrantes">
+                <p:dataTable style="font-size: 10pt" var="integ" value="#{proa.integrantes}">
+                    <p:column headerText="">
+                        <p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" style="width: 40px;height: 40px "  />
+                    </p:column>
+                    <p:column width="300" headerText="">
+                        <h:outputText  value="#{integ.matricula.estudiante.toString()}" /> 
+                    </p:column>                           
+                </p:dataTable>                                 
+            </p:column>
+            <p:column headerText="Opciones">
+                <div class="Acciones">
+                    <div class="accion">
+                        <i class="uil uil-file-search-alt" style="color: #005CB9; font-size: 25px"></i><h:commandButton class="icono" value="." action="#{profesorController.pcrearTutoria(proa)}" />
+                    </div>
+                </div>  
+            </p:column>  
+        </p:dataTable> 
+
+    </h:body>
+</html>

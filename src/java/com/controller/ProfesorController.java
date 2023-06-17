@@ -27,6 +27,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -97,6 +98,7 @@ public class ProfesorController implements Serializable {
     private boolean mostPAsignatura;//para mostrar la asignatura seleccionada por el profesor
     private boolean mpanelTutorias;
     private boolean mpanelPTutoria;
+    private boolean mpanelPCTutoria;//mostrar panel para crear tutorias
     private boolean mpanelPCompetencias;//mostrar obciones del modulo de competencias
     private boolean mostPanelEvaluaciones;
     private int activeIRes = 0;
@@ -108,6 +110,8 @@ public class ProfesorController implements Serializable {
      */
     public ProfesorController() {
     }
+    
+    
 
     public void seleccionarSemestrepTResultados(Semestre s) {
 
@@ -150,14 +154,19 @@ public class ProfesorController implements Serializable {
     public void agregarAsignaturaTutoria(Asignatura a) {
         getTutcon().setAsignatura(a);
         getTutcon().consultarTutoriasXAsignaturaProfesor();
+        proyectosXSeccion(a.getSeccion());
         mpanelTutorias = true;
     }
 
+    
+   
+    
     public void agregarAsignaturaCompetencia(Asignatura a) {
         getCompcon().setUnidad(new UnidadCompetencia());
         getCompcon().setAsignatura(a);
         getCompcon().getUnidad().setAsignatura(a);
         getCompcon().consultarUnidadesCompetenciaAsignatura();
+        getCompcon().getCricon().consultarCriteriosEvaluacionAsignatura(a);
         tipecon.setAsignatura(a);
         tipecon.consultarTipos_Entregable();
     }
@@ -166,6 +175,16 @@ public class ProfesorController implements Serializable {
         mpanelTutorias = false;
     }
 
+    public void crearTutoria(){        
+        mpanelPCTutoria=true;
+        paginaTutoria = "Tutorias/CrearTutoria.xhtml";
+    }
+    
+    public void volverTutorias(){
+        mpanelPCTutoria=false;
+    }
+    
+    
     public void pprogramarTutoria(Tutoria t) {
         mpanelPTutoria = true;
         tutcon.setTutoria(t);
@@ -179,6 +198,17 @@ public class ProfesorController implements Serializable {
         paginaTutoria = "Tutorias/RealizarTutoria.xhtml";
     }
 
+    public void pcrearTutoria(Proyecto_Aula proyecto) {
+        mpanelPTutoria = true;
+        Tutoria tutoria=new Tutoria();
+        tutoria.setProyecto(proyecto);
+        tutoria.setAsignatura(tutcon.getAsignatura());
+        tutcon.setTutoria(tutoria);
+        tutcon.armarAsistentes();
+        paginaTutoria = "Tutorias/RealizarTutoria.xhtml";
+    }
+    
+    
     public void palmacenarTutoria() {
         tutcon.realizarTutoria();
         tutcon.consultarTutoriasXProfesor(profesor);
@@ -193,6 +223,7 @@ public class ProfesorController implements Serializable {
 
     public void pvolverdeProgramar() {
         mpanelPTutoria = false;
+        mpanelPCTutoria=false;
     }
 
     public void seleccionarAsignatura(Asignatura a) {
@@ -264,6 +295,7 @@ public class ProfesorController implements Serializable {
         compcon.consultarTiposCompetencias();
         tipecon.consultarTipos_Entregable(profesor);
         compcon.consultarCompetenciasProfesor(profesor);
+        compcon.consultarCriteriosGlobalesProfesor(profesor);
     }
 
     public void obtenerTutoriasXProfesor() {
@@ -316,6 +348,8 @@ public class ProfesorController implements Serializable {
     }
 
     public void consultarFases(ProgramaAcademico pa) {
+        fascon.setPeriodo(periodo);
+        fascon.setPrograma(programa);
         fascon.obtenerFasesXPrograma(pa, periodo);
     }
 
@@ -1044,6 +1078,20 @@ public class ProfesorController implements Serializable {
      */
     public void setSemcon(SemestreController semcon) {
         this.semcon = semcon;
+    }
+
+    /**
+     * @return the mpanelPCTutoria
+     */
+    public boolean isMpanelPCTutoria() {
+        return mpanelPCTutoria;
+    }
+
+    /**
+     * @param mpanelPCTutoria the mpanelPCTutoria to set
+     */
+    public void setMpanelPCTutoria(boolean mpanelPCTutoria) {
+        this.mpanelPCTutoria = mpanelPCTutoria;
     }
 
 }
