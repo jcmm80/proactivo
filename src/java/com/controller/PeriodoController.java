@@ -55,18 +55,22 @@ public class PeriodoController implements Serializable {
     public void registrarPeriodo() {
         getPeriodo().setFecha(new Date());
         if (getPeriodo().validar()) {
-            setPeriodo(perser.modificar(getPeriodo()));
-            setPeriodo(new Periodo());
-            obtenerPeriodos();
+            if (!existe(getPeriodo())) {
+                setPeriodo(perser.modificar(getPeriodo()));
+                setPeriodo(new Periodo());
+                obtenerPeriodos();
+            }else{
+                FacesUtil.addErrorMessage("Ya existe un periodo con el año y denominacion seleccionada.");
+            }
         }
     }
 
-    public void seleccionarPeriodo(Periodo p){
+    public void seleccionarPeriodo(Periodo p) {
         setPeriodo(p);
     }
-    
+
     public void aliminar(Periodo p) {
-        if(habilitarEliminar(p)){
+        if (habilitarEliminar(p)) {
             perser.eliminar(p);
             obtenerPeriodos();
             FacesUtil.addInfoMessage("Se elimino el periodo con exito");
@@ -106,6 +110,16 @@ public class PeriodoController implements Serializable {
         p.setActual(true);
         p = perser.modificar(p);
         obtenerPeriodos();
+    }
+
+    public boolean existe(Periodo p) {
+        boolean existe = false;
+        for (Periodo pe : periodos) {
+            if (pe.getAnio() == p.getAnio() && pe.getNumero() == p.getNumero()) {
+                existe = true;
+            }
+        }
+        return existe;
     }
 
     public void obtenerPeriodos() {

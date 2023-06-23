@@ -302,7 +302,7 @@ public class EvaluacionController implements Serializable {
         competencia.setHoras(1);
         competencia.setEstrategia(dimension.getNombre());
         competencia.setTipo(new TipoCompetencia(Long.parseLong("2"), "Generica"));
-        Tipo_Entregable tipoentregable = new Tipo_Entregable("Sustentacion", "Sustentacion", a);
+        Tipo_Entregable tipoentregable = new Tipo_Entregable(dimension.getNombre(), dimension.getDescripcion(), a);
         tipoentregable.setTipo("Global");
         tipoentregable = teser.modificar(tipoentregable);
         competencia.setTipoentregable(tipoentregable);

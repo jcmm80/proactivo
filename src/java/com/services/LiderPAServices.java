@@ -40,10 +40,34 @@ public class LiderPAServices extends ImplDao<LiderPA, Long> implements ILiderPA,
         }
         finally{
             em.getTransaction().commit();
-            System.out.println("LiderPAServices");
+            System.out.println("obtenersemestresLiderPAXProfesor");
         }
         
         return  lid;
     }
-    
+     public List<LiderPA> obtenerSeccionesLideradasPeriodo(Periodo pe){
+        EntityManager em =ImplDao.getEntityManagger();
+        List<LiderPA> lid=new LinkedList();
+        em.getTransaction().begin();        
+        try{//tengo que colocar el semestre para que me de un unico resultado
+        String q="select lp from LiderPA lp where lp.seccion.periodo.id = ?1";        
+//        System.out.println(" Consulta: "+q);
+        Query qu=em.createQuery(q)
+                .setParameter(1, pe.getId());
+        lid=qu.getResultList();
+//        System.out.println(" Usuario: "+usu.getTipo());
+        }catch(javax.persistence.NoResultException ner){
+            
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+            //FacesUtil.addErrorMessage("Error Inicio Session",ex.getMessage() );
+        }
+        finally{
+            em.getTransaction().commit();
+            System.out.println("obtenerSeccionesLideradasPeriodo");
+        }
+        
+        return  lid;
+    }
 }

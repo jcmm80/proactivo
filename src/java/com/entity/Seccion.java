@@ -61,6 +61,9 @@ public class Seccion implements Serializable {
             if (this.getPeriodo().getId() < 0 || this.getPrograma().getId() < 0 || this.getSemestre().getId() < 0) {
                 habilitar = false;
                 FacesUtil.addErrorMessage("Falta informacion para registrar una sección");
+            }if(this.denominacion.trim().equals("")){
+                habilitar = false;
+                FacesUtil.addErrorMessage("Falta la denominación para registrar una sección");
             }
         } catch (java.lang.NullPointerException npe) {
             habilitar = false;

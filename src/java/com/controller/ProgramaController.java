@@ -56,8 +56,8 @@ public class ProgramaController implements Serializable {
             nucleoe.setFecha(new Date());
             if (nucleoe.validarNucleo()) {
                 nucleo = nucser.modificar(nucleoe);
-                nucleo=new Nucleo();
-            }else{
+                nucleo = new Nucleo();
+            } else {
                 FacesUtil.addErrorMessage("Faltan datos para definir a un nucleo");
             }
         } else {
@@ -65,8 +65,8 @@ public class ProgramaController implements Serializable {
             nucleo.setFecha(new Date());
             if (nucleo.validarNucleo()) {
                 nucleo = nucser.modificar(nucleo);
-                nucleo=new Nucleo();
-            }else{
+                nucleo = new Nucleo();
+            } else {
                 FacesUtil.addErrorMessage("Faltan datos para definir a un nucleo");
             }
         }
@@ -104,15 +104,28 @@ public class ProgramaController implements Serializable {
     }
 
     public void asignarCoordinadorPA() {
-        programa = paserv.modificar(programa);
-        FacesUtil.addInfoMessage("Se asigno el profesor: " + programa.getCoordinadorPA().toString() + " al Programa: " + programa.getNombreCompleto());
+        try {
+            if (programa.getCoordinadorPA().getId() > 0) {
+                if (programa.getId() > 0) {
+                    programa = paserv.modificar(programa);
+                    FacesUtil.addInfoMessage("Se asigno el profesor: " + programa.getCoordinadorPA().toString() + " al Programa: " + programa.getNombreCompleto());
+                } else {
+                    FacesUtil.addErrorMessage("Debe Seleccionar el programa");
+                }
+            } else {
+                FacesUtil.addErrorMessage("Debe Seleccionar el profesor");
+            }
+        } catch (NullPointerException npe) {
+            FacesUtil.addErrorMessage("Debe Seleccionar el programa");
+        }
     }
 
     public void registrar() {
         if (programa.validar()) {
             programa.setEstado("Activo");
             programa = paserv.modificar(programa);
-            consultarProgramasXCoordinador(programa.getCoordinador());
+            consultarProgramas();
+//            consultarProgramasXCoordinador(programa.getCoordinador());
             programa = new ProgramaAcademico();
         }
     }

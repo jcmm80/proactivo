@@ -101,7 +101,7 @@ public class UsuarioController implements Serializable {
                     estcon.obtenerEstudiante(getUsuario().getId());
                     estcon.setPeriodo(percon.getPeriodoActual());
                     estcon.consultarMatriculaEstudiante();
-                    
+                    estcon.getAsigcon().setAsignaturas(null);
                     if (estcon.getEstudiantehabilitado()) {
                         estcon.consultarProyectoXMatricula();
                         estcon.consultarFases();
@@ -116,25 +116,30 @@ public class UsuarioController implements Serializable {
                     profcon.obtenerPrtofesor(getUsuario().getId());
                     profcon.setPeriodo(percon.getPeriodoActual());
                     procon.obtenerProgramaCoordinadorPA(profcon.getProfesor());
-                    profcon.esLiderPA();
+                    profcon.obtenerLideresXseccionPeriodo();
+                    
                     try {
                         if (procon.getPrograma().getId() > 0) {//si es coordinador de proyectos del programa
                             System.out.println("El profesor es coordinador de PA");
                             profcon.setPrograma(procon.getPrograma());
                             profcon.consultarFases(procon.getPrograma());
+                            profcon.obtenerLideresXPrograma(procon.getPrograma());
                             profcon.consultarMatriculasXPeriodo();
                             profcon.consultarProfesores();//ojo porque consulta profesores
                             procon.consultarProgramas();
                             percon.obtenerPeriodos();
                             semcon.obtenerSemestres();
                             profcon.consultarTutoriasPeriodo();
+                            
                         } else {
                             procon.setPrograma(null);
                         }
+                        
                     } catch (NullPointerException npe) {
 
 //                        System.out.println(""+procon.getPrograma().getCoordinadorPA().toString());
                     }
+                    profcon.esLiderPA();
                     profcon.consultarProyectosAulaPeriodo();
                     profcon.obtenerAsignaturasXProfesor();
                     profcon.obtenerTutoriasXProfesor();

@@ -54,6 +54,7 @@ public class Periodo implements Serializable {
 
     public boolean validar() {
         boolean valido = true;
+        try{
         if (this.fechaInicial.after(this.fechaFinal)) {
             FacesUtil.addErrorMessage("La fecha inicial no puede ser inferior a la fecha final");
             valido = false;
@@ -65,6 +66,10 @@ public class Periodo implements Serializable {
         if (this.numero < 1 || this.numero > 2) {
             FacesUtil.addErrorMessage("El periodo asignado esta fuera de rango");
             valido = false;
+        }
+        }catch(java.lang.NullPointerException npe){
+            valido = false;
+            FacesUtil.addErrorMessage("Debe ingresar las fechas  de inicio y nila del periodo");
         }
         return valido;
     }

@@ -228,6 +228,7 @@ public class CoordinadorController implements Serializable {
     }
 
     public void gasignaturas() {
+        asigcon.setActiveIndex(0);
         paginaActualC = "/Coordinador/GestorAsignatura.xhtml";
     }
 

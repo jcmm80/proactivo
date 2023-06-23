@@ -9,6 +9,7 @@ import com.entity.LiderPA;
 import com.entity.Periodo;
 import com.entity.Profesor;
 import com.entity.ProgramaAcademico;
+import com.entity.Proyecto_Aula;
 import com.entity.Seccion;
 import com.services.LiderPAServices;
 import com.services.SeccionServices;
@@ -29,15 +30,15 @@ public class LiderPAController implements Serializable {
 
     private LiderPA liderPA = new LiderPA();
     private Periodo periodo = new Periodo();//para almacenar el el periodo actual
-    private ProgramaAcademico programa=new ProgramaAcademico();
+    private ProgramaAcademico programa = new ProgramaAcademico();
 //    private Semestre semestre=new Semestre();
 
     LiderPAServices lidser = new LiderPAServices();
-    SeccionServices secser=new SeccionServices();
+    SeccionServices secser = new SeccionServices();
 
     private List<LiderPA> lideresPA = new LinkedList();
     private List<Profesor> profesores = new LinkedList();
-    private List<Seccion> secciones=new LinkedList();
+    private List<Seccion> secciones = new LinkedList();
 
     //controladores
     @ManagedProperty("#{periodoController}")
@@ -46,38 +47,88 @@ public class LiderPAController implements Serializable {
     private ProgramaController progcont;
     @ManagedProperty("#{profesorController}")
     private ProfesorController profcont;
+    @ManagedProperty("#{proyectoAulaController}")
+    private ProyectoAulaController proacon;
+
+    private int activeIndex = 0;
+
+    public void eliminarLider(LiderPA lider) {
+        if (!tieneProyectos(lider)) {
+            lidser.eliminar(lider);
+//        liderPA = new LiderPA();
+            activeIndex = 0;
+            profcont.obtenerLideresXseccionPeriodo();
+            profcont.obtenerLideresXPrograma(programa);
+        }else{
+            FacesUtil.addErrorMessage("No se puede eliminar este lider debido a que ya posee proyectos creados por el");
+        }
+
+    }
+
+    public boolean tieneProyectos(LiderPA lider) {
+        boolean tiene = false;
+        for (Proyecto_Aula pa : proacon.getProyectos()) {
+            if (pa.getProfesorLider().getId().equals(lider.getId())) {
+                tiene = true;
+            }
+        }
+        return tiene;
+    }
 
     public void agregarProfesor(Profesor p) {
         getLiderPA().setProfesor(p);
-    }
-
-    public void agregarPrograma(ProgramaAcademico pa) {
-        setPrograma(pa);
-    }
-
-    public void agregarPeriodo(Periodo p) {
-        setPeriodo(p);
+        liderPA.setSeccion(new Seccion());
+        setPeriodo(profcont.getPeriodo());
+        setPrograma(profcont.getPrograma());
         obtenerseccionesPeriodo();
+        activeIndex = 2;
+
     }
 
-     public void obtenerseccionesPeriodo(){       
-        secciones=secser.obtenerSeccionesXPeriodo_Programa(programa, periodo);        
+//    public void agregarPrograma(ProgramaAcademico pa) {
+//        setPrograma(pa);
+//        obtenerseccionesPeriodo();
+//        activeIndex = 2;
+//    }
+//
+//    public void agregarPeriodo(Periodo p) {
+//        setPeriodo(p);
+//        obtenerseccionesPeriodo();
+//    }
+    public void obtenerseccionesPeriodo() {
+        secciones = secser.obtenerSeccionesXPeriodo_Programa(programa, periodo);
     }
-    
-     public void agregarSeccion(Seccion sec){
-         liderPA.setSeccion(sec);
-     }
-    
-    public void registrarLiderPA() {
-//        liderPA.setSemestre(getSemestre());
-        try {
-            if (liderPA.validarliderPA()) {
-                lidser.crear(liderPA);
-                liderPA = new LiderPA();
-                
+
+    public void agregarSeccion(Seccion sec) {
+        liderPA.setSeccion(sec);
+    }
+
+    public boolean existeLider(LiderPA lid) {
+        boolean existe = false;
+        for (LiderPA l : profcont.getLideresXseccionPrograma()) {
+            if (l.getSeccion().getId().equals(lid.getSeccion().getId())) {
+                existe = true;
             }
-        }catch(java.lang.NullPointerException npe){
-            
+        }
+        return existe;
+    }
+
+    public void registrarLiderPA() {
+
+        try {
+            if (!existeLider(liderPA)) {
+                if (liderPA.validarliderPA()) {
+                    lidser.crear(liderPA);
+                    liderPA = new LiderPA();
+                    activeIndex = 0;
+                    profcont.obtenerLideresXseccionPeriodo();
+                    profcont.obtenerLideresXPrograma(programa);
+                }
+            } else {
+                FacesUtil.addErrorMessage("La seccion ya tiene un lider asignado: debera eliminar ese lider para la seccion antes de realizar esta operacion");
+            }
+        } catch (java.lang.NullPointerException npe) {
+
         }
     }
 
@@ -166,5 +217,33 @@ public class LiderPAController implements Serializable {
      */
     public void setSecciones(List<Seccion> secciones) {
         this.secciones = secciones;
+    }
+
+    /**
+     * @return the activeIndex
+     */
+    public int getActiveIndex() {
+        return activeIndex;
+    }
+
+    /**
+     * @param activeIndex the activeIndex to set
+     */
+    public void setActiveIndex(int activeIndex) {
+        this.activeIndex = activeIndex;
+    }
+
+    /**
+     * @return the proacon
+     */
+    public ProyectoAulaController getProacon() {
+        return proacon;
+    }
+
+    /**
+     * @param proacon the proacon to set
+     */
+    public void setProacon(ProyectoAulaController proacon) {
+        this.proacon = proacon;
     }
 }

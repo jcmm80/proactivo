@@ -11,8 +11,8 @@
             <div class="contcompasig">
                 <div class="cunid">
                     
-                    <p:accordionPanel value="#{competenciasController.unidades}" var="unidad">
-                        <p:tab title="#{unidad.descripcion}">
+                    <p:accordionPanel  value="#{competenciasController.unidades}" var="unidad">
+                        <p:tab  title="#{unidad.descripcion}">
                             <p:dataTable var="comp" value="#{unidad.competencias}" >
                                 <p:column>
                                     #{comp.tipo.descripcion}
@@ -28,8 +28,7 @@
                                 </p:column>
                             </p:dataTable>  
                         </p:tab>
-                    </p:accordionPanel>
-                       
+                    </p:accordionPanel>                       
                     
                     
                 </div>
