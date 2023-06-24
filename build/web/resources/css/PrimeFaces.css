@@ -67,3 +67,7 @@ body .ui-widget{
 body .ui-tabs .ui-tabs-nav li.ui-tabs-header a{
     font-size: 13px;
 }
+body .ui-dataview .ui-dataview-header{
+    background: none !important;         
+    border: none !important;
+}

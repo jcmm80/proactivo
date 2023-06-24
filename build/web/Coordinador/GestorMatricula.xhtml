@@ -19,7 +19,7 @@
 
             <p:panel rendered="#{!matriculaController.existematricula}">
                 <div class="card">
-                    <p:tabView activeIndex="#{matriculaController.activeIndex}">
+                    <p:tabView activeIndex="#{matriculaController.activeIndex}" scrollable="true">
                         <p:tab id="test" title="Estudiante">
                             <div class="relative pb-2 mb-2">
                                 <h3 class="text-lg ">Tabla de Estudiantes</h3>
@@ -156,7 +156,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <p:dataView  multiViewState="true" gridIcon="pi pi-th-large" listIcon="pi pi-bars"  var="sem"  value="#{semestreController.semestres}">
+                            <p:dataView  multiViewState="true" gridIcon="pi pi-eye"   var="sem"  value="#{semestreController.semestres}">
                                 <p:dataViewGridItem  columns="4"  >
                                     <div class="relative img-negra bg-black" >
                                         <div class="w-full h-full">
@@ -168,17 +168,7 @@
                                         <h:commandButton   class="btn" value="Abrir" action="#{matriculaController.seleccionarSemestre(sem)}" />
                                     </div>
                                 </p:dataViewGridItem>
-                                <p:dataViewListItem >
-                                    <div class="relative img-negra bg-black" >
-                                        <div class="w-full h-full">
-                                            <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
-                                        </div>
-                                        <div class="contenido">
-                                            <p>Semestre <br></br>#{sem.denominacion}</p>
-                                        </div>
-                                        <h:commandButton   class="btn" value="Abrir" action="#{matriculaController.seleccionarSemestre(sem)}"/>
-                                    </div>
-                                </p:dataViewListItem>
+                               
                             </p:dataView>
                             <div class="mt-4">
                                 <div class="relative pb-2 mb-2">
@@ -186,7 +176,7 @@
                                     <small class="block mb-4 text-gray-600">una sección o curso se refiere a un grupo específico de estudiantes que cursan unas asignaturas alrededor de un núcleo problémico.</small>  
                                     <div class="espaceador"></div>
                                 </div>   
-                                <p:dataView  multiViewState="true" gridIcon="pi pi-th-large" listIcon="pi pi-bars" var="sec" value="#{matriculaController.secciones}">
+                                <p:dataView  multiViewState="true" gridIcon="pi pi-eye"  var="sec" value="#{matriculaController.secciones}">
                                     <p:dataViewGridItem  columns="3"  >
                                         <div class="relative img-negra bg-black">
                                             <div class="w-full h-full">
@@ -200,19 +190,7 @@
                                             <h:commandButton   class="btn" value="Abrir" action="#{matriculaController.seleccionarSeccion(sec)}" />
                                         </div> 
                                     </p:dataViewGridItem>
-                                    <p:dataViewListItem >
-                                        <div class="relative img-negra bg-black">
-                                            <div class="w-full h-full">
-                                                <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
-                                            </div>
-                                            <div class="contenido-grid">
-                                                <h2 class="text-white">#{sec.programa.nombre}</h2>
-                                                <span>Semestre #{sec.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
-                                                <h3 class="text-white">Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
-                                            </div>
-                                            <h:commandButton   class="btn" value="Abrir" action="#{matriculaController.seleccionarSeccion(sec)}"/>
-                                        </div> 
-                                    </p:dataViewListItem>
+                                    
                                 </p:dataView>
                             </div>
                             <div class="btns-container justify-content-end">
@@ -238,10 +216,7 @@
         </div>
     </section>
     <style>
-        body .ui-dataview .ui-dataview-header{
-            background: none;         
-            border: none;
-        }
+       
         .contestsec {  display: grid;
                        grid-template-columns: 1fr;
                        grid-template-rows: 0.4fr 1.6fr;

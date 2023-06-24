@@ -1,91 +1,119 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <xhtml xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
         <section class="contenido-contenedor">
-            <div class="border contenedor top">
-                <h1 class="tittle">Crear seciones</h1>
+            <div class=" contenedor top">
+
+                <div class="relative pb-2 mb-2">
+                    <h3 class="text-2xl ">Gestion Secciones</h3>
+                    <small class="block mb-4 text-gray-600">una sección o curso se refiere a un grupo específico de estudiantes que cursan unas asignaturas alrededor de un núcleo problémico, una sección posee una asignatura eje la cual la debe orientar un profesor líder de proyectos de aula. </small>  
+                    <div class="espaceador"></div>
+                </div>
+
                 <p:panel rendered="#{!seccionController.mostPCsecc}">
-                    <p:dataTable class="tabla-reporte" var="prog" value="#{programaController.programas}">
-                        <p:column headerText="Codigo">
-                            #{prog.codigo}
-                        </p:column>
-                        <p:column headerText="Nombre">
-                            #{prog.nombreCompleto}
-                        </p:column>
-                        <p:column headerText="">
-                            <div class="accion">
-                                <i class="fa fa-hand-pointer" style="color: #005CB9"></i>
-                                <h:commandButton class="icono" value="+" action="#{seccionController.obtenerseccionesPeriodo(prog)}" />
-                            </div>                            
-                        </p:column>
-                    </p:dataTable>                     
-
+                    <div class="card">
+                        <small class="text-gray-600 mb-2">Selecciona un programa para crear seccion</small>
+                        <p:dataTable class="tabla-reporte" var="prog" value="#{programaController.programas}">
+                            <p:column headerText="Codigo">
+                                #{prog.codigo}
+                            </p:column>
+                            <p:column headerText="Nombre">
+                                #{prog.nombreCompleto}
+                            </p:column>
+                            <p:column headerText="">
+                                <div class="btn-normal">
+                                    <i class="fa fa-hand-pointer"></i>
+                                    <h:commandButton class="btn" value="+" action="#{seccionController.obtenerseccionesPeriodo(prog)}" />
+                                </div>                            
+                            </p:column>
+                        </p:dataTable>
+                    </div>
                 </p:panel>
+
                 <p:panel rendered="#{seccionController.mostPCsecc}">
-                    <div class="tanone" style="justify-content: flex-start; column-gap: 1rem" >
-                        <div class="btn-normal" style="background-color: #005CB9">
-                            <i class="uil uil-angle-left-b" ></i>
-                            Volver
-                            <h:commandButton class="btn" value="volver" action="#{seccionController.volverprogramas()}" />
-                        </div>
-
-                    </div>
-
-                    <span class="aviso">Selecciona un Semestre</span>    
-                    <p:dataGrid columns="5" var="sem" value="#{semestreController.semestres}">
-                        <div class="card img-negra" >
-                            <figure >
-                                <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
-                            </figure>
-                            <div class="contenido">
-                                <p>Semestre <br></br>#{sem.denominacion}</p>
-
+                    <div class="card">
+                        <div class="btns-container m-0">
+                            <div class="btn-normal">
+                                <i class="ri-arrow-left-line"></i>
+                                <h:commandButton class="btn" value="volver" action="#{seccionController.volverprogramas()}" />
                             </div>
-                            <h:commandButton   class="btn" value="Abrir" action="#{seccionController.seleccionarSemestre(sem)}" />
+                        </div>
+                        <div class="relative pb-2 mb-2 mt-4">
+                            <h3 class="text-2xl ">Semestres</h3>
+                            <small class="block mb-4 text-gray-600">Selecciona un semestre</small>  
+                            <div class="espaceador"></div>
+                        </div>
+                        <p:dataView  multiViewState="true" gridIcon="pi pi-eye" var="sem"  value="#{semestreController.semestres}">
+                            <p:dataViewGridItem  columns="6"  >
+                                <div class="relative img-negra bg-black" >
+                                    <div class="w-full h-full">
+                                        <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
+                                    </div>
+                                    <div class="contenido">
+                                        <p>Semestre <br></br>#{sem.denominacion}</p>
+                                    </div>
+                                    <h:commandButton   class="btn" value="Abrir" action="#{seccionController.seleccionarSemestre(sem)}" />
+                                </div>
+                            </p:dataViewGridItem>
+
+                        </p:dataView>
+                        <div class="mt-4">
+                            <div class="relative pb-2 mb-2">
+                                <h3 class="text-2xl ">Secciones</h3>
+                                <small class="block mb-4 text-gray-600">Establece una cantidad de semestres</small>  
+                                <div class="espaceador"></div>
+                            </div>
+                            <div class="form">
+                                <p:selectOneRadio id="console" value="#{seccionController.seccion.denominacion}">
+                                    <f:selectItem itemLabel="1" itemValue="1"/>
+                                    <f:selectItem itemLabel="2" itemValue="2"/>
+                                    <f:selectItem itemLabel="3" itemValue="3"/>
+                                    <f:selectItem itemLabel="4" itemValue="4"/>
+                                    <f:selectItem itemLabel="5" itemValue="5"/>
+                                    <f:selectItem itemLabel="6" itemValue="6"/>
+                                </p:selectOneRadio>
+                            </div>
                         </div>
 
-                    </p:dataGrid>>
+                        <div class="btns-container justify-content-end">
+                            <div class="btn-c">
+                                <label>Agregar</label>
+                                <h:commandButton class="btn" value="agregar" action="#{seccionController.registrar()}" />
+                            </div>
+                        </div>
 
-
-
-
-                    <span class="aviso">Selecciona el numero de seccioens</span>
-
-
-
-
-                    <div class="tanone" style="justify-content: flex-start; column-gap: 1rem">
-                        Seccion<br></br>
-                        <p:spinner min="1" max="10" value="#{seccionController.seccion.denominacion}" />
-                        <h:commandButton class="boton" value="agregar" action="#{seccionController.registrar()}" />
-                    </div>
-
-
-
-                    <div class="csecciones">
-                        <p:dataTable class="tabla-reporte" rows="10" paginator="true" var="sems" value="#{seccionController.semestres}">
-                            <p:column headerText="Semestre" width="10%">
-                                #{sems.denominacion}
-                            </p:column>
-                            <p:column headerText="Secciones" width="90%">
-                                <p:dataGrid columns="6" var="sec" value="#{sems.secciones}">
-                                    <p:panel>
-                                        <h:commandButton value="#{sec.denominacion}" />
-                                        <h:commandButton value="x" action="#{seccionController.eliminar(sec)}" />
-                                    </p:panel>
+                        <div class="relative pb-2 mb-2">
+                            <h3 class="text-2xl ">Secciones Creadas</h3>
+                            <small class="block mb-4 text-gray-600">Puedes ver y eliminar secciones por cada semestre</small>  
+                            <div class="espaceador"></div>
+                        </div>
+                        <p:tabView scrollable="true" var="sems" value="#{seccionController.semestres}">
+                            <p:tab title="Semestre #{sems.denominacion}">
+                                <p:dataGrid var="sec" value="#{sems.secciones}">
+                                    <div class="card flex align-items-center justify-content-between relative overflow-hidden">
+                                        <div class="absolute top-0 left-0 img-negra" style="object-fit: cover">
+                                            <h:graphicImage class="img" style="object-fit: contain" value="/resources/img/imgsemestres.jpg"/> 
+                                        </div>
+                                        <p class="text-white z-5">Seccion #{sec.denominacion}</p>
+                                        <div class="btn-normal text-white" >
+                                            <i class="uil-trash-alt"></i>
+                                            <label>Eliminar</label>
+                                            <h:commandButton value="x" class="btn" action="#{seccionController.eliminar(sec)}" />
+                                        </div>
+                                    </div>
                                 </p:dataGrid>  
-                                
-                            </p:column>
-                        </p:dataTable>                           
+
+                            </p:tab>
+                        </p:tabView>                          
+
                     </div>
-
-
                 </p:panel>    
             </div>
         </section>

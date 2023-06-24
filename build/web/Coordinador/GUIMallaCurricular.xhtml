@@ -7,53 +7,60 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <p:dataGrid columns="4" var="sem" value="#{asignaturaController.semestres}">
-            <p:panel header="#{sem.denominacion}">                
-                <p:dataTable class="tabla-reporte" var="secci" value="#{sem.secciones}">
-                    <p:column>
-                        #{secci.denominacion}
-                    </p:column>
-                    <p:column width="90%">
-                        <p:dataTable style="font-size: 7pt" var="asig" value="#{secci.asignaturas}">
-                            <p:column headerText="Asignatura" width="70%">
-                                <div class="contiasig">
-                                    <div class="copc"><h:commandButton value="C" action="#{competenciasController.consultarCompetenciasAsignatura(asig)}"/></div>
-                                    <div class="copt"><h:commandButton value="T" action="#{tutoriasController.consultarTutoriasXAsignatura(asig)}"/></div>
-                                    <div class="casig"> #{asig.nombre}</div>
-                                </div>                               
-                            </p:column>
-                            <p:column headerText="Creditos" width="10%">
-                                #{asig.creditos}
-                            </p:column>
-                            <p:column headerText="Componente" width="20%"> 
-                                #{asig.area.nombre}
-                            </p:column>
-                        </p:dataTable>
-                    </p:column>
-                </p:dataTable> 
-            </p:panel>
-        </p:dataGrid>
+        <div >
+            <div class="relative pb-2 mb-2">
+                <h3 class="text-lg ">Malla Curricular</h3>
+                <small class="block mb-4 text-gray-600">Una malla curricular es una estructura o plan de estudios que organiza y define las asignaturas requeridas para completar un programa académico específico.</small>  
+                <div class="espaceador"></div>
+            </div>   
+            <p:accordionPanel  var="sem" value="#{asignaturaController.semestres}">
+                <p:tab class="overflow-x-hidden" title="Semestre #{sem.denominacion}">                
+                    <p:tabView  var="secci" value="#{sem.secciones}">
+                        <p:tab title="Seccion #{secci.denominacion}">
+                            <p:repeat var="asig" value="#{secci.asignaturas}">
+                                <div class="p-4 flex justify-content-between card mb-1 responsive-flex">
+                                    <div>
+                                        <div class="mb-2">
+                                            <h4>Asignatura</h4>
+                                            <p>#{asig.nombre}</p>
+                                        </div>
+                                        <div class="mb-1">
+                                            <h4><i class="fas fa-credit-card mr-1"></i>créditos : #{asig.creditos}</h4> 
+                                        </div>
+
+                                        <div >
+                                            <small>#{asig.area.nombre}</small>
+                                        </div>
+
+                                    </div>
+                                    <div class="flex flex-column gap-2">
+                                        <div class="btn-c ">
+                                            <i class="ri-search-line"></i>
+                                            <label>Competencias</label>
+                                            <h:commandButton class="btn" action="#{competenciasController.consultarCompetenciasAsignatura(asig)}"/>
+                                        </div>
+                                        <div class="btn-p ">
+                                            <i class="ri-search-line"></i>
+                                            <label>Tutorias</label>
+                                            <h:commandButton class="btn" action="#{tutoriasController.consultarTutoriasXAsignatura(asig)}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p:repeat>
+                        </p:tab>
+
+                    </p:tabView>
+                </p:tab>
+            </p:accordionPanel>
+        </div>
+
 
     </h:body>  
 
     <style>
-        .contiasig{  display: grid;
-                     grid-template-columns: 10% 90%;
-                     grid-template-rows: 30px 30px;
-                     grid-auto-columns: 1fr;
-                     gap: 0px 0px;
-                     grid-auto-flow: row;
-                     grid-template-areas:
-                         "copc casig"
-                         "copt casig";
-        }
 
-        .copc { grid-area: copc; }
-
-        .copt { grid-area: copt; }
-
-        .casig { grid-area: casig; }
 
     </style>
+
 </html>
 

@@ -8,8 +8,11 @@
     </h:head>
     <h:body>
         <section class="contenido-contenedor">
-            <div class="border contenedor top">
-                <h1 class="tittle">Resultados de Aprendizaje</h1>
+            <div class=" contenedor top">
+                <div class="relative pb-4 mb-2">
+                    <h3 class="text-lg ">Resultados de Aprendizaje</h3>
+                    <div class="espaceador"></div>
+                </div>   
                 <p:tabView activeIndex="#{coordinadorController.activeIRes}">
                     <p:tab title="Programa">
                         <p:dataTable class="tabla-reporte" var="prog" value="#{programaController.programas}">
@@ -20,47 +23,66 @@
                                 #{prog.nombreCompleto}
                             </p:column>
                             <p:column headerText="Seleccionar">
-                                <div class="Acciones">
-                                    <div class="accion">
-                                        <i class="fa fa-hand-pointer" style="color: #005CB9"></i>
-                                        <h:commandButton class="icono" value="+" action="#{coordinadorController.seleccionarProgramaparaResultados(prog)}" />
-                                    </div>
+                                <div class="btn-normal">
+                                    <i class="fa fa-hand-pointer" ></i>
+                                    <h:commandButton class="btn" value="+" action="#{coordinadorController.seleccionarProgramaparaResultados(prog)}" />
                                 </div>
                             </p:column>
                         </p:dataTable>
                     </p:tab>                
                     <p:tab title="Semestre - Seccion">
-                        <p:dataGrid    columns="5" var="sem"  value="#{semestreController.semestres}">
-                            <div class="card img-negra" >
-                                <figure >
-                                    <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
-                                </figure>
-                                <div class="contenido">
-                                    <p>Semestre <br></br>#{sem.denominacion}</p>
-
-                                </div>
-                                <h:commandButton   class="btn" value="Abrir" action="#{coordinadorController.seleccionarSemestrepTResultados(sem)}" />
+                        <div class="progress-bar mb-2">
+                            <div class="progress-tittle">
+                                <i class="ri-focus-3-line"></i>
+                                Seleccionado :
                             </div>
+                            <i class="ri-bookmark-fill"></i>
+                            <div>
+                                #{asignaturaController.programa.nombre}
+                            </div>
+                        </div>
+                        <div class="relative pb-4 mb-2">
+                            <h3 class="text-lg ">Semestres</h3>
+                            <div class="espaceador"></div>
 
-                        </p:dataGrid> 
-                        <p:panelGrid columns="2">
-                            <p:dataGrid var="sec" value="#{coordinadorController.secciones}">
-                                <div class="card img-negra">
-                                    <figure >
-                                        <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
-                                    </figure>
-                                    <div class="contenido-grid">
-                                        <h2>#{sec.programa.nombre}</h2>
-                                        <span>Semestre #{sec.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
-                                        <h3>Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
+                        </div>
 
+                        <p:dataView  multiViewState="true" gridIcon="pi pi-eye" var="sem"  value="#{semestreController.semestres}">
+                            <p:dataViewGridItem  columns="6"  >
+                                <div class="relative img-negra bg-black" >
+                                    <div class="w-full h-full">
+                                        <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
                                     </div>
-                                    <h:commandButton   class="btn" value="Abrir" action="#{coordinadorController.obtenerResultadosSeccion(sec)}" />
-                                </div> 
-                            </p:dataGrid>                          
+                                    <div class="contenido">
+                                        <p>Semestre <br></br>#{sem.denominacion}</p>
+                                    </div>
+                                    <h:commandButton   class="btn" value="Abrir" action="#{coordinadorController.seleccionarSemestrepTResultados(sem)}" />
+                                </div>
+                            </p:dataViewGridItem>
 
-                        </p:panelGrid>
+                        </p:dataView>
+                        <div class="mt-4">
+                            <div class="relative pb-4 mb-2">
+                                <h3 class="text-lg ">Secciones</h3>
+                                <div class="espaceador"></div>
+                            </div>   
+                            <p:dataView  multiViewState="true" gridIcon="pi pi-eye" listIcon="pi pi-bars" var="sec" value="#{coordinadorController.secciones}">
+                                <p:dataViewGridItem  columns="3"  >
+                                    <div class="relative img-negra bg-black">
+                                        <div class="w-full h-full">
+                                            <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
+                                        </div>
+                                        <div class="contenido-grid">
+                                            <h2 class="text-white">#{sec.programa.nombre}</h2>
+                                            <span>Semestre #{sec.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
+                                            <h3 class="text-white">Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
+                                        </div>
+                                        <h:commandButton   class="btn" value="Abrir" action="#{coordinadorController.obtenerResultadosSeccion(sec)}" />
+                                    </div> 
+                                </p:dataViewGridItem>
 
+                            </p:dataView>
+                        </div> 
                     </p:tab>
                     <p:tab rendered="#{not empty matriculaController.seccion.semestre}" title="Estudiantes de la Seccion:#{matriculaController.seccion.getSeccion()} ">
 
@@ -110,12 +132,12 @@
                                         Nota General:
                                         <p:inputNumber  disabled="true" value="#{evaluacionController.notaFIntegrante(matriculaController.integrante)}" size="4"  minValue="0" maxValue="5" />
 
-                                        
+
                                     </div>
                                     <div class="cvol">
                                         <h:commandButton value="volver" action="#{coordinadorController.volverEstudiantesSeccion()}" />
 
-                                        
+
                                     </div>
                                 </div>
 

@@ -1,56 +1,70 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+<xhtml xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-       
-            <div class="contcompasig">
-                <div class="cunid">
-                    
-                    <p:accordionPanel value="#{competenciasController.unidades}" var="unidad">
-                        <p:tab title="#{unidad.descripcion}">
-                            <p:dataTable var="comp" value="#{unidad.competencias}" >
-                                <p:column>
-                                    #{comp.tipo.descripcion}
-                                </p:column>
-                                  <p:column>
-                                    #{comp.evidencia}
-                                </p:column>
-                                  <p:column>
-                                    #{comp.estrategia}
-                                </p:column>
-                                 <p:column>
-                                    #{comp.bibliografia}
-                                </p:column>
-                            </p:dataTable>  
-                        </p:tab>
-                    </p:accordionPanel>
-                       
-                    
-                    
-                </div>
-                <div class="cinfasig">#{competenciasController.asignatura.toString()}</div>
-            </div>  
+        <div class="mb-4 overflow-hidden">
 
+
+            <div class="flex justify-content-between align-items-center">
+                <div class="progress-bar text-xs">
+                    <div class="progress-tittle"><i class="ri-hashtag"></i>#{competenciasController.asignatura.codigo}</div>
+                    >
+                    <i class="ri-bookmark-fill"></i><div>#{competenciasController.asignatura.nombre}</div>
+                    /
+                    <div>#{competenciasController.asignatura.area.nombre}</div>
+                </div>
+                <div class="flex gap-2 align-items-center text-xs">                
+                    <i class="ri-calendar-fill"></i><div>Semestre #{competenciasController.asignatura.seccion.semestre.denominacion}</div>
+                    <div>Seccion #{competenciasController.asignatura.seccion.denominacion}</div>
+                </div>
+            </div>
+
+            <div class="flex gap-2 text-xs align-items-center">
+                <div class="w-2rem flex"><p:graphicImage class="img" value="/Imagenes/Perfiles/#{competenciasController.asignatura.profesor.imagenPerfil()}"/></div>
+                <h4>#{competenciasController.asignatura.profesor.toString()}</h4>
+            </div>
+
+
+            <div class="mt-4">
+
+                <p:tabView scrollable="true" value="#{competenciasController.unidades}" var="unidad">
+                    <p:tab title="#{unidad.descripcion}">
+                        <p:repeat  var="comp" value="#{unidad.competencias}">
+                            <h5>Descripcion</h5>
+                            <p>#{comp.tipo.descripcion}</p>
+
+                            <p:divider />
+                            <h5>Evidencia</h5>
+                            <p>#{comp.evidencia}</p>
+
+                            <p:divider />
+                            <h5>Estrategia</h5>
+                            <p> #{comp.estrategia}</p>
+
+                            <p:divider />
+                            <h5>Bibliografia</h5>
+                            <p>   #{comp.bibliografia}</p>
+                        </p:repeat>
+
+                    </p:tab>
+                </p:tabView>
+
+
+
+            </div>
+
+
+        </div>  
     </h:body>
 
     <style>
-        .contcompasig { display: grid; 
-                        grid-auto-columns: 1fr; 
-                        grid-template-columns: 300px 300px 300px; 
-                        grid-template-rows: 106px 1fr; 
-                        gap: 0px 0px; 
-                        grid-template-areas: 
-                            "cinfasig cinfasig cinfasig"
-                            "cunid cunid cunid"; 
-        }
-        .cunid { grid-area: cunid; }
-        .cinfasig { grid-area: cinfasig; }
+
 
     </style>
-</html>
+</xhtml>
 

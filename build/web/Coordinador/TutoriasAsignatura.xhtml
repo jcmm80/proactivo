@@ -1,67 +1,77 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+<xhtml xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-
-        <div class="conttutpasig">
-            <div class="cunid">
-                <p:dataTable var="tut" value="#{tutoriasController.tutoriasAsignatura}" >
-                    <p:column>
-                        #{tut.proyecto.codigo}
-                    </p:column>
-                    <p:column width="340">
-                        <p:dataTable style="font-size: 10pt" var="integ" value="#{tut.proyecto.integrantes}">
-                            <p:column width="40" headerText="">
-                                <p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" style="width: 40px;height: 40px "  />
-                            </p:column>
-                            <p:column width="300" headerText="Integrantes">
-                                <h:outputText  value="#{integ.matricula.estudiante.toString()}" /> 
-                            </p:column>  
-                        </p:dataTable>  
-                    </p:column>
-                    <p:column>
-                        #{tut.fechaSolicitud}
-                    </p:column>
-                    <p:column>
-                        #{tut.fechaEjecucion}
-                    </p:column>
-                    <p:column>
-                        #{tut.recomendaciones}
-                    </p:column>
-                    <p:column>
-                        #{tut.recomendaciones}
-                    </p:column>
-                    <p:column>
-                        #{tut.estado}
-                    </p:column>
-                </p:dataTable>  
+        <div class="mb-4 ">
 
 
-
+            <div class="flex justify-content-between align-items-center">
+                <div class="progress-bar text-xs">
+                    <div class="progress-tittle"><i class="ri-hashtag"></i>#{tutoriasController.asignatura.codigo}</div>
+                    >
+                    <i class="ri-bookmark-fill"></i><div>#{tutoriasController.asignatura.nombre}</div>
+                    /
+                    <div>#{tutoriasController.asignatura.area.nombre}</div>
+                </div>
+                <div class="flex gap-2 align-items-center text-xs">                
+                    <i class="ri-calendar-fill"></i><div>Semestre #{tutoriasController.asignatura.seccion.semestre.denominacion}</div>
+                    <div>Seccion #{tutoriasController.asignatura.seccion.denominacion}</div>
+                </div>
             </div>
-            <div class="cinfasig">#{tutoriasController.asignatura.toString()}</div>
-        </div>  
 
+            <div class="flex gap-2 text-xs align-items-center">
+                <div class="w-2rem flex"><p:graphicImage class="img" value="/Imagenes/Perfiles/#{tutoriasController.asignatura.profesor.imagenPerfil()}"/></div>
+                <h4>#{tutoriasController.asignatura.profesor.toString()}</h4>
+            </div>
+
+            <div class="relative pb-2 mt-3">
+                <h3 class="text-lg ">Tutorias</h3>
+                <small class="block mb-4 text-gray-600">La tutoría es un proceso en el cual participan activamente los orientadores y estudiantes en función de verificar resultados, resolver dudas y proponer alternativas que permitan abordar el desarrollo del proyecto asegurando el éxito del mismo.
+                </small>  
+                <div class="espaceador"></div>
+            </div>    
+            <p:accordionPanel value="#{tutoriasController.tutoriasAsignatura}" var="tut">
+                <p:tab title="#{tut.proyecto.titulo} - #{tut.proyecto.codigo}">
+                    <div class="flex justify-content-between align-items-center ">
+                        <div class="progress-bar text-xs">
+                            <div class="progress-tittle"><i class="ri-calendar-event-line"></i>Solicitud</div>
+                            >
+                            <div>#{tut.fechaSolicitud}</div>
+                            |
+                            <div>Ejecucion</div>
+                            >
+                            <div>#{tut.fechaEjecucion}</div>
+                        </div>
+                        <div class="flex gap-2 align-items-center text-xs" style="color: #14FF00">                
+                            <i class="ri-checkbox-fill"></i>#{tut.estado}
+                        </div>
+                    </div>
+
+
+                    <p:tabView style="min-height: 150px; margin-bottom: 3rem; overflow: hidden">
+                        <p:tab title="Integrantes">
+                            <p:repeat var="integ" value="#{tut.proyecto.integrantes}">
+                                <div class="flex align-items-center gap-2">
+                                    <div class="w-2rem border-circle overflow-hidden flex">
+                                        <p:graphicImage class="img" value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" />
+                                    </div>
+                                    <h4>#{integ.matricula.estudiante.toString()}</h4>
+                                </div>
+
+                            </p:repeat> 
+                        </p:tab>
+                        <p:tab title="Recomendaciones">#{tut.recomendaciones}</p:tab>
+                        <p:tab title="Compromiso">#{tut.compromisos}</p:tab>
+                    </p:tabView>
+                </p:tab>
+            </p:accordionPanel>
+        </div>    
     </h:body>
 
-    <style>
-        .conttutpasig { display: grid; 
-                        grid-auto-columns: 1fr; 
-                        grid-template-columns: 300px 300px 300px; 
-                        grid-template-rows: 106px 1fr; 
-                        gap: 0px 0px; 
-                        grid-template-areas: 
-                            "cinfasig cinfasig cinfasig"
-                            "cunid cunid cunid"; 
-        }
-        .cunid { grid-area: cunid; }
-        .cinfasig { grid-area: cinfasig; }
-
-    </style>
-</html>
+</xhtml>
 

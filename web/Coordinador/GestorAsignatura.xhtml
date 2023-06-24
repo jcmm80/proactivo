@@ -58,7 +58,7 @@
                             </div>
                         </div>
 
-                        <p:dataView  multiViewState="true" gridIcon="pi pi-th-large" listIcon="pi pi-bars"  var="sem"  value="#{semestreController.semestres}">
+                        <p:dataView  multiViewState="true" gridIcon="pi pi-eye" var="sem"  value="#{semestreController.semestres}">
                             <p:dataViewGridItem  columns="4"  >
                                 <div class="relative img-negra bg-black" >
                                     <div class="w-full h-full">
@@ -70,17 +70,7 @@
                                     <h:commandButton   class="btn" value="Abrir" action="#{asignaturaController.seleccionarSemestre(sem,1)}" />
                                 </div>
                             </p:dataViewGridItem>
-                            <p:dataViewListItem >
-                                <div class="relative img-negra bg-black" >
-                                    <div class="w-full h-full">
-                                        <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
-                                    </div>
-                                    <div class="contenido">
-                                        <p>Semestre <br></br>#{sem.denominacion}</p>
-                                    </div>
-                                    <h:commandButton   class="btn" value="Abrir" action="#{asignaturaController.seleccionarSemestre(sem,1)}" />
-                                </div>
-                            </p:dataViewListItem>
+                            
                         </p:dataView>
                         <div class="mt-4">
                             <div class="relative pb-2 mb-2">
@@ -88,7 +78,7 @@
                                 <small class="block mb-4 text-gray-600">una sección o curso se refiere a un grupo específico de estudiantes que cursan unas asignaturas alrededor de un núcleo problémico.</small>  
                                 <div class="espaceador"></div>
                             </div>   
-                            <p:dataView  multiViewState="true" gridIcon="pi pi-th-large" listIcon="pi pi-bars" var="sec" value="#{asignaturaController.secciones}">
+                            <p:dataView  multiViewState="true" gridIcon="pi pi-eye" listIcon="pi pi-bars" var="sec" value="#{asignaturaController.secciones}">
                                 <p:dataViewGridItem  columns="3"  >
                                     <div class="relative img-negra bg-black">
                                         <div class="w-full h-full">
@@ -102,19 +92,7 @@
                                         <h:commandButton   class="btn" value="Abrir" action="#{asignaturaController.agregarSeccion(sec)}" />
                                     </div> 
                                 </p:dataViewGridItem>
-                                <p:dataViewListItem >
-                                    <div class="relative img-negra bg-black">
-                                        <div class="w-full h-full">
-                                            <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
-                                        </div>
-                                        <div class="contenido-grid">
-                                            <h2 class="text-white">#{sec.programa.nombre}</h2>
-                                            <span>Semestre #{sec.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
-                                            <h3 class="text-white">Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
-                                        </div>
-                                        <h:commandButton   class="btn" value="Abrir" action="#{asignaturaController.agregarSeccion(sec)}" />
-                                    </div> 
-                                </p:dataViewListItem>
+                                
                             </p:dataView>
                         </div>
 
