@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<xhtml xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
@@ -17,7 +17,20 @@
 
 
 
-                <p:tabView>
+                <p:tabView activeIndex="#{liderPAController.activeIndex}">
+                    <p:tab title="Lideres Actuales">
+                        <p:dataTable var="lid" value="#{profesorController.lideresXseccionPrograma}">
+                            <p:column headerText="Profesor">
+                                #{lid.profesor.toString()}
+                            </p:column>
+                            <p:column headerText="Seccion">
+                                #{lid.seccion.seccion}
+                            </p:column>
+                             <p:column headerText="Opciones">
+                                 <h:commandButton value="x" action="#{liderPAController.eliminarLider(lid)}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
                     <p:tab id="test" title="Profesores">
 
                         <p:dataTable class="tabla-reporte" var="prof" value="#{profesorController.profesores}" >
@@ -43,61 +56,7 @@
                             </p:column>
                         </p:dataTable>
                     </p:tab>
-                    <p:tab id="tpro" title="Programa">
 
-                        <div class="plider-seleccionado">
-                            <span>Seleccionado:</span>
-                            <span>#{liderPAController.liderPA.profesor.toString()}</span>
-                        </div>
-                        <p:dataTable var="prog" class="tabla-reporte" value="#{programaController.programas}">
-
-                            <p:column headerText="Codigo">
-                                #{prog.codigo}
-                            </p:column>
-                            <p:column headerText="Nombre">
-                                #{prog.nombreCompleto}
-                            </p:column>
-                            <p:column headerText="Seleccionar">
-                                <div class="Acciones">
-                                    <div class="accion">
-                                        <i class="fa fa-hand-pointer" style="color: #005CB9"></i>
-                                        <h:commandButton value="." class="icono" action="#{liderPAController.agregarPrograma(prog)}" />
-                                    </div>
-                                </div>
-                            </p:column>
-                        </p:dataTable>
-
-                    </p:tab>
-                    <p:tab id="tper" title="Periodo">
-
-                        <div class="plider-seleccionado">
-                            <span>Seleccionado:</span>
-                            <span>#{liderPAController.liderPA.profesor.toString()}</span>
-                            <span>#{liderPAController.liderPA.seccion.programa.toString()}</span>
-                        </div>
-
-                        <p:dataTable class="tabla-reporte" var="per" value="#{periodoController.periodos}" >
-
-                            <p:column headerText="Fecha Inicio">
-                                #{per.fechaInicial}
-                            </p:column>
-                            <p:column headerText="fecha Fin">
-                                #{per.fechaFinal}
-                            </p:column>
-                            <p:column headerText="Nombre">
-                                #{per.anio}-#{per.numero}
-                            </p:column>
-                            <p:column headerText="Seleccionar">
-                                <div class="Acciones">
-                                    <div class="accion">
-                                        <i class="fa fa-hand-pointer" style="color: #005CB9"></i>
-                                        <h:commandButton value="+" class="icono" action="#{liderPAController.agregarPeriodo(per)}" />
-                                    </div>
-                                </div>
-
-                            </p:column>
-                        </p:dataTable> 
-                    </p:tab>
 
                     <p:tab id="tmat" title="Vincular">
                         <div class="plider-seleccionado">
@@ -105,10 +64,11 @@
                             <span>#{liderPAController.liderPA.profesor.toString()}</span>
                             <span>#{liderPAController.liderPA.seccion.programa.nombreCompleto}</span>
                             <span>#{liderPAController.periodo.anio}-#{liderPAController.periodo.numero}</span>
+                            <span>Seccion: #{liderPAController.liderPA.seccion.seccion}</span>
                         </div>
 
                         <p:dataGrid columns="4" var="sec"  value="#{liderPAController.secciones}">
-                            <div>
+                            <div class="card img-negra">
                                 <figure >
                                     <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
                                 </figure>
@@ -118,7 +78,7 @@
                                     <span >Seccion <span style="font-weight: bold">#{sec.denominacion}</span></span>
 
                                 </div>
-                                <h:commandButton   class="" value="Abrir" action="#{liderPAController.agregarSeccion(sec)}" />
+                                <h:commandButton   class="btn" value="Abrir" action="#{liderPAController.agregarSeccion(sec)}" />
                             </div>
 
                         </p:dataGrid>
@@ -129,6 +89,7 @@
 
 
                     </p:tab>
+
                 </p:tabView>
             </p:card>
         </div>
@@ -136,4 +97,4 @@
     <style>
 
     </style>
-</html>
+</xhtml>

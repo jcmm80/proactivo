@@ -53,6 +53,9 @@ public class ProfesorController implements Serializable {
     //Colecciones
     private List<Profesor> profesores = new LinkedList();
     private List<LiderPA> semestresLider = new LinkedList();//semestres en la cual un profesor es lider
+    private List<LiderPA> lideresXseccion = new LinkedList();//lideres con sus secciones en el periodo
+    private List<LiderPA> lideresXseccionPrograma=new LinkedList();//lideres del programa por secciones
+    
     private List<Proyecto_Aula> proyectosSemestre = new LinkedList();
     private List<Seccion> secciones = new LinkedList();//para consultar resultados cuando es coordinador de proyectos
 
@@ -82,7 +85,6 @@ public class ProfesorController implements Serializable {
     private ProgramaController progcon;
     @ManagedProperty("#{avanceController}")
     private AvanceController avancon;
-
     @ManagedProperty("#{semestreController}")
     private SemestreController semcon;
     @ManagedProperty("#{reportesController}")
@@ -110,8 +112,6 @@ public class ProfesorController implements Serializable {
      */
     public ProfesorController() {
     }
-    
-    
 
     public void seleccionarSemestrepTResultados(Semestre s) {
 
@@ -158,9 +158,6 @@ public class ProfesorController implements Serializable {
         mpanelTutorias = true;
     }
 
-    
-   
-    
     public void agregarAsignaturaCompetencia(Asignatura a) {
         getCompcon().setUnidad(new UnidadCompetencia());
         getCompcon().setAsignatura(a);
@@ -175,16 +172,15 @@ public class ProfesorController implements Serializable {
         mpanelTutorias = false;
     }
 
-    public void crearTutoria(){        
-        mpanelPCTutoria=true;
+    public void crearTutoria() {
+        mpanelPCTutoria = true;
         paginaTutoria = "Tutorias/CrearTutoria.xhtml";
     }
-    
-    public void volverTutorias(){
-        mpanelPCTutoria=false;
+
+    public void volverTutorias() {
+        mpanelPCTutoria = false;
     }
-    
-    
+
     public void pprogramarTutoria(Tutoria t) {
         mpanelPTutoria = true;
         tutcon.setTutoria(t);
@@ -200,15 +196,14 @@ public class ProfesorController implements Serializable {
 
     public void pcrearTutoria(Proyecto_Aula proyecto) {
         mpanelPTutoria = true;
-        Tutoria tutoria=new Tutoria();
+        Tutoria tutoria = new Tutoria();
         tutoria.setProyecto(proyecto);
         tutoria.setAsignatura(tutcon.getAsignatura());
         tutcon.setTutoria(tutoria);
         tutcon.armarAsistentes();
         paginaTutoria = "Tutorias/RealizarTutoria.xhtml";
     }
-    
-    
+
     public void palmacenarTutoria() {
         tutcon.realizarTutoria();
         tutcon.consultarTutoriasXProfesor(profesor);
@@ -223,7 +218,7 @@ public class ProfesorController implements Serializable {
 
     public void pvolverdeProgramar() {
         mpanelPTutoria = false;
-        mpanelPCTutoria=false;
+        mpanelPCTutoria = false;
     }
 
     public void seleccionarAsignatura(Asignatura a) {
@@ -302,7 +297,7 @@ public class ProfesorController implements Serializable {
         System.out.println("Consultare las tutorias");
         tutcon.consultarTutoriasXProfesor(profesor);
     }
-    
+
     public void consultarTutoriasPeriodo() {
         tutcon.obtenerTutoriasXPeriodo(periodo);
         repcon.setSemestres(semcon.getSemestres());
@@ -334,12 +329,38 @@ public class ProfesorController implements Serializable {
         mostPanelProyectoAula = false;
     }
 
+    
+    public void obtenerLideresXseccionPeriodo(){
+        lideresXseccion=lidpaser.obtenerSeccionesLideradasPeriodo(periodo);
+    }
+    
+    public void obtenerLideresXPrograma(ProgramaAcademico prog){
+        lideresXseccionPrograma=new LinkedList();
+        for(LiderPA lpa:lideresXseccion){
+            if(lpa.getSeccion().getPrograma().getId().equals(prog.getId())){
+                lideresXseccionPrograma.add(lpa);
+            }
+        }
+    }
+    
+    public List<LiderPA> seccionesXLider(Profesor pro){
+        List<LiderPA> lideres=new LinkedList();
+        for(LiderPA lpa:lideresXseccion){
+            if(lpa.getProfesor().getId().equals(pro.getId())){
+                lideres.add(lpa);
+            }
+        }return lideres;
+    }
+    
+    
     public void esLiderPA() {
         semestresLider = null;
-        semestresLider = lidpaser.obtenersemestresLiderPAXProfesor(profesor, periodo);
+        semestresLider=seccionesXLider(profesor);
+//        semestresLider = lidpaser.obtenersemestresLiderPAXProfesor(profesor, periodo);
         if (semestresLider.size() > 0) {
             mostPanelSemestres = true;
             System.out.println("El profesor el lider");
+          
 //            proacon.consultarProyectosXPeriodo(periodo);
 //            proacon.obtenerIntegrantesXProyectos(periodo);
 //            proacon.consultarProyectosXProfesorLider(profesor);
@@ -535,10 +556,10 @@ public class ProfesorController implements Serializable {
     }
 
     public void gFases() {
-       
+
         paginaActualP = "/Profesor/GestorFases.xhtml";
     }
-    
+
     public void gEvaluaciones() {
         mostPanelEvaluaciones = false;
         evacon.setIndTavEvaluacion(0);
@@ -1093,5 +1114,34 @@ public class ProfesorController implements Serializable {
     public void setMpanelPCTutoria(boolean mpanelPCTutoria) {
         this.mpanelPCTutoria = mpanelPCTutoria;
     }
+
+    /**
+     * @return the lideresXseccion
+     */
+    public List<LiderPA> getLideresXseccion() {
+        return lideresXseccion;
+    }
+
+    /**
+     * @param lideresXseccion the lideresXseccion to set
+     */
+    public void setLideresXseccion(List<LiderPA> lideresXseccion) {
+        this.lideresXseccion = lideresXseccion;
+    }
+
+    /**
+     * @return the lideresXseccionPrograma
+     */
+    public List<LiderPA> getLideresXseccionPrograma() {
+        return lideresXseccionPrograma;
+    }
+
+    /**
+     * @param lideresXseccionPrograma the lideresXseccionPrograma to set
+     */
+    public void setLideresXseccionPrograma(List<LiderPA> lideresXseccionPrograma) {
+        this.lideresXseccionPrograma = lideresXseccionPrograma;
+    }
+
 
 }

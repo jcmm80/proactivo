@@ -34,6 +34,8 @@ public class AsignaturaController implements Serializable {
     private List<Semestre> semestres = new LinkedList();
     private List<Asignatura> asignaturas = new LinkedList();
     private List<Asignatura> asignaturasAA = new LinkedList();
+    private List<Asignatura> asignaturasp;
+    ;
     private List<Area> areas = new LinkedList();
     private List<Seccion> secciones = new LinkedList();
 
@@ -56,18 +58,30 @@ public class AsignaturaController implements Serializable {
     private int activeIndex = 0;
     private int activeIndexAA = 0;
     private boolean mostPprofesores = false;
-    private String visorMallaCurricular = "GUIMallaCurricular.xhtml";
+//    private String visorMallaCurricular = "GUIMallaCurricular.xhtml";
 
     public AsignaturaController() {
     }
 
     public void agregarPrograma(ProgramaAcademico pa, int cu) {
         setPrograma(pa);
+        asignaturasDelPrograma(pa);
+        semestres = generarMallaAcademica();
         if (cu == 1) {
             setActiveIndex(1);
         }
         if (cu == 2) {
             activeIndexAA = 1;
+        }
+    }
+
+    public void asignaturasDelPrograma(ProgramaAcademico p) {
+        asignaturasp = new LinkedList();
+        for (Asignatura a : asignaturas) {
+            if (a.getSeccion().getPrograma().getId().equals(p.getId())) {
+                System.out.println("" + a.getNombre() + " Es del programa " + p.getNombre());
+                asignaturasp.add(a);
+            }
         }
     }
 
@@ -133,7 +147,8 @@ public class AsignaturaController implements Serializable {
         setSemestre(s);
         secciones = new LinkedList();
         for (Seccion sec : secccon.getSecciones()) {
-            if (sec.getSemestre().getId().equals(s.getId())) {
+            if (sec.getSemestre().getId().equals(s.getId()) && sec.getPrograma().getId().equals(programa.getId())) {
+                System.out.println("" + sec.getSeccion());
                 secciones.add(sec);
             }
         }
@@ -170,19 +185,35 @@ public class AsignaturaController implements Serializable {
         mostPprofesores = false;
     }
 
+    public boolean existeNombreAsignatura(Asignatura a) {
+        boolean existe = false;
+        for (Asignatura asi : asignaturas) {
+            if (asi.getNombre().equals(a.getNombre()) && asi.getSeccion().getId().equals(a.getSeccion().getId())) {
+                existe = true;
+                break;
+            }
+        }
+        return existe;
+    }
+
     public void reistrarAsignatura() {
         try {
             if (asignatura.getId() != null) {
                 asignatura = asigser.modificar(asignatura);
             } else {
-                for (Seccion s : secciones) {
-                    asignatura.setSeccion(s);
-                    asignatura.setEstado("Activa");
-                    if (asignatura.validarAsignatura()) {
-                        Asignatura asign = asignatura;
-                        asigser.modificar(asign);
-                        asign = new Asignatura();
+//               
+                if (secciones.size() > 0) {
+                    for (Seccion s : secciones) {
+                        asignatura.setSeccion(s);
+                        asignatura.setEstado("Activa");
+                        if (asignatura.validarAsignatura()) {
+                            Asignatura asign = asignatura;
+                            asigser.modificar(asign);
+                            asign = new Asignatura();
+                        }
                     }
+                }else{
+                    FacesUtil.addErrorMessage("No se puede almacenar asignatura: No hay secciones registradas para el semestre seleccionado.");
                 }
                 if (asignatura.getNombre() != null) {
                     consultarAsignaturas(asignatura.getSeccion().getPeriodo());
@@ -198,48 +229,30 @@ public class AsignaturaController implements Serializable {
 
     public List<Semestre> generarMallaAcademica() {
         List<Seccion> secciones = new LinkedList();
-        List<Semestre> semestres = new LinkedList();
-        for (Asignatura asi : asignaturas) {
-            if (!existeSeccion(secciones, asi.getSeccion())) {
-//                System.out.println("Agregue Seccion: "+asi.getSeccion().getDenominacion());
-                secciones.add(asi.getSeccion());
-            }
-            if (!existeSemestre(semestres, asi.getSeccion().getSemestre())) {
-                semestres.add(asi.getSeccion().getSemestre());
-//                System.out.println("Agregue Semestre: "+asi.getSeccion().getSemestre().getDenominacion());
+        List<Semestre> semests = new LinkedList();
+        for (Asignatura asi : asignaturasp) {//fue cambiada por una coleccion de asignaturas del programa
+            if (asi.getSeccion().getPrograma().getId().equals(programa.getId()) && asi.getSeccion().getPeriodo().getId().equals(periodo.getId())) {//validar que la seccion pertenezca al programa
+                if (!existeSeccion(secciones, asi.getSeccion())) {
+                    secciones.add(asi.getSeccion());
+                }
+                if (!existeSemestre(semests, asi.getSeccion().getSemestre())) {
+                    semests.add(asi.getSeccion().getSemestre());
+                }
+                System.out.println("" + asi.toString());
             }
         }
-        System.out.println(secciones.size() + "  " + semestres.size());
-//        for (Asignatura a : asignaturas) {
-//            for (int i = 0; i < secciones.size(); i++) {
-//                if (a.getSeccion().getId().equals(secciones.get(i).getId())) {
-//                    secciones.get(i).getAsignaturas().add(a);
-//                    System.out.println("Agregue asignatura: " + a.getNombre() + " a:  " + secciones.get(i).getDenominacion()+" - "+secciones.get(i).getSemestre().getDenominacion());
-//                }
-//            }
-//        }
+        for (int i = 0; i < semests.size(); i++) {
+            semests.get(i).setSecciones(new LinkedList());
+            for (Seccion s : secciones) {
+                if (s.getSemestre().getId().equals(semests.get(i).getId())) {
+                    semests.get(i).getSecciones().add(s);
+                }
+            }
+        }
 
-//        for(int i=0;i<semestres.size();i++){
-//             for(Seccion s:semestres.get(i).getSecciones()){
-//                 System.out.println(""+s.getSemestre().getDenominacion()+" "+s.getDenominacion());
-//             }
-//         }
-//        
-//        for (Seccion sec : secciones) {
-//            for (int i = 0; i < semestres.size(); i++) {
-//                if (sec.getSemestre().getId().equals(semestres.get(i).getId())) {
-//                    semestres.get(i).getSecciones().add(sec);
-//                    System.out.println("Agregue seccion: " + sec.getDenominacion() + " a " + semestres.get(i).getDenominacion());
-//                }
-////            }
-////        }
-//         System.out.println(secciones.size()+"  "+semestres.size());
-//         for(int i=0;i<semestres.size();i++){
-//             for(Seccion s:semestres.get(i).getSecciones()){
-//                 System.out.println(""+s.getSemestre().getDenominacion()+" "+s.getDenominacion());
-//             }
-//         }
-        return semestres;
+        System.out.println(secciones.size() + "  " + semests.size());
+
+        return semests;
     }
 
     public boolean existeSemestre(List<Semestre> semestres, Semestre s) {
@@ -273,7 +286,7 @@ public class AsignaturaController implements Serializable {
     public void consultarAsignaturas(Periodo p) {
         periodo = p;
         asignaturas = asigser.obtenerAsignaturasXPrograma(p);
-        semestres = generarMallaAcademica();
+//        semestres = generarMallaAcademica();
     }
 
     public void volverprogramas() {
@@ -456,17 +469,30 @@ public class AsignaturaController implements Serializable {
         this.mostPprofesores = mostPprofesores;
     }
 
+//    /**
+//     * @return the visorMallaCurricular
+//     */
+//    public String getVisorMallaCurricular() {
+//        return visorMallaCurricular;
+//    }
+//
+//    /**
+//     * @param visorMallaCurricular the visorMallaCurricular to set
+//     */
+//    public void setVisorMallaCurricular(String visorMallaCurricular) {
+//        this.visorMallaCurricular = visorMallaCurricular;
+//    }
     /**
-     * @return the visorMallaCurricular
+     * @return the asignaturasp
      */
-    public String getVisorMallaCurricular() {
-        return visorMallaCurricular;
+    public List<Asignatura> getAsignaturasp() {
+        return asignaturasp;
     }
 
     /**
-     * @param visorMallaCurricular the visorMallaCurricular to set
+     * @param asignaturasp the asignaturasp to set
      */
-    public void setVisorMallaCurricular(String visorMallaCurricular) {
-        this.visorMallaCurricular = visorMallaCurricular;
+    public void setAsignaturasp(List<Asignatura> asignaturasp) {
+        this.asignaturasp = asignaturasp;
     }
 }

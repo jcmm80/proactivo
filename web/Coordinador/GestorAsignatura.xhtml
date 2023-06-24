@@ -190,7 +190,7 @@
                             </div>
                         </div>
 
-                        <p:dataTable rows="8" paginator="true" scrollable="true" style="font-size: 10pt" var="asig" value="#{asignaturaController.asignaturas}">
+                        <p:dataTable rows="8" paginator="true" scrollable="true" style="font-size: 10pt" var="asig" value="#{asignaturaController.asignaturasp}">
                             <p:column headerText="Codigo">
                                 #{asig.codigo}
                             </p:column>
@@ -224,7 +224,7 @@
 
                     </p:tab>
                     <p:tab  title="Malla Curricular">
-                        <ui:include src="#{asignaturaController.visorMallaCurricular}" />
+                        <ui:include src="GUIMallaCurricular.xhtml" />
                     </p:tab>
                     <p:tab title="Competecnias de Asignatura">
                         <ui:include src="CompetenciasAsignatura.xhtml"/>

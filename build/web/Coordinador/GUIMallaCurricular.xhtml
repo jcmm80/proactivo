@@ -17,7 +17,7 @@
                 <p:tab class="overflow-x-hidden" title="Semestre #{sem.denominacion}">                
                     <p:tabView  var="secci" value="#{sem.secciones}">
                         <p:tab title="Seccion #{secci.denominacion}">
-                            <p:repeat var="asig" value="#{secci.asignaturas}">
+                            <p:repeat var="asig" value="#{secci.asignaturas}" rendered="#{not empty secci.asignaturas}">
                                 <div class="p-4 flex justify-content-between card mb-1 responsive-flex">
                                     <div>
                                         <div class="mb-2">
