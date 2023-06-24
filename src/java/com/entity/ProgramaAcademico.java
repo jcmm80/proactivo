@@ -34,7 +34,7 @@ public class ProgramaAcademico implements Serializable {
     @ManyToOne
     private Coordinador coordinador;
     @OneToOne
-    private Profesor coordinadorPA;    
+    private Profesor coordinadorPA;
     @OneToMany(mappedBy = "programa")
     private List<Fase> fases;
     @OneToMany(mappedBy = "programa")
@@ -52,24 +52,25 @@ public class ProgramaAcademico implements Serializable {
         this.coordinador = coordinador;
         this.coordinadorPA = coordinadorPA;
     }
-    
-     public boolean validar(){
-        boolean valido=true;
-        if(this.nombre.equals("")||this.nombreCompleto.equals("")|| this.getCodigo().equals("")){
-            valido=false;
+
+    public boolean validar() {
+        boolean valido = true;
+        if (this.nombre.equals("") || this.nombreCompleto.equals("") || this.getCodigo().equals("")) {
+            valido = false;
             FacesUtil.addErrorMessage("Estos campos son requeridos: (Nombre-NombreCompleto-Codigo");
         }
-        try{
-        if(this.getCoordinador().getIdentificacion().equals("")){
-            valido=false;
+        try {
+            if (this.getCoordinador().getId() < 0) {
+                valido = false;
+                FacesUtil.addErrorMessage("Debes Agregar un coordinador al programa");
+            }
+        } catch (java.lang.NullPointerException npe) {
+            valido = false;
             FacesUtil.addErrorMessage("Debes Agregar un coordinador al programa");
-        }
-        }catch(java.lang.NullPointerException npe){
-            
         }
         return valido;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -200,5 +201,5 @@ public class ProgramaAcademico implements Serializable {
     public void setCoordinadorPA(Profesor coordinadorPA) {
         this.coordinadorPA = coordinadorPA;
     }
-    
+
 }

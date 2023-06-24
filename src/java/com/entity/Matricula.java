@@ -63,6 +63,8 @@ public class Matricula implements Serializable {
     
     public boolean validarMatricula() {
         boolean valido = true;
+        try{
+            
         if (this.estudiante.toString().equals("") || this.seccion.getPrograma().getNombreCompleto().equals("")) {
             FacesUtil.addErrorMessage("No hay informacion de los siguientes entes:(estudiante o programa)");
             valido = false;
@@ -70,7 +72,12 @@ public class Matricula implements Serializable {
         if (this.fecha.equals("") || this.estado.equals("")) {
             FacesUtil.addErrorMessage("no se han suministrado los siguientes datos(fecha o estado)");
             valido = false;
-        }        
+        }      
+        }catch(NullPointerException npe){
+            valido = false;
+            FacesUtil.addErrorMessage("No hay informacion de los siguientes entes:(estudiante o programa)");
+            
+        }
         return valido;
     }
 
