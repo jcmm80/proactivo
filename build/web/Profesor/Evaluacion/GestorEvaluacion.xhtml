@@ -36,7 +36,8 @@
 
 
                     </p:tab>
-                    <p:tab title="Asignaturas a Evaluar">
+                    <p:tab title="Asignaturas a Evaluar del Programa: #{profesorController.liderPa.seccion.programa.nombre}">
+                        
                         <p:panel>
                             <p:dataGrid var="asigs" value="#{evaluacionController.asignaturasSeccion}">
                                 <p:panel>
@@ -161,7 +162,7 @@
                             </p:tab>
                             <p:tab title="Programar Evaluacion">
                                 <p:panelGrid columns="3" rendered="#{not empty evaluacionController.evaluacion}">
-                                    <p:calendar value="#{evaluacionController.evaluacion.fechaprogramada}" />
+                                    <p:calendar value="#{evaluacionController.evaluacion.fechaprogramada}" maxdate="#{evaluacionController.periodo.fechaFinal}" />
                                     <h:commandButton value="almacenar" rendered="#{!evaluacionController.evaluacion.habilitarEvaluacion()}" action="#{evaluacionController.almacenarCriteriosEvaluacion()}" />
                                     <h:commandButton value="publicar" rendered="#{evaluacionController.evaluacion.habilitarPublicacion()}" action="#{evaluacionController.publicarEvaluacion()}" />
                                 </p:panelGrid>

@@ -24,9 +24,9 @@
                     <input type="search" placeholder="Buscar...."></input>
                     <i class="ri-search-line"></i>
                 </div>
-                <div class="nav-unicolombo">
+                <div class="nav-unicolombo"></div>
 
-                </div>
+
                 <div class="nav-profile">
                     <div class="profile-data">
                         Profesor<br></br>
@@ -87,6 +87,7 @@
                             </li>
                         </ul>
                     </div>
+
                     <div class="nav-menu-vertical">
                         <h4 class="menu-tittle2">Menú</h4>
                         <ul class="nav-list-vertical grids">
@@ -117,7 +118,7 @@
                                 <li class="nav-vertical-item">
                                     <h:commandButton value="Gestor Dimensiones" class="nav-vertical-link" action="#{profesorController.gDimensiones()}"></h:commandButton>
                                 </li>
-                                
+
                                 <li class="nav-vertical-item">
                                     <h:commandButton value="Proyectos del Programa" class="nav-vertical-link" action="#{profesorController.gRproyectos()}"></h:commandButton>
                                 </li>
@@ -144,7 +145,7 @@
         </header>
         <ui:include  src="../General/ProgramacionProyectos.xhtml" />
         <ui:include src="#{profesorController.paginaActualP}" />
-        
+
 
         <script type="text/javascript" 
                 src="../resources/js/menu.js">

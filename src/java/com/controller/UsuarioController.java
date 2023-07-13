@@ -116,13 +116,19 @@ public class UsuarioController implements Serializable {
                     profcon.obtenerPrtofesor(getUsuario().getId());
                     profcon.setPeriodo(percon.getPeriodoActual());
                     procon.obtenerProgramaCoordinadorPA(profcon.getProfesor());
+                    profcon.setPrograma(procon.getPrograma());
+                    profcon.obtenerLideresXseccionPeriodo();
+                     profcon.consultarMatriculasXPeriodo();
+
                     profcon.obtenerLideresXseccionPeriodo();
                     
+
                     try {
                         if (procon.getPrograma().getId() > 0) {//si es coordinador de proyectos del programa
                             System.out.println("El profesor es coordinador de PA");
                             profcon.setPrograma(procon.getPrograma());
                             profcon.consultarFases(procon.getPrograma());
+
                             profcon.obtenerLideresXPrograma(procon.getPrograma());
                             profcon.consultarMatriculasXPeriodo();
                             profcon.consultarProfesores();//ojo porque consulta profesores
@@ -130,7 +136,6 @@ public class UsuarioController implements Serializable {
                             percon.obtenerPeriodos();
                             semcon.obtenerSemestres();
                             profcon.consultarTutoriasPeriodo();
-                            
                         } else {
                             procon.setPrograma(null);
                         }
@@ -142,7 +147,8 @@ public class UsuarioController implements Serializable {
                     profcon.esLiderPA();
                     profcon.consultarProyectosAulaPeriodo();
                     profcon.obtenerAsignaturasXProfesor();
-                    profcon.obtenerTutoriasXProfesor();
+                    profcon.consultarTutoriasPeriodo();
+//                    profcon.obtenerTutoriasXProfesor();
                     profcon.getEvacon().setSemestres(semcon.getSemestres());
                     paginaActual = "/Profesor/GUIProfesor.xhtml";
 

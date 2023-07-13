@@ -7,6 +7,37 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
+<<<<<<< HEAD
+        
+        
+        
+        <p:dataGrid columns="4" var="sem" value="#{asignaturaController.semestres}">
+            <p:panel header="#{sem.denominacion}">                
+                <p:dataTable class="tabla-reporte" var="secci"  value="#{sem.secciones}">
+                    <p:column width="10%" headerText="Sec">
+                        #{secci.denominacion}
+                    </p:column>
+                    <p:column width="90%" >
+                        <p:dataTable rendered="#{not empty secci.asignaturas}" style="font-size: 7pt" var="asig" value="#{secci.asignaturas}">
+                            <p:column headerText="Asignatura" width="70%">
+                                <div class="contiasig">
+                                    <div class="copc"><h:commandButton value="C" action="#{competenciasController.consultarCompetenciasAsignatura(asig)}"/></div>
+                                    <div class="copt"><h:commandButton value="T" action="#{tutoriasController.consultarTutoriasXAsignatura(asig)}"/></div>
+                                    <div class="casig"> #{asig.nombre}</div>
+                                </div>                               
+                            </p:column>
+                            <p:column headerText="Creditos" width="10%">
+                                #{asig.creditos}
+                            </p:column>
+                            <p:column headerText="Componente" width="20%"> 
+                                #{asig.area.nombre}
+                            </p:column>
+                        </p:dataTable>
+                    </p:column>
+                </p:dataTable> 
+            </p:panel>
+        </p:dataGrid>
+=======
         <div >
             <div class="relative pb-2 mb-2">
                 <h3 class="text-lg ">Malla Curricular</h3>
@@ -54,6 +85,7 @@
             </p:accordionPanel>
         </div>
 
+>>>>>>> e91aa172b276db175211aef9ca2f00e5d5f241fe
 
     </h:body>  
 

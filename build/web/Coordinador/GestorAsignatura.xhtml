@@ -1,15 +1,16 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<xhtml xmlns="http://www.w3.org/1999/xhtml"
-       xmlns:h="http://xmlns.jcp.org/jsf/html"
-       xmlns:p="http://primefaces.org/ui"
-       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
 
     <h:body>
         <section class="contenido-contenedor">
+<<<<<<< HEAD
             <div class=" contenedor top">
 
 
@@ -21,13 +22,13 @@
                 </div>
 
                 <p:tabView  scrollable="true" activeIndex="#{asignaturaController.activeIndex}">
+=======
+            <div class="border contenedor top">
+                <h1 class="tittle">Gestor Asignaturas</h1>
+                <p:tabView activeIndex="#{asignaturaController.activeIndex}">
+>>>>>>> julio
                     <p:tab  title="Programa">
-                        <div class="relative pb-2 mb-2">
-                            <h3 class="text-lg ">Selecciona Programa Academico</h3>
-                            <small class="block mb-4 text-gray-600">Un programa académico se refiere a una estructura de estudio y aprendizaje diseñada para cumplir con ciertos objetivos educativos específicos.</small>  
-                            <div class="espaceador"></div>
-                        </div>
-                        <p:dataTable scrollable="true" var="prog" value="#{programaController.programas}">
+                        <p:dataTable class="tabla-reporte" var="prog" value="#{programaController.programas}">
                             <p:column headerText="Codigo">
                                 #{prog.codigo}
                             </p:column>
@@ -35,14 +36,17 @@
                                 #{prog.nombreCompleto}
                             </p:column>
                             <p:column headerText="Seleccionar">
-                                <div class="btn-normal">
-                                    <i class="fa fa-hand-pointer"></i>
-                                    <h:commandButton class="btn" value="+" action="#{asignaturaController.agregarPrograma(prog,1)}" />
+                                <div class="Acciones">
+                                    <div class="accion">
+                                        <i class="fa fa-hand-pointer" style="color: #005CB9"></i>
+                                        <h:commandButton class="icono" value="+" action="#{asignaturaController.agregarPrograma(prog,1)}" />
+                                    </div>
                                 </div>
                             </p:column>
                         </p:dataTable>
                     </p:tab>
                     <p:tab title="Semestre">
+<<<<<<< HEAD
                         <div class="relative pb-2 mb-2">
                             <h3 class="text-lg ">Semestres</h3>
                             <small class="block mb-4 text-gray-600">Un semestre académico es un período de tiempo en el que se llevan a cabo cursos y actividades académicas en una institución educativa superior.</small>  
@@ -57,8 +61,40 @@
                                     #{asignaturaController.programa.nombre}
                                 </div>
                             </div>
+=======
+                        <div class="plider-seleccionado">
+                            <span>Seleccionado:</span>
+                            <span>Programa: #{asignaturaController.programa.nombre}</span>
+>>>>>>> julio
                         </div>
+                        <p:dataGrid    columns="5" var="sem"  value="#{semestreController.semestres}">
+                            <div class="card img-negra" >
+                                <figure >
+                                    <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
+                                </figure>
+                                <div class="contenido">
+                                    <p>Semestre <br></br>#{sem.denominacion}</p>
 
+                                </div>
+                                <h:commandButton   class="btn" value="Abrir" action="#{asignaturaController.seleccionarSemestre(sem,1)}" />
+                            </div>
+                        </p:dataGrid>>                    
+                        <p:dataGrid var="sec" value="#{asignaturaController.secciones}">
+                            <div class="card img-negra">
+                                <figure >
+                                    <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
+                                </figure>
+                                <div class="contenido-grid">
+                                    <h2>#{sec.programa.nombre}</h2>
+                                    <span>Semestre #{sec.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
+                                    <h3>Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
+
+<<<<<<< HEAD
+                                </div>
+                                <h:commandButton   class="btn" value="Abrir" action="#{asignaturaController.agregarSeccion(sec)}" />
+                            </div> 
+                        </p:dataGrid>
+=======
                         <p:dataView  multiViewState="true" gridIcon="pi pi-eye" var="sem"  value="#{semestreController.semestres}">
                             <p:dataViewGridItem  columns="4"  >
                                 <div class="relative img-negra bg-black" >
@@ -75,100 +111,87 @@
                         </p:dataView>
                         
 
+>>>>>>> e91aa172b276db175211aef9ca2f00e5d5f241fe
 
                     </p:tab>
                     <p:tab  title="Area">
-                        <div class="relative pb-2 mb-2">
-                            <h3 class="text-lg ">Selecciona Area</h3>
-                            <small class="block mb-4 text-gray-600">un área de conocimiento se refiere a una disciplina académica o campo de estudio específico que abarca un conjunto de conocimientos, métodos y enfoques relacionados. </small>  
-                            <div class="espaceador"></div>
-                            <div class="progress-bar">
-                                <div class="progress-tittle">
-                                    <i class="ri-focus-3-line"></i>
-                                    Seleccionado :
-                                </div>
-                                <i class="ri-bookmark-fill"></i>
-                                <div>
-                                    #{asignaturaController.programa.nombre}
-                                </div>
-                                <i class="ri-calendar-fill"></i>
-                                <div>
-                                    Semestre #{asignaturaController.semestre.denominacion}
-                                </div>
-                            </div>
+                        <div class="plider-seleccionado">
+                            <span>Seleccionado:</span>
+                            <span>Programa: #{asignaturaController.programa.nombre}</span>
+                            <span>Semestre: #{asignaturaController.semestre.denominacion}</span>                            
                         </div>
-
-                        <p:dataTable  scrollable="true" style="font-size: 10pt" var="area" value="#{coordinadorController.areas}">
+                        <p:dataTable class="tabla-reporte" style="font-size: 10pt" var="area" value="#{coordinadorController.areas}">
                             <p:column headerText="Nombre">
                                 #{area.nombre}
                             </p:column>
                             <p:column headerText="Nombre Corto">
                                 #{area.descripcion}
                             </p:column>
-                            <p:column headerText="Seleccionar" class="text-center">
-                                <div class="btn-normal" title="seleccionar">
-                                    <i class="fa fa-hand-pointer"></i>
-                                    <h:commandButton class="btn" value="+" action="#{asignaturaController.agregarArea(area)}" />
+                            <p:column headerText="Seleccionar">
+                                <div class="Acciones">
+                                    <div class="accion">
+                                        <i class="fa fa-hand-pointer" style="color: #005CB9"></i>
+                                        <h:commandButton class="icono" value="+" action="#{asignaturaController.agregarArea(area)}" />
+                                    </div>
                                 </div>
                             </p:column>
                         </p:dataTable>
                     </p:tab>
                     <p:tab  title="Asignatura">
-                        <div class="relative pb-2 mb-2">
-                            <h3 class="text-lg ">Establece Asignatura</h3>
-                            <small class="block mb-4 text-gray-600">Una asignatura se refiere a una unidad de estudio o materia específica dentro de un programa académico.</small>  
-                            <div class="espaceador"></div>
-                            <div class="progress-bar text-xs">
-                                <div class="progress-tittle">
-                                    <i class="ri-focus-3-line"></i>
-                                    Seleccionado :
-                                </div>
-                                <i class="ri-bookmark-fill"></i>
-                                <div>
-                                    #{asignaturaController.programa.nombre}
-                                </div>
-                                <i class="ri-calendar-fill"></i>
-                                <div>
-                                    Semestre #{asignaturaController.semestre.denominacion}
-                                </div>
-                                <i class="ri-pie-chart-fill"></i>
-                                <div>
-                                    #{asignaturaController.asignatura.area.nombre}
-                                </div>
-
-                            </div>
+                        <div class="plider-seleccionado">
+                            <span>Seleccionado:</span>
+                            <span>Programa: #{asignaturaController.programa.nombre}</span>
+                            <span>Semestre: #{asignaturaController.semestre.denominacion}</span>                            
+                            <span>Area: #{asignaturaController.asignatura.area.nombre}</span>
                         </div>
-                        <div class="form">
-                            <div >
-                                <h4>Codigo</h4>
+                        <div class="contasig">
+                            <div class="cl1">Codigo:</div>
+                            <div class="cl2">Nombre:</div>
+                            <div class="cl4">Descripcion:</div>
+                            <div class="cl3">Creditos</div>
+                            <div class="copc">                                
+                                <h:commandButton id="salsem" class="boton" value="Guardar" action="#{asignaturaController.reistrarAsignatura()}" />                              
+                            </div>
+                            <div class="ccod">
                                 <p:inputText placeholder="Codigo" rendered="#{not empty asignaturaController.asignatura}" value="#{asignaturaController.asignatura.codigo}" />
                             </div>
-
-                            <div >
-                                <h4>Nombre</h4>
+                            <div class="ccre">
+                                <p:spinner placeholder="Creditos" min="1" max="10" rendered="#{not empty asignaturaController.asignatura}" value="#{asignaturaController.asignatura.creditos}" />
+                            </div>
+                            <div class="cnom">
                                 <p:inputText placeholder="Nombre" rendered="#{not empty asignaturaController.asignatura}" value="#{asignaturaController.asignatura.nombre}" />
                             </div>
-
-                            <div>
-                                <h4>Descripción</h4>
-                                <p:inputTextarea class="w-full" placeholder="Descripcion" rendered="#{not empty asignaturaController.asignatura}" value="#{asignaturaController.asignatura.nombreCorto}" />
-                            </div>
-                            <div >
-                                <h4>Créditos</h4>
-                                <h:panelGrid columns="1" style="margin-bottom: 10px">
-                                    <p:inputText id="txt" rendered="#{not empty asignaturaController.asignatura}" value="#{asignaturaController.asignatura.creditos}" />
-                                    <p:slider minValue="0" maxValue="10" step="1" for="txt" range="false"/>
-                                </h:panelGrid>
-
-                            </div>
-                        </div>
-                        <div class="btns-container justify-content-end">
-                            <div class="btn-c">   
-                                <label>Guardar</label>
-                                <h:commandButton id="salsem" class="btn" value="Guardar" action="#{asignaturaController.reistrarAsignatura()}" />                              
+                            <div class="cdes">
+                                <p:inputTextarea placeholder="Descripcion" rendered="#{not empty asignaturaController.asignatura}" value="#{asignaturaController.asignatura.nombreCorto}" />
                             </div>
                         </div>
 
+<<<<<<< HEAD
+                        <p:panel>
+                            <p:dataTable rows="8" paginator="true" class="tabla-reporte" style="font-size: 10pt" var="asig" value="#{asignaturaController.asignaturasp}">
+                                <p:column headerText="Codigo">
+                                    #{asig.codigo}
+                                </p:column>
+                                <p:column headerText="Nombre">
+                                    #{asig.nombre}
+                                </p:column>
+                                <p:column headerText="Descripcion">
+                                    #{asig.nombreCorto}
+                                </p:column>
+                                <p:column headerText="Creditos">
+                                    #{asig.creditos}
+                                </p:column>
+                                <p:column headerText="Seccion">
+                                    #{asig.seccion.semestre.denominacion} - #{asig.seccion.denominacion}
+                                </p:column>
+                                <p:column headerText="Opciones">
+                                    <h:commandButton action="#{asignaturaController.consultarAsignatura(asig)}" value="consultar" />
+                                    <h:commandButton action="#{asignaturaController.eliminar(asig)}" value="x" />
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel>
+
+=======
                         <p:dataTable rows="8" paginator="true" scrollable="true" style="font-size: 10pt" var="asig" value="#{asignaturaController.asignaturasp}">
                             <p:column headerText="Codigo">
                                 #{asig.codigo}
@@ -200,6 +223,7 @@
                                 </div>
                             </p:column>    
                         </p:dataTable>
+>>>>>>> e91aa172b276db175211aef9ca2f00e5d5f241fe
 
                     </p:tab>
                     <p:tab  title="Malla Curricular">
@@ -216,18 +240,39 @@
         </section>
     </h:body>
     <style>
-        body .ui-dataview .ui-dataview-header{
-            background: none;         
-            border: none;
+        .contasig {  display: grid;
+                     grid-template-columns: 120px 200px 120px 200px 150px;
+                     grid-template-rows: 85px 130px;
+                     grid-auto-columns: 1fr;
+                     gap: 0px 0px;
+                     grid-auto-flow: row;
+                     justify-items: center;
+                     align-items: start;
+                     grid-template-areas:
+                         "cl1 ccod cl3 ccre copc"
+                         "cl2 cnom cl4 cdes copc";
         }
-        @media screen and (max-width: 1005px) {
-            .form{
-                grid-template-columns: repeat(1, 1fr);
-            }
-        }  
-        
+
+        .cl1 { grid-area: cl1; }
+
+        .cl2 { grid-area: cl2; }
+
+        .cl4 { grid-area: cl4; }
+
+        .cl3 { grid-area: cl3; }
+
+        .copc { grid-area: copc; }
+
+        .ccod { grid-area: ccod; }
+
+        .ccre { grid-area: ccre; }
+
+        .cnom { grid-area: cnom; }
+
+        .cdes { grid-area: cdes; }
+
     </style>
 
 
-</xhtml>
+</html>
 

@@ -40,17 +40,19 @@ public class ImplDao<T, ID> implements IDao<T, ID> {
             et.commit();
             // FacesUtil.addInfoMessage("Se almacenó en el sistema el siguiente Elemento: " + entity.getClass().getSimpleName());
         } catch (PersistenceException pe) {
-            pe.printStackTrace();
-            //et.rollback();
-            // FacesUtil.addErrorMessage("Error de Persistencia: "+pe.getMessage());
-        } finally {
-            if (em != null && em.isOpen()) {
-                if (em.getTransaction() != null
-                        && em.getTransaction().isActive()) {
-                    em.getTransaction().rollback();
-                }
-
+           FacesUtil.addErrorMessage("Error de Persistencia: " + pe.getMessage());
+            if (et.isActive()) {
+                et.rollback();
             }
+            pe.printStackTrace();
+        } finally {
+//            if (em != null && em.isOpen()) {
+//                if (em.getTransaction() != null
+//                        && em.getTransaction().isActive()) {
+//                    em.getTransaction().rollback();
+//                }
+//
+//            }
         }
     }
 

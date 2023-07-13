@@ -119,6 +119,11 @@ public class ProfesorController implements Serializable {
 
     }
 
+    public void seleccionarProfesor(Profesor p){
+        setProfesor(p);
+        System.out.println(""+profesor.toString());
+    }
+    
     public void seleccionarSemestreVProyectos(Semestre s) {
         setSecciones(getSecser().obtenerSeccionesXSemestre_Periodo_Programa(s, getPrograma(), getPeriodo()));
         getRepcon().createBarModel();
@@ -206,7 +211,16 @@ public class ProfesorController implements Serializable {
 
     public void palmacenarTutoria() {
         tutcon.realizarTutoria();
-        tutcon.consultarTutoriasXProfesor(profesor);
+        try{
+        if(programa.getId() > 0){
+            consultarTutoriasPeriodo();
+        }else{
+            tutcon.consultarTutoriasXProfesor(profesor);
+        }
+        }catch(java.lang.NullPointerException npe){
+             consultarTutoriasPeriodo();
+        }
+        //si el profesor es coordinador no esta funcionado
         tutcon.consultarTutoriasXAsignaturaProfesor();
         pvolverdeProgramar();
     }
@@ -408,8 +422,8 @@ public class ProfesorController implements Serializable {
     }
 
     public void consultarMatriculasXPeriodo() {
-        matcont.consultarMatriculasXPeriodoYPrograma(programa, periodo);
-//        matcont.consultarEstudiantesMatriculadosXPeriodo(periodo);
+//        matcont.consultarMatriculasXPeriodoYPrograma(programa, periodo);
+        matcont.consultarEstudiantesMatriculadosXPeriodo(periodo);
     }
 
     public void registrarprofesor() {
@@ -458,6 +472,8 @@ public class ProfesorController implements Serializable {
             matcont.consultarEstudiantesMatriculadosXPeriodo(periodo);
             proacon.consultarProyectosXProfesorLider(profesor);
             proyectosXSeccion(liderPa.getSeccion());
+            proacon.setIntegrantesseleccionados(new LinkedList());
+            proacon.setProyecto(new Proyecto_Aula());
         }
     }
 
@@ -1142,6 +1158,5 @@ public class ProfesorController implements Serializable {
     public void setLideresXseccionPrograma(List<LiderPA> lideresXseccionPrograma) {
         this.lideresXseccionPrograma = lideresXseccionPrograma;
     }
-
 
 }

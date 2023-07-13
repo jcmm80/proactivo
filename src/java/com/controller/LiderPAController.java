@@ -246,4 +246,5 @@ public class LiderPAController implements Serializable {
     public void setProacon(ProyectoAulaController proacon) {
         this.proacon = proacon;
     }
+
 }

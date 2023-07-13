@@ -66,8 +66,12 @@ public class LiderPAServices extends ImplDao<LiderPA, Long> implements ILiderPA,
         finally{
             em.getTransaction().commit();
             System.out.println("obtenerSeccionesLideradasPeriodo");
+
         }
         
         return  lid;
     }
+
+   
 }
+

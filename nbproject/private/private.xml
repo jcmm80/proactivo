@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/jcmm/Desktop/jhonatan/Proyectos%20personales/proactivo/web/Profesor/ResultadosAprendizaje.xhtml</file>
             <file>file:/C:/Users/jcmm/Desktop/jhonatan/Proyectos%20personales/proactivo/web/Profesor/Evaluacion/GestorEvaluacion.xhtml</file>
             <file>file:/C:/Users/jcmm/Desktop/jhonatan/Proyectos%20personales/proactivo/src/java/com/controller/AsignaturaController.java</file>
@@ -10,6 +11,35 @@
             <file>file:/C:/Users/jcmm/Desktop/jhonatan/Proyectos%20personales/proactivo/src/java/com/controller/MatriculaController.java</file>
             <file>file:/C:/Users/jcmm/Desktop/jhonatan/Proyectos%20personales/proactivo/src/java/com/controller/PeriodoController.java</file>
             <file>file:/C:/Users/jcmm/Desktop/jhonatan/Proyectos%20personales/proactivo/web/Profesor/GestorFases.xhtml</file>
+=======
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/web/Profesor/Tutorias/ProgramarTutoria.xhtml</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/web/Estudiante/Gestor_Proyecto_Aula.xhtml</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/web/Profesor/TutoriasPrograma.xhtml</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/web/Profesor/Evaluacion/GestorEvaluacion.xhtml</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/web/Profesor/GUIProfesor.xhtml</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/src/java/com/controller/EvaluacionController.java</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/web/Profesor/Tutorias/RealizarTutoria.xhtml</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/web/Profesor/GestorFases.xhtml</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/web/Coordinador/TutoriasPrograma.xhtml</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/web/Profesor/GestorGrupos.xhtml</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/src/java/com/controller/TutoriasController.java</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/src/java/com/controller/AvanceController.java</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/web/Estudiante/Gestor_Avances.xhtml</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/web/Profesor/Evaluacion/GestorDimensiones.xhtml</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/web/General/GestorAreas.xhtml</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/web/Profesor/Tutorias/CrearTutoria.xhtml</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/web/Profesor/GestorTipo_Item.xhtml</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/web/Profesor/GestorTutorias.xhtml</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/src/java/com/controller/FasesController.java</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/web/Estudiante/GUIEstudiante.xhtml</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/web/Profesor/GUIProyectosAula.xhtml</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/web/Profesor/GestorProfesores.xhtml</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/src/java/com/controller/UsuarioController.java</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/src/java/com/entity/Avance.java</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/src/java/com/controller/ProyectoAulaController.java</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/src/java/com/controller/Tipo_itemController.java</file>
+            <file>file:/C:/Users/JCMM/Desktop/proactivo/src/java/com/controller/ProfesorController.java</file>
+>>>>>>> julio
         </group>
     </open-files>
 </project-private>

@@ -62,8 +62,7 @@ public class Avance implements Serializable {
     
     
     public boolean validarAvance() {
-        boolean valido = true;
-        FacesUtil.addErrorMessage("Estos campos son requeridos");        
+        boolean valido = true;               
         if(this.getProyecto().getId()<=0){
             FacesUtil.addErrorMessage("Avance no tiene proyecto asociado");
             valido = false;
