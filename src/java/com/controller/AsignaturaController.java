@@ -104,6 +104,8 @@ public class AsignaturaController implements Serializable {
         if (!tieneProcesos(a)) {
             asigser.eliminar(a);
             consultarAsignaturas(periodo);
+            asignaturasDelPrograma(getPrograma());
+            semestres = generarMallaAcademica();
         }
     }
 
@@ -212,11 +214,13 @@ public class AsignaturaController implements Serializable {
                             asign = new Asignatura();
                         }
                     }
-                }else{
+                } else {
                     FacesUtil.addErrorMessage("No se puede almacenar asignatura: No hay secciones registradas para el semestre seleccionado.");
                 }
                 if (asignatura.getNombre() != null) {
                     consultarAsignaturas(asignatura.getSeccion().getPeriodo());
+                    asignaturasDelPrograma(getPrograma());
+                    semestres = generarMallaAcademica();
                     asignatura = new Asignatura();
                     secciones = new LinkedList();
                 }
@@ -241,6 +245,7 @@ public class AsignaturaController implements Serializable {
                 System.out.println("" + asi.toString());
             }
         }
+        ordenarAsignaturasenSecciones(secciones);
         for (int i = 0; i < semests.size(); i++) {
             semests.get(i).setSecciones(new LinkedList());
             for (Seccion s : secciones) {
@@ -253,6 +258,19 @@ public class AsignaturaController implements Serializable {
         System.out.println(secciones.size() + "  " + semests.size());
 
         return semests;
+    }
+
+    public void ordenarAsignaturasenSecciones(List<Seccion> seccions) {    
+        for (int i = 0; i < seccions.size(); i++) {
+            seccions.get(i).setAsignaturas(new LinkedList());
+        }
+        for (Asignatura asi : asignaturasp) {
+            for (int i = 0; i < seccions.size(); i++) {
+                if (asi.getSeccion().getId().equals(seccions.get(i).getId())) {
+                    seccions.get(i).getAsignaturas().add(asi);break;
+                }
+            }
+        }
     }
 
     public boolean existeSemestre(List<Semestre> semestres, Semestre s) {

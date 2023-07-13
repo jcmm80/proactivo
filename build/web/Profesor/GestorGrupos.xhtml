@@ -8,7 +8,7 @@
     </h:head>
     <h:body>
 
-
+        
         <p:panel rendered="#{profesorController.mostPanelSemestres}">
             <section class="contenido-contenedor">
                 <div class="border contenedor top" >
@@ -31,17 +31,21 @@
             </section>        
         </p:panel>
         <p:panel rendered="#{!profesorController.mostPanelSemestres}">
+            
             <section class="contenido-contenedor">
+                
                 <div class="border contenedor top">
                     <div class="tanone" style="justify-content: flex-start; column-gap: 1rem" >
                         <div class="btns" style="background-color: #005CB9">
                             <i class="uil uil-angle-left-b" ></i>
                             Volver
                             <h:commandButton class="btn" value="volver" action="#{profesorController.volverSemestres()}" />
-                        </div>
+                        </div>                        
                     </div>
                     <h1 class="tittle">Gestor Grupos</h1>
+                    
                     <div class="contproy">
+                        <h:commandButton value="nuevo" action="#{proyectoAulaController.prepararNuevoProyecto()}" />
                         <div class="cestudiantes">
                             <p:dataTable rows="5" class="tabla-reporte" paginator="true" style="font-size: 10pt" var="est" value="#{matriculaController.matriculasXSeccion}">
                                 <p:column filterBy="#{est.estudiante.identificacion}" headerText="Identificacion">
@@ -72,7 +76,7 @@
                         </div>
                         <div class="cintegrantes">
                             <h1 class="aviso">Integrantes Seleccionados</h1>
-                            <p:dataGrid rows="5"   columns="5" var="inte" value="#{proyectoAulaController.integrantes}">
+                            <p:dataGrid rows="5"   columns="5" var="inte" value="#{proyectoAulaController.integrantesseleccionados}">
                                 <div class="card estu">
                                     <div class="imagen-est">
                                         <p:graphicImage value="/Imagenes/Perfiles/#{inte.matricula.estudiante.imagenPerfil()}" style="max-width: 100%; height: auto"  />

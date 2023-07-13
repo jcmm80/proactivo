@@ -50,6 +50,7 @@ public class Tipo_EntregableController implements Serializable {
 
     public void eliminartipo_Entregable(Tipo_Entregable te) {
         tipenser.eliminar(te);
+        getTipos_EntregableP().remove(te);
         consultarTipos_Entregable();
 
     }
@@ -68,10 +69,10 @@ public class Tipo_EntregableController implements Serializable {
         }
     }
 
-    public void consultarTipos_entregable(Asignatura a){
+    public void consultarTipos_entregable(Asignatura a) {
         setTipos_EntregableP(tipenser.obtenerTipo_EntregableAsignaturas(a));
     }
-    
+
     public void consultarTipos_Entregable(Profesor p) {
         setTipos_EntregableP(tipenser.obtenerTipo_EntregableProfesor(p));
     }
