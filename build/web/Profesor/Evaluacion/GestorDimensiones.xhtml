@@ -9,129 +9,162 @@
     </h:head>
     <h:body>
         <section class="contenido-contenedor">
-            <div class="border contenedor top" >
-                <h1 class="tittle">Dimensiones o Aspectos Para Evaluacion</h1>
+            <div class=" contenedor top" >
+                <div class="card">
+                    <div class="relative pb-4 mb-2">
+                        <h3 class="text-2xl ">Dimensiones o Aspectos Para Evaluacion</h3>
+                        <div class="espaceador"></div>
+                    </div>
+                    <p:tabView>
+                        <p:tab title="Gestor Dimensiones">
 
-                <p:tabView>
-                    <p:tab title="Gestor Dimensiones">
-                        <div class="contgdim">
-                            <div class="vddim">
-                                <div class="contdim">
-                                    <div class="lnom">Nombre</div>
-                                    <div class="cnom"><p:inputText value="#{evaluacionController.dimencion.nombre}" /></div>
-                                    <div class="ldes">Descripcion</div>
-                                    <div class="cdes"><p:inputTextarea value="#{evaluacionController.dimencion.descripcion}" /></div>
-                                    <div class="lpor">Porcentaje<br/>
-                                        <br/><br/><br/>
-                                        <p:selectOneButton  value="#{evaluacionController.dimencion.tipo}">
+                            <div class="form">
+                                <div>
+                                    <h4>Nombre</h4>
+                                    <p:inputText value="#{evaluacionController.dimencion.nombre}" />
+                                </div>
+                                <div>
+                                    <h4>Descripcion</h4>
+                                    <p:inputTextarea  class="w-full" value="#{evaluacionController.dimencion.descripcion}" />
+                                </div>
+                                <div>
+                                    <h4>Porcentaje</h4>
+                                    <div class="flex  align-content-center gap-2 ">
+                                        <p:selectOneRadio  value="#{evaluacionController.dimencion.tipo}">
                                             <f:selectItem itemValue="Particular" itemLabel="Particular" />
                                             <f:selectItem itemValue="Global" itemLabel="Global" />
-                                        </p:selectOneButton>
+                                        </p:selectOneRadio>
+                                        <div class="mb-4">
+                                            <h:outputText id="output" value=" %#{sliderView.number2}"/>
+                                            <h:inputHidden id="txt2" value="#{evaluacionController.dimencion.porcentaje}"/>
+                                            <p:slider for="txt2" display="output" maxValue="#{evaluacionController.maxPor}" style="width: 200px" displayTemplate=" %{value}"/>
+                                        </div>
+
                                     </div>
-                                    <div class="cpor"><p:knob max="#{evaluacionController.maxPor}" value="#{evaluacionController.dimencion.porcentaje}" /></div>                           
-                                    <div class="opc"><h:commandButton value="agregar" action="#{evaluacionController.agregarDimension()}" /></div>
+
                                 </div>
                             </div>
-                            <div class="ctdim">
 
-                                <h:outputText value="#{evaluacionController.dimencion.programa.nombre} - Periodo: #{evaluacionController.dimencion.periodo.toString()}" />
-                                <p:dataTable var="dim" value="#{evaluacionController.dimenciones}" >
-                                    <p:column headerText="Nombre">
-                                        #{dim.nombre}
-                                    </p:column>
-                                    <p:column headerText="Descripcion">
-                                        #{dim.descripcion}
-                                    </p:column>
-                                    <p:column headerText="Porcentaje">
-                                        <p:knob disabled="true" height="50px" value="#{dim.porcentaje}" />
-                                    </p:column>
-                                    <p:column headerText="Opciones">
-                                        <h:commandButton value="eliminar" action="#{evaluacionController.quitarDimension(dim)}" />
-                                    </p:column>
+                            <div class="btns-container justify-content-end">
+                                <div class="btn-p">
+                                    <label>Agregar</label>
+                                    <h:commandButton value="agregar" class="btn" action="#{evaluacionController.agregarDimension()}" />
+                                </div>
+                            </div>                           
 
-                                </p:dataTable>
-                                <p:panel rendered="#{!evaluacionController.mostPanelMod}">
+                            <div class="relative pb-4 mb-2">
+                                <h4 >#{evaluacionController.dimencion.programa.nombre} - Periodo: #{evaluacionController.dimencion.periodo.toString()}</h4>
+                                <div class="espaceador"></div>
+                            </div>
 
-                                    <p:panel rendered="#{evaluacionController.habilitarAlmacenamientoDimenciones()}" >
-                                        <p:dataGrid columns="6" var="sem" value="#{semestreController.semestres}"><f:facet name="header">Aplicar a los semestres:</f:facet>
-                                            <h:commandButton disabled="#{evaluacionController.tieneDimensiones(sem)}" value="#{sem.denominacion}" action="#{evaluacionController.agregarSemestre(sem)}"></h:commandButton>
-                                        </p:dataGrid>
-                                        <p:dataGrid columns="6" var="sema" value="#{evaluacionController.semestresSeleccionados}"><f:facet name="header">Semestres Seleccionados:</f:facet>
-                                            <h:commandButton value="#{sema.denominacion}" action="#{evaluacionController.quitarSemestre(sema)}"></h:commandButton>
-                                        </p:dataGrid>                                    
-                                        <h:commandButton value="almacenar" action="#{evaluacionController.almacenarDimensiones()}" />
-                                    </p:panel>
+                            <h:outputText  />
+                            <p:dataTable scrollable="true" var="dim" value="#{evaluacionController.dimenciones}" >
+                                <p:column headerText="Nombre">
+                                    #{dim.nombre}
+                                </p:column>
+                                <p:column headerText="Descripcion">
 
-                                </p:panel> 
-                                <p:panel rendered="#{evaluacionController.mostPanelMod}">
-                                    <p:panel rendered="#{evaluacionController.habilitarAlmacenamientoDimenciones()}" >
-                                        <h:commandButton value="almacenar" action="#{evaluacionController.actualizarDimensiones()}" />
-                                    </p:panel>
+                                    <div class="btn-p">
+                                        <i class="ri-eye-line"></i>
+                                        <label>Ver</label>
+                                        <p:commandButton value="Show" class="btn" type="button" icon="pi pi-external-link" onclick="PF('#{dim.id} dimension').show()"/>
+                                    </div>
+                                    <p:dialog widgetVar="#{dim.id} dimension" modal="true"  hideEffect="fade" resizable="false" minHeight="40" width="700" showEffect="fade">
+                                        <p class="m-0 w-full">#{dim.descripcion}</p>
+                                    </p:dialog>
+                                </p:column>
+                                <p:column headerText="Porcentaje">
+                                    #{dim.porcentaje}<i class="ri-percent-line"></i>
+                                </p:column>
+                                <p:column headerText="Opciones">
+                                    <div class="btn-normal">
+                                        <i class="ri-delete-bin-line"></i>
+                                        <h:commandButton value="eliminar" class="btn" action="#{evaluacionController.quitarDimension(dim)}" />
+                                    </div>
+                                </p:column>
+
+                            </p:dataTable>
+                            <p:panel class="mt-4" style="background: #eee" rendered="#{!evaluacionController.mostPanelMod}">
+
+                                <p:panel  rendered="#{evaluacionController.habilitarAlmacenamientoDimenciones()}">
+                                    <div class="flex  align-content-center gap-8 responsive-flex">
+                                        <div class="xl:w-6 card">
+                                            <div class="relative pb-2 mb-2">
+                                                <h4>Aplicar a los semestres</h4>
+                                                <small class="block mb-4 text-gray-600">pulsa en un semestre para agregar</small>  
+                                                <div class="espaceador"></div>
+                                            </div>
+
+                                            <p:dataGrid columns="4" var="sem" value="#{semestreController.semestres}">
+                                                <h:commandButton class="p-4 font-bold " style="background-color: #eee" disabled="#{evaluacionController.tieneDimensiones(sem)}" value="#{sem.denominacion}" action="#{evaluacionController.agregarSemestre(sem)}"></h:commandButton>
+                                            </p:dataGrid>
+                                        </div>
+
+                                        <div class="xl:w-6 card">
+                                            <div class="relative pb-2 mb-2 ">
+                                                <h4>Semestres Seleccionados</h4>
+                                                <small class="block mb-4 text-gray-600">pulsa en un semestre para remover</small>  
+                                                <div class="espaceador"></div>
+                                            </div>
+                                            <p:dataGrid columns="4" var="sema" value="#{evaluacionController.semestresSeleccionados}">
+                                                <h:commandButton class="p-4 font-bold text-white border-none" style="background-color: var(--first-color-p)" value="#{sema.denominacion}" action="#{evaluacionController.quitarSemestre(sema)}"></h:commandButton>
+                                            </p:dataGrid>  
+                                        </div>
+
+                                    </div>
+                                    <div class="btns-container justify-content-end">
+                                        <div class="btn-p">
+                                            <label>Almacenar</label>
+                                            <h:commandButton value="almacenar" class="btn" action="#{evaluacionController.almacenarDimensiones()}" />
+                                        </div>
+                                    </div>
                                 </p:panel>
 
-
-                            </div>
-                        </div>
-                    </p:tab>
-                    <p:tab title="Dimensiones en semestres">                        
-                        <p:accordionPanel var="semd" value="#{evaluacionController.semestres}">
-                            <p:tab title="#{semd.denominacion}">
-                                <h:commandButton value="Configurar" action="#{evaluacionController.seleccionarSemestre(semd)}" />
-                                <p:dataTable var="dimes" value="#{semd.dimensions}">
-                                    <p:column headerText="Nombre">
-                                        #{dimes.nombre}
-                                    </p:column>
-                                    <p:column headerText="Descripcion">
-                                        #{dimes.descripcion}
-                                    </p:column>
-                                    <p:column headerText="Porcentaje">
-                                        #{dimes.porcentaje}%
-                                        <p:knob disabled="true" height="50px" value="#{dimes.porcentaje}" />
-                                    </p:column>
-                                </p:dataTable>                            
-                            </p:tab>
-                        </p:accordionPanel>
-                    </p:tab>
-                </p:tabView>
+                            </p:panel> 
+                            <p:panel rendered="#{evaluacionController.mostPanelMod}">
+                                <p:panel rendered="#{evaluacionController.habilitarAlmacenamientoDimenciones()}" >
+                                    <div class="btns-container justify-content-end">
+                                        <div class="btn-p">
+                                            <label>Almacenar</label>
+                                            <h:commandButton value="almacenar" class="btn" action="#{evaluacionController.actualizarDimensiones()}" />
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </p:panel>
 
 
+
+
+                        </p:tab>
+                        <p:tab title="Dimensiones en semestres">                        
+                            <p:accordionPanel var="semd" value="#{evaluacionController.semestres}">
+                                <p:tab title="Semestre #{semd.denominacion}">
+                                    <div class="flex relative justify-content-end align-items-center p-2 gap-1 font-bold">
+                                        <i class="ri-settings-5-line"></i>
+                                        <label>Configurar</label>
+                                        <h:commandButton value="Configurar" class="btn" action="#{evaluacionController.seleccionarSemestre(semd)}" />
+                                    </div>
+                                    <p:dataTable var="dimes" value="#{semd.dimensions}">
+                                        <p:column headerText="Nombre">
+                                            #{dimes.nombre}
+                                        </p:column>
+                                        <p:column headerText="Descripcion">
+                                            #{dimes.descripcion}
+                                        </p:column>
+                                        <p:column headerText="Porcentaje">
+                                            #{dimes.porcentaje}<i class="ri-percent-line"></i>
+                                        </p:column>
+                                    </p:dataTable>                            
+                                </p:tab>
+                            </p:accordionPanel>
+                        </p:tab>
+                    </p:tabView>
+
+                </div>
             </div>
         </section>
     </h:body>
     <style>
-        .contgdim {  display: grid;
-                     grid-template-columns: 450px 150px 300px 200px;
-                     grid-template-rows: 450px 450px;
-                     grid-auto-columns: 1fr;
-                     gap: 0px 0px;
-                     grid-auto-flow: row;
-                     grid-template-areas:
-                         "vddim ctdim ctdim ctdim"
-                         "vddim ctdim ctdim ctdim";
-        }
-
-        .vddim { grid-area: vddim; }
-
-        .ctdim { grid-area: ctdim; }
-
-        .contdim { display: grid; 
-                   grid-auto-columns: 1fr; 
-                   grid-template-columns: 183px 417px; 
-                   grid-template-rows: 98px 119px 214px 109px; 
-                   gap: 0px 0px; 
-                   grid-template-areas: 
-                       "lnom cnom"
-                       "ldes cdes"
-                       "lpor cpor"
-                       "opc opc"; 
-        }
-        .lnom { grid-area: lnom; }
-        .cnom { grid-area: cnom; }
-        .ldes { grid-area: ldes; }
-        .cdes { grid-area: cdes; }
-        .lpor { grid-area: lpor; }
-        .cpor { grid-area: cpor; }
-        .opc { grid-area: opc; }
 
 
     </style>

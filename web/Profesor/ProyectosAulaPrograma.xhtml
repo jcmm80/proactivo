@@ -9,143 +9,186 @@
     </h:head>
     <h:body>
         <section class="contenido-contenedor">
-            <div class="border contenedor top">
-                <h1 class="tittle">Proyectos de Aula</h1>
+            <div class="contenedor top">
+                <div class="card">
+                    <div class="relative pb-2 mb-2">
+                        <h3 class="text-2xl ">Proyectos de Aula</h3>
+                        <small class="block mb-4 text-gray-600">Un proyecto de aula es una estrategia pedagógica en la que se integran los estudiantes y orientadores en la planificación, desarrollo y evaluación de un proyecto específico dentro del entorno de aprendizaje de un aula.</small>  
+                        <div class="espaceador"></div>
+                    </div>
+                    <p:tabView activeIndex="#{profesorController.activeIproy}" scrollable="true" class="overflow-y-hidden">                               
+                        <p:tab title="Semestre - Seccion">
+                            <div class="relative pb-2 mb-2">
+                                <h4 class="text-2xl ">Semestres</h4>
+                                <small class="block mb-4 text-gray-600">Selecciona un semestre</small>  
+                                <div class="espaceador"></div>
+                            </div>
+                            <p:dataView  multiViewState="true" gridIcon="pi pi-eye"   var="sem"  value="#{semestreController.semestres}">
+                                <p:dataViewGridItem  columns="4"  >
+                                    <div class="relative img-negra bg-black" >
+                                        <div class="w-full h-full">
+                                            <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
+                                        </div>
+                                        <div class="contenido">
+                                            <p>Semestre <br></br>#{sem.denominacion}</p>
+                                        </div>
+                                        <h:commandButton   class="btn" value="Abrir" action="#{profesorController.seleccionarSemestreVProyectos(sem)}" />
+                                    </div>
+                                </p:dataViewGridItem>
+                            </p:dataView>
+                            <div class="relative pb-2 mb-2">
+                                <h4 class="text-2xl ">Secciones</h4>
+                                <small class="block mb-4 text-gray-600">Selecciona una seccion</small>  
+                                <div class="espaceador"></div>
+                            </div>
+                            <p:dataView  multiViewState="true" gridIcon="pi pi-eye"  var="sec" value="#{profesorController.secciones}">
+                                <p:dataViewGridItem  columns="3"  >
+                                    <div class="relative img-negra bg-black">
+                                        <div class="w-full h-full">
+                                            <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
+                                        </div>
+                                        <div class="contenido-grid">
+                                            <h2 class="text-white">#{sec.programa.nombre}</h2>
+                                            <span>Semestre #{sem.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
+                                            <h3 class="text-white">Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
+                                        </div>
+                                        <h:commandButton   class="btn" value="Abrir" action="#{profesorController.obtenerProyectosSeccion(sec)}" />
+                                    </div> 
+                                </p:dataViewGridItem>
 
-                <p:tabView activeIndex="#{profesorController.activeIproy}">                               
-                    <p:tab title="Semestre - Seccion">
-                        <p:dataGrid    columns="5" var="sem"  value="#{semestreController.semestres}">
-                            <div class="card img-negra" >
-                                <figure >
-                                    <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
-                                </figure>
-                                <div class="contenido">
-                                    <p>Semestre <br></br>#{sem.denominacion}</p>
+                            </p:dataView>
 
+                            <div rendered="#{!not empty profesorController.seccion}" class="card mt-2 bg-gray-600">
+                                <div class="relative pb-4 mb-2">
+                                    <h4 >Proyectos por Seccion</h4>
+                                    <div class="espaceador"></div>
                                 </div>
-                                <h:commandButton   class="btn" value="Abrir" action="#{profesorController.seleccionarSemestreVProyectos(sem)}" />
+                                <div class="w-4">
+                                    <p:chart type="bar"  style="max-width: 100%; height: auto;" model="#{reportesController.barMProyectosxSeccion}" />
+                                </div>
                             </div>
 
-                        </p:dataGrid> 
-                        <p:panelGrid columns="2">
-                            <p:dataGrid var="sec" value="#{profesorController.secciones}">
-                                <div class="card img-negra">
-                                    <figure >
-                                        <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
-                                    </figure>
-                                    <div class="contenido-grid">
-                                        <h2>#{sec.programa.nombre}</h2>
-                                        <span>Semestre #{sec.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
-                                        <h3>Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
-
-                                    </div>
-                                    <h:commandButton   class="btn" value="Abrir" action="#{profesorController.obtenerProyectosSeccion(sec)}" />
-                                </div> 
-                            </p:dataGrid>
-                            <p:panel header="Proyectos por Seccion">
-                                <p:chart type="bar"  model="#{reportesController.barMProyectosxSeccion}" />
-                            </p:panel>
-                            
-                        </p:panelGrid>
 
 
-                    </p:tab>
-                    <p:tab rendered="#{not empty profesorController.seccion}" title="Proyectos de Aula, Seccion: #{profesorController.seccion.getSeccion()}">
-                        <p:dataTable class="tabla-reporte" rendered="#{not empty profesorController.proyectosSemestre}" var="proa" value="#{profesorController.proyectosSemestre}">
-                            <p:column headerText="Codigo">
 
-                                <h:outputText value="#{proa.codigo}" title="#{proa.titulo}" /><br/>
-                                <h:outputText value="#{proa.titulo}" title="#{proa.titulo}" />
-                            </p:column>
-                            <p:column headerText="Fecha Ingreso">
-                                <h:outputText value="#{proa.fecha_ingreso}" title="#{proa.problematica}" />                               
-                            </p:column>                             
-                            <p:column width="500" headerText="Integrantes">
-                                <p:dataTable style="font-size: 10pt" var="integ" value="#{proa.integrantes}">
-                                    <p:column headerText="">
-                                        <p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" style="width: 40px;height: 40px "  />
-                                    </p:column>
-                                    <p:column width="300" headerText="">
-                                        <h:outputText  value="#{integ.matricula.estudiante.toString()}" /> 
-                                    </p:column>                           
-                                </p:dataTable>                                 
-                            </p:column>
-                            <p:column headerText="Opciones">
-                                <div class="Acciones">
-                                    <div class="accion">
-                                        <i class="uil uil-file-search-alt" style="color: #005CB9; font-size: 25px"></i><h:commandButton class="icono" value="." action="#{profesorController.consultarProyectoR(proa)}" />
-                                    </div>
-                                </div>  
-                            </p:column>  
-                        </p:dataTable> 
-                    </p:tab>
-                    <p:tab title="Proyecto Seleccionado">
-
-
-                        <p:panel header="Informacion Basica del Proyecto">
-                            <div class="contpro">
-                                <div class="codse">
-                                    <i class="fa fa-solid fa-thumbtack ic"></i>
-                                    <div class="codseitem">
-                                        <h:outputText value="Codigo Proyecto" /><br></br>
-                                        <span>#{proyectoAulaController.proyecto.codigo}</span>
-                                    </div>
-                                    <div class="codseitem">
-                                        <h:outputText value="Semestre - Seccion" /><br></br>
-                                        <span>#{proyectoAulaController.proyecto.seccion.semestre.denominacion} - #{proyectoAulaController.proyecto.seccion.denominacion}</span>
-                                    </div>
-                                </div>
-                                <span class="aviso">Establezca la fecha del proyecto</span>
-                                <div class="fechas codse" style="gap:20px;">
-                                    <div class="input-form-200">
-                                        Fecha Inicial
-                                        <p:calendar   value="#{proyectoAulaController.proyecto.fecha_inicio}" />
-                                    </div>
-
-                                    <div class="input-form-200">
-                                        Fecha Finalizacion
-                                        <p:calendar   value="#{proyectoAulaController.proyecto.fecha_finalizacion}" />
-                                    </div>        
-                                </div>
-                                <span class="aviso ">Titulo Del proyecto</span>
-                                <div class="fechas codse" style="gap:20px;">
-                                    <p:inputText placeholder="Titulo" size="100" value="#{proyectoAulaController.proyecto.titulo}"/>
-                                </div>
-                                <span class="aviso">Problematica Del proyecto</span>
-                                <div class="fechas codse" style="gap:20px;">
-                                    <p:inputTextarea placeholder="Problematica" cols="100" value="#{proyectoAulaController.proyecto.problematica}" />
-                                </div>
-                            </div>
-                        </p:panel>
-                        <p:panel header="Items del Proyecto">
-                            <p:dataTable class="tabla-reporte" var="items" value="#{proyectoAulaController.proyecto.itenes_Proyecto}">
-                                <p:column headerText="Tipo"> 
-                                    #{items.tipo.nombre}
+                        </p:tab>
+                        <p:tab rendered="#{not empty profesorController.seccion}" title="Proyectos de Aula, Seccion: #{profesorController.seccion.getSeccion()}">
+                            <p:dataTable scrollable="true"  rendered="#{not empty profesorController.proyectosSemestre}" var="proa" value="#{profesorController.proyectosSemestre}">
+                                <p:column headerText="Codigo">
+                                    <h:outputText value="#{proa.codigo}" title="#{proa.titulo}" />
                                 </p:column>
-                                <p:column headerText="Contenido"> 
-                                    #{items.contenido}
+                                <p:column headerText="Fecha Ingreso">
+                                    <h:outputText value="#{proa.fecha_ingreso}" title="#{proa.problematica}" />                               
+                                </p:column>                             
+                                <p:column  headerText="Integrantes">
+                                    <p:repeat var="integ" value="#{proa.integrantes}">
+                                        <div class="flex gap-1 align-items-center">
+                                            <div class="w-1 border-circle overflow-hidden flex">
+                                                <p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" class="img"  />
+                                            </div>
+                                            <small>#{integ.matricula.estudiante.toString()}</small>
+                                        </div>
+                                    </p:repeat>
                                 </p:column>
-                                <p:column headerText="Fecha Creacion"> 
-                                    #{items.fecharegistro}
-                                </p:column>
-                                <p:column headerText="Ultima Modificacion"> 
-                                    #{items.fechamodificacion}
-                                </p:column>
-                                <p:column headerText="Autor/Editor"> 
-                                    #{items.editor.estudiante.toString()}
-                                </p:column>                                
-                            </p:dataTable>
+                                <p:column headerText="Opciones">
+                                    <div class="btn-normal" title="Ver">
+                                        <i class="uil uil-file-search-alt" ></i>
+                                        <h:commandButton class="btn" value="." action="#{profesorController.consultarProyectoR(proa)}" />
+                                    </div>  
+                                </p:column>  
+                            </p:dataTable> 
+                        </p:tab>
+                        <p:tab title="Proyecto Seleccionado">
+                            <p:tabView scrollable="true">
+                                <p:tab title="Informacion basica del Proyecto">
+                                    <div >
+                                        <div class="title-description-inplace">
+                                            <h3  class="inplace-h3" >#{proyectoAulaController.proyecto.titulo}</h3>
+                                            <p class="inplace-p" >
+                                                #{proyectoAulaController.proyecto.problematica}
+                                            </p>
+                                        </div>
+                                        <div class="info-proyecto">
+                                            <div class="info-tittle">Infórmacion del proyecto</div>
+                                            <div class="info-data">
+                                                <div class="info-data-item">
+                                                    <div>
+                                                        <i class="ri-qr-code-line"></i>
+                                                        Código Proyecto:
+                                                    </div>
+                                                    <p>#{proyectoAulaController.proyecto.codigo}</p>
 
-                        </p:panel>
-                    </p:tab>
+                                                </div>
+                                                <div class="info-data-item">
+                                                    <div>
+                                                        <i class="ri-medal-2-line"></i>
+                                                        Semestre- Seccion:
+                                                    </div>
+                                                    <p>#{proyectoAulaController.proyecto.seccion.semestre.denominacion} - #{proyectoAulaController.proyecto.seccion.denominacion}</p>
+                                                </div>
+                                            </div>
+                                            <div class="espaceador"></div>
+                                        </div>
 
-                    <p:tab title="Proyectos Por Semestre">
-                        <p:chart type="bar"  model="#{reportesController.barMProyectos}">
+                                        <div class="info-proyecto">
+                                            <div class="info-tittle">Establezca la fecha del proyecto</div>
+                                            <div class="info-data">
+                                                <div class="info-data-item">
+                                                    <div>
+                                                        <i class="ri-calendar-todo-fill"></i>
+                                                        Fecha Inicial:
+                                                    </div>
+                                                    <p:calendar   value="#{proyectoAulaController.proyecto.fecha_inicio}" />
+                                                </div>
+                                                <div class="info-data-item">
+                                                    <div>
+                                                        <i class="ri-calendar-todo-fill"></i>
+                                                        Fecha Final:
+                                                    </div>
+                                                    <p:calendar   value="#{proyectoAulaController.proyecto.fecha_finalizacion}" />
+                                                </div>
+                                            </div>
+                                            <div class="espaceador"></div>
+                                        </div>
+                                    </div>
+                                </p:tab>
+                                <p:tab title="items del proyecto">
+                                    <p:dataTable scrollable="true" var="items" value="#{proyectoAulaController.proyecto.itenes_Proyecto}">
+                                        <p:column headerText="Tipo"> 
+                                            #{items.tipo.nombre}
+                                        </p:column>
+                                        <p:column headerText="Contenido"> 
+                                            <div class="btn-p">
+                                                <i class="ri-eye-line"></i>
+                                                <label>Ver</label>
+                                                <p:commandButton value="Show" class="btn" type="button" icon="pi pi-external-link" onclick="PF('#{items.id}').show()"/>
+                                            </div>
+                                            <p:dialog header="#{items.tipo.nombre}" widgetVar="#{items.id}" minHeight="40" width="350" showEffect="fade">
+                                                <p class="m-0">#{items.contenido}</p>
+                                            </p:dialog>
+                                        </p:column>
+                                        <p:column headerText="Fecha Creacion"> 
+                                            #{items.fecharegistro}
+                                        </p:column>
+                                        <p:column headerText="Ultima Modificacion"> 
+                                            #{items.fechamodificacion}
+                                        </p:column>
+                                        <p:column headerText="Autor/Editor"> 
+                                            #{items.editor.estudiante.toString()}
+                                        </p:column>                                
+                                    </p:dataTable>
+                                </p:tab>
+                            </p:tabView>
+                        </p:tab>
 
-                        </p:chart>
+                        <p:tab title="Proyectos Por Semestre">
+                            <p:chart type="bar"  model="#{reportesController.barMProyectos}">
 
-                    </p:tab>
-                </p:tabView>
+                            </p:chart>
+
+                        </p:tab>
+                    </p:tabView>
+                </div>
 
             </div>
         </section>

@@ -10,46 +10,55 @@
         <p:panel rendered="#{!avanceController.mostPrevision}">
             <p:accordionPanel value="#{fasesController.fases}" var="fase">
                 <p:tab title="#{fase.toString()}">
-                    <div class="contavanc">
-                        <div class="cdes">
-                            <p:inputTextarea placeholder="Descripcion del avance" cols="100" value="#{avanceController.avanceFase(fase).descripcion}" />
-                        </div>
-                        <div class="centr">
-                            <p:dataTable scrollHeight="100px" class="tabla-reporte" var="entr" value="#{avanceController.avanceFase(fase).entregables}">
-                                <p:column headerText="Fecha-Entrega">
-                                    #{entr.fechaEntrega}
-                                </p:column>
-                                <p:column headerText="Asignatura">
-                                    #{entr.asignatura.nombre}
-                                </p:column>
-                                <p:column headerText="Descripcion">
-                                    #{entr.descripcion}
-                                </p:column>
-                                <p:column headerText="%Desarrollo">
-                                    #{entr.porcentajeAutoevaluacion}%
-                                </p:column>
-                                <p:column headerText="Estado">
-                                    #{entr.estado}
-                                </p:column>
-                                <p:column headerText="Archivo">
-                                    <h:commandLink action="#{avanceController.descargar(entr)}" >
-                                        <h:graphicImage title="#{entr.nombreArchivo}.#{avanceController.conversor(entr.extencionArchivo)}" class="logo-unico" value="/Imagenes/Extenciones/#{avanceController.conversor(entr.extencionArchivo)}.png"/>                                    
-                                    </h:commandLink>
-                                </p:column>
-                                <p:column headerText="Valoracion">
-                                    <h:outputText value="#{entr.porcentajeEjecucion}%"/>
-                                </p:column>
-                                <p:column headerText="Observaciones">
-                                    <h:outputText value="#{entr.observaciones}%"/>
-                                </p:column>
-                                <p:column headerText="">
-                                    <h:commandButton disabled="#{!entr.esdeAsignatura(asignaturaController.asignatura)}" value="ver" action="#{avanceController.revisarEntregable(entr)}" />
-                                </p:column>         
-                            </p:dataTable>                           
-                        </div>
-                        <div class="cop">
+                    <div class="relative pb-2 mb-2">
+                        <h3>Descripcion del avance</h3>
+                        <small class="block mb-4 text-gray-600">#{avanceController.avanceFase(fase).descripcion}</small>  
+                        <div class="espaceador"></div>
+                    </div>
+                    <div class="centr">
+                        <p:dataTable  scrollable="true" class="tabla-reporte" var="entr" value="#{avanceController.avanceFase(fase).entregables}">
+                            <p:column headerText="Entrega">
+                                #{entr.fechaEntrega}
+                            </p:column>
+                            <p:column headerText="Asignatura">
+                                #{entr.asignatura.nombre}
+                            </p:column>
+                            <p:column headerText="Descripcion">
+                                #{entr.descripcion}
+                            </p:column>
+                            <p:column headerText="%Desarrollo">
+                                #{entr.porcentajeAutoevaluacion}%
+                            </p:column>
+                            <p:column headerText="Estado">
+                                #{entr.estado}
+                            </p:column>
+                            <p:column headerText="Archivo">
+                                <h:commandLink action="#{avanceController.descargar(entr)}" >
+                                    <h:graphicImage title="#{entr.nombreArchivo}.#{avanceController.conversor(entr.extencionArchivo)}" class="img" value="/Imagenes/Extenciones/#{avanceController.conversor(entr.extencionArchivo)}.png"/>                                    
+                                </h:commandLink>
+                            </p:column>
+                            <p:column headerText="Valoracion">
+                                <h:outputText value="#{entr.porcentajeEjecucion}%"/>
+                            </p:column>
+                            <p:column headerText="Observaciones">
 
-                        </div>                  
+                                <div class="btn-p">
+                                    <i class="ri-eye-line"></i>
+                                    <label>Ver</label>
+                                    <p:commandButton value="Show" class="btn" type="button" icon="pi pi-external-link" onclick="PF('#{entr.id}').show()"/>
+                                </div>
+                                <p:dialog header="Observación" widgetVar="#{entr.id}" minHeight="40" width="350" showEffect="fade">
+                                    <p class="m-0">#{entr.observaciones}%</p>
+                                </p:dialog>
+                            </p:column>
+                            <p:column >
+                                <div class="btn-normal" title="Seleccionar">
+                                    <i class="fa fa-hand-pointer"></i>
+                                    <h:commandButton rendered="#{entr.esdeAsignatura(asignaturaController.asignatura)}"  class="btn" value="+" action="#{avanceController.revisarEntregable(entr)}" />
+                                </div>
+                            </p:column>         
+                        </p:dataTable>                           
+
                     </div>
                 </p:tab>
             </p:accordionPanel> 
@@ -57,78 +66,84 @@
 
         </p:panel>
         <p:panel rendered="#{avanceController.mostPrevision}">
-            <div class="contRevicion">
-                <div class="cinfoEnt">
-                    <h1>#{avanceController.entregable.descripcion}</h1>
-                    <h3>Entregado:#{avanceController.entregable.fechaEntrega}</h3>
-                    <h3>Autoevaluacion: #{avanceController.entregable.porcentajeAutoevaluacion}</h3>
-                    <h3>Archivo:
-                    <h:commandLink action="#{avanceController.descargar(avanceController.entregable)}" >
-                        <h:graphicImage title="#{avanceController.entregable.nombreArchivo}.#{avanceController.conversor(avanceController.entregable.extencionArchivo)}" class="logo-unico" value="/Imagenes/Extenciones/#{avanceController.conversor(avanceController.entregable.extencionArchivo)}.png"/>                                    
-                    </h:commandLink></h3>
-                </div>
-                <div class="ccoment">
-                    <p:inputTextarea placeholder="Observaciones" cols="60" value="#{avanceController.entregable.observaciones}" />                    
-                </div>
-                <div class="cvalor">                    
-                    <p:knob width="150" foregroundColor="darkgreen" backgroundColor="#495057" max="100" min="0" value="#{avanceController.entregable.porcentajeEjecucion}"/>
-                </div>
-                <div class="cop1">
-                    <h:commandButton value="valorar" action="#{avanceController.valorarEntregable()}" />
-                </div>
-                <div class="cop2"> 
-                    <h:commandButton value="volver" action="#{avanceController.regresardeRevisar()}" />
-                </div>
-            </div>
+          
 
+            <div class="contRevicion">
+
+                <div >
+                    <div class="title-description-inplace">
+                        <div class="info-tittle">Descripción del entregable</div>
+                        <div class="info-data" >
+                            <div class="info-data-item">
+                                <div>
+                                    #{avanceController.entregable.descripcion}
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="info-proyecto">
+                        <div class="info-tittle">Infórmacion del entregable</div>
+                        <div class="info-data">
+                            <div class="info-data-item">
+                                <div>
+                                    <i class="ri-qr-code-line"></i>
+                                    Entregado:
+                                </div>
+                                <p>#{avanceController.entregable.fechaEntrega}</p>
+
+                            </div>
+                            <div class="info-data-item">
+                                <div>
+                                    <i class="ri-medal-2-line"></i>
+                                    Autoevaluacion: 
+                                </div>
+                                <p>#{avanceController.entregable.porcentajeAutoevaluacion}</p>
+                            </div>
+                        </div>
+                        <div class="espaceador"></div>
+                    </div>
+
+                    <div class="flex gap-6 align-items-center justify-content-center">
+                        <h:form >
+                            <p:textEditor style="max-width: 100%" placeholder="Observaciones" widgetVar="editor1"  value="#{avanceController.entregable.observaciones}" height="200" secure="false" />
+                        </h:form>
+                        <div class="flex flex-column justify-content-between">
+                            <div class="flex flex-column justify-content-center align-items-center p-2">
+                                <div class="w-3rem">
+                                    <h:commandLink action="#{avanceController.descargar(avanceController.entregable)}" >
+                                        <h:graphicImage title="#{avanceController.entregable.nombreArchivo}.#{avanceController.conversor(avanceController.entregable.extencionArchivo)}" class="img" value="/Imagenes/Extenciones/#{avanceController.conversor(avanceController.entregable.extencionArchivo)}.png"/>                                    
+                                    </h:commandLink>
+                                </div>
+
+                            </div>
+                            <div class="cvalor">                    
+                                <p:knob width="150" foregroundColor="darkgreen" backgroundColor="#495057" max="100" min="0" value="#{avanceController.entregable.porcentajeEjecucion}"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="btns-container justify-content-between">
+                        <div class="btn-s" title="seleccionar">
+                            <label>Volver</label>
+                            <h:commandButton class="btn" value="+" action="#{avanceController.regresardeRevisar()}" />
+                        </div>
+                        <div class="btn-p" title="seleccionar">
+                            <label>Valorar</label>
+                            <h:commandButton class="btn" value="+" action="#{avanceController.valorarEntregable()}" />
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
         </p:panel>
 
 
     </h:body>
 
     <style> 
-        .contavanc {  display: grid;
-                      grid-template-columns: 1000px 102px;
-                      grid-template-rows: 100px 180px;
-                      grid-auto-columns: 1fr;
-                      gap: 0px 0px;
-                      grid-auto-flow: row;
-                      justify-items: stretch;
-                      align-items: stretch;
-                      grid-template-areas:
-                          "cdes cdes"
-                          "centr cop";
-        }
-
-        .cdes { grid-area: cdes; }
-
-        .centr { grid-area: centr; }
-
-        .cop { grid-area: cop; }
-
-
-        .contRevicion {  display: grid;
-                         grid-template-columns: 200px 200px 200px 200px;
-                         grid-template-rows: 160px 160px;
-                         grid-auto-columns: 1fr;
-                         gap: 0px 0px;
-                         grid-auto-flow: row;
-                         justify-items: stretch;
-                         align-items: stretch;
-                         grid-template-areas:
-                             "cinfoEnt cinfoEnt cvalor cop1"
-                             "ccoment ccoment cvalor cop2";
-        }
-
-        .cinfoEnt { grid-area: cinfoEnt; }
-
-        .ccoment { grid-area: ccoment; }
-
-        .cvalor { grid-area: cvalor; }
-
-        .cop1 { grid-area: cop1; }
-
-        .cop2 { grid-area: cop2; }
 
 
     </style>

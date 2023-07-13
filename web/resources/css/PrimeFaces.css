@@ -47,6 +47,7 @@ body .ui-inputfield{
 }
 body .ui-panel .ui-panel-content{
     padding: 0 !important;
+    background-color: transparent !important;
 }
 
 

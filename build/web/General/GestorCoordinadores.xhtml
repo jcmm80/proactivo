@@ -10,86 +10,86 @@
     <h:body>
         <section class="contenido-contenedor">
             <div class="contenedor mt-4">
+                <form>
+                    <div class="card">
+                        <div class="relative pb-2 mb-1">
+                            <h3 class="text-2xl mb-4">Crea Coordinadores</h3>
+                            <div class="espaceador"></div>
+                        </div>
+                        <div class="form">
+                            <div>
+                                <h4>Primer Nombre</h4>
+                                <p:inputText   value="#{coordinadorController.coordinador.primerNombre}" />
+                            </div>
+                            <div>
+                                <h4>Primer Apelldio</h4>
+                                <p:inputText  value="#{coordinadorController.coordinador.primerApellido}" />
+                            </div>
+                            <div>  
+                                <h4>Segundo Nombre</h4>
+                                <p:inputText  value="#{coordinadorController.coordinador.segundoNombre}" />
+                            </div>
+                            <div>
+                                <h4>Segundo Apellido</h4>
+                                <p:inputText  value="#{coordinadorController.coordinador.segundoApellido}" />
+                            </div>
+                            <div>
+                                <h4>Genero</h4>
+                                <p:selectOneRadio  value="#{coordinadorController.coordinador.genero}">
+                                    <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                                    <f:selectItem itemLabel="Femenino" itemValue="Femenino"/>
+                                </p:selectOneRadio>
+                            </div>
+                            <div></div>
+                            <div>
+                                <h4>Tipo Identificacion</h4>
+                                <p:selectOneRadio  value="#{coordinadorController.coordinador.tipo_ide}">
+                                    <f:selectItem itemLabel="TI" itemValue="TI"/>
+                                    <f:selectItem itemLabel="CC" itemValue="CC"/>
+                                    <f:selectItem itemLabel="CE" itemValue="CE"/>     
+                                </p:selectOneRadio>
+                            </div>
+                            <div>
+                                <h4>Identificacion</h4>
+                                <p:inputText  value="#{coordinadorController.coordinador.identificacion}" /> 
+                            </div>
+                            <div>
+                                <h4>Email</h4>
+                                <p:inputText   value="#{coordinadorController.coordinador.email}" />
+                            </div>
+                            <div>
+                                <h4>Telefono</h4>
+                                <p:inputText  value="#{coordinadorController.coordinador.telefono}" />
+                            </div>
+                            <div>
+                                <h4>Direccion</h4>
+                                <p:inputText  value="#{coordinadorController.coordinador.direccion}" />
+                            </div>  
 
-                <div class="card">
-                    <div class="relative pb-2 mb-1">
-                        <h3 class="text-2xl mb-4">Crea Coordinadores</h3>
-                        <div class="espaceador"></div>
+                        </div>
+                    </div>    
+                    <p:card style="margin-top: 0.5rem;">
+                        <h3 style="margin-bottom: 1rem">Configura El usuario y contraseña</h3>
+                        <div class="form" style="padding-bottom: 0">
+                            <div class="ui-inputgroup">
+                                <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
+                                <p:inputText value="#{coordinadorController.coordinador.login}" placeholder="Username"/>
+                            </div>
+                            <div class="ui-inputgroup">
+                                <div class="ui-inputgroup-addon"><i class="pi pi-lock"></i></div>
+                                <p:inputText value="#{coordinadorController.coordinador.password}" placeholder="Password"/>
+                            </div>
+                        </div>
+                    </p:card>
+
+
+                    <div class="btns-container" style="justify-content: right">
+                        <div class="btn-s">
+                            <label>Registrar</label>
+                            <p:commandButton   class="btn" action="#{coordinadorController.registrar()}" value="Registrar" />  
+                        </div>
                     </div>
-                    <div class="form">
-                        <div>
-                            <h4>Primer Nombre</h4>
-                            <p:inputText   value="#{coordinadorController.coordinador.primerNombre}" />
-                        </div>
-                        <div>
-                            <h4>Primer Apelldio</h4>
-                            <p:inputText  value="#{coordinadorController.coordinador.primerApellido}" />
-                        </div>
-                        <div>  
-                            <h4>Segundo Nombre</h4>
-                            <p:inputText  value="#{coordinadorController.coordinador.segundoNombre}" />
-                        </div>
-                        <div>
-                            <h4>Segundo Apellido</h4>
-                            <p:inputText  value="#{coordinadorController.coordinador.segundoApellido}" />
-                        </div>
-                        <div>
-                            <h4>Genero</h4>
-                            <p:selectOneRadio  value="#{coordinadorController.coordinador.genero}">
-                                <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
-                                <f:selectItem itemLabel="Femenino" itemValue="Femenino"/>
-                            </p:selectOneRadio>
-                        </div>
-                        <div></div>
-                        <div>
-                            <h4>Tipo Identificacion</h4>
-                            <p:selectOneRadio  value="#{coordinadorController.coordinador.tipo_ide}">
-                                <f:selectItem itemLabel="TI" itemValue="TI"/>
-                                <f:selectItem itemLabel="CC" itemValue="CC"/>
-                                <f:selectItem itemLabel="CE" itemValue="CE"/>     
-                            </p:selectOneRadio>
-                        </div>
-                        <div>
-                            <h4>Identificacion</h4>
-                            <p:inputText  value="#{coordinadorController.coordinador.identificacion}" /> 
-                        </div>
-                        <div>
-                            <h4>Email</h4>
-                            <p:inputText   value="#{coordinadorController.coordinador.email}" />
-                        </div>
-                        <div>
-                            <h4>Telefono</h4>
-                            <p:inputText  value="#{coordinadorController.coordinador.telefono}" />
-                        </div>
-                        <div>
-                            <h4>Direccion</h4>
-                            <p:inputText  value="#{coordinadorController.coordinador.direccion}" />
-                        </div>  
-
-                    </div>
-                </div>    
-                <p:card style="margin-top: 0.5rem;">
-                    <h3 style="margin-bottom: 1rem">Configura El usuario y contraseña</h3>
-                    <div class="form" style="padding-bottom: 0">
-                        <div class="ui-inputgroup">
-                            <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
-                            <p:inputText value="#{coordinadorController.coordinador.login}" placeholder="Username"/>
-                        </div>
-                        <div class="ui-inputgroup">
-                            <div class="ui-inputgroup-addon"><i class="pi pi-lock"></i></div>
-                            <p:inputText value="#{coordinadorController.coordinador.password}" placeholder="Password"/>
-                        </div>
-                    </div>
-                </p:card>
-
-
-                <div class="btns-container" style="justify-content: right">
-                    <div class="btn-s">
-                        <label>Registrar</label>
-                        <h:commandButton class="btn" action="#{coordinadorController.registrar()}" value="Registrar" />  
-                    </div>
-                </div>
-
+                </form>
 
                 <div class="card mb-4">
                     <div class="relative pb-2">

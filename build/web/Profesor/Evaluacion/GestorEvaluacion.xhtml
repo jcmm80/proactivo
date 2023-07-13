@@ -9,24 +9,32 @@
     <h:body>
 
         <section class="contenido-contenedor">
-            <div class="border contenedor top" >
-                <h1 class="tittle">Gestor de Evaluacion</h1>
-                <p:tabView activeIndex="#{evaluacionController.indTavEvaluacion}">
+            <div class=" contenedor top" >
+                <div class="relative pb-2 mb-2">
+                    <h3 class="text-2xl ">Gestor de Evaluacion</h3>
+                    <small class="block mb-4 text-gray-600">Una evaluación es un proceso sistemático y continuo que tiene como objetivo medir el progreso, el aprendizaje y el rendimiento de los estudiantes.</small>  
+                    <div class="espaceador"></div>
+                </div>
+                <p:tabView activeIndex="#{evaluacionController.indTavEvaluacion}" scrollable="true">
                     <p:tab title="Seccion">
-                        <p:dataGrid paginator="true"  var="sem" value="#{profesorController.semestresLider}">
-                            <div class="card img-negra">
-                                <figure >
-                                    <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
-                                </figure>
-                                <div class="contenido-grid">
-                                    <h2>#{sem.seccion.programa.nombre}</h2>
-                                    <span>Semestre #{sem.seccion.semestre.denominacion} -  Seccion #{sem.seccion.denominacion}</span>
-                                    <h3>Año #{sem.seccion.periodo.anio} - #{sem.seccion.periodo.numero}</h3>
+                        <p:dataView  multiViewState="true" gridIcon="pi pi-eye"  var="sem" value="#{profesorController.semestresLider}">
+                            <p:dataViewGridItem  columns="3"  >
+                                <div class="relative img-negra bg-black">
+                                    <div class="w-full h-full">
+                                        <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
+                                    </div>
+                                    <div class="contenido-grid text-white">
+                                       <h2>#{sem.seccion.programa.nombre}</h2>
+                                        <span>Semestre #{sem.seccion.semestre.denominacion} -  Seccion #{sem.seccion.denominacion}</span>
+                                        <h3>Año #{sem.seccion.periodo.anio} - #{sem.seccion.periodo.numero}</h3>
+                                    </div>
+                                    <h:commandButton   class="btn" value="Abrir" action="#{profesorController.seleccionarSeccionLider(sem)}" />
+                                </div> 
+                            </p:dataViewGridItem>
+                            
+                        </p:dataView>
 
-                                </div>
-                                <h:commandButton   class="btn" value="Abrir" action="#{profesorController.seleccionarSeccionLider(sem)}" />
-                            </div>  
-                        </p:dataGrid>
+
                     </p:tab>
                     <p:tab title="Asignaturas a Evaluar">
                         <p:panel>

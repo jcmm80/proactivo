@@ -9,57 +9,92 @@
     </h:head>
     <h:body>
         <section class="contenido-contenedor">
-            <div class="border contenedor top" >
-                <h1 class="tittle">Gestor de Fases (Ciclos)</h1>
-                <h:outputText value="Periodo: desde: #{fasesController.periodo.formattedFechaInicial} - Hasta: #{fasesController.periodo.formattedFechaFinal}" />
+            <div class=" contenedor top" >
+                <div class="card">
 
-                <p:panelGrid columns="1" >
+
+                    <div class="relative pb-2 mb-2">
+                        <h3 class="text-2xl ">Gestor de Fases (Ciclos)</h3>
+                        <small class="block mb-2 text-gray-600">Una fase o ciclo de corte se refiere a una etapa específica dentro del periodo en la cual se llevan a cabo revisiones y tutorías parciales para medir el progreso y el rendimiento de los proyectos desarrollados por los estudiantes.</small>  
+                        <div class="espaceador"></div>
+                        <div class="progress-bar"><div class="progress-tittle">
+                                <i class="ri-calendar-line"></i>
+                                Periodo :</div>
+                            <div>Desde: #{fasesController.periodo.formattedFechaInicial}</div>
+                            >
+                            <div>Hasta: #{fasesController.periodo.formattedFechaFinal}</div>
+                        </div>
+                    </div>
+
+
                     <p:panel rendered="#{fasesController.habilitarCreacion()}">
-                        <p:panelGrid columns="3">
-                            <p:panel id="panfi" header="Fecha Inicial" footer="Fecha Seleccionada: #{fasesController.formattedfechaIfase}">
+                        <div class="flex gap-5 justify-content-center align-items-center responsive-flex">
+
+                            <p:panel  id="panfi">
+                                <div class="relative pb-2 mb-2 text-center">
+                                    <h4>Fecha Inicial</h4>
+                                    <small class="block  text-gray-600">Fecha Seleccionada: #{fasesController.formattedfechaIfase}</small>  
+                                </div>
                                 <p:calendar value="#{fasesController.fechaIfase}"  pages="1"  navigator="true" mode="online"
                                             mindate="#{fasesController.fechaInicialdisponible}" maxdate="#{fasesController.fechaFinaldisponible}">
                                     <p:ajax event="dateSelect"  update="panfi" />
 
                                 </p:calendar> 
                             </p:panel>
-                            <p:panel id="panff" header="Fecha Final" footer="Fecha Seleccionada: #{fasesController.formattedfechaFfase}" >
+                            <p:panel id="panff" >
+                                <div class="relative pb-2 mb-2 text-center">
+                                    <h4>Fecha Final</h4>
+                                    <small class="block text-gray-600">Fecha Seleccionada: #{fasesController.formattedfechaFfase}</small>  
+                                </div>
                                 <p:calendar value="#{fasesController.fechaFfase}" title="Fecha Final" pages="1"  navigator="true" mode="online"
                                             mindate="#{fasesController.fechaInicialdisponible}" maxdate="#{fasesController.fechaFinaldisponible}">
                                     <p:ajax event="dateSelect"  update="panff" /></p:calendar>  
                             </p:panel>
 
-                            <p:panelGrid columns="1">
-                                <p:panel>
-                                    Numero de Fase Disponible: #{fasesController.numero}
-                                </p:panel>
-                                <h:commandButton value="aceptar" action="#{fasesController.agregar()}" />
-                            </p:panelGrid>
-                            
-                        </p:panelGrid>
+                        </div>
+                        <h4 class="text-center info-tittle mt-2" >Numero de Fase Disponible: #{fasesController.numero}</h4>
+
+
+
+                        <div class="btns-container justify-content-end">
+                            <div class="btn-p" title="seleccionar">
+                                <label>Agregar</label>
+                                <h:commandButton class="btn" value="+"  action="#{fasesController.agregar()}"  />
+                            </div>
+                        </div>
+
+
 
                     </p:panel>
 
                     <p:panel>
-                        <p:dataTable var="fas" value="#{fasesController.fases}">
-                            <p:column>
+                        <p:dataTable var="fas"  value="#{fasesController.fases}">
+                            <p:column headerText="Fase">
                                 #{fas.numero}
                             </p:column>
-                            <p:column>
-                                <p:calendar value="#{fas.fechaInicial}" readonly="true"  />
+                            <p:column headerText="Inicio">
+                                #{fas.fechaInicial}
                             </p:column>
-                            <p:column>
-                                <p:calendar value="#{fas.fechaFinal}" readonly="true" />
+                            <p:column headerText="Final">
+                                #{fas.fechaFinal}
                             </p:column>
-                            <p:column>
-                                <h:commandButton value="seleccionar" action="#{fasesController.seleccionar(fas)}" />
-                                <h:commandButton value="eliminar" action="#{fasesController.eliminarFase(fas)}" rendered="#{fasesController.habilitarELiminar(fas)}" />
+                            <p:column headerText="Opciones">
+                                <div class="btn-normal" title="seleccionar">
+                                    <i class="fa fa-hand-pointer"></i>
+                                    <h:commandButton class="btn" value="+" action="#{fasesController.seleccionar(fas)}" />
+                                </div>
+                                <p:panel class="inline-flex" rendered="#{fasesController.habilitarELiminar(fas)}" >
+                                    <div class="btn-normal"  >
+                                        <i class="ri-delete-bin-line"></i>
+                                        <h:commandButton class="btn" value="+" action="#{fasesController.eliminarFase(fas)}"  />
+                                    </div>
+                                </p:panel>
                             </p:column>
                         </p:dataTable>
 
                     </p:panel>
 
-                </p:panelGrid>
+                </div>
 
             </div>
         </section>

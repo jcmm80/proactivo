@@ -50,7 +50,7 @@
                         <small class=" text-gray-600 mb-2">Selecciona un coordinador</small>
                         <div class="espaceador"></div> 
                     </div>
-                    <p:dataView  multiViewState="true" gridIcon="pi pi-eye"   var="prof" value="#{profesorController.profesores}">
+                    <p:dataView  multiViewState="true" gridIcon="pi pi-eye"  var="prof" value="#{profesorController.profesores}">
                         <p:dataViewGridItem  columns="4"  >
                             <div class="cdppa">
                                 <h:commandButton class="cdpbtn" value="seleccionar" action="#{programaController.seleccionarCoordinadorPA(prof)}" />
@@ -82,6 +82,7 @@
          .id-carta{
             background-color: var(--first-color-c) !important;
         }
+
     </style>
 
 </xhtml>

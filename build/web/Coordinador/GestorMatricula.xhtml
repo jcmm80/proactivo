@@ -31,7 +31,7 @@
                                 <p:column headerText="Tipo de Identificacion">
                                     #{est.tipo_ide}
                                 </p:column>
-                                <p:column headerText="estado">
+                                <p:column headerText="estado" sortBy="#{est.estado}">
                                     #{est.estado}
                                 </p:column>
                                 <p:column filterBy="#{est.identificacion}" sortBy="#{est.identificacion}" headerText="Identificacion">

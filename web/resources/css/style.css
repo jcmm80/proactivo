@@ -132,9 +132,7 @@
     position: relative;
 }
 .cdppa:hover{
-
     background-color: #C5BCBC;
-
 }
 .cdpbtn{
     border: none;
@@ -247,6 +245,7 @@
     position:absolute;
     right: 0;
     top: 25px;
+    z-index: 100;
 
 }
 
@@ -374,9 +373,7 @@
 }
 
 
-.none{
-    display: none;
-}
+
 
 .contenido-move{
     translate: 263px;

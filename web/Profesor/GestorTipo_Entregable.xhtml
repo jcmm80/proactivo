@@ -10,70 +10,87 @@
     <h:body>
         <section class="contenido-contenedor">
             <div class=" contenedor top">
-                <p:card>
-                    <h1 class="tittle">Gestor Tipo de Entregable</h1>
+                <div class="card">
 
-                    <p:panelGrid columns="1">
-                        <p:panel>
-                            <p:dataGrid class="periodos" var="asig" columns="4" rows="8" paginator="true" pageLinks="" value="#{asignaturaController.asignaturas}" >
-                                <div class="cdppa">
-                                    <h:commandButton class="cdpbtn" value="seleccionar" action="#{tipo_EntregableController.seleccionarAsignatura(asig)}" />
-                                    <div class="id-carta"><span>#{asig.codigo}</span></div>
-                                    <div class="img-nombre">
-                                        <div ><p:graphicImage value="/Imagenes/Asignaturas/iasignatura.png" style="width: 80px;height: 80px; margin-left: 5px; border-radius: 50px;"  /> </div>
-                                        <div style="margin-left: 10px;">
-                                            <h:outputText value="#{asig.nombre}" /><br></br>
-                                            <h:outputText value="Creditos: #{asig.creditos}" /><br></br>
-                                            <h:outputText value="#{asig.area.nombre}" /><br></br>
-                                            <h:outputText value="#{asig.seccion.semestre.denominacion} - #{asig.seccion.denominacion}" />
-                                        </div> 
+
+                    <div class="relative pb-2 mb-2">
+                        <h3 class="text-2xl ">Gestor Tipo de Entregable</h3>
+                        <small class="block mb-4 text-gray-600">Un tipo entregable se refiere a la clasificación o categoría de los diferentes elementos o documentos que se deben presentar como parte del avance del proyecto</small>  
+                        <div class="espaceador"></div>
+                    </div>
+
+                    <p:tabView>
+                        <p:tab title="Elige Asinatura">
+                            <p:dataView  multiViewState="true" listIcon="pi pi-eye" var="asig" value="#{asignaturaController.asignaturas}">
+                                <p:dataViewListItem >
+                                    <div class="p-4 flex justify-content-between card mb-1 responsive-flex cdppa">
+                                        <h:commandButton class="btn" value="seleccionar" action="#{tipo_EntregableController.seleccionarAsignatura(asig)}" />
+                                        <div>
+                                            <div class="mb-2">
+                                                <h4>Asignatura</h4>
+                                                <p>#{asig.nombre}</p>
+                                            </div>
+                                            <div class="mb-1">
+                                                <h4><i class="fas fa-credit-card mr-1"></i>créditos : #{asig.creditos}</h4> 
+                                            </div>
+
+                                            <div >
+                                                <small>#{asig.area.nombre}</small>
+                                            </div>
+
+                                        </div>
+                                        <div class="flex flex-column gap-2">
+                                            <small>#{asig.seccion.programa.nombre}</small>
+                                            <h4>#{asig.seccion.semestre.denominacion} - #{asig.seccion.denominacion}</h4>
+                                        </div>
                                     </div>
-                                    <div class="contrato-carta"><span>#{asig.seccion.programa.nombre}</span></div>
+                                </p:dataViewListItem>
+
+                            </p:dataView>
+                        </p:tab>
+                        <p:tab title="Crear TE">
+                            <div class="relative pb-2 mb-2">
+                                <small class="block mb-2 text-gray-600"  >Crear Tipo De Entregable para la asignatura: <span style="color: var(--first-color-p);">#{tipo_EntregableController.asignatura.nombre}</span></small>
+
+                            </div>
+                            <div class="form" >
+                                <div >
+                                    <h4>Nombre</h4>
+                                    <p:inputText  value="#{tipo_EntregableController.tipo_entregable.nombre}" />
                                 </div>
-                            </p:dataGrid>
-                        </p:panel>
-                        <p:panel>
-                            <p:dataTable class="tabla-reporte" var="per" value="#{tipo_EntregableController.tipos_Entregable}" >
+
+                                <div >
+                                    <h4 >Descripcion</h4>
+                                    <p:inputTextarea class="w-full"  value="#{tipo_EntregableController.tipo_entregable.descripcion}"/>
+                                </div>
+                            </div>
+                            <div class="btns-container justify-content-end">
+                                <div class="btn-p">
+                                    <label>Agregar</label>
+                                    <h:commandButton class="btn " value="agregar" action="#{tipo_EntregableController.registrarTipo_Entregable()}" />
+                                </div>  
+                            </div>
+                        </p:tab>
+                        <p:tab title="TE Creados">
+                            <p:dataTable scrollable="true" var="te" value="#{tipo_EntregableController.tipos_Entregable}" >
                                 <p:column headerText="Nombre">
-                                    #{per.nombre}
+                                    #{te.nombre}
+
                                 </p:column>
                                 <p:column headerText="Descripcion">
-                                    #{per.descripcion}
+                                    #{te.descripcion}
                                 </p:column>
                                 <p:column headerText="Eliminar">
-                                    <div class="Acciones">
-                                        <div class="accion">
-                                            <i class="uil uil-trash-alt" style="color: red; font-size: 25px"></i>
-                                            <h:commandButton class="icono" value="Eliminar" action="#{tipo_EntregableController.eliminartipo_Entregable(per)}" />
-                                        </div>
-                                    </div>                        
+                                    <div class="btn-normal">
+                                        <i class="uil uil-trash-alt"></i>
+                                        <h:commandButton class="btn" value="Eliminar" action="#{tipo_EntregableController.eliminartipo_Entregable(te)}" />
+                                    </div>
                                 </p:column>
                             </p:dataTable>  
-                        </p:panel>
-                    </p:panelGrid>
+                        </p:tab>
+                    </p:tabView>
 
-                    <span class="aviso">Crear Tipo De Entregable para la asignatura: #{tipo_EntregableController.asignatura.nombre}</span>
-                    <div class="contenedor-form periodos" style="align-items: center">
-                        <div class="form-izq">
-                            <div class="input-form-310">
-                                Nombre
-                                <p:inputText class="iform" value="#{tipo_EntregableController.tipo_entregable.nombre}" />
-                            </div>
-
-                        </div>
-                        <div class="form-dere">
-                            <div class="input-form-410">
-                                Descripcion
-                                <p:inputTextarea  class="iform" value="#{tipo_EntregableController.tipo_entregable.descripcion}"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tanone">
-                        <h:commandButton class="boton " value="agregar" action="#{tipo_EntregableController.registrarTipo_Entregable()}" />
-
-                    </div>   
-
-                </p:card>
+                </div>
             </div>
         </section>
     </h:body>
