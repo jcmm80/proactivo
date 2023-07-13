@@ -52,6 +52,7 @@
     border: 1px solid var(--first-color-e);
     transition: background-color .3s ease-out;
     color: var(--first-color-e);
+    justify-content: center;
 }
 .btn-e:hover{
     background-color: var(--first-color-e);
@@ -67,6 +68,7 @@
     border: 1px solid var(--first-color-p);
     transition: background-color .3s ease-out;
     color: var(--first-color-p);
+    justify-content: center;
 }
 .btn-p:hover{
     background-color: var(--first-color-p);
@@ -82,6 +84,7 @@
     border: 1px solid var(--first-color-c);
     transition: background-color .3s ease-out;
     color: var(--first-color-c);
+    justify-content: center;
 }
 .btn-c:hover{
     background-color: var(--first-color-c);
@@ -98,6 +101,7 @@
     border: 1px solid var(--first-color-s);
     transition: background-color .3s ease-out;
     color: var(--first-color-s);
+    justify-content: center;
 }
 .btn-s:hover{
     background-color: var(--first-color-s);

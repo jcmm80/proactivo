@@ -5,7 +5,7 @@
 .contenedor{
     width: 95%;
     margin: auto;
-    
+
 }
 .top{
     margin-top: 20px;
@@ -23,7 +23,7 @@
 .logo-proac-container{
     display: flex;
     align-items: center;
-    
+
 }
 .seleccionador {
     position: relative;
@@ -117,6 +117,8 @@
     justify-content:center;
 
 }
+
+
 .cdc{
     display: flex;
     background-color: #EEEEEE;
@@ -399,7 +401,8 @@
     display: flex;
     align-items: center;
     overflow-x: scroll;
-    
+    min-height: 100vh;
+
 
 }
 .border{ 
@@ -767,8 +770,11 @@
     flex-direction: column;
     column-gap: 0.5rem;
     text-align: left;
-    color: white;
-
+    color: white ;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    padding: 1rem;
 }
 .card{
     position: relative;
@@ -953,7 +959,7 @@
 }
 
 .periodos{
-   
+
 }
 
 .codseitem{

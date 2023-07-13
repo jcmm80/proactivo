@@ -58,10 +58,51 @@
                                     <span>Semestre #{sec.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
                                     <h3>Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
 
+<<<<<<< HEAD
                                 </div>
                                 <h:commandButton   class="btn" value="Abrir" action="#{asignaturaController.agregarSeccion(sec)}" />
                             </div> 
                         </p:dataGrid>
+=======
+                        <p:dataView  multiViewState="true" gridIcon="pi pi-eye" var="sem"  value="#{semestreController.semestres}">
+                            <p:dataViewGridItem  columns="4"  >
+                                <div class="relative img-negra bg-black" >
+                                    <div class="w-full h-full">
+                                        <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
+                                    </div>
+                                    <div class="contenido">
+                                        <p>Semestre <br></br>#{sem.denominacion}</p>
+                                    </div>
+                                    <h:commandButton   class="btn" value="Abrir" action="#{asignaturaController.seleccionarSemestre(sem,1)}" />
+                                </div>
+                            </p:dataViewGridItem>
+                            
+                        </p:dataView>
+                        <div class="mt-4">
+                            <div class="relative pb-2 mb-2">
+                                <h3 class="text-lg ">Secciones</h3>
+                                <small class="block mb-4 text-gray-600">una sección o curso se refiere a un grupo específico de estudiantes que cursan unas asignaturas alrededor de un núcleo problémico.</small>  
+                                <div class="espaceador"></div>
+                            </div>   
+                            <p:dataView  multiViewState="true" gridIcon="pi pi-eye" listIcon="pi pi-bars" var="sec" value="#{asignaturaController.secciones}">
+                                <p:dataViewGridItem  columns="3"  >
+                                    <div class="relative img-negra bg-black">
+                                        <div class="w-full h-full">
+                                            <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
+                                        </div>
+                                        <div class="contenido-grid">
+                                            <h2 class="text-white">#{sec.programa.nombre}</h2>
+                                            <span>Semestre #{sec.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
+                                            <h3 class="text-white">Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
+                                        </div>
+                                        <h:commandButton   class="btn" value="Abrir" action="#{asignaturaController.agregarSeccion(sec)}" />
+                                    </div> 
+                                </p:dataViewGridItem>
+                                
+                            </p:dataView>
+                        </div>
+
+>>>>>>> e91aa172b276db175211aef9ca2f00e5d5f241fe
 
                     </p:tab>
                     <p:tab  title="Area">
@@ -116,6 +157,7 @@
                             </div>
                         </div>
 
+<<<<<<< HEAD
                         <p:panel>
                             <p:dataTable rows="8" paginator="true" class="tabla-reporte" style="font-size: 10pt" var="asig" value="#{asignaturaController.asignaturasp}">
                                 <p:column headerText="Codigo">
@@ -140,6 +182,39 @@
                             </p:dataTable>
                         </p:panel>
 
+=======
+                        <p:dataTable rows="8" paginator="true" scrollable="true" style="font-size: 10pt" var="asig" value="#{asignaturaController.asignaturasp}">
+                            <p:column headerText="Codigo">
+                                #{asig.codigo}
+                            </p:column>
+                            <p:column headerText="Nombre">
+                                #{asig.nombre}
+                            </p:column>
+                            <p:column headerText="Descripcion">
+                                #{asig.nombreCorto}
+                            </p:column>
+                            <p:column headerText="Creditos">
+                                #{asig.creditos}
+                            </p:column>
+                            <p:column headerText="Seccion">
+                                #{asig.seccion.semestre.denominacion} - #{asig.seccion.denominacion}
+                            </p:column>
+                            <p:column  class="text-center" headerText="Opciones">
+                                <div class="btn-normal">
+                                    <i class="fa fa-hand-pointer"></i>
+                                    <h:commandButton class="btn" value="+" action="#{asignaturaController.agregarAsignatura(asig)}" />
+                                </div>
+                                <div class="btn-normal">
+                                    <i class="ri-search-line"></i>
+                                    <h:commandButton class="btn" action="#{asignaturaController.consultarAsignatura(asig)}" value="consultar" />
+                                </div>
+                                <div class="btn-normal">
+                                    <i class="ri-delete-bin-line"></i>
+                                    <h:commandButton class="btn" action="#{asignaturaController.eliminar(asig)}" value="x"  />
+                                </div>
+                            </p:column>    
+                        </p:dataTable>
+>>>>>>> e91aa172b276db175211aef9ca2f00e5d5f241fe
 
                     </p:tab>
                     <p:tab  title="Malla Curricular">

@@ -2,16 +2,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Lemon&family=Poppins:wght@400;500;600;700&display=swap');
 
 :root {
-    
-    
-    
+
+
+
     --header-height: 3rem;
 
     --first-color-e: #5086c1;
     --first-color-p: #5dc460;
     --first-color-c: #ffa44d;  
     --first-color-s: #ff6961;
-    
+
     --color-second-e: #b2dafa;
     --color-second-p: #a5eea0;
     --color-second-c: #FFDC82;
@@ -24,7 +24,7 @@
     /*========== Font and typography ==========*/
     --body-font: 'Poppins', sans-serif;
     --second-font: 'Lemon', cursive;
- 
+
 
     /* .5rem = 8px, 1rem = 16px, 1.5rem = 24px ... */
     --big-font-size: 2rem;
@@ -77,14 +77,14 @@
 
 html {
     scroll-behavior: smooth;
-    
+
 }
 
 body {
-    
+
     font-size: var(--normal-font-size);
     color: var(--text-color);
-    
+
 }
 
 h1, h2, h3, h4 {
@@ -126,4 +126,18 @@ a {
     display: grid;
     gap: 2rem;
 }
+@media screen and (max-width: 767px) {
+    .form{
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 1rem;
+        position: relative;
+        padding-bottom: 2rem;
+    }
+    .responsive-flex{
+      flex-direction: column;
+      gap: .5rem;
+    }
+}
+
 

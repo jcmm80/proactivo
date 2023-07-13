@@ -8,44 +8,46 @@
     </h:head>
     <h:body>
         <section class="contenido-contenedor">
-            <div class="border contenedor top">
-                <h1 class="tittle">Gestor de Usuarios</h1>
-                <div class="contgusu">
-                    <div class="lnom">Nombre</div>
-                    <div class="cnom">
-                        <h:outputText value="#{usuarioController.usuarioTemp.primerNombre} #{usuarioController.usuarioTemp.segundoNombre}" />
+            <div class="contenedor top">
+                <div class="card">
+                    <div class="relative pb-2 mb-1">
+                        <h3 class="text-2xl">Gestor Usuarios</h3>
+                        <small class="block mb-4 text-gray-600">Restablece Correo, Usuario y Constraseña pulsando el boton de seleccionar. </small>  
+                        <div class="espaceador"></div>
                     </div>
-                    <div class="lape">Apellido</div>
-                    <div class="cape">
-                        <h:outputText value="#{usuarioController.usuarioTemp.primerApellido} #{usuarioController.usuarioTemp.segundoApellido}" />
+                    <div class="form">
+                        <div ><h4>Tipo</h4><h:outputText value="#{usuarioController.usuarioTemp.tipo}" /></div>
+                        <div class="cide"><h4>Identificacion</h4><h:outputText value="#{usuarioController.usuarioTemp.identificacion}" /></div>
+                        <div ><h4>Nombre</h4><h:outputText value="#{usuarioController.usuarioTemp.primerNombre} #{usuarioController.usuarioTemp.segundoNombre}" /></div>
+                        <div ><h4>Apellido</h4> <h:outputText value="#{usuarioController.usuarioTemp.primerApellido} #{usuarioController.usuarioTemp.segundoApellido}" /></div>
                     </div>
-                    <div class="lusu">Usuario</div>
-                    <div class="clog">
-                        <p:inputText value="#{usuarioController.usuarioTemp.login}" />
+                </div>
+                <p:card style="margin-top: 0.5rem;">
+                    <h3 style="margin-bottom: 1rem">Restablecer</h3>
+                    <div class="form" style="padding-bottom: 0">
+                        <div class="ui-inputgroup">
+                            <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
+                            <p:inputText value="#{usuarioController.usuarioTemp.login}" placeholder="Username"/>
+                        </div>
+                        <div class="ui-inputgroup">
+                            <div class="ui-inputgroup-addon"><i class="pi pi-lock"></i></div>
+                            <p:inputText value="#{usuarioController.usuarioTemp.password}" placeholder="Password"/>
+                        </div>
+                        <div class="ui-inputgroup">
+                            <div class="ui-inputgroup-addon"><i class="pi pi-envelope"></i></div>
+                            <p:inputText value="#{usuarioController.usuarioTemp.email}" placeholder="Email"/>
+                        </div>
                     </div>
-                    <div class="lcon">Contraseña</div>
-                    <div class="ccon">
-                        <p:inputText value="#{usuarioController.usuarioTemp.password}" />
-                    </div>
-                    <div class="ltusu">Tipo</div>
-                    <div class="ctusu">
-                        <h:outputText value="#{usuarioController.usuarioTemp.tipo}" />
-                    </div>
-                    <div class="lide">Identificacion</div>
-                    <div class="cide">
-                        <h:outputText value="#{usuarioController.usuarioTemp.identificacion}" />
-                    </div>
-                    <div class="lema">Email</div>
-                    <div class="cema">
-                        <p:inputText value="#{usuarioController.usuarioTemp.email}" />
-                    </div>
-                    <div class="opc">
-                        <h:commandButton value="Guardar" action="#{usuarioController.almacenarUsuario()}" />
+                </p:card>
+                <div class="btns-container justify-content-end">
+                    <div class="btn-s">
+                        <label>Guardar</label>
+                        <h:commandButton class="btn" value="Guardar" action="#{usuarioController.almacenarUsuario()}" />
                     </div>
                 </div>
 
                 <p:separator />
-                <p:dataTable paginator="true" rows="10" class="tabla-reporte" style="font-size: 10pt" var="usu" value="#{usuarioController.usuarios}">
+                <p:dataTable paginator="true" rows="10"  scrollable="true" var="usu" value="#{usuarioController.usuarios}">
                     <p:column headerText="Tipo de Identificacion">
                         #{usu.tipo_ide}
                     </p:column>
@@ -66,12 +68,10 @@
                     </p:column>                  
 
                     <p:column headerText="Seleccionar">
-                        <div class="Acciones">
-                            <div class="accion">
-                                <i class="fa fa-hand-pointer" style="color: #005CB9"></i>
-                                <h:commandButton value="+" class="icono" action="#{usuarioController.seleccionarUsuario(usu)}" />
+                            <div class="btn-normal">
+                                <i class="fa fa-hand-pointer"></i>
+                                <h:commandButton value="+" class="btn" action="#{usuarioController.seleccionarUsuario(usu)}" />
                             </div>
-                        </div>                            
                     </p:column>
                 </p:dataTable>
 
@@ -80,49 +80,7 @@
         </section>
     </h:body>
     <style>
-        .contgusu {  display: grid;
-                     grid-template-columns: 150px 300px 150px 300px;
-                     grid-template-rows: 80px 80px 80px 80px;
-                     grid-auto-columns: 1fr;
-                     gap: 0px 0px;
-                     grid-auto-flow: row;
-                     align-content: center;
-                     grid-template-areas:
-                         "lnom cnom lape cape"
-                         "lusu clog lcon ccon"
-                         "ltusu ctusu lide cide"
-                         "lema cema opc opc";
-        }
 
-        .lnom { grid-area: lnom; }
-
-        .cnom { grid-area: cnom; }
-
-        .lape { grid-area: lape; }
-
-        .cape { grid-area: cape; }
-
-        .lusu { grid-area: lusu; }
-
-        .clog { grid-area: clog; }
-
-        .lcon { grid-area: lcon; }
-
-        .ccon { grid-area: ccon; }
-
-        .ltusu { grid-area: ltusu; }
-
-        .ctusu { grid-area: ctusu; }
-
-        .lide { grid-area: lide; }
-
-        .cide { grid-area: cide; }
-
-        .lema { grid-area: lema; }
-
-        .cema { grid-area: cema; }
-
-        .opc { grid-area: opc; }
 
     </style>
 </html>

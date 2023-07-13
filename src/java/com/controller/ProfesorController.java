@@ -1159,5 +1159,4 @@ public class ProfesorController implements Serializable {
         this.lideresXseccionPrograma = lideresXseccionPrograma;
     }
 
-
 }

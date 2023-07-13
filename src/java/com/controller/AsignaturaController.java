@@ -214,7 +214,8 @@ public class AsignaturaController implements Serializable {
                             asign = new Asignatura();
                         }
                     }
-                } else {
+
+                }else{
                     FacesUtil.addErrorMessage("No se puede almacenar asignatura: No hay secciones registradas para el semestre seleccionado.");
                 }
                 if (asignatura.getNombre() != null) {
@@ -245,6 +246,7 @@ public class AsignaturaController implements Serializable {
                 System.out.println("" + asi.toString());
             }
         }
+
         ordenarAsignaturasenSecciones(secciones);
         for (int i = 0; i < semests.size(); i++) {
             semests.get(i).setSecciones(new LinkedList());
@@ -258,6 +260,7 @@ public class AsignaturaController implements Serializable {
         System.out.println(secciones.size() + "  " + semests.size());
 
         return semests;
+
     }
 
     public void ordenarAsignaturasenSecciones(List<Seccion> seccions) {    
@@ -271,6 +274,7 @@ public class AsignaturaController implements Serializable {
                 }
             }
         }
+
     }
 
     public boolean existeSemestre(List<Semestre> semestres, Semestre s) {
