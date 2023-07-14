@@ -367,7 +367,14 @@ public class EvaluacionController implements Serializable {
     }
 
     public void consultarDimensionesProgramaAndPeriodoAndSemestre(LiderPA lpa) {
+//        System.out.println("-----------------------------\n");
+//        System.out.println("Periodo: "+lpa.getSeccion().getPeriodo());
+//        System.out.println("Programa: "+ lpa.getSeccion().getPrograma());
+//        System.out.println("Semestre: "+lpa.getSeccion().getSemestre());
+//        System.out.println("-----------------------------\n");
         dimencionesPeriodo = dimser.obtenerDimensionesXProgramaPeriodoSemestre(lpa.getSeccion().getPeriodo(), lpa.getSeccion().getPrograma(), lpa.getSeccion().getSemestre());
+        periodo=lpa.getSeccion().getPeriodo();
+//        System.out.println("----------------------------------\ndimensiones del periodo: "+dimencionesPeriodo.size()+"\n----------------------------");
     }
 
     public void obtenerEvaluacionXSeccion(Seccion s) {
@@ -625,6 +632,7 @@ public class EvaluacionController implements Serializable {
         for (Dimension d : dimencionesPeriodo) {
             if (!d.getTipo().equals("Global")) {
                 dimencionesPeriodoNoGlobales.add(d);
+                System.out.println("Dimencion preparada: "+d.getNombre());
             }
         }
     }

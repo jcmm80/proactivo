@@ -36,18 +36,19 @@
         
                 
                 
-                <p:dataTable class="tabla-reporte" var="per" value="#{tipo_itemController.tipos_Items}" >
+                <p:dataTable class="tabla-reporte" var="ti" value="#{tipo_itemController.tipos_Items}" >
                     <p:column headerText="Nombre">
-                        #{per.nombre}
+                        #{ti.nombre}
                       </p:column>
                     <p:column headerText="Descripcion">
-                        #{per.descripcion}
+                        #{ti.descripcion}
                      </p:column>
                     <p:column headerText="Eliminar">
                         <div class="Acciones">
                             <div class="accion">
                             <i class="uil uil-trash-alt" style="color: red; font-size: 25px"></i>
-                            <h:commandButton class="icono" value="Eliminar" action="#{tipo_itemController.eliminartipo_Item(per)}" />
+                            <h:commandButton class="icono" value="Eliminar" action="#{tipo_itemController.eliminartipo_Item(ti)}" />
+                            <h:commandButton class="btn-c" value="ver" action="#{tipo_itemController.seleccionarItem(ti)}" />
                         </div>
                         </div>
                         
@@ -63,4 +64,3 @@
        
 
 </html>
-

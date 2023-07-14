@@ -13,9 +13,11 @@ import com.entity.ProgramaAcademico;
 import com.entity.Proyecto_Aula;
 import com.entity.Seccion;
 import com.entity.Semestre;
+import com.entity.Usuario;
 import com.services.AreaServices;
 import com.services.CoordinadorServices;
 import com.services.SeccionServices;
+import com.services.UsuarioServices;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,6 +35,9 @@ public class CoordinadorController implements Serializable {
 
     private List<Coordinador> coordinadores = new LinkedList();
     private Coordinador coordinador = new Coordinador();
+    
+    private List<Usuario> usuarios = new LinkedList();
+    private Usuario usuario = new Usuario();
 
     // Areas
     private List<Area> areas = new LinkedList();
@@ -50,6 +55,8 @@ public class CoordinadorController implements Serializable {
     CoordinadorServices coordser = new CoordinadorServices();
     AreaServices areaser = new AreaServices();
     SeccionServices secser = new SeccionServices();
+    UsuarioServices user = new UsuarioServices();
+
 
     //Controllers
     @ManagedProperty("#{asignaturaController}")
@@ -248,15 +255,23 @@ public class CoordinadorController implements Serializable {
         areaser.eliminar(area);
         consultarAreas();
     }
-
+    
+   public void obtenerUsuarios() {
+        usuarios = user.consultarTodo(Usuario.class);
+    }
     public void registrar() {
-        if (coordinador.validarUsuario()) {
+        obtenerUsuarios();
+        if(coordinador.compararIdentificacion(usuarios, coordinador.getIdentificacion())){
+           
+        }else{
+          if (coordinador.validarUsuario()) {
             coordinador.setEstado("Activo");
             coordinador.setTipo("Coordinador");
             coordser.crear(coordinador);
             coordinador = new Coordinador();
             consultarCoordinadores();
         }
+        } 
     }
 
     public void registrarArea() {

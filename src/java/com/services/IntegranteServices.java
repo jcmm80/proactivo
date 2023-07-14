@@ -120,4 +120,21 @@ public class IntegranteServices extends ImplDao<Integrante, Long> implements IIn
         return integrantes;
     }
 
+     public void elimimarIntegrantesProyecto(Proyecto_Aula p) {
+        try {
+            EntityManager em = getEntityManagger();
+            em.getTransaction().begin();
+            String q = "delete from Integrante i where i.proyecto.id = ?1";
+            System.out.println(" Consulta: " + q);
+            Query qu = em.createQuery(q)
+                    .setParameter(1, p.getId());
+            qu.executeUpdate();
+            em.getTransaction().commit();
+            System.out.println("elimimarIntegrantesProyecto");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    
 }

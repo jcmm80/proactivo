@@ -36,6 +36,9 @@ public class ProgramaController implements Serializable {
 
     ProgramaAcademicoServices paserv = new ProgramaAcademicoServices();
     NucleoServices nucser = new NucleoServices();
+    
+    private int activeIndex = 0;
+    private int activeIcest = 0;
 
     /**
      * Creates a new instance of ProgramaController
@@ -142,6 +145,12 @@ public class ProgramaController implements Serializable {
      */
     public void setPrograma(ProgramaAcademico programa) {
         this.programa = programa;
+    }
+    
+      public void agregarPrograma(ProgramaAcademico pa) {
+        setPrograma(pa);
+        activeIndex = 2;
+        activeIcest = 1;
     }
 
     /**

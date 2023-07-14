@@ -69,7 +69,7 @@ public class Periodo implements Serializable {
         }
         }catch(java.lang.NullPointerException npe){
             valido = false;
-            FacesUtil.addErrorMessage("Debe ingresar las fechas  de inicio y nila del periodo");
+            FacesUtil.addErrorMessage("Debe ingresar las fechas  de inicio y final del periodo");
         }
         return valido;
     }

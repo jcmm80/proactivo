@@ -44,6 +44,11 @@ public class Tipo_itemController implements Serializable{
     
         }
     }
+    
+//    public boolean existeNombre(){
+//        
+//    }
+    
     public void eliminartipo_Item(Tipo_Item te){
         
         getTipiser().eliminar(te);
@@ -51,6 +56,10 @@ public class Tipo_itemController implements Serializable{
         
     }
         
+    public void seleccionarItem(Tipo_Item ti){
+        setTipo_item(ti);
+    }
+    
        public void consultarTipos_Items(){
            System.out.println("consulte los tipos de item");
            setTipos_Items(getTipiser().consultarTodo(Tipo_Item.class));
@@ -102,4 +111,3 @@ public class Tipo_itemController implements Serializable{
  
         
     }
-

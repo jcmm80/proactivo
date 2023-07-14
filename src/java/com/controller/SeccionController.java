@@ -30,7 +30,10 @@ public class SeccionController implements Serializable {
 
     private Seccion seccion = new Seccion();
     private Periodo periodo = new Periodo();
+    
+    private Semestre semestre = new Semestre();
     private List<Semestre> semestres = new LinkedList();
+    
     ProgramaAcademico programa = new ProgramaAcademico();
     private List<Seccion> secciones = new LinkedList();
 
@@ -39,6 +42,7 @@ public class SeccionController implements Serializable {
     MatriculaServices matser = new MatriculaServices();
 
     private boolean mostPCsecc = false;
+  
 
     /**
      * Creates a new instance of SeccionController
@@ -93,6 +97,7 @@ public class SeccionController implements Serializable {
     }
 
     public void seleccionarSemestre(Semestre sem) {
+        setSemestre(sem);
         seccion.setSemestre(sem);
     }
 
@@ -104,8 +109,10 @@ public class SeccionController implements Serializable {
                 obtenerseccionesPeriodo(seccion.getPrograma());
                 seccion = new Seccion();
                 seccion.setPrograma(programa);
+                semestre = null;
             } else {
                 FacesUtil.addErrorMessage("La seccion ya esta registrada");
+                semestre = null;
             }
         }
     }
@@ -182,6 +189,15 @@ public class SeccionController implements Serializable {
     /**
      * @return the semestres
      */
+    
+     public Semestre getSemestre() {
+        return semestre;
+    }
+     
+    public void setSemestre(Semestre semestre) {
+        this.semestre = semestre;
+    }
+   
     public List<Semestre> getSemestres() {
         return semestres;
     }

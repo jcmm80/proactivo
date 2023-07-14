@@ -154,6 +154,14 @@
                                     <div>
                                         #{matriculaController.matricula.seccion.periodo.anio}-#{matriculaController.matricula.seccion.periodo.numero}
                                     </div>
+                                    <i class="ri-calendar-fill"></i>
+                                    <div>
+                                    Semestre #{matriculaController.semestre.denominacion}
+                                    </div>
+                                    <i class="ri-calendar-fill"></i>
+                                    <div>
+                                        Sección #{matriculaController.seccion.denominacion}
+                                    </div>
                                 </div>
                             </div>
                             <p:dataView  multiViewState="true" gridIcon="pi pi-eye"   var="sem"  value="#{semestreController.semestres}">

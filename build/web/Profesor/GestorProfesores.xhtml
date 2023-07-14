@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <xhtml xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -101,11 +101,13 @@
                         <h3 class="text-2xl mb-4">Tabla de Profesores</h3>
                         <div class="espaceador"></div>
                     </div>
-                    <p:dataView var="prof" value="#{profesorController.profesores}" multiViewState="true" gridIcon="pi pi-eye" >
-                        <p:dataViewGridItem columns="4"  >
-                            <div>
-                                <div class="id-carta"><span>#{prof.identificacion}</span></div>
+                    <p:dataView var="prof" value="#{profesorController.profesores}" multiViewState="true" 
 
+                                gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+                        <p:dataViewGridItem columns="4"  >
+                            <div class="relative">
+                                <div class="id-carta"><span>#{prof.identificacion} </span></div>
+                                <h:commandButton class="btn" value="ver" action="#{profesorController.seleccionarProfesor(prof)}" />
                                 <div class="img-nombre">
                                     <div ><p:graphicImage value="/Imagenes/Perfiles/#{prof.imagenPerfil()}" style="width: 80px;height: 80px; margin-left: 5px; border-radius: 50px;"  /> </div>
                                     <div style="margin-left: 10px;">
@@ -115,9 +117,27 @@
                                 </div>
 
                                 <div class="contrato-carta"><span>#{prof.tipocontrato}</span></div>
-                               
+                                <!--<div>
+                                    <h:outputText value="" />
+                                 </div> !-->
                             </div>
                         </p:dataViewGridItem>
+                        <p:dataViewListItem>
+                            <div class="relative">
+                                <h:commandButton value="ver" action="#{profesorController.seleccionarProfesor(prof)}" />
+                                <div class="id-carta"><span>#{prof.identificacion}</span></div>
+                                
+                                <div class="img-nombre">
+                                    <div ><p:graphicImage value="/Imagenes/Perfiles/#{prof.imagenPerfil()}" style="width: 80px;height: 80px; margin-left: 5px; border-radius: 50px;"  /> </div>
+                                    <div style="margin-left: 10px;">
+                                        <h:outputText value="#{prof.primerNombre} #{prof.segundoNombre}" /><br></br>
+                                        <h:outputText value="#{prof.primerApellido} #{prof.segundoApellido}" />
+                                    </div> 
+                                </div>
+
+                                <div class="contrato-carta"><span>#{prof.tipocontrato}</span></div>
+                            </div>
+                        </p:dataViewListItem>
                     </p:dataView>
                 </div>
 
@@ -140,4 +160,3 @@
 
 
 </xhtml>
-

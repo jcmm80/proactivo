@@ -5,7 +5,9 @@
  */
 package com.entity;
 
+import com.controller.FacesUtil;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -71,6 +73,12 @@ public class Usuario implements Serializable {
         }
         if (this.primerApellido.equals("") || this.segundoApellido.equals("") || this.primerNombre.equals("")) {
             valido = false;
+        }
+        if (this.genero.equals("") || this.tipo_ide.equals("")) {
+            valido = false;
+        }
+        if(valido == false){
+            FacesUtil.addErrorMessage("Debe relllenar todos los campos");
         }
         return valido;
     }
@@ -316,6 +324,16 @@ public class Usuario implements Serializable {
      */
     public void setGenero(String genero) {
         this.genero = genero;
+    }
+    
+    public boolean compararIdentificacion(List<Usuario> usuarios, String newIdentificacion) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.getIdentificacion().equals(newIdentificacion)) {
+                FacesUtil.addErrorMessage("La identificación ingresada ya está en sistema");
+                return true;
+            }
+        }
+        return false;
     }
     
 }

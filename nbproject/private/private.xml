@@ -3,31 +3,32 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/web/Estudiante/GUIEstudiante.xhtml</file>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/web/resources/css/PrimeFaces.css</file>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/web/resources/css/style-menu.css</file>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/web/resources/css/botones.css</file>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/web/index.xhtml</file>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/web/Estudiante/PerfilEstudiante.xhtml</file>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/web/General/GestorCoordinadores.xhtml</file>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/web/General/GestorUsuarios.xhtml</file>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/web/General/GestorPeriodos.xhtml</file>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/web/META-INF/context.xml</file>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/web/Coordinador/GestorSecciones.xhtml</file>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/web/Profesor/GestorProfesorLider.xhtml</file>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/web/resources/js/menu.js</file>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/web/Profesor/GUIProfesor.xhtml</file>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/web/Estudiante/Gestor_Proyecto_Aula.xhtml</file>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/web/resources/css/root.css</file>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/web/resources/css/style.css</file>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/web/General/CargaMasiva.xhtml</file>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/web/Coordinador/GUICoordinador.xhtml</file>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/web/General/GestorProgramas.xhtml</file>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/web/resources/css/login.css</file>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/web/GUISuperUsuario.xhtml</file>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/web/PlantillaInicial.xhtml</file>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/src/conf/persistence.xml</file>
-            <file>file:/C:/Users/Roxana/Documents/proactivo/web/Coordinador/GestorAsignatura.xhtml</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/web/resources/css/botones.css</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/web/resources/css/login.css</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/web/resources/js/menu-vertical.js</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/src/java/com/entity/Periodo.java</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/web/Coordinador/AsignacionAcademica.xhtml</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/web/Coordinador/GestorSecciones.xhtml</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/src/java/com/controller/CoordinadorController.java</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/web/Profesor/GUIProfesor.xhtml</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/web/resources/css/style.css</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/web/General/GestorProgramas.xhtml</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/web/resources/css/style-menu.css</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/web/Coordinador/GestorAsignatura.xhtml</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/src/java/com/entity/Usuario.java</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/web/resources/css/root.css</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/web/Coordinador/AsignarCoordinacionPA.xhtml</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/src/java/com/controller/AsignaturaController.java</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/web/General/GestorCoordinadores.xhtml</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/src/java/com/controller/MatriculaController.java</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/src/java/com/controller/UsuarioController.java</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/web/Coordinador/GestorMatricula.xhtml</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/web/GUISuperUsuario.xhtml</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/web/index.xhtml</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/web/Profesor/Evaluacion/GestorEvaluacion.xhtml</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/src/java/com/controller/ProgramaController.java</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/web/resources/css/PrimeFaces.css</file>
+            <file>file:/C:/Users/sistemas/Desktop/proactivo/web/PlantillaInicial.xhtml</file>
         </group>
     </open-files>
 </project-private>

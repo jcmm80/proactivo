@@ -27,6 +27,7 @@
                         <span>Profesor</span>
                         <span>#{profesorController.profesor.toString()}</span>
                         <span>#{programaController.programa.nombre}</span>
+                        <span>#{periodoController.periodoActual.anio}-#{periodoController.periodoActual.numero}</span>
                     </div>
                     <div class="foto-perfil">
                         <h:commandButton action="#{profesorController.miperfil()}" class="mi-perfil" value="Perfil" />
@@ -77,6 +78,10 @@
                             <div class="linea"></div>
                             <div class="op-v"><h:commandButton value="Tipos de Item " class="botones-v" action="#{profesorController.gtipo_Item()}"></h:commandButton></div>
                         </div>
+                        <div class="cop">
+                            <div class="linea"></div>
+                            <div class="op-v"><h:commandButton  value="Gestor de Evaluaciones" class="botones-v" action="#{profesorController.gEvaluaciones()}"></h:commandButton></div>
+                        </div>
                     </h:panelGroup>            
                     <h:panelGroup layout="block" rendered="#{not empty profesorController.programa.coordinadorPA}">
                         <div class="cop">
@@ -85,24 +90,30 @@
                         </div>
                         <div class="cop">
                             <div class="linea"></div>
-                            <div class="op-v"><h:graphicImage value="/resources/img/libro.png"/><h:commandButton  value="Nucleos Problemicos" class="botones-v" action="#{profesorController.gNucleos()}"></h:commandButton></div>
+                            <div class="op-v"><h:commandButton  value="Nucleos Problemicos" class="botones-v" action="#{profesorController.gNucleos()}"></h:commandButton></div>
                         </div>
+
+                        <div class="cop">
+                            <div class="linea"></div>
+                            <div class="op-v"><h:commandButton value="Gestor Dimesiones" class="botones-v" action="#{profesorController.gDimensiones()}"></h:commandButton></div>
+                        </div>
+                        
                         <div class="cop">
                             <div class="linea "></div>
-                            <div class="op-v"><h:graphicImage  value="/resources/img/plus.png"/><h:commandButton value="Proyectos del Programa" class="botones-v" action="#{profesorController.gRproyectos()}"></h:commandButton></div>
+                            <div class="op-v"><h:commandButton value="Proyectos del Programa" class="botones-v" action="#{profesorController.gRproyectos()}"></h:commandButton></div>
                         </div>
 
                         <div class="cop">
                             <div class="linea "></div>
-                            <div class="op-v"><h:graphicImage  value="/resources/img/plus.png"/><h:commandButton value="Resultados de Aprendizaje" class="botones-v" action="#{profesorController.gResultadosA()}"></h:commandButton></div>
+                            <div class="op-v"><h:commandButton value="Resultados de Aprendizaje" class="botones-v" action="#{profesorController.gResultadosA()}"></h:commandButton></div>
                         </div>
-                         <div class="cop">
+                        <div class="cop">
                             <div class="linea "></div>
-                            <div class="op-v"><h:graphicImage  value="/resources/img/plus.png"/><h:commandButton value="Tutorias del Programa" class="botones-v" action="#{profesorController.gRtutorias()}"></h:commandButton></div>
+                            <div class="op-v"><h:commandButton value="Tutorias del Programa" class="botones-v" action="#{profesorController.gRtutorias()}"></h:commandButton></div>
                         </div>
-                         <div class="cop">
+                        <div class="cop">
                             <div class="linea "></div>
-                            <div class="op-v"><h:graphicImage  value="/resources/img/plus.png"/><h:commandButton value="Gestor de Fases" class="botones-v" action="#{profesorController.gFases()}"></h:commandButton></div>
+                            <div class="op-v"><h:commandButton value="Gestor de Fases" class="botones-v" action="#{profesorController.gFases()}"></h:commandButton></div>
                         </div>
                     </h:panelGroup>   
                     <div class="cop">
@@ -123,9 +134,9 @@
                 <i class="ri-menu-line"></i>
             </div>
         </header>  
-        
+
         <ui:include src="#{profesorController.paginaActualP}" />
-        
+
         <script type="text/javascript" 
                 src="../resources/js/menu-vertical.js">
         </script>

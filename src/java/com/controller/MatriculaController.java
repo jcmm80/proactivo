@@ -180,10 +180,12 @@ public class MatriculaController implements Serializable {
 
     public void seleccionarSemestre(Semestre s) {
         setSemestre(s);
+        seccion.setSemestre(s);
         secciones = secser.obtenerSeccionesXSemestre_Periodo_Programa(getSemestre(), getPrograma(), getPeriodo());
     }
 
     public void seleccionarSeccion(Seccion s) {
+        setSeccion(s);
         matricula.setSeccion(s);
     }
 
@@ -282,7 +284,8 @@ public class MatriculaController implements Serializable {
     public void setSemestre(Semestre semestre) {
         this.semestre = semestre;
     }
-
+    
+   
     /**
      * @return the periodo
      */

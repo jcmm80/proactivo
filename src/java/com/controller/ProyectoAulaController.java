@@ -42,6 +42,7 @@ public class ProyectoAulaController implements Serializable {
     //colecciones
     private List<Item_Proyecto> itenes = new LinkedList();
     private List<Integrante> integrantes = new LinkedList();
+    private List<Integrante> integrantesseleccionados = new LinkedList();
     private List<Proyecto_Aula> proyectos = new LinkedList();
     private List<Proyecto_Aula> proyectosNoGuardados = new LinkedList();
 
@@ -133,28 +134,32 @@ public class ProyectoAulaController implements Serializable {
     }
 
     public void crearPA() {
-        proyecto.setEstado("Guardado");
-        proyecto.setFecha_ingreso(new Date());
-        if (validarIntegrantes()) {
-            if (proyecto.esvalido()) {
-                datosPeriodoPrograma();
-                proyecto.generarCodigo();
-                proyecto = proaser.modificar(proyecto);
-                guardarIntegrates(proyecto);
-                FacesUtil.addInfoMessage("Se ha creado un grupo de proyecto de aula");
-                consultarProyectosXProfesorLider(lider.getProfesor());
-                obtenerIntegrantesXProyectos(lider.getProfesor());
-                matser.obtenerMatriculasXperiodo(proyecto.getSeccion().getPeriodo());
-                proyecto = new Proyecto_Aula();
-                integrantes = new LinkedList();
+
+        if (proyecto.getId() != null) {
+            FacesUtil.addInfoMessage("EL proyecto ya esta registrado");
+        } else {
+            proyecto.setEstado("Guardado");
+            proyecto.setFecha_ingreso(new Date());
+            if (validarIntegrantes()) {
+                if (proyecto.esvalido()) {
+                    datosPeriodoPrograma();
+                    proyecto.generarCodigo();
+                    proyecto = proaser.modificar(proyecto);
+                    guardarIntegrates(proyecto);
+                    FacesUtil.addInfoMessage("Se ha creado un grupo de proyecto de aula");
+                    consultarProyectosXProfesorLider(lider.getProfesor());
+                    obtenerIntegrantesXProyectos(lider.getProfesor());
+                    matser.obtenerMatriculasXperiodo(proyecto.getSeccion().getPeriodo());
+                    proyecto = new Proyecto_Aula();
+                    setIntegrantesseleccionados((List<Integrante>) new LinkedList());
+                }
             }
         }
     }
 
     public void seleccionarProyecto(Proyecto_Aula pa) {
         proyecto = pa;
-
-        integrantes = pa.getIntegrantes();
+        setIntegrantesseleccionados(pa.getIntegrantes());
     }
 
     public boolean tieneProcesos(Proyecto_Aula pa) {
@@ -184,6 +189,11 @@ public class ProyectoAulaController implements Serializable {
         proyectos.remove(pa);
     }
 
+    public void prepararNuevoProyecto() {
+        proyecto = new Proyecto_Aula();
+        setIntegrantesseleccionados((List<Integrante>) new LinkedList());
+    }
+
     public void eliminarIntegrante(Integrante inte, Proyecto_Aula pa) {
         Matricula mat = inte.getMatricula();
         mat.setEstadoPA("Libre");
@@ -211,27 +221,26 @@ public class ProyectoAulaController implements Serializable {
         }
     }
 
-    public Integrante integranteMatricula(Matricula m){
-        Integrante inte=new Integrante();
-        for(Integrante i:integrantes){
-            if(i.getMatricula().getId().equals(m.getId())){
+    public Integrante integranteMatricula(Matricula m) {
+        Integrante inte = new Integrante();
+        for (Integrante i : integrantes) {
+            if (i.getMatricula().getId().equals(m.getId())) {
 //                 System.out.println("Encontre la matricula: "+m.getEstudiante().getPrimerApellido());
-                inte=i;break;
+                inte = i;
+                break;
             }
         }
         return inte;
     }
-    
-    
+
 //    public void consultarIntegrantesXperiodo(Periodo p){
 //         integrantes = inteser.obtenerIntegrantesProyectosXPeriodo(p);
 //    }
-    
     public void obtenerIntegrantesXProyectos(Periodo p) {
         try {
             integrantes = inteser.obtenerIntegrantesProyectosXPeriodo(p);
 //            System.out.println("Numero de integrantes: "+ integrantes.size()+ "Periodo: "+p.getAnio());
-            
+
             for (int i = 0; i < proyectos.size(); i++) {
                 ListIterator it = integrantes.listIterator();
                 proyectos.get(i).setIntegrantes(new LinkedList());
@@ -256,7 +265,7 @@ public class ProyectoAulaController implements Serializable {
     }
 
     public void guardarIntegrates(Proyecto_Aula p) {
-        for (Integrante i : integrantes) {
+        for (Integrante i : getIntegrantesseleccionados()) {
             i.setProyecto(p);
             i.setFechaIngreso(new Date());
             i.setEstado("Activo");
@@ -277,13 +286,13 @@ public class ProyectoAulaController implements Serializable {
 
     public void quitarIntegrante(Integrante inte) {
         if (existeIntegrante(inte.getMatricula())) {
-            integrantes.remove(inte);
+            getIntegrantesseleccionados().remove(inte);
         }
     }
 
     public boolean validarIntegrantes() {
         boolean valido = true;
-        int nintegrantes = integrantes.size();
+        int nintegrantes = getIntegrantesseleccionados().size();
         if (nintegrantes > 5) {
             valido = false;
             FacesUtil.addErrorMessage("EL numero de integrantes es superior al reglamentado");
@@ -303,16 +312,21 @@ public class ProyectoAulaController implements Serializable {
         integrante.setEstado("Activo");
         integrante.setRol("Estudiante");
         if (!existeIntegrante(m)) {
-            integrantes.add(integrante);
+            if (proyecto.getId() != null) {
+                inteser.crear(integrante);
+                modificarMatriculaAsignado(integrante.getMatricula());
+            }
+            getIntegrantesseleccionados().add(integrante);
+
         }
     }
 
     public boolean existeIntegrante(Matricula m) {
         boolean existe = false;
-        if (integrantes.size() <= 0) {
+        if (getIntegrantesseleccionados().size() <= 0) {
             existe = false;
         } else {
-            for (Integrante inte : integrantes) {
+            for (Integrante inte : getIntegrantesseleccionados()) {
                 if (inte.getMatricula().getId().equals(m.getId())) {
                     existe = true;
                 }
@@ -459,6 +473,20 @@ public class ProyectoAulaController implements Serializable {
      */
     public void setTutcon(TutoriasController tutcon) {
         this.tutcon = tutcon;
+    }
+
+    /**
+     * @return the integrantesseleccionados
+     */
+    public List<Integrante> getIntegrantesseleccionados() {
+        return integrantesseleccionados;
+    }
+
+    /**
+     * @param integrantesseleccionados the integrantesseleccionados to set
+     */
+    public void setIntegrantesseleccionados(List<Integrante> integrantesseleccionados) {
+        this.integrantesseleccionados = integrantesseleccionados;
     }
 
 }

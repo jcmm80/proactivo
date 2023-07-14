@@ -90,7 +90,7 @@
                         </p:dataGrid>
 
 
-                        <p:dataTable var="tut" value="#{tutoriasController.tutoriasAsignatura}" >
+                        <p:dataTable var="tut"  value="#{tutoriasController.tutoriasAsignatura}" >
                             <p:column>
                                 #{tut.proyecto.codigo}
                             </p:column>
@@ -128,7 +128,7 @@
                         <p:chart type="bar"  model="#{reportesController.barTutoriasxSemestre}">
 
                         </p:chart>
-                        <p:dataTable var="tut" value="#{tutoriasController.tutorias}" >
+                        <p:dataTable var="tut" rows="5" paginator="true" value="#{tutoriasController.tutorias}" >
                             <p:column>
                                 #{tut.proyecto.codigo}
                             </p:column>
@@ -172,4 +172,3 @@
 
     </h:body>
 </html>
-
