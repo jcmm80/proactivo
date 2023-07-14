@@ -7,58 +7,58 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-
-        <p:panelGrid columns="1">
-            <h:outputText rendered="#{not empty criteriosController.criterio}" value="#{criteriosController.criterio.competencia.tipo.descripcion} - #{criteriosController.criterio.competencia.estrategia}" />
-            <p:panel>
-                <div class="contgcriterios">
-                    <div class="ldes">Descripcion</div>
-                    <div class="cdes"><p:inputTextarea style="width: 400px" value="#{criteriosController.criterio.descripcion}" /></div>
-                    <div class="lpor">Porcentaje</div>
-                    <div class="cpor"><p:knob min="0" max="#{criteriosController.criterio.porcentaje}" value="#{criteriosController.criterio.porcentaje}" />   </div>
-                    <div class="cop"><h:commandButton value="Agregar" action="#{criteriosController.registrarCriterio()}" /></div>
+        <div class="relative pb-2 mb-2" rendered="#{not empty criteriosController.criterio}" >
+            <h3 class="text-2xl ">#{criteriosController.criterio.competencia.tipo.descripcion}</h3>
+            <small class="block mb-4 text-gray-600">#{criteriosController.criterio.competencia.estrategia}</small>  
+            <div class="espaceador"></div>
+        </div>
+     
+            <div class="form">
+                <div >
+                    <h4>Descripcion</h4>
+                    <p:inputTextarea class="w-full" value="#{criteriosController.criterio.descripcion}" />
                 </div>
-            </p:panel>
-            <p:panel>
-                <p:dataTable class="tabla-reporte" value="#{criteriosController.criterios}" var="cri">
-                    <p:column headerText="Descripcion">
-                        #{cri.descripcion}
-                    </p:column>
-                    <p:column headerText="Porcentaje">
-                        #{cri.porcentaje}
-                    </p:column>
-                    <p:column headerText="Tipo">
-                        #{cri.tipo}
-                    </p:column>
-                    <p:column headerText="Opciones">
-                        <h:commandButton disabled="#{criteriosController.criterioVinculado(cri)}" value="Eliminar" action="#{criteriosController.aliminarCriterio(cri)}" />
-                        <h:commandButton value="Consultar" action="#{criteriosController.seleccionarCriterio(cri)}" />
-                    </p:column>
-                </p:dataTable>
-            </p:panel>
-        </p:panelGrid>
+                <div class="flex w-full justify-content-center flex-column align-items-center">
+                    <h4>Porcentaje</h4>
+                    <div>
+                        <p:knob min="0" max="#{criteriosController.criterio.porcentaje}" value="#{criteriosController.criterio.porcentaje}" />
+                    </div>
+                </div>
+            </div>
+            <div class="btns-container justify-content-end">
+                <div class="btn-p" title="agregar">
+                    <label>Agregar</label>
+                    <h:commandButton class="btn" value="+" action="#{criteriosController.registrarCriterio()}" />
+                </div>
+            </div>
+       
+
+        <p:panel>
+            <p:dataTable class="tabla-reporte" value="#{criteriosController.criterios}" var="cri">
+                <p:column headerText="Descripcion">
+                    #{cri.descripcion}
+                </p:column>
+                <p:column headerText="Porcentaje">
+                    #{cri.porcentaje}
+                </p:column>
+                <p:column headerText="Tipo">
+                    #{cri.tipo}
+                </p:column>
+                <p:column headerText="Opciones">
+                    <div class="btn-normal" title="editar">
+                       <i class="ri-pencil-line"></i>
+                        <h:commandButton class="btn" value="+" action="#{criteriosController.seleccionarCriterio(cri)}" />
+                    </div>
+                    <div class="btn-normal" title="Eliminar">
+                       <i class="ri-delete-bin-line"></i>
+                        <h:commandButton class="btn"  disabled="#{criteriosController.criterioVinculado(cri)}" value="eliminar" action="#{criteriosController.aliminarCriterio(cri)}" />
+                    </div>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
 
     </h:body>
     <style>
-        .contgcriterios {  display: grid;
-                           grid-template-columns: 120px 500px 120px 200px 100px;
-                           grid-template-rows: 200px;
-                           grid-auto-columns: 1fr;
-                           gap: 0px 0px;
-                           grid-auto-flow: row;
-                           grid-template-areas:
-                               "ldes cdes lpor cpor cop";
-        }
-
-        .ldes { grid-area: ldes; }
-
-        .cdes { grid-area: cdes; }
-
-        .lpor { grid-area: lpor; }
-
-        .cpor { grid-area: cpor; }
-
-        .cop { grid-area: cop; }
 
 
     </style>

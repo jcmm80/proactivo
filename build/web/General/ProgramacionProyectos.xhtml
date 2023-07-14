@@ -7,43 +7,50 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <div class="contprogramacion">
-            <div class="cfases">
-                <p:dataGrid rendered="#{not empty fasesController.fases}" columns="1" var="fas" value="#{fasesController.fases}"  >
-                    <p:card header="Corte: ##{fas.numero}">
+        <section class="contenido-contenedor hidden xl:block md:block min-h-0">
+            <div class=" w-full m-auto top" >
 
-                        <h:outputText value="Inicia: #{fas.fechaInicial}" /><br/>
-                        <h:outputText value="Finaliza: #{fas.fechaFinal}" />
-                    </p:card>
-                </p:dataGrid>
+                <div class="">
+                    <div class="">
+                        <div class="progress-bar w-full bg-gray-600 p-1 " >
+                            <p:repeat  rendered="#{not empty fasesController.fases}"  var="fas" value="#{fasesController.fases}"  >
+                                <div class="progress-tittle text-center">
+                                    <i class="ri-hashtag"></i>
+                                    Corte #{fas.numero}
+                                </div>
+                                >
+                                <i class="ri-calendar-line"></i>
+                                <div>
+                                    Inicia : #{fas.fechaInicial}
+                                </div>
+                                -
+                                <div>
+                                    Finaliza : #{fas.fechaFinal}
+                                </div>
+                            </p:repeat>
+                        </div>
+                    </div>
+                    <p:panel rendered="#{not empty evaluacionController.evaluacion}" class="inline-flex">
+                        <div class="progress-bar p-1 inline-flex">
+                            <div class="progress-tittle">
+                                <i class="ri-article-line"></i>
+                                Evaluacion
+                            </div>
+                            >
+                            <i class="ri-calendar-line"></i>
+                            <div>
+                                Sustentacion: #{evaluacionController.evaluacion.fechaprogramada}
+                            </div>
 
+                        </div>
+                    </p:panel>
+                </div>
             </div>
-            <div class="ceval">
-                <p:card rendered="#{not empty evaluacionController.evaluacion}" header="Evaluacion">                        
-                    <h:outputText value="Sustentacion: #{evaluacionController.evaluacion.fechaprogramada}" />                        
-                </p:card>
-
-            </div>
-        </div>
+        </section>
     </h:body>
     <style>
 
-        .contprogramacion {  display: grid;
-                             grid-template-columns: 100%;
-                             grid-template-rows: 1fr 1fr;
-                             grid-auto-columns: 1fr;
-                             gap: 0px 0px;
-                             grid-auto-flow: row;
-                             align-content: center;
-                             grid-template-areas:
-                                 "cfases"
-                                 "ceval";
-        }
 
-        .cfases { grid-area: cfases; }
-
-        .ceval { grid-area: ceval; }
 
     </style>
 </html>
-

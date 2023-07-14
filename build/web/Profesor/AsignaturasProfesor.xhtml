@@ -9,41 +9,71 @@
     </h:head>
     <h:body>
         <section class="contenido-contenedor">
-            <div class="border contenedor top" >
-                <h1 class="tittle">Mis Asignaturas</h1>
-                <p:panel rendered="#{!profesorController.mostPAsignatura}">
-                    <p:dataGrid class="periodos" var="asig" columns="4" rows="8" paginator="true" pageLinks="" value="#{asignaturaController.asignaturas}" >
-                        <div class="cdppa">
-                            <h:commandButton class="cdpbtn" value="seleccionar" action="#{profesorController.seleccionarAsignatura(asig)}" />
-                            <div class="id-carta"><span>#{asig.codigo}</span></div>
-                            <div class="img-nombre">
-                                <div ><p:graphicImage value="/Imagenes/Asignaturas/iasignatura.png" style="width: 80px;height: 80px; margin-left: 5px; border-radius: 50px;"  /> </div>
-                                <div style="margin-left: 10px;">
-                                    <h:outputText value="#{asig.nombre}" /><br></br>
-                                    <h:outputText value="Creditos: #{asig.creditos}" /><br></br>
-                                    <h:outputText value="#{asig.area.nombre}" /><br></br>
-                                    <h:outputText value="#{asig.seccion.semestre.denominacion} - #{asig.seccion.denominacion}" />
-                                </div> 
-                            </div>
-                            <div class="contrato-carta"><span>#{asig.seccion.programa.nombre}</span></div>
-                        </div>
-                    </p:dataGrid>
-                </p:panel>
-                 
-                <p:panel rendered="#{profesorController.mostPAsignatura}">
-                    <h:commandButton class="boton" style="margin-left: 20px;" value="Asignaturas" action="#{profesorController.volverPanelAsignaturas()}" />
-                    <div class="plider-seleccionado">
-                        <span>Asignatura Seleccionada:</span>
-                        <span>#{asignaturaController.asignatura.nombre}</span>
-                        <span>Creditos: #{asignaturaController.asignatura.creditos}</span>
-                        <span>#{asignaturaController.asignatura.area.nombre}</span>
-                        <span>Seccion: #{asignaturaController.asignatura.seccion.getSeccion()}</span>
+            <div class=" contenedor top" >
+                <div class="card">
+
+                    <div class="relative pb-4 mb-2">
+                        <h3 class="text-2xl ">Mis Asignaturas</h3>
+                        <div class="espaceador"></div>
                     </div>
-                    <ui:include src="VisorProyectosAula.xhtml" />
-                </p:panel>
+                    <p:panel rendered="#{!profesorController.mostPAsignatura}">
+                        <p:dataView  multiViewState="true" listIcon="pi pi-eye" var="asig" value="#{asignaturaController.asignaturas}">
+                            <p:dataViewListItem >
+                                <div class="p-4 flex justify-content-between card mb-1 responsive-flex cdppa">
+                                    <h:commandButton class="btn" value="seleccionar"  action="#{profesorController.seleccionarAsignatura(asig)}" />
+                                    <div>
+                                        <div class="mb-2">
+                                            <h4>Asignatura</h4>
+                                            <p>#{asig.nombre}</p>
+                                        </div>
+                                        <div class="mb-1">
+                                            <h4><i class="fas fa-credit-card mr-1"></i>créditos : #{asig.creditos}</h4> 
+                                        </div>
+
+                                        <div >
+                                            <small>#{asig.area.nombre}</small>
+                                        </div>
+
+                                    </div>
+                                    <div class="flex flex-column gap-2">
+                                        <small>#{asig.seccion.programa.nombre}</small>
+                                        <h4>#{asig.seccion.semestre.denominacion} - #{asig.seccion.denominacion}</h4>
+                                    </div>
+                                </div>
+                            </p:dataViewListItem>
+                        </p:dataView>
+                    </p:panel>
+
+                    <p:panel rendered="#{profesorController.mostPAsignatura}">
+
+                        <div class="progress-bar mb-4">
+                            <div class="btn-normal inline-flex border-none" title="Volver">
+                                <i class="ri-arrow-left-line text-xl"></i>
+                                <h:commandButton class="btn" value="volver" action="#{profesorController.volverPanelAsignaturas()}" />
+                            </div>
+                            <div class="progress-tittle">
+                                <i class="ri-focus-3-line"></i>
+                                Asignatura : #{asignaturaController.asignatura.nombre}
+                            </div>
+                            <i class="ri-bank-card-fill"></i>
+                            <div>
+                                #{asignaturaController.asignatura.creditos}
+                            </div>
+                            <i class="ri-bookmark-fill"></i>
+                            <div>
+                                Area : #{asignaturaController.asignatura.area.nombre}
+                            </div>
+                            <i class="ri-calendar-fill"></i>
+                            <div>
+                                Seccion : #{asignaturaController.asignatura.seccion.getSeccion()}
+                            </div>
+                        </div>
+
+                        <ui:include src="VisorProyectosAula.xhtml" />
+                    </p:panel>
+                </div>
             </div>
         </section>
 
     </h:body>
 </html>
-

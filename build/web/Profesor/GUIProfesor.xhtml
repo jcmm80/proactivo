@@ -1,160 +1,165 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<xhtml xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <h:head>
         <title>Facelet Title</title>
+
     </h:head>
     <h:body>
-        <header>
-            <div class="nav-up contenedor">
-                <div class="logo-search">
-                    <a href="index.xhtml" class="logo-proac-container">
-                        <h:graphicImage class="img logo-proac" value="/resources/img/logo-verde.png"/>
-                        <p><span>Pro</span>activo</p>
-                    </a>
-                    <div class="buscador">
-                        <input type="search" placeholder="Search..."></input>
-                        <i class="fas fa-search input-i"></i>
-                    </div>  
+        <header class="header" id="header">
+            <nav class="nav-up container-menu">
+                <div class="nav-toggle" id="nav_toggle">
+                    <i class="ri-menu-line"></i>
                 </div>
-                <div class="perfil">
-                    <div class="informacion-perfil">
-                        <span>Profesor</span>
-                        <span>#{profesorController.profesor.toString()}</span>
-                        <span>#{programaController.programa.nombre}</span>
-                        <span>#{periodoController.periodoActual.anio}-#{periodoController.periodoActual.numero}</span>
-                    </div>
-                    <div class="foto-perfil">
-                        <h:commandButton action="#{profesorController.miperfil()}" class="mi-perfil" value="Perfil" />
-                        <div class="imagen-perfil">
+                <a href="index.xhtml" class="logo-proac-container">
+                    <h:graphicImage class="img logo-proac" value="/resources/img/logo-rojo.png"/>
+                    <p><span>Pro</span>activo</p>
+                </a>
+                <div class="nav-search">
+                    <input type="search" placeholder="Buscar...."></input>
+                    <i class="ri-search-line"></i>
+                </div>
+                <div class="nav-unicolombo">
 
-                            <h:graphicImage class="logo-unico" value="/Imagenes/Perfiles/#{profesorController.profesor.imagenPerfil()}"/>
-                            <div class="conectado"></div> 
+                </div>
+                <div class="nav-profile">
+                    <div class="profile-data">
+                        Profesor<br></br>
+                        #{periodoController.periodoActual.anio}-#{periodoController.periodoActual.numero}<br></br>
+                        #{profesorController.profesor.toString()}<br></br>
+                        #{programaController.programa.nombre}
+                    </div>
+                    <div class="profile-img-btn">
+                        <div class="profile-img relative">
+                            <h:graphicImage class="img " value="/Imagenes/Perfiles/#{profesorController.profesor.imagenPerfil()}"/>
+                            <h:commandButton action="#{profesorController.miperfil()}"  class="btn" value="Perfil" />
                         </div>
                         <h:commandButton action="#{usuarioController.salir()}" class="log-out" value="Log out" />
+                    </div>
 
+
+                </div>
+            </nav>
+            <nav class="nav-menu" id="nav_menu">
+                <div class="nav-logos-close">
+                    <div class="nav-close" id="nav_close">
+                        <i class="ri-close-line"></i>
+                    </div>
+                    <div class="nav-search w-3">
+                        <input type="search" placeholder="Buscar...."></input>
+                        <i class="ri-search-line"></i>
                     </div>
                 </div>
-            </div>
-            <!-- Nav horizontal -->
-            <div class="nav-horizontal">
-                <nav>
-                    <div class="op"><i class="ri-lightbulb-fill"></i><h:commandLink action="#{profesorController.g_tutoria()}" value="Tutorias"  /></div>
-                    <div class="op"><i class="fa fa-user-graduate"></i><a href="">Estudiantes</a></div>
-                    <div class="op"><i class="ri-article-fill"></i><h:commandLink action="#{profesorController.gproyectosaula()}" value="Proyecto Aula"  /></div>
-                    <div class="op"><i class="ri-slideshow-fill"></i><h:commandLink action="#{profesorController.asignaturasProfesor()}" value="Asignaturas"  /></div>
-                    <div class="op"><i class="fa fa-user-tie"></i><a href="">Profesores</a></div>
-                    <div class="op"><i class="ri-booklet-fill"></i><a href="">Notas</a></div>     
-                </nav>
-            </div>
-            <!-- Nav vertical -->
-            <div class="nav-vertical ">
-                <nav id="nav-vertical" >
-                    <div class="menu-vertical">
-                        <div class="contenedor-mv">
 
-                            <span class="texto-menu">Menú</span>
-                        </div> 
+
+                <div class="nav-menu-container">
+                    <div class="nav-menu-horizontal">
+                        <h4 class="menu-tittle">Principal</h4>
+                        <ul class="nav-list-horizontal grids">
+                            <li class="nav-horizontal-item">
+                                <i class="ri-lightbulb-fill"></i>
+                                <h:commandLink action="#{profesorController.g_tutoria()}" value="Tutorias"  />
+                            </li>
+                            <li class="nav-horizontal-item">
+                                <i class="fa fa-user-graduate"></i>
+                                <a href="" class="nav-down-link">Estudiantes</a>
+                            </li>
+                            <li class="nav-horizontal-item">
+                                <i class="ri-article-fill"></i>
+                                <h:commandLink action="#{profesorController.gproyectosaula()}" value="Proyectos de Aula"  />
+                            </li>
+                            <li class="nav-horizontal-item">
+                                <i class="ri-slideshow-fill"></i>
+                                <h:commandLink action="#{profesorController.asignaturasProfesor()}" value="Asignaturas"  />
+                            </li>
+                            <li class="nav-horizontal-item">
+                                <i class="fa fa-user-tie"></i>
+                                <a href="" class="nav-down-link">Profesores</a>
+                            </li>
+                            <li class="nav-horizontal-item">
+                                <i class="ri-booklet-fill"></i>
+                                <a href="" class="nav-down-link">Notas</a>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="cop ">
-                        <div class="linea"></div>
-                        <div class="op-v"><h:commandButton value="Tipo Entregable" class="botones-v" action="#{profesorController.gtipo_Entregable()}"></h:commandButton></div>
-                    </div>                
-                    <h:panelGroup layout="block" rendered="#{profesorController.habilitarLider()}">
-                        <div class="cop">
-                            <div class="linea"></div>
-                            <div class="op-v"><h:commandButton value="Gestor de Grupos" class="botones-v" action="#{profesorController.ggrupos()}"></h:commandButton></div>
-                        </div>
-                        <div class="cop">
-                            <div class="linea"></div>
-                            <div class="op-v"><h:commandButton value="Ver Proyectos" class="botones-v" action="#{profesorController.gproyectosaula()}"></h:commandButton></div>
-                        </div>
-                        <div class="cop">
-                            <div class="linea"></div>
-                            <div class="op-v"><h:commandButton value="Tipos de Item " class="botones-v" action="#{profesorController.gtipo_Item()}"></h:commandButton></div>
-                        </div>
-                        <div class="cop">
-                            <div class="linea"></div>
-                            <div class="op-v"><h:commandButton  value="Gestor de Evaluaciones" class="botones-v" action="#{profesorController.gEvaluaciones()}"></h:commandButton></div>
-                        </div>
-                    </h:panelGroup>            
-                    <h:panelGroup layout="block" rendered="#{not empty profesorController.programa.coordinadorPA}">
-                        <div class="cop">
-                            <div class="linea"></div>
-                            <div class="op-v"><h:commandButton  value="Gestor de Prof Lider " class="botones-v" action="#{profesorController.gproflider()}"></h:commandButton></div>
-                        </div>
-                        <div class="cop">
-                            <div class="linea"></div>
-                            <div class="op-v"><h:commandButton  value="Nucleos Problemicos" class="botones-v" action="#{profesorController.gNucleos()}"></h:commandButton></div>
-                        </div>
-
-                        <div class="cop">
-                            <div class="linea"></div>
-                            <div class="op-v"><h:commandButton value="Gestor Dimesiones" class="botones-v" action="#{profesorController.gDimensiones()}"></h:commandButton></div>
-                        </div>
-                        
-                        <div class="cop">
-                            <div class="linea "></div>
-                            <div class="op-v"><h:commandButton value="Proyectos del Programa" class="botones-v" action="#{profesorController.gRproyectos()}"></h:commandButton></div>
-                        </div>
-
-                        <div class="cop">
-                            <div class="linea "></div>
-                            <div class="op-v"><h:commandButton value="Resultados de Aprendizaje" class="botones-v" action="#{profesorController.gResultadosA()}"></h:commandButton></div>
-                        </div>
-                        <div class="cop">
-                            <div class="linea "></div>
-                            <div class="op-v"><h:commandButton value="Tutorias del Programa" class="botones-v" action="#{profesorController.gRtutorias()}"></h:commandButton></div>
-                        </div>
-                        <div class="cop">
-                            <div class="linea "></div>
-                            <div class="op-v"><h:commandButton value="Gestor de Fases" class="botones-v" action="#{profesorController.gFases()}"></h:commandButton></div>
-                        </div>
-                    </h:panelGroup>   
-                    <div class="cop">
-                        <div class="linea"></div>
-                        <div class="op-v"><h:commandButton value="Asignaturas " class="botones-v" action="#{profesorController.asignaturasProfesor()}"></h:commandButton></div>
+                    <div class="nav-menu-vertical">
+                        <h4 class="menu-tittle2">Menú</h4>
+                        <ul class="nav-list-vertical grids">
+                            <li class="nav-vertical-item">
+                                <h:commandButton value="Tipo Entregable" class="nav-vertical-link" action="#{profesorController.gtipo_Entregable()}"></h:commandButton>
+                            </li>
+                            <h:panelGroup layout="block" rendered="#{profesorController.habilitarLider()}">
+                                <li class="nav-vertical-item">
+                                    <h:commandButton value="Gestor de Grupos" class="nav-vertical-link" action="#{profesorController.ggrupos()}"></h:commandButton>
+                                </li>
+                                <li class="nav-vertical-item">
+                                    <h:commandButton value="Ver Proyectos" class="nav-vertical-link" action="#{profesorController.gproyectosaula()}"></h:commandButton>
+                                </li>
+                                <li class="nav-vertical-item">
+                                    <h:commandButton value="Tipos de Item" class="nav-vertical-link" action="#{profesorController.gtipo_Item()}"></h:commandButton>
+                                </li>
+                                <li class="nav-vertical-item">
+                                    <h:commandButton value="Gestor de Evaluaciones" class="nav-vertical-link" action="#{profesorController.gEvaluaciones()}"></h:commandButton>
+                                </li>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block" rendered="#{not empty profesorController.programa.coordinadorPA}">
+                                <li class="nav-vertical-item">
+                                    <h:commandButton value="Gestor de Prof Lider" class="nav-vertical-link" action="#{profesorController.gproflider()}"></h:commandButton>
+                                </li>
+                                <li class="nav-vertical-item">
+                                    <h:commandButton value="Nucleos Problemicos" class="nav-vertical-link" action="#{profesorController.gNucleos()}"></h:commandButton>
+                                </li>
+                                <li class="nav-vertical-item">
+                                    <h:commandButton value="Gestor Dimensiones" class="nav-vertical-link" action="#{profesorController.gDimensiones()}"></h:commandButton>
+                                </li>
+                                
+                                <li class="nav-vertical-item">
+                                    <h:commandButton value="Proyectos del Programa" class="nav-vertical-link" action="#{profesorController.gRproyectos()}"></h:commandButton>
+                                </li>
+                                <li class="nav-vertical-item">
+                                    <h:commandButton value="Resultados de Aprendizaje" class="nav-vertical-link" action="#{profesorController.gResultadosA()}"></h:commandButton>
+                                </li>
+                                <li class="nav-vertical-item">
+                                    <h:commandButton value="Tutorias del Programa" class="nav-vertical-link" action="#{profesorController.gRtutorias()}"></h:commandButton>
+                                </li>
+                                <li class="nav-vertical-item">
+                                    <h:commandButton value="Gestor de Fases" class="nav-vertical-link" action="#{profesorController.gFases()}"></h:commandButton>
+                                </li>
+                            </h:panelGroup>
+                            <li class="nav-vertical-item">
+                                <h:commandButton value="Asignaturas" class="nav-vertical-link" action="#{profesorController.asignaturasProfesor()}"></h:commandButton>
+                            </li>
+                            <li class="nav-vertical-item">
+                                <h:commandButton value="Competencias" class="nav-vertical-link" action="#{profesorController.gCompetenciasProfesor()}"></h:commandButton>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="cop">
-                        <div class="linea"></div>
-                        <div class="op-v"><h:commandButton value="Competencias" class="botones-v" action="#{profesorController.gCompetenciasProfesor()}"></h:commandButton></div>
-                    </div>
-
-
-                    <ui:include src="../General/ProgramacionProyectos.xhtml" />
-
-                </nav>
-            </div>
-            <div class="boton-menu">
-                <i class="ri-menu-line"></i>
-            </div>
-        </header>  
-
+                </div>
+            </nav>
+        </header>
+        <ui:include  src="../General/ProgramacionProyectos.xhtml" />
         <ui:include src="#{profesorController.paginaActualP}" />
+        
 
         <script type="text/javascript" 
-                src="../resources/js/menu-vertical.js">
+                src="../resources/js/menu.js">
         </script>
+
     </h:body>
     <style>
-        .linea,
-        .nav-horizontal,
-        .menu-vertical,
+        .nav-logos-close,
+        .nav-vertical-item:before,
         .tabla-reporte thead,
-        .boton-menu{
-            background-color: var(--first-color-p);
+        body .ui-datatable thead th{
+            background-color: var(--first-color-p) !important;
         }
         body .ui-tabs.ui-tabs-top > .ui-tabs-nav li.ui-tabs-header.ui-state-active{
             border-color: var(--first-color-p);
-        }
-
-        .ui-accordion-header{
-            color: var(--first-color-p) !important;
         }
 
         .logo-proac-container span,
@@ -162,5 +167,42 @@
         {
             color: var(--first-color-p);
         }
+        @media screen and (max-width: 1005px) {
+            .nav-horizontal-item i{
+                color: var(--first-color-p) !important;
+            }
+            .nav-horizontal-item a{
+                color: var(--first-color-p) !important;
+            }
+            .menu-tittle2{
+                background-color: #fff;
+            }
+            .header{
+                background-color: var(--first-color-p);
+            }
+            .nav-vertical-link{
+                color: var(--first-color-p);
+            }
+            .menu-tittle, .menu-tittle2{
+                color: var(--first-color-p) !important;
+            }
+
+        }
+        @media screen and (min-width: 1005px) {
+            .nav-list-horizontal{
+                background-color: var(--first-color-p);
+            }
+            .menu-tittle2{
+                background-color: var(--first-color-p);
+            }
+        }
+
+        body{
+            background-color: #eee;
+        }
+
+
+
     </style>
-</html>
+
+</xhtml>

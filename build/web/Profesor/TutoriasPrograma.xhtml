@@ -8,143 +8,187 @@
     </h:head>
     <h:body>
         <section class="contenido-contenedor">
-            <div class="border contenedor top">
-                <h1 class="tittle">Tutorias del Programa</h1>
-                <p:tabView activeIndex="#{profesorController.activeItut}">                   
-                    <p:tab title="Semestre - Seccion">
-                        <p:dataGrid    columns="5" var="sem"  value="#{semestreController.semestres}">
-                            <div class="card img-negra" >
-                                <figure >
-                                    <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
-                                </figure>
-                                <div class="contenido">
-                                    <p>Semestre <br></br>#{sem.denominacion}</p>
-
-                                </div>
-                                <h:commandButton   class="btn" value="Abrir" action="#{profesorController.seleccionarSemestrepTRTutorias(sem)}" />
+            <div class="contenedor top">
+                <div class="card">
+                    <div class="relative pb-4 mb-2">
+                        <h3>Tutorias del Programa</h3>
+                        <div class="espaceador"></div>
+                    </div>
+                    <p:tabView scrollable="true" activeIndex="#{profesorController.activeItut}">  
+                        <p:tab title="semestre-seccion">
+                            <div class="relative  pb-2 mb-2">
+                                <h3 >Semestres</h3>
+                                <small class="block mb-4 text-gray-600">seleccione un semestre</small>  
+                                <div class="espaceador"></div>
                             </div>
-
-                        </p:dataGrid> 
-                        <p:panelGrid columns="2">
-                            <p:dataGrid var="sec" value="#{profesorController.secciones}">
-                                <div class="card img-negra">
-                                    <figure >
-                                        <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
-                                    </figure>
-                                    <div class="contenido-grid">
-                                        <h2>#{sec.programa.nombre}</h2>
-                                        <span>Semestre #{sec.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
-                                        <h3>Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
-
+                            <p:dataView  multiViewState="true" gridIcon="pi pi-eye"   var="sem"  value="#{semestreController.semestres}">
+                                <p:dataViewGridItem  columns="6"  >
+                                    <div class="relative img-negra bg-black" >
+                                        <div class="w-full h-full">
+                                            <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
+                                        </div>
+                                        <div class="contenido">
+                                            <p>Semestre <br></br>#{sem.denominacion}</p>
+                                        </div>
+                                        <h:commandButton   class="btn" value="Abrir" action="#{profesorController.seleccionarSemestrepTRTutorias(sem)}"/>
                                     </div>
-                                    <h:commandButton   class="btn" value="Abrir" action="#{profesorController.obtenerTutoriasSeccion(sec)}" />
-                                </div> 
-                            </p:dataGrid>
-                            <p:panel header="Tutorias por Seccion">
-                                <p:chart type="bar"  model="#{reportesController.barTutoriasxSeccion}" />
-                            </p:panel>
-
-                        </p:panelGrid>
-
-
-                    </p:tab>
-                    <p:tab rendered="#{not empty profesorController.seccion}" title="Tutorias, Seccion: #{profesorController.seccion.getSeccion()}">
-                        <p:panel header="Tutorias por Asignaturas">
-                            <p:chart type="bar"  model="#{reportesController.barMProyectosxSignaturas}" />
-                        </p:panel>
-
-                        <p:dataGrid class="periodos" var="asig" columns="4" rows="8" paginator="true" pageLinks="" value="#{asignaturaController.asignaturas}" >
-                            <div class="cdppa">
-                                <h:commandButton class="cdpbtn" value="seleccionar" action="#{tutoriasController.obtenerTutoriasAsignatura(asig)}" />
-                                <div class="id-carta"><span>#{asig.codigo}</span></div>
-                                <div class="img-nombre">
-                                    <div ><p:graphicImage value="/Imagenes/Asignaturas/iasignatura.png" style="width: 80px;height: 80px; margin-left: 5px; border-radius: 50px;"  /> </div>
-                                    <div style="margin-left: 10px;">
-                                        <h:outputText value="#{asig.nombre}" /><br></br>
-                                        <h:outputText value="Creditos: #{asig.creditos}" /><br></br>
-                                        <h:outputText value="#{asig.area.nombre}" /><br></br>
-                                        <h:outputText value="#{asig.seccion.semestre.denominacion} - #{asig.seccion.denominacion}" /><br></br>
-                                        <h:outputText value="#{asig.profesor.toString()}" />
-                                    </div> 
-                                </div>
-                                <div class="contrato-carta"><span>#{asig.seccion.programa.nombre}</span></div>
+                                </p:dataViewGridItem>
+                            </p:dataView> 
+                            <div class="relative mt-4 pb-2 mb-2">
+                                <h3 >Secciones</h3>
+                                <small class="block mb-4 text-gray-600">seleccione una seccion.</small>  
+                                <div class="espaceador"></div>
                             </div>
-                        </p:dataGrid>
+                            <p:dataView  multiViewState="true" gridIcon="pi pi-eye"  var="sec" value="#{profesorController.secciones}">
+                                <p:dataViewGridItem  columns="4"  >
+                                    <div class="relative img-negra bg-black">
+                                        <div class="w-full h-full">
+                                            <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
+                                        </div>
+                                        <div class="contenido-grid">
+                                            <h2 class="text-white">#{sec.programa.nombre}</h2>
+                                            <span>Semestre #{sec.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
+                                            <h3 class="text-white">Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
+                                        </div>
+                                        <h:commandButton   class="btn" value="Abrir" action="#{profesorController.obtenerTutoriasSeccion(sec)}" />
+                                    </div> 
+                                </p:dataViewGridItem>
+                            </p:dataView>
+                            <div class="card mt-2 bg-gray-600">
+                                <div class="relative pb-4 mb-2">
+                                    <h4 >Tutorias por seccion</h4>
+                                    <div class="espaceador"></div>
+                                </div>
+                                <div class="w-4">
+                                    <p:chart type="bar" class="img" model="#{reportesController.barTutoriasxSeccion}" />
+                                </div>
+                            </div>
+                        </p:tab>
+                        <p:tab rendered="#{not empty profesorController.seccion}" title="Tutorias, Seccion: #{profesorController.seccion.getSeccion()}">
+                            <div class="card mt-2 bg-gray-600">
+                                <div class="relative pb-4 mb-2">
+                                    <h4 >Tutorias por Asignatura</h4>
+                                    <div class="espaceador"></div>
+                                </div>
+                                <div class="w-full">
+                                    <p:chart type="bar" class="img" model="#{reportesController.barMProyectosxSignaturas}" />
+                                </div>
+                            </div>
+                            <p:dataView  multiViewState="true" listIcon="pi pi-eye" var="asig" value="#{asignaturaController.asignaturas}">
+                                <p:dataViewListItem >
+                                    <div class="p-4 flex justify-content-between card mb-1 responsive-flex cdppa">
+                                        <h:commandButton class="btn" value="seleccionar" action="#{tutoriasController.obtenerTutoriasAsignatura(asig)}" />
+                                        <div>
+                                            <div class="mb-2">
+                                                <h4>Asignatura</h4>
+                                                <p>#{asig.nombre}</p>
+                                            </div>
+                                            <div class="mb-1">
+                                                <h4><i class="fas fa-credit-card mr-1"></i>créditos : #{asig.creditos}</h4> 
+                                            </div>
+
+                                            <div >
+                                                <small>#{asig.area.nombre}</small>
+                                            </div>
+
+                                        </div>
+                                        <div class="flex flex-column gap-2 text-right">
+                                            <small>#{asig.profesor.toString()}</small>
+                                            <h4>#{asig.seccion.semestre.denominacion} - #{asig.seccion.denominacion}</h4>
+                                        </div>
+                                    </div>
+                                </p:dataViewListItem>
+
+                            </p:dataView>
 
 
-                        <p:dataTable var="tut" value="#{tutoriasController.tutoriasAsignatura}" >
-                            <p:column>
-                                #{tut.proyecto.codigo}
-                            </p:column>
-                            <p:column width="340">
-                                <p:dataTable style="font-size: 10pt" var="integ" value="#{tut.proyecto.integrantes}">
-                                    <p:column width="40" headerText="">
-                                        <p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" style="width: 40px;height: 40px "  />
-                                    </p:column>
-                                    <p:column width="300" headerText="Integrantes">
-                                        <h:outputText  value="#{integ.matricula.estudiante.toString()}" /> 
-                                    </p:column>  
-                                </p:dataTable>  
-                            </p:column>
-                            <p:column>
-                                #{tut.fechaSolicitud}
-                            </p:column>
-                            <p:column>
-                                #{tut.fechaEjecucion}
-                            </p:column>
-                            <p:column>
-                                #{tut.recomendaciones}
-                            </p:column>
-                            <p:column>
-                                #{tut.recomendaciones}
-                            </p:column>
-                            <p:column>
-                                #{tut.estado}
-                            </p:column>
-                        </p:dataTable>  
+                            <p:dataTable class="mt-4" scrollable="true" var="tut" value="#{tutoriasController.tutoriasAsignatura}" >
+                                <p:column headerText="codigo">
+                                    #{tut.proyecto.codigo}
+                                </p:column>
+                                <p:column headerText="Integrantes">
+                                    <p:repeat var="integ" value="#{tut.proyecto.integrantes}">
+                                        <div class="flex gap-1 align-items-center">
+                                            <div class="w-1 border-circle overflow-hidden flex">
+                                                <p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" class="img"  />
+                                            </div>
+                                            <small>#{integ.matricula.estudiante.toString()}</small>
+                                        </div>
+                                    </p:repeat>
+                                </p:column>
+                                <p:column headerText="Solicitud">
+                                    #{tut.fechaSolicitud}
+                                </p:column>
+                                <p:column headerText="Ejecución">
+                                    #{tut.fechaEjecucion}
+                                </p:column>
+                                <p:column headerText="Recomendaciones">
+                                    <div class="btn-p">
+                                        <i class="ri-eye-line"></i>
+                                        <label>Ver</label>
+                                        <p:commandButton value="Show" class="btn" type="button" icon="pi pi-external-link" onclick="PF('#{tut.recomendaciones}').show()"/>
+                                    </div>
+                                    <p:dialog widgetVar="#{tut.recomendaciones}" minHeight="40" width="350" showEffect="fade">
+                                        <p class="m-0">#{tut.recomendaciones}</p>
+                                    </p:dialog>
+                                </p:column>
+                                <p:column headerText="Compromisos">
+                                    <div class="btn-p">
+                                        <i class="ri-eye-line"></i>
+                                        <label>Ver</label>
+                                        <p:commandButton value="Show" class="btn" type="button" icon="pi pi-external-link" onclick="PF('#{tut.compromisos}').show()"/>
+                                    </div>
+                                    <p:dialog widgetVar="#{tut.compromisos}" minHeight="40" width="350" showEffect="fade">
+                                        <p class="m-0">#{tut.compromisos}</p>
+                                    </p:dialog>
+                                </p:column>
+                                <p:column headerText="Estado">
+                                    #{tut.estado}
+                                </p:column>
+                            </p:dataTable>  
 
 
-                    </p:tab>
+                        </p:tab>
 
-                    <p:tab title="Tutorias por Semestre">
-                        <p:chart type="bar"  model="#{reportesController.barTutoriasxSemestre}">
+                        <p:tab title="Tutorias por Semestre">
+                            <p:chart type="bar"  model="#{reportesController.barTutoriasxSemestre}">
 
-                        </p:chart>
-                        <p:dataTable var="tut" value="#{tutoriasController.tutorias}" >
-                            <p:column>
-                                #{tut.proyecto.codigo}
-                            </p:column>
-                            <p:column width="340">
-                                <p:dataTable style="font-size: 10pt" var="integ" value="#{tut.proyecto.integrantes}">
-                                    <p:column width="40" headerText="">
-                                        <p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" style="width: 40px;height: 40px "  />
-                                    </p:column>
-                                    <p:column width="300" headerText="Integrantes">
-                                        <h:outputText  value="#{integ.matricula.estudiante.toString()}" /> 
-                                    </p:column>  
-                                </p:dataTable>  
-                            </p:column>
-                            <p:column>
-                                #{tut.fechaSolicitud}
-                            </p:column>
-                            <p:column>
-                                #{tut.fechaEjecucion}
-                            </p:column>
-                            <p:column>
-                                #{tut.recomendaciones}
-                            </p:column>
-                            <p:column>
-                                #{tut.recomendaciones}
-                            </p:column>
-                            <p:column>
-                                #{tut.estado}
-                            </p:column>
-                        </p:dataTable>  
+                            </p:chart>
+                            <p:dataTable class="mt-4" var="tut" value="#{tutoriasController.tutorias}" >
+                                <p:column>
+                                    #{tut.proyecto.codigo}
+                                </p:column>
+                                <p:column width="340">
+                                    <p:dataTable style="font-size: 10pt" var="integ" value="#{tut.proyecto.integrantes}">
+                                        <p:column width="40" headerText="">
+                                            <p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" style="width: 40px;height: 40px "  />
+                                        </p:column>
+                                        <p:column width="300" headerText="Integrantes">
+                                            <h:outputText  value="#{integ.matricula.estudiante.toString()}" /> 
+                                        </p:column>  
+                                    </p:dataTable>  
+                                </p:column>
+                                <p:column>
+                                    #{tut.fechaSolicitud}
+                                </p:column>
+                                <p:column>
+                                    #{tut.fechaEjecucion}
+                                </p:column>
+                                <p:column>
+                                    #{tut.recomendaciones}
+                                </p:column>
+                                <p:column>
+                                    #{tut.recomendaciones}
+                                </p:column>
+                                <p:column>
+                                    #{tut.estado}
+                                </p:column>
+                            </p:dataTable>  
 
 
-                    </p:tab>
-                </p:tabView>
-
+                        </p:tab>
+                    </p:tabView>
+                </div>
             </div>
         </section>
 
@@ -154,4 +198,3 @@
 
     </h:body>
 </html>
-

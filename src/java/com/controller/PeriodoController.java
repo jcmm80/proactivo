@@ -111,6 +111,16 @@ public class PeriodoController implements Serializable {
         p = perser.modificar(p);
         obtenerPeriodos();
     }
+    
+    public String getEstadoIcono(Periodo p) {
+        String icon = "";
+        if(p.isActual()){
+            icon = "ri-toggle-fill" ;
+        } else {
+            icon = "ri-toggle-line";
+        }
+        return icon;
+    }
 
     public boolean existe(Periodo p) {
         boolean existe = false;

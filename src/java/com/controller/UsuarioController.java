@@ -119,19 +119,27 @@ public class UsuarioController implements Serializable {
                     profcon.setPrograma(procon.getPrograma());
                     profcon.obtenerLideresXseccionPeriodo();
                      profcon.consultarMatriculasXPeriodo();
+
+                    profcon.obtenerLideresXseccionPeriodo();
+                    
+
                     try {
                         if (procon.getPrograma().getId() > 0) {//si es coordinador de proyectos del programa
                             System.out.println("El profesor es coordinador de PA");
                             profcon.setPrograma(procon.getPrograma());
                             profcon.consultarFases(procon.getPrograma());
-                            profcon.obtenerLideresXPrograma(procon.getPrograma());                           
+
+                            profcon.obtenerLideresXPrograma(procon.getPrograma());
+                            profcon.consultarMatriculasXPeriodo();
                             profcon.consultarProfesores();//ojo porque consulta profesores
                             procon.consultarProgramas();
                             percon.obtenerPeriodos();
                             semcon.obtenerSemestres();
+                            profcon.consultarTutoriasPeriodo();
                         } else {
                             procon.setPrograma(null);
                         }
+                        
                     } catch (NullPointerException npe) {
 
 //                        System.out.println(""+procon.getPrograma().getCoordinadorPA().toString());

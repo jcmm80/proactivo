@@ -10,6 +10,11 @@
     <h:body>
         <p:tabView activeIndex="#{competenciasController.activeIndex}">
             <p:tab  title="Competencias">
+                <div class="flex relative justify-content-end align-items-center p-2 gap-1 font-bold text-sm" style="color: var(--first-color-p)">
+                    +
+                    <label >Agrear</label>
+                    <h:commandButton value="Agregar" title="Agregar Competencia" class="btn" action="#{competenciasController.irCrearCompetencia()}"/>
+                </div>
                 <p:dataTable class="tabla-reporte" var="comp" value="#{competenciasController.competenciasXUnidad}" >
                     <p:column headerText="Horas">
                         #{comp.horas}
@@ -29,10 +34,19 @@
                     <p:column headerText="Tipo Entregable">
                         #{comp.tipoentregable.nombre}
                     </p:column>
-                    <p:column headerText="">
-                        <h:commandButton disabled="#{criteriosController.competenciaVinculada(comp)}" title="Eliminar" value="x" action="#{competenciasController.eliminarCompetencia(comp)}" />
-                        <h:commandButton title="Consultar" value="Consultar" action="#{competenciasController.consultarCompetencia(comp)}"/>
-                        <h:commandButton title="Criterios" value="Criterios" action="#{competenciasController.seleccionarCompetencia(comp)}"/>
+                    <p:column headerText="opciones">
+                        <div class="btn-normal" title="Eliminar">
+                            <i class="ri-delete-bin-line"></i>
+                            <h:commandButton class="btn" value="+" disabled="#{criteriosController.competenciaVinculada(comp)}" action="#{competenciasController.eliminarCompetencia(comp)}" />
+                        </div>
+                        <div class="btn-normal" title="Editar">
+                            <i class="ri-pencil-line"></i>
+                            <h:commandButton class="btn" value="+" action="#{competenciasController.consultarCompetencia(comp)}" />
+                        </div>
+                        <div class="btn-normal" title="Criterios">
+                            <i class="ri-cursor-line"></i>
+                            <h:commandButton class="btn" value="+" action="#{competenciasController.seleccionarCompetencia(comp)}" />
+                        </div>
                     </p:column>
                 </p:dataTable>
             </p:tab>
@@ -45,4 +59,3 @@
 
     </h:body>
 </html>
-

@@ -9,131 +9,135 @@
     </h:head>
     <h:body>
         <section class="contenido-contenedor">
-            <div class="border contenedor top" >
-                <h1 class="tittle">Gestor de Evaluacion</h1>
-                <p:panelGrid columns="3">
-                    <h:outputText value="Codigo: #{evaluacionController.proyectoAula.codigo}" />
-                    <h:outputText value="Titulo: #{evaluacionController.proyectoAula.titulo}" />
-                    <h:outputText value="Asignatura: #{evaluacionController.asignaturaEvaluar.toString()}" />
-                </p:panelGrid>                
-                <div class="contgeneva">
-                    <div class="ccriteva">
-                        <div class="contlcrit">
-                            <div class="clcrit">Criterios para evaluar</div>
-                            <div class="ccriteva" >
-                                <p:dataTable var="critev" value="#{evaluacionController.proyectoAula.integrantes.get(0).valoracions}">
-                                    <p:column style="height: 70px">
-                                        <div style="max-height: 70px; overflow: hidden;">
-                                            <h:outputText style="font-size: 7pt" value="#{critev.criterio.criterio.descripcion}" />
-                                        </div>                                        
-                                    </p:column>
-                                </p:dataTable>
-                            </div>
-                        </div>
-
-
+            <div class=" contenedor top" >
+                <div class="card">
+                    <div class="relative pb-2 mb-2">
+                        <h3 class="text-2xl ">Gestor de Evaluacion</h3>
+                        <small class="block mb-4 text-gray-600">Una evaluación es un proceso sistemático y continuo que tiene como objetivo medir el progreso, el aprendizaje y el rendimiento de los estudiantes.</small>  
+                        <div class="espaceador"></div>
                     </div>
-                    <div class="cvalint">
-                        <p:dataGrid style="font-size: 10pt" var="integ" value="#{evaluacionController.proyectoAula.integrantes}">
-                            <div class="contintegeva">
-                                <div class="cinte">
-                                    <div class="continfinte">
-                                        <div class="cimgin"><p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" style="width: 80px;height: 80px "  /></div>
-                                        <div class="cnomint"> <h:outputText  value="#{integ.matricula.estudiante.toString()}" /> </div>
+                    <p:tabView>
+                        <p:tab title="Evaluar">
+                            <div class="flex responsive-flex">
+                                <p:repeat  var="integ" value="#{evaluacionController.proyectoAula.integrantes}">
+                                    <div class="flex flex-column justify-content-center">
+                                        <div class="flex gap-2 align-items-center justify-content-center">
+                                            <div class="w-3rem"><p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" class="img"  /></div>
+                                            <div class="cnomint"> <h:outputText  value="#{integ.matricula.estudiante.toString()}" /> </div>
+                                        </div>
+                                        <p:dataTable var="val" value="#{integ.valoracions}">
+                                            <p:column headerText="Criterio">  
+
+                                                <div class="btn-p">
+                                                    <i class="ri-eye-line"></i>
+                                                    <label>Criterio</label>
+                                                    <p:commandButton value="Show" class="btn" type="button" icon="pi pi-external-link" onclick="PF('#{val.criterio.criterio.descripcion}').show()"/>
+                                                </div>
+                                                <p:dialog widgetVar="#{val.criterio.criterio.descripcion}" modal="true"  hideEffect="fade" resizable="false" minHeight="40" width="700" showEffect="fade">
+                                                    <p class="m-0 w-full">#{val.criterio.criterio.descripcion}</p>
+                                                </p:dialog> 
+                                                
+                                            </p:column>
+                                            <p:column  headerText="Nota">                                             
+                                                <p:inputNumber  title="#{val.criterio.criterio.descripcion}" value="#{val.valor}" size="6"  minValue="0" maxValue="5" />
+                                            </p:column>
+                                        </p:dataTable>
+                                        <div class="text-center font-bold p-2">
+                                            <h:outputText value="Nota final: #{evaluacionController.notaFIntegrante(integ)}" />
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="cval">
+                                </p:repeat> 
 
-
-
-                                    <p:dataTable var="val" value="#{integ.valoracions}">
-                                        <p:column  style="height: 70px">                                             
-                                            <p:inputNumber  title="#{val.criterio.criterio.descripcion}" value="#{val.valor}" size="6"  minValue="0" maxValue="5" />
-                                        </p:column>
-                                    </p:dataTable>
-                                   
+                            </div>
+                            <div class="btns-container justify-content-end">
+                                <div class="btn-p" title="seleccionar">
+                                    <label>Almacenar</label>
+                                    <h:commandButton value="almacenar" class="btn" action="#{evaluacionController.almacenarValoraciones()}" />
                                 </div>
-                                <div class="cres">
-                                    <h:outputText value="Nota final: #{evaluacionController.notaFIntegrante(integ)}" />
+                            </div>
+                        </p:tab>
+                        <p:tab title="Información">
+                            <div >
+                                <div class="info-proyecto">
+                                    <div class="info-tittle">Infórmacion del proyecto</div>
+                                    <div class="info-data">
+                                        <div class="info-data-item">
+                                            <div>
+                                                <i class="ri-qr-code-line"></i>
+                                                Codigo del proyecto: 
+                                            </div>
+                                            <p>#{evaluacionController.proyectoAula.codigo}</p>
+
+                                        </div>
+                                        <div class="info-data-item">
+                                            <div>
+                                                <i class="ri-medal-2-line"></i>
+                                                Titulo: 
+                                            </div>
+                                            <p>#{evaluacionController.proyectoAula.titulo}</p>
+                                        </div>
+                                    </div>
+                                    <div class="espaceador"></div>
                                 </div>
-                            </div>                        
-                        </p:dataGrid> 
-                    </div>
-                    <h:commandButton value="almacenar" action="#{evaluacionController.almacenarValoraciones()}" />
+
+                                <div class="info-proyecto">
+                                    <div class="info-tittle">Información de la Asignatura</div>
+                                    <div class="info-data">
+                                        <div class="info-data-item">
+                                            <div>
+                                                <div class="w-1rem">
+                                                    <p:graphicImage value="/Imagenes/Perfiles/#{evaluacionController.asignaturaEvaluar.profesor.imagenPerfil()}" class="img"  />
+                                                </div>
+                                                Profesor: 
+                                            </div>
+                                            <p>#{evaluacionController.asignaturaEvaluar.profesor.toString()}</p>
+                                        </div>
+                                        <div class="info-data-item">
+                                            <div>
+                                                <i class="ri-file-3-line"></i>
+                                                Nombre: 
+                                            </div>
+                                            <p>#{evaluacionController.asignaturaEvaluar.nombreCorto}</p>
+                                        </div>
+                                        <div class="info-data-item">
+                                            <div>
+                                                <i class="ri-qr-code-fill"></i>
+                                                Codigo: 
+                                            </div>
+                                            <p>#{evaluacionController.asignaturaEvaluar.codigo}</p>
+                                        </div>
+
+                                        <div class="info-data-item">
+                                            <div>
+                                                <i class="ri-command-line"></i>
+                                                Area: 
+                                            </div>
+                                            <p>#{evaluacionController.asignaturaEvaluar.area.nombre}</p>
+                                        </div>
+
+                                        <div class="info-data-item">
+                                            <div>
+                                                <i class="ri-calendar-todo-fill"></i>
+                                                Seccion: 
+                                            </div>
+                                            <p>#{evaluacionController.asignaturaEvaluar.seccion.semestre.denominacion}-#{evaluacionController.asignaturaEvaluar.seccion.denominacion}</p>
+                                        </div>
+                                    </div>
+                                    <div class="espaceador"></div>
+                                </div>
+                            </div>
+                        </p:tab>
+
+                    </p:tabView>
+
                 </div>
-
             </div>
         </section>
 
         <style>
-            .contintegeva {  display: grid;
-                             grid-template-columns: 300px;
-                             grid-template-rows: 108px 1fr 72px;
-                             grid-auto-columns: 1fr;
-                             gap: 0px 0px;
-                             grid-auto-flow: row;
-                             grid-template-areas:
-                                 "cinte"
-                                 "cval"
-                                 "cres";
-            }
-
-            .cinte { grid-area: cinte; align-self: center; }
-
-            .cval { grid-area: cval; }
-
-            .cres { grid-area: cres; }
-
-
-            .continfinte {  display: grid;
-                            grid-template-columns: 100px 300px;
-                            grid-template-rows: 100px;
-                            grid-auto-columns: 1fr;
-                            gap: 0px 0px;
-                            grid-auto-flow: row;
-                            grid-template-areas:
-                                "cimgin cnomint";
-
-            }
-
-            .cimgin { grid-area: cimgin; }
-
-            .cnomint { grid-area: cnomint;align-self: center;  }
-
-            .contgeneva {  display: grid;
-                           grid-template-columns: 1.2fr 1.8fr;
-                           grid-template-rows: 1fr;
-                           grid-auto-columns: 1fr;
-                           gap: 0px 0px;
-                           grid-auto-flow: row;
-                           align-content: center;
-                           grid-template-areas:
-                               "ccriteva cvalint";
-            }
-
-            .ccriteva { grid-area: ccriteva; }
-
-            .cvalint { grid-area: cvalint; }
-
-            .contlcrit {  display: grid;
-                          grid-template-columns: 1fr;
-                          grid-template-rows: 100px 1fr;
-                          grid-auto-columns: 1fr;
-                          gap: 0px 0px;
-                          grid-auto-flow: row;
-                          align-content: center;
-                          grid-template-areas:
-                              "clcrit"
-                              "ccriteva";
-            }
-
-            .clcrit { grid-area: clcrit; align-self: center; }
-
-            .ccriteva { grid-area: ccriteva; }
 
 
         </style>
 
     </h:body>
 </html>
-

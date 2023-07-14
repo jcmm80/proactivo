@@ -8,99 +8,84 @@
     </h:head>
     <h:body>
         <section class="contenido-contenedor">
-            <div class="border contenedor top" >
-                <h1 class="tittle">Gestor de nucleos problemicos</h1>
-                <div class="contnucleos">
-                    <div class="cdatnu">
-                        <div class="contcnucleo">
-                            <div class="lsem">Seleccionar Semestre: </div>
+            <div class="contenedor top" >
+
+                <div class="card">
+                    <div class="relative pb-2 mb-2">
+                        <h3 class="text-2xl ">Gestor de nucleos problemicos</h3>
+                        <small class="block mb-4 text-gray-600">Con base en las competencias genéricas y específicas a desarrollar en un semestre, se formúla como una pregunta globalizante cuyas posibles soluciones permitirán articular las competencias propuestas por las asignaturas involucradas en el proyecto.</small>  
+                        <div class="espaceador"></div>
+                    </div>
+                    <p:tabView>
+                        <p:tab title="Semestres">
+                            <small><i class="ri-error-warning-fill mr-1"></i>Selecciona un Semestre</small>
                             <div class="csemestres">
-                                <p:dataGrid columns="11" var="sem" value="#{semestreController.semestres}">
-                                    <p:panel>
-                                        <h:commandButton value="#{sem.denominacion}" action="#{programaController.agregarSemestreANucleo(sem)}" />
-                                    </p:panel>
-                                </p:dataGrid>
-                                
-                            </div>
-                            <div class="csem">
-                                <h:commandButton value="#{programaController.nucleo.semestre.denominacion}" />
-                            </div>
-                            <div class="cdes">
-                                <p:inputTextarea value="#{programaController.nucleo.descripcion}" cols="60" />
-                                
-                            </div>
-                            <div class="cacc">
-                                <h:commandButton value="agregar" action="#{programaController.almacenarNucleo()}" />
-                            </div>
-                        </div>
+                                <p:dataView  var="sem" value="#{semestreController.semestres}"  multiViewState="true" gridIcon="pi pi-eye">
+                                    <p:dataViewGridItem columns="6">
+                                        <div class=" relative p-5 flex justify-content-center align-content-center" style="background-color: #eee" >
+                                            <p class="font-bold ">#{sem.denominacion}</p>
+                                            <h:commandButton value="" class="btn" action="#{programaController.agregarSemestreANucleo(sem)}" />
 
-                    </div>
-                    <div class="cnucleos">
-                        <p:dataTable var="nuc" value="#{programaController.nucleos}">
-                            <p:column headerText="Semestre">
-                                #{nuc.semestre.denominacion}
-                            </p:column>
-                            <p:column headerText="Descripcion">
-                                #{nuc.descripcion}
-                            </p:column>
-                            <p:column headerText="Opciones">
+                                        </div>
+                                    </p:dataViewGridItem>
+                                </p:dataView>
 
-                            </p:column>
-                        </p:dataTable>
+                            </div>
+                        </p:tab>
+                        <p:tab title="Descripcion">
+                            <div class="progress-bar">
+                                <div class="progress-tittle">
+                                    <i class="ri-focus-3-line"></i>
+                                    Seleccionado :
+                                </div>
+                                Semestre #{programaController.nucleo.semestre.denominacion}         
+                            </div>
 
-                    </div>
+                            <p:textEditor style="max-width: 100%" placeholder="Descripcion del Nucleo Problematico" widgetVar="editor1" value="#{programaController.nucleo.descripcion}" height="300" secure="false" />
+
+
+
+                            <div class="btns-container justify-content-end">
+                                <div class="btn-p">
+                                    <label>Agregar</label>
+                                    <h:commandButton value="agregar" class="btn" action="#{programaController.almacenarNucleo()}" />
+                                </div>
+                            </div>
+                        </p:tab>
+                        <p:tab title="Ver Nucleos">
+                            <div class="cnucleos">
+                                <p:dataTable var="nuc" value="#{programaController.nucleos}">
+                                    <p:column headerText="Semestre">
+                                        #{nuc.semestre.denominacion}
+                                    </p:column>
+                                    <p:column headerText="Descripcion">
+                                        <div class="btn-p">
+                                            <i class="ri-eye-line"></i>
+                                            <label>Ver</label>
+                                            <p:commandButton value="Show" class="btn" type="button" icon="pi pi-external-link" onclick="PF('#{nuc.id}').show()"/>
+                                        </div>
+                                        <p:dialog widgetVar="#{nuc.id}" modal="true" header="Descripción sem #{nuc.semestre.denominacion}" hideEffect="fade" resizable="false" minHeight="40" width="700" showEffect="fade">
+                                            <p class="m-0 w-full">#{nuc.descripcion}</p>
+                                        </p:dialog>
+                                    </p:column>
+                                    <p:column headerText="Opciones">
+                                    </p:column>
+                                </p:dataTable>
+
+                            </div>
+                        </p:tab>
+                    </p:tabView>
+
+
                 </div>
-
-
-
-
-
             </div>
+
+
 
         </section>
 
     </h:body>
     <style>
-        .contnucleos {  display: grid;
-                        grid-template-columns: 1fr;
-                        grid-template-rows: 180px 1.4fr;
-                        grid-auto-columns: 1fr;
-                        gap: 0px 0px;
-                        grid-auto-flow: row;
-                        align-content: center;
-                        grid-template-areas:
-                            "cdatnu"
-                            "cnucleos";
-        }
-
-        .cdatnu { grid-area: cdatnu; }
-
-        .cnucleos { grid-area: cnucleos; }
-
-        .contcnucleo {  display: grid;
-                        grid-template-columns: 0.6fr 1.9fr 0.5fr;
-                        grid-template-rows: 50px 180px;
-                        grid-auto-columns: 1fr;
-                        gap: 0px 0px;
-                        grid-auto-flow: row;
-                        align-content: center;
-                        grid-template-areas:
-                            "lsem csemestres csemestres"
-                            "csem cdes cacc";
-        }
-
-        .lsem { grid-area: lsem; }
-
-        .csemestres { grid-area: csemestres; }
-
-        .csem { grid-area: csem; }
-
-        .cdes { grid-area: cdes; }
-
-        .cacc { grid-area: cacc; }
-
-
 
     </style>
 </html>
-

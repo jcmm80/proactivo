@@ -20,7 +20,7 @@
                     <div class="form mt-2">
 
                         <div>
-                            <h4 class="flex align-items-center gap-1"><i class="ri-calendar-todo-line"></i> Fecha Final</h4>
+                            <h4 class="flex align-items-center gap-1"><i class="ri-calendar-todo-line"></i> Fecha Inicial</h4>
                             <div class="ui-inputgroup-addon flex justify-content-center align-items-center"></div>
                             <p:calendar   value="#{periodoController.periodo.fechaInicial}"/>
                         </div>
@@ -73,8 +73,9 @@
                                 <h:outputText rendered="#{per.actual}" value="Actual" />
                             </p:column>
                             <p:column headerText="Activador">
-                                <div class="accion">
-                                    <i class="fa fa-toggle-on" ></i><h:commandButton  class="icono" rendered="#{!per.actual}" action="#{periodoController.activarPeriodo(per)}" value="." />
+                                <div class="accion" >
+                                    <i class="#{periodoController.getEstadoIcono(per)}"  ></i>
+                                    <h:commandButton rendered="#{!per.actual}" class="icono"  action="#{periodoController.activarPeriodo(per)}" value="." />
                                 </div>
 
                             </p:column>
@@ -88,8 +89,13 @@
     </h:body>
     <style>
 
-
+        .ri-toggle-fill{
+            color: var(--first-color-s);
+            font-size: 32px;
+        }
+        .ri-toggle-line{
+            font-size: 32px;
+        }
     </style>
 
 </xhtml>
-
