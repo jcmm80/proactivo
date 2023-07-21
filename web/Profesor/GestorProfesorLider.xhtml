@@ -12,100 +12,100 @@
         <div class=" contenedor top">
             <div class="card">
                 <div class="relative pb-2 mb-2">
-                <h3 class="text-2xl ">Asigna Profesor Lider</h3>
-                <small class="block mb-4 text-gray-600">Es el encargado de guiar y coordinar el desarrollo de proyectos educativos dentro del aula. </small>  
-                <div class="espaceador"></div>
-            </div>
-            <p:tabView activeIndex="#{liderPAController.activeIndex}">
-                <p:tab title="Lideres Actuales">
-                    <p:dataTable scrollable="true" var="lid" value="#{profesorController.lideresXseccionPrograma}">
-                        <p:column headerText="Profesor">
-                            #{lid.profesor.toString()}
-                        </p:column>
-                        <p:column headerText="Seccion">
-                            #{lid.seccion.seccion}
-                        </p:column>
-                        <p:column headerText="Opciones">
-                            <div class="btn-normal">
-                                <i class="uil uil-trash-alt"></i>
-                                <h:commandButton class="btn" value="Eliminar" action="#{liderPAController.eliminarLider(lid)}" />
-                            </div>
-                        </p:column>
-                    </p:dataTable>
-                </p:tab>
-                <p:tab id="test" title="Profesores">
-                    <p:dataTable scrollable="true" var="prof" value="#{profesorController.profesores}" >
-                        <p:column filterBy="#{prof.primerNombre}"  headerText="Primer Nombre">
-                            #{prof.primerNombre}
-                        </p:column>
-                        <p:column filterBy="#{prof.segundoNombre}" headerText="Segundo Nombre">
-                            #{prof.segundoApellido}
-                        </p:column>
-                        <p:column filterBy="#{prof.primerApellido}" headerText="Primer Apellido">
-                            #{prof.primerApellido}
-                        </p:column>
-                        <p:column filterBy="#{prof.segundoApellido}" headerText="Segundo Apellido">
-                            #{prof.segundoApellido}
-                        </p:column>
-                        <p:column headerText="Seleccionar">
-                            <div class="btn-normal">
-                                <i class="fa fa-hand-pointer"></i>
-                                <h:commandButton class="btn" value="seleccionar" action="#{liderPAController.agregarProfesor(prof)}" />
-                            </div>
-                        </p:column>
-                    </p:dataTable>
-                </p:tab>
-                <p:tab id="tmat" title="Vincular">
-                    <div class="progress-bar">
-                        <div class="progress-tittle">
-                            <i class="ri-focus-3-line"></i>
-                            Seleccionado :
-                        </div>
-                        <i class="ri-bookmark-fill"></i>
-                        <div>
-                            #{liderPAController.liderPA.profesor.toString()}
-                        </div>
-                        >
-                        <i class="ri-bookmark-fill"></i>
-                        <div>
-                            #{liderPAController.liderPA.seccion.programa.nombreCompleto}
-                        </div>
-                        >
-                        <i class="ri-calendar-line"></i>
-                        <div>
-                            #{liderPAController.periodo.anio}-#{liderPAController.periodo.numero}
-                        </div>
-                        <div>
-                            Seccion: #{liderPAController.liderPA.seccion.seccion}
-                        </div>
-                    </div>
-                    <p:dataView  multiViewState="true" gridIcon="pi pi-eye" var="sec"  value="#{liderPAController.secciones}">
-                        <p:dataViewGridItem  columns="4"  >
-                            <div class="relative img-negra bg-black">
-                                <div class="w-full h-full">
-                                    <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
+                    <h3 class="text-2xl ">Asigna Profesor Lider</h3>
+                    <small class="block mb-4 text-gray-600">Es el encargado de guiar y coordinar el desarrollo de proyectos educativos dentro del aula. </small>  
+                    <div class="espaceador"></div>
+                </div>
+                <p:tabView activeIndex="#{liderPAController.activeIndex}">
+                    <p:tab title="Lideres Actuales">
+                        <p:dataTable scrollable="true" var="lid" value="#{profesorController.lideresXseccionPrograma}">
+                            <p:column headerText="Profesor">
+                                #{lid.profesor.toString()}
+                            </p:column>
+                            <p:column headerText="Seccion">
+                                #{lid.seccion.seccion}
+                            </p:column>
+                            <p:column headerText="Opciones">
+                                <div class="btn-normal">
+                                    <i class="uil uil-trash-alt"></i>
+                                    <h:commandButton class="btn" value="Eliminar" action="#{liderPAController.eliminarLider(lid)}" />
                                 </div>
-                                <div class="contenido-grid">
-                                    <h2 class="text-white">#{sec.programa.nombre}</h2>
-                                    <span>Semestre #{sec.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
-                                    <h3 class="text-white">Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
+                    <p:tab id="test" title="Profesores">
+                        <p:dataTable scrollable="true" var="prof" value="#{profesorController.profesores}" >
+                            <p:column filterBy="#{prof.primerNombre}"  headerText="Primer Nombre">
+                                #{prof.primerNombre}
+                            </p:column>
+                            <p:column filterBy="#{prof.segundoNombre}" headerText="Segundo Nombre">
+                                #{prof.segundoApellido}
+                            </p:column>
+                            <p:column filterBy="#{prof.primerApellido}" headerText="Primer Apellido">
+                                #{prof.primerApellido}
+                            </p:column>
+                            <p:column filterBy="#{prof.segundoApellido}" headerText="Segundo Apellido">
+                                #{prof.segundoApellido}
+                            </p:column>
+                            <p:column headerText="Seleccionar">
+                                <div class="btn-normal">
+                                    <i class="fa fa-hand-pointer"></i>
+                                    <h:commandButton class="btn" value="seleccionar" action="#{liderPAController.agregarProfesor(prof)}" />
                                 </div>
-                                <h:commandButton   class="btn" value="Abrir" action="#{liderPAController.agregarSeccion(sec)}" />
-                            </div> 
-                        </p:dataViewGridItem>     
-                    </p:dataView>
-                    <div class="btns-container justify-content-end">
-                        <div class="btn-p">
-                            <label>Vincular</label>
-                            <h:commandButton id="salsem" class="btn" value="Registrar" action="#{liderPAController.registrarLiderPA()}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
+                    <p:tab id="tmat" title="Vincular">
+                        <div class="progress-bar">
+                            <div class="progress-tittle">
+                                <i class="ri-focus-3-line"></i>
+                                Seleccionado :
+                            </div>
+                            <i class="ri-bookmark-fill"></i>
+                            <div>
+                                #{liderPAController.liderPA.profesor.toString()}
+                            </div>
+                            >
+                            <i class="ri-bookmark-fill"></i>
+                            <div>
+                                #{liderPAController.liderPA.seccion.programa.nombreCompleto}
+                            </div>
+                            >
+                            <i class="ri-calendar-line"></i>
+                            <div>
+                                #{liderPAController.periodo.anio}-#{liderPAController.periodo.numero}
+                            </div>
+                            <div>
+                                Seccion: #{liderPAController.liderPA.seccion.seccion}
+                            </div>
                         </div>
-                    </div>
-                </p:tab>
-            </p:tabView>
+                        <div class="grid-cuatro">
+                            <p:repeat   var="sec"  value="#{liderPAController.secciones}">
+                                <div class="relative img-negra bg-black">
+                                    <div class="w-full h-full">
+                                        <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
+                                    </div>
+                                    <div class="contenido-grid">
+                                        <h2 class="text-white">#{sec.programa.nombre}</h2>
+                                        <span>Semestre #{sec.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
+                                        <h3 class="text-white">Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
+                                    </div>
+                                    <h:commandButton   class="btn" value="Abrir" action="#{liderPAController.agregarSeccion(sec)}" />
+                                </div> 
+                            </p:repeat>
+                        </div>
+                        <div class="btns-container justify-content-end">
+                            <div class="btn-p">
+                                <label>Vincular</label>
+                                <h:commandButton id="salsem" class="btn" value="Registrar" action="#{liderPAController.registrarLiderPA()}" />
+                            </div>
+                        </div>
+                    </p:tab>
+                </p:tabView>
             </div>
         </div>
     </section>
     <style>
-
+        
     </style>
 </xhtml>

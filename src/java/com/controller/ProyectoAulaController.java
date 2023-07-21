@@ -132,6 +132,8 @@ public class ProyectoAulaController implements Serializable {
             FacesUtil.addErrorMessage("No se puede publicar proyecto si no posee Items");
         }
     }
+    
+    
 
     public void crearPA() {
 

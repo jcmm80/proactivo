@@ -124,9 +124,8 @@
                         </p:dataViewGridItem>
                         <p:dataViewListItem>
                             <div class="relative">
-                                <h:commandButton value="ver" action="#{profesorController.seleccionarProfesor(prof)}" />
-                                <div class="id-carta"><span>#{prof.identificacion}</span></div>
-                                
+                                <div class="id-carta"><span>#{prof.identificacion} </span></div>
+                                <h:commandButton class="btn" value="ver" action="#{profesorController.seleccionarProfesor(prof)}" />
                                 <div class="img-nombre">
                                     <div ><p:graphicImage value="/Imagenes/Perfiles/#{prof.imagenPerfil()}" style="width: 80px;height: 80px; margin-left: 5px; border-radius: 50px;"  /> </div>
                                     <div style="margin-left: 10px;">
@@ -136,6 +135,9 @@
                                 </div>
 
                                 <div class="contrato-carta"><span>#{prof.tipocontrato}</span></div>
+                                <!--<div>
+                                    <h:outputText value="" />
+                                 </div> !-->
                             </div>
                         </p:dataViewListItem>
                     </p:dataView>

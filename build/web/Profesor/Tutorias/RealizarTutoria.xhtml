@@ -7,63 +7,55 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <div class="contRTutoria">
-            <div class="cproy">
-                <p:panelGrid columns="3">
-                    <h:outputText value="#{tutoriasController.tutoria.proyecto.toString()}" />                
-                    <h:commandButton value="volver" action="#{profesorController.pvolverdeProgramar()}" />
-                    <h:commandButton value="Crear tutoria" action="#{profesorController.palmacenarTutoria()}" />
-                </p:panelGrid>
+        <div class="card">
+            
+            <div class="btn-normal inline-flex border-none" title="Volver">
+                <i class="ri-arrow-left-line text-xl"></i>
+                <h:commandButton class="btn" value="volver" action="#{profesorController.pvolverdeProgramar()}" />
             </div>
-            <div class="cinteg">
-                <p:dataTable  class="tabla-reporte" style="font-size: 8pt" var="integ" value="#{tutoriasController.asistentes}">
-                    <p:column headerText="">
-                        <p:graphicImage value="/Imagenes/Perfiles/#{integ.estudiante.matricula.estudiante.imagenPerfil()}" style="width: 40px;height: 40px "  />
-                    </p:column>
-                    <p:column width="300" headerText="Integrantes">
-                        <h:outputText  value="#{integ.estudiante.matricula.estudiante.toString()}" /> 
-                    </p:column>   
-                    <p:column headerText="Asistencia">
-                        <p:selectBooleanCheckbox value="#{integ.asistio}"/>
-                    </p:column>
-                    <p:column width="300" headerText="Motivo">
-                        <p:inputText value="#{integ.motivo}" />
-                    </p:column>
-                </p:dataTable>  
+            <div class="flex mt-4 responsive-flex justify-content-between gap-4">
+                <div class="md:w-8 sm:w-full">
+                    <p:dataTable  scrollable="true"  var="integ" value="#{tutoriasController.asistentes}">
+
+                        <p:column  headerText="Integrantes">
+                            <div class="flex align-items-center gap-2">
+                                <p:graphicImage value="/Imagenes/Perfiles/#{integ.estudiante.matricula.estudiante.imagenPerfil()}" style="width: 40px;height: 40px "  />
+                                <h:outputText class="w-8" value="#{integ.estudiante.matricula.estudiante.toString()}" /> 
+                            </div>
+                        </p:column>   
+                        <p:column width="100" headerText="Asistencia">
+                            <p:selectBooleanCheckbox value="#{integ.asistio}"/>
+                        </p:column>
+                        <p:column  headerText="Motivo">
+                            <p:inputText value="#{integ.motivo}" />
+                        </p:column>
+                    </p:dataTable>  
+                </div>
+                <div class="md:w-4 sm:w-full h-full flex md:flex-column sm:flex-row gap-2">
+                    <div class="w-full">
+                        <h4 class="mb-2">Recomendaciones</h4>
+                        <p:inputTextarea  class="w-full " placeholder="Recomendaciones" value="#{tutoriasController.tutoria.recomendaciones}" />
+                    </div>
+                    <div class="w-full ">
+                        <h4 class="mb-2">Compromisos</h4>
+                        <p:inputTextarea  class="w-full" placeholder="Compromisos" value="#{tutoriasController.tutoria.compromisos}" />
+                    </div>
+
+
+
+                </div>
             </div>
-            <div class="crecom">
-                <p:inputTextarea style="width: 800px" placeholder="Recomendaciones" value="#{tutoriasController.tutoria.recomendaciones}" />
-            </div>
-            <div class="ccomp">
-                <p:inputTextarea style="width: 800px" placeholder="Compromisos" value="#{tutoriasController.tutoria.compromisos}" />
+            <div class="btns-container justify-content-end">
+                <div class="btn-p" title="Crear tutoria">
+                    <label>Crear tutoria</label>
+                    <h:commandButton class="btn" value="+"  action="#{profesorController.palmacenarTutoria()}" />
+                </div>
             </div>
         </div>
 
 
         <style>
-            .contRTutoria {  display: grid;
-                             grid-template-columns: 200px 200px 200px 200px;
-                             grid-template-rows: 120px 150px 150px 150px 150px;
-                             grid-auto-columns: 1fr;
-                             gap: 0px 0px;
-                             grid-auto-flow: row;
-                             justify-items: stretch;
-                             align-items: stretch;
-                             grid-template-areas:
-                                 "cproy cproy cproy cproy"
-                                 "cinteg cinteg cinteg cinteg"
-                                 "cinteg cinteg cinteg cinteg"
-                                 "crecom crecom crecom crecom"
-                                 "ccomp ccomp ccomp ccomp";
-            }
 
-            .cproy { grid-area: cproy; }
-
-            .cinteg { grid-area: cinteg; }
-
-            .crecom { grid-area: crecom; }
-
-            .ccomp { grid-area: ccomp; }
         </style>
 
 

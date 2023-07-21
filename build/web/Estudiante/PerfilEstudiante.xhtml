@@ -1,124 +1,138 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+<xhtml xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
         <section class="contenido-contenedor">
-        <div class="border contenedor top">
-             <span class="aviso">Configuracion De Perfil</span>
-             <div class="perfil-conteiner">
-                 <div class="perfil-prof">
-                     <div class="perfil-img">
-                         <p:graphicImage value="/Imagenes/Perfiles/#{estudianteController.estudiante.imagenPerfil()}"  style="width: 100%;height: 100%" /><br/>             
-                     </div>
-                     <div class="perfil-data">
-                         <span class="perfil-data-name">#{estudianteController.estudiante.toString()}</span>
-                         <span class="perfil-data-tipe">#{estudianteController.estudiante.tipo}</span>
-                     </div>
-                 </div>
-                 <div class="perfil-buttons">
-                     <p:fileUpload  value="#{estudianteController.iestudiante}"  mode="simple" skinSimple="true"/>
-                  <div class="btn-delete"> 
-                     <i class="uil uil-image-times"></i>
-                     Cargar
-                     <h:commandButton class="btn" action="#{estudianteController.subirImagenEstudiante()}" value="" /> 
-                  </div>
+            <div class=" contenedor top">
+                <div class="card">
+
+                    <div class="relative pb-4 mb-2">
+                        <h3 class="text-2xl ">Configuracion De Perfil</h3>
+                        <div class="espaceador"></div>
+                    </div>
+                    <div class="flex  flex-column">
+                        <div class="flex  gap-2">
+                            <div class="flex justify-content-center flex-column align-items-center gap-4">
+
+                                <div class="perfil-img flex">
+                                    <p:graphicImage value="/Imagenes/Perfiles/#{estudianteController.estudiante.imagenPerfil()}"  class="img" /><br/>             
+                                </div>
+                                <div class="flex flex-column justify-content-center text-center align-items-center">
+                                    <h:form>
+                                        <p:fileUpload value="#{estudianteController.iestudiante}"  mode="simple" skinSimple="true" auto="true"
+                                                      process="@this" 
+                                                      listener="#{estudianteController.subirImagenEstudiante()}"/>
+                                    </h:form>
+                                    <small>*Carga imagen para tu perfil</small>
+                                </div>
+                            </div>
+                            <div class="flex flex-column p-2">
+                                <span class="perfil-data-name">#{estudianteController.estudiante.toString()}</span>
+                                <span class="perfil-data-tipe">#{estudianteController.estudiante.tipo}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form mt-4">
+                        <div>
+                            <h4>Primer Nombre</h4>
+                            <p:inputText   value="#{estudianteController.estudiante.primerNombre}" />
+
+                        </div>
+                        <div>
+                            <h4>Primer Apelldio</h4>
+                            <p:inputText  value="#{estudianteController.estudiante.primerApellido}" />
+                        </div>
+                        <div>  
+                            <h4>Segundo Nombre</h4>
+                            <p:inputText class="iform" value="#{estudianteController.estudiante.segundoNombre}" />
+
+                        </div>
+                        <div>
+                            <h4>Segundo Apellido</h4>
+                            <p:inputText class="iform" value="#{estudianteController.estudiante.segundoApellido}" />
+
+                        </div>
+                        <div>
+                            <h4>Genero</h4>
+                            <p:selectOneRadio  value="#{estudianteController.estudiante.genero}">
+                                <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                                <f:selectItem itemLabel="Femenino" itemValue="Femenino"/>
+                            </p:selectOneRadio>
+                        </div>
+                        <div>
+                            <h4>Codigo</h4>
+                            <p:inputText type="text"  disabled="true"  value="#{estudianteController.estudiante.codigo}" />
+
+                        </div>
+                        <div>
+                            <h4>Tipo Identificacion</h4>
+                            <p:selectOneRadio  value="#{estudianteController.estudiante.tipo_ide}">
+                                <f:selectItem itemLabel="TI" itemValue="TI"/>
+                                <f:selectItem itemLabel="CC" itemValue="CC"/>
+                                <f:selectItem itemLabel="CE" itemValue="CE"/>
+                            </p:selectOneRadio>
+                        </div>
+                        <div>
+                            <h4>Identificacion</h4>
+                            <p:inputText class="iform" value="#{estudianteController.estudiante.identificacion}" /> 
+
+                        </div>
+                        <div>
+                            <h4>Email</h4>
+                            <p:inputText   value="#{estudianteController.estudiante.email}" />
+                        </div>
+                        <div>
+                            <h4>Telefono</h4>
+                            <p:inputText class="iform" value="#{estudianteController.estudiante.telefono}" />
+
+                        </div>
+                        <div>
+                            <h4>Direccion</h4>
+                            <p:inputText class="iform" value="#{estudianteController.estudiante.direccion}" />
+
+                        </div>  
+
+                    </div>
+                    <p:card style="margin-top: 0.5rem;">
+                        <h3 style="margin-bottom: 1rem">Configura El usuario y contraseña</h3>
+                        <div class="form" style="padding-bottom: 0">
+                            <div class="ui-inputgroup">
+                                <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
+                                <p:inputText placeholder="Username" value="#{estudianteController.estudiante.login}" />
+
+                            </div>
+                            <div class="ui-inputgroup">
+                                <div class="ui-inputgroup-addon"><i class="pi pi-lock"></i></div>
+                                <p:inputText value="#{estudianteController.estudiante.password}" placeholder="Password"/>
+                            </div>
+                        </div>
+                    </p:card>
+
                 </div>
-            
-             
-                    
-            
+                <div class="btns-container justify-content-end">
+                    <div class="btn-e" title="Actualizar">
+                        <label>Actualizar</label>
+                        <h:commandButton class="btn" value="Actualizar" action="#{estudianteController.actualizarEstudiante()}" />
+                    </div>
+                </div>
 
             </div>
-            <div class="contenedor-form ">
-                 <div class="form-izq">git
-                     <div class="input-form-310">
-                        Primer Nombre
-                        <p:inputText  class="iform" value="#{estudianteController.estudiante.primerNombre}" />
-                     </div>
-                      <div class="input-form-310">
-                        Primer Apellido
-                        <p:inputText class="iform" value="#{estudianteController.estudiante.primerApellido}" />
-                      </div>  
-                     <div class="input-form-170">
-                        Tipo Identificacion
+        </section>
 
-                       <p:selectOneMenu  class="iform" value="#{estudianteController.estudiante.tipo_ide}">
-                           <f:selectItem itemLabel="Select One" itemValue=""/>
-                           <f:selectItem itemLabel="TI" itemValue="TI"/>
-                           <f:selectItem itemLabel="CC" itemValue="CC"/>
-                           <f:selectItem itemLabel="CE" itemValue="CE"/>                         
-                       </p:selectOneMenu> 
-                     </div>
-                     <div class="input-form-310">
-                        Username
-                        <p:inputText class="iform" value="#{estudianteController.estudiante.login}" />
-                     </div>
-                     <div class="input-form-170">
-                        Genero
-                        <p:selectOneMenu  class="iform" value="#{estudianteController.estudiante.genero}">
-                            <f:selectItem itemLabel="Select One" itemValue=""/>
-                            <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
-                            <f:selectItem itemLabel="Femenino" itemValue="Femenino"/>                    
-                        </p:selectOneMenu>
-                     </div>
-                      <div class="input-form-310">
-                        Email
-                        <p:inputText type="email"  class="iform" value="#{estudianteController.estudiante.email}" />
-                      </div>
-                     <div class="input-form-170">
-                        Codigo
-                        <p:inputText type="text"  disabled="true" class="iform" value="#{estudianteController.estudiante.codigo}" />
-                       
-                    </div>
-               </div>
-                 
-                 
-              <div class="form-dere">
-                     <div class="input-form-310">
-                        Segundo Nombre
-                        <p:inputText class="iform" value="#{estudianteController.estudiante.segundoNombre}" />
-                     </div>
-                 <div class="input-form-310">
-                     Segundo Apellido
-                     <p:inputText class="iform" value="#{estudianteController.estudiante.segundoApellido}" />
-                 </div>
-                 <div class="input-form-310">
-                    Identificacion
-                    <p:inputText class="iform" value="#{estudianteController.estudiante.identificacion}" /> 
-                 </div>
-                <div class="input-form-310">
-                    Password
-                    <p:inputText class="iform" value="#{estudianteController.estudiante.password}" />
-                </div>
-                <div class="input-form-310">
-                    Telefono
-                    <p:inputText class="iform" value="#{estudianteController.estudiante.telefono}" />
-                </div>
-                <div class="input-form-310">
-                    Direccion
-                    <p:inputText class="iform" value="#{estudianteController.estudiante.direccion}" />
-                </div>
-                 <div class="botones ">
-                     <h:commandButton class="boton" value="Actualizar" action="#{estudianteController.actualizarEstudiante()}" /> 
-                    
-                 </div>
-                     
-                    
-              </div>
-             </div>
-
-    
-
-        </div>
-    </section>
- 
     </h:body>
-    
-</html>
+    <style>
+        .ui-fileupload-simple .ui-button{
+            border: 1px solid var(--first-color-e) !important;
+            background: transparent !important;
+            color: var(--first-color-e) !important;
+        }
+    </style>
+</xhtml>
 

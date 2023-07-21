@@ -8,122 +8,133 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        
+
         <section class="contenido-contenedor">
-        <div class="border contenedor top">
-             <span class="aviso">Configuracion de perfil</span>
-             <div class="perfil-conteiner">
-                 <div class="perfil-prof">
-                     <div class="perfil-img">
-                     <p:graphicImage value="/Imagenes/Perfiles/#{profesorController.profesor.imagenPerfil()}" style="max-width:100%;height: auto;"  />
-                     </div>
-                    <div class="perfil-data">
-                        <span class="perfil-data-name">#{profesorController.profesor.toString()}</span>
-                        <span class="perfil-data-tipe">#{profesorController.profesor.tipo}</span>
+            <div class=" contenedor top">
+                <div class="card">
+
+
+                    <div class="relative pb-4 mb-2">
+                        <h3 class="text-2xl ">Configuracion De Perfil</h3>
+                        <div class="espaceador"></div>
                     </div>
-                 </div>
-                 
-                <div class="perfil-buttons">
-                    <p:fileUpload  value="#{profesorController.iprofesor}"  mode="simple" skinSimple="true"/>
-                  <div class="btn-delete"> 
-                     <i class="uil uil-image-times"></i>
-                     Delete
-                     <h:commandButton class="btn" action="#{profesorController.subirImagenProfesor()}" value="xx" /> 
-                  </div>
-                </div>
+                    <div class="perfil-conteiner">
+                        <div class="perfil-prof">
+                            <div class="perfil-img">
+                                <p:graphicImage value="/Imagenes/Perfiles/#{profesorController.profesor.imagenPerfil()}" style="max-width:100%;height: auto;"  />
+                            </div>
+                            <div class="perfil-data">
+                                <span class="perfil-data-name">#{profesorController.profesor.toString()}</span>
+                                <span class="perfil-data-tipe">#{profesorController.profesor.tipo}</span>
+                            </div>
+                        </div>
 
-             </div>
-<div class="contenedor-form ">
-                 <div class="form-izq">
-                     <div class="input-form-310">
-                        Primer Nombre
-                        <p:inputText  class="iform" value="#{profesorController.profesor.primerNombre}" />
-                     </div>
-                      <div class="input-form-310">
-                        Primer Apellido
-                        <p:inputText class="iform" value="#{profesorController.profesor.primerApellido}" />
-                      </div>  
-                     <div class="input-form-170">
-                        Tipo Identificacion
+                        <div class="perfil-buttons">
+                            <p:fileUpload  value="#{profesorController.iprofesor}"  mode="simple" skinSimple="true"/>
+                            <div class="btn-delete"> 
+                                <i class="uil uil-image-times"></i>
+                                Delete
+                                <h:commandButton class="btn" action="#{profesorController.subirImagenProfesor()}" value="xx" /> 
+                            </div>
+                        </div>
 
-                       <p:selectOneMenu  class="iform" value="#{profesorController.profesor.tipo_ide}">
-                           <f:selectItem itemLabel="Select One" itemValue=""/>
-                           <f:selectItem itemLabel="TI" itemValue="TI"/>
-                           <f:selectItem itemLabel="CC" itemValue="CC"/>
-                           <f:selectItem itemLabel="CE" itemValue="CE"/>                         
-                       </p:selectOneMenu> 
-                     </div>
-                     <div class="input-form-310">
-                        Username
-                        <p:inputText class="iform" value="#{profesorController.profesor.login}" />
-                     </div>
-                     <div class="input-form-170">
-                        Genero
-                        <p:selectOneMenu  class="iform" value="#{profesorController.profesor.genero}">
-                            <f:selectItem itemLabel="Select One" itemValue=""/>
-                            <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
-                            <f:selectItem itemLabel="Femenino" itemValue="Femenino"/>                    
-                        </p:selectOneMenu>
-                     </div>
-                      <div class="input-form-310">
-                        Email
-                        <p:inputText type="text"  class="iform" value="#{profesorController.profesor.email}" />
-                      </div>
-                     <div class="input-form-170">
-                        Tipo de Contrato
-
-                       <p:selectOneMenu  class="iform" disabled="true" value="#{profesorController.profesor.tipocontrato}">
-                           <f:selectItem itemLabel="Select One" itemValue=""/>
-                           <f:selectItem itemLabel="Tiempo Completo" itemValue="Tiempo Completo"/>
-                           <f:selectItem itemLabel="Medio Tiempo" itemValue="Medio Tiempo"/>
-                           <f:selectItem itemLabel="3/4 de Tiempo" itemValue="3/4 de Tiempo"/> 
-                           <f:selectItem itemLabel="Catedra" itemValue="Catedra"/>                           
-                       </p:selectOneMenu>
                     </div>
-               </div>
-                 
-                 
-              <div class="form-dere">
-                     <div class="input-form-310">
-                        Segundo Nombre
-                        <p:inputText class="iform" value="#{profesorController.profesor.segundoNombre}" />
-                     </div>
-                 <div class="input-form-310">
-                     Segundo Apellido
-                     <p:inputText class="iform" value="#{profesorController.profesor.segundoApellido}" />
-                 </div>
-                 <div class="input-form-310">
-                    Identificacion
-                    <p:inputText class="iform" value="#{profesorController.profesor.identificacion}" /> 
-                 </div>
-                <div class="input-form-310">
-                    Password
-                    <p:inputText class="iform" value="#{profesorController.profesor.password}" />
-                </div>
-                <div class="input-form-310">
-                    Telefono
-                    <p:inputText class="iform" value="#{profesorController.profesor.telefono}" />
-                </div>
-                <div class="input-form-310">
-                    Direccion
-                    <p:inputText class="iform" value="#{profesorController.profesor.direccion}" />
-                </div>
-                 <div class="botones ">
-                     <h:commandButton class="boton" action="#{profesorController.actualizarprofesor()}" value="Actualizar" />  
-                    
-                 </div>
-                     
-                    
-              </div>
-             </div>
-    
+                    <div class="form">
+                        <div>
+                            <h4>Primer Nombre</h4>
+                            <p:inputText   value="#{profesorController.profesor.primerNombre}" />
+                        </div>
+                        <div>
+                            <h4>Primer Apelldio</h4>
+                            <p:inputText  value="#{profesorController.profesor.primerApellido}" />
+                        </div>
+                        <div>  
+                            <h4>Segundo Nombre</h4>
+                            <p:inputText  value="#{profesorController.profesor.segundoNombre}" />
+                        </div>
+                        <div>
+                            <h4>Segundo Apellido</h4>
+                            <p:inputText  value="#{profesorController.profesor.segundoApellido}" />
+                        </div>
+                        <div>
+                            <h4>Genero</h4>
+                            <p:selectOneRadio  value="#{profesorController.profesor.genero}">
+                                <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                                <f:selectItem itemLabel="Femenino" itemValue="Femenino"/>
+                            </p:selectOneRadio>
+                        </div>
+                        <div>
+                            <h4>Tipo de contrado</h4>
+                            <p:selectOneRadio  disabled="true" value="#{profesorController.profesor.tipocontrato}">
+                                <f:selectItem itemLabel="Tiempo Completo" itemValue="Tiempo Completo"/>
+                                <f:selectItem itemLabel="Medio Tiempo" itemValue="Medio Tiempo"/>
+                                <f:selectItem itemLabel="3/4 de Tiempo" itemValue="3/4 de Tiempo"/> 
+                                <f:selectItem itemLabel="Catedra" itemValue="Catedra"/>
+                            </p:selectOneRadio>
+                        </div>
+                        <div>
+                            <h4>Tipo Identificacion</h4>
+                            <p:selectOneRadio  rendered="#{not empty profesorController.profesor}" value="#{coordinadorController.coordinador.tipo_ide}">
+                                <f:selectItem itemLabel="TI" itemValue="TI"/>
+                                <f:selectItem itemLabel="CC" itemValue="CC"/>
+                                <f:selectItem itemLabel="CE" itemValue="CE"/>
+                            </p:selectOneRadio>
+                        </div>
+                        <div>
+                            <h4>Identificacion</h4>
+                            <p:inputText  value="#{profesorController.profesor.identificacion}" /> 
+                        </div>
+                        <div>
+                            <h4>Email</h4>
+                            <p:inputText   value="#{profesorController.profesor.email}" />
+                        </div>
+                        <div>
+                            <h4>Telefono</h4>
+                            <p:inputText  value="#{profesorController.profesor.telefono}" />
+                        </div>
+                        <div>
+                            <h4>Direccion</h4>
+                            <p:inputText  value="#{profesorController.profesor.direccion}" />
+                        </div>  
 
-        </div>
-    </section>
+                    </div>
 
 
+                    <p:card style="margin-top: 0.5rem;">
+                        <h3 style="margin-bottom: 1rem">Configura El usuario y contraseña</h3>
+                        <div class="form" style="padding-bottom: 0">
+                            <div class="ui-inputgroup">
+                                <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
+                                <p:inputText value="#{profesorController.profesor.login}" placeholder="Username"/>
+                            </div>
+                            <div class="ui-inputgroup">
+                                <div class="ui-inputgroup-addon"><i class="pi pi-lock"></i></div>
+                                <p:inputText value="#{profesorController.profesor.password}" placeholder="Password"/>
+                            </div>
+                        </div>
+                    </p:card>
+                    <div class="btns-container" style="justify-content: right">
+                        <div class="btn-p">
+                            <label>Actualizar</label>
+                            <h:commandButton class="btn" action="#{profesorController.actualizarprofesor()}" value="Registrar" />  
+                        </div>
+                    </div>
+f
+                </div>
+
+            
+
+            </div>
+        </section>
 
     </h:body>
-    
+    <style>
+        .ui-fileupload-simple .ui-button{
+            border: 1px solid var(--first-color-p) !important;
+            background: transparent !important;
+            color: var(--first-color-p) !important;
+        }
+    </style>
+
 </html>
 

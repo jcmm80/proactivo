@@ -7,39 +7,42 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        
-         <div class="btns" style="background-color: #005CB9">
-                                    <i class="uil uil-angle-left-b" ></i>
-                                    Volver
-                                    <h:commandButton class="btn" value="volver" action="#{profesorController.volverTutorias()}" />
-                                </div>
-        
-        <span class="aviso">Proyectos Existentes</span>
-        <p:dataTable class="tabla-reporte" var="proa" value="#{profesorController.proyectosSemestre}">
-            <p:column headerText="Codigo">
-                #{proa.codigo}
-            </p:column>
-            <p:column headerText="Fecha Ingreso">
-                #{proa.fecha_ingreso}
-            </p:column>                             
-            <p:column width="500" headerText="Integrantes">
-                <p:dataTable style="font-size: 10pt" var="integ" value="#{proa.integrantes}">
-                    <p:column headerText="">
-                        <p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" style="width: 40px;height: 40px "  />
-                    </p:column>
-                    <p:column width="300" headerText="">
-                        <h:outputText  value="#{integ.matricula.estudiante.toString()}" /> 
-                    </p:column>                           
-                </p:dataTable>                                 
-            </p:column>
-            <p:column headerText="Opciones">
-                <div class="Acciones">
-                    <div class="accion">
-                        <i class="uil uil-file-search-alt" style="color: #005CB9; font-size: 25px"></i><h:commandButton class="icono" value="." action="#{profesorController.pcrearTutoria(proa)}" />
+        <div class="btn-normal inline-flex border-none" title="Volver">
+            <i class="ri-arrow-left-line text-xl"></i>
+            <h:commandButton class="btn" value="volver" action="#{profesorController.volverTutorias()}" />
+        </div>
+
+
+
+        <div class="card">
+            <div class="relative pb-4 mb-2">
+                <h3>Proyectos Existentes</h3>
+                <div class="espaceador"></div>
+            </div>
+            <p:dataTable scrollable="true" var="proa" value="#{profesorController.proyectosSemestre}">
+                <p:column headerText="Codigo">
+                    #{proa.codigo}
+                </p:column>
+                <p:column headerText="Ingreso">
+                    #{proa.fecha_ingreso}
+                </p:column>                             
+                <p:column  headerText="Integrantes">
+                    <p:repeat var="integ" value="#{proa.integrantes}">
+                        <div class="flex gap-1 align-items-center">
+                            <div class="w-2 border-circle overflow-hidden flex">
+                                <p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" class="img"  />
+                            </div>
+                            <small class="w-full text-justify">#{integ.matricula.estudiante.toString()}</small>
+                        </div>
+                    </p:repeat>                                
+                </p:column>
+                <p:column headerText="Opciones">
+                    <div class="btn-normal" title="Crear Tutoria">
+                        <i class="uil uil-file-search-alt" ></i><h:commandButton class="btn" value="." action="#{profesorController.pcrearTutoria(proa)}" />
                     </div>
-                </div>  
-            </p:column>  
-        </p:dataTable> 
+                </p:column>  
+            </p:dataTable> 
+        </div>
 
     </h:body>
 </html>

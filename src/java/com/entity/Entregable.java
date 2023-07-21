@@ -83,6 +83,23 @@ public class Entregable implements Serializable {
     public Long getId() {
         return id;
     }
+    
+    public String colorEstado() {
+        String color = "";
+        
+        if(this.estado.equals("Guardado")){
+            color = "#EEE";
+        }
+        if(this.estado.equals("Entregado")){
+            color = "var(--first-color-c)";
+        }
+        if(this.estado.equals("Revisado")){
+            color = "var(--first-color-p)";
+        }
+        
+        
+        return color;
+    }
 
     public void setId(Long id) {
         this.id = id;

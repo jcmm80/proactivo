@@ -9,58 +9,82 @@
     </h:head>
     <h:body>
         <section class="contenido-contenedor">
-        <div class="border contenedor top">
-             <h1 class="tittle">Tipo de item</h1>
-             <span class="aviso">Crea Tipo De Item</span>
-             <div class="contenedor-form periodos" style="align-items:center">
-                 <div class="form-izq">
-                     <div class="input-form-310">
-                         Nombre
-                         <p:inputText class="iform" value="#{tipo_itemController.tipo_item.nombre}" />
-                     </div>
-                     
-                 </div>
-                 <div class="form-dere">
-                     <div class="input-form-410">
-                         Descripcion
-                         <p:inputTextarea class="iform" value="#{tipo_itemController.tipo_item.descripcion}" />
-                     </div>
-                     
-                 </div>
-                 
-             </div>
-              
-             <div class="tanone">
-                 <h:commandButton value="agregar" class="boton" action="#{tipo_itemController.registrarTipo_Item()}" />
-             </div>
-        
-                
-                
-                <p:dataTable class="tabla-reporte" var="ti" value="#{tipo_itemController.tipos_Items}" >
-                    <p:column headerText="Nombre">
-                        #{ti.nombre}
-                      </p:column>
-                    <p:column headerText="Descripcion">
-                        #{ti.descripcion}
-                     </p:column>
-                    <p:column headerText="Eliminar">
-                        <div class="Acciones">
-                            <div class="accion">
-                            <i class="uil uil-trash-alt" style="color: red; font-size: 25px"></i>
-                            <h:commandButton class="icono" value="Eliminar" action="#{tipo_itemController.eliminartipo_Item(ti)}" />
-                            <h:commandButton class="btn-c" value="ver" action="#{tipo_itemController.seleccionarItem(ti)}" />
-                        </div>
-                        </div>
-                        
-                        
-                    </p:column>
-                </p:dataTable>
-    
+            <div class=" contenedor top">
+                <div class="card">
 
-        </div>
-    </section>
+                    <div class="relative pb-2 mb-2">
+                        <h3 class="text-2xl ">Gestor Tipo de Item</h3>
+                        <small class="block mb-4 text-gray-600">Es un elemento o componente específico que forma parte del proyecto en sí. Los ítems son las diferentes partes o aspectos que se deben abordar o completar para lograr los objetivos del proyecto.</small>  
+                        <div class="espaceador"></div>
+                    </div>
+                    <div class="form">
+                        <div>
+                            <h4>Nombre</h4>
+                            <div>
+                                <p:inputText  value="#{tipo_itemController.tipo_item.nombre}" placeholder="INTRODUCCIÓN"/>
+                                <small class="flex align-items-center gap-1 text-gray-600"><i class="ri-question-fill " ></i><p></p>Establece un nombre al tipo de item</small>
+                            </div>
+                        </div>
+                        <div>  
+                            <h4>Descripcion</h4>
+                            <p:inputTextarea  class="w-full" value="#{tipo_itemController.tipo_item.descripcion}" placeholder="Escribe aquí..."/>
+                            <small class="flex align-items-center gap-1 text-gray-600"><i class="ri-question-fill " ></i><p></p>Agrega un breve descripcion sobre el tipo de item</small>
+                        </div>
+
+
+
+                    </div>
+                </div>
+                <div class="btns-container justify-content-end">
+                    <div class="btn-p" title="agregar">
+                        <label>Agregar</label>
+                        <h:commandButton class="btn" value="+" action="#{tipo_itemController.registrarTipo_Item()}" />
+                    </div>
+                </div>
+
+
+
+                <div class="card">
+                    <div class="relative pb-4 mb-2">
+                        <h3 >Tipos de Items Creados</h3>
+                        <div class="espaceador"></div>
+                    </div>
+                    <p:dataTable scrollable="true" var="ti" value="#{tipo_itemController.tipos_Items}" >
+                        <p:column headerText="Nombre">
+                            #{ti.nombre}
+                        </p:column>
+                        <p:column headerText="Descripcion">
+                            <div class="btn-p">
+                                <i class="ri-eye-line"></i>
+                                <label>Ver</label>
+                                <p:commandButton value="Show" class="btn" type="button" icon="pi pi-external-link" onclick="PF('#{ti.descripcion}').show()"/>
+                            </div>
+                            <p:dialog widgetVar="#{ti.descripcion}" modal="true" header="#{ti.nombre}" hideEffect="fade" resizable="false" minHeight="40" width="700" showEffect="fade">
+                                <p class="m-0 w-full">#{ti.descripcion}}</p>
+                            </p:dialog>
+
+                        </p:column>
+                        <p:column headerText="Opciones">
+                            <div class="btn-eliminar" title="Eliminar">
+                                <i class="uil uil-trash-alt" ></i>
+                                <h:commandButton class="btn" value="Eliminar" action="#{tipo_itemController.eliminartipo_Item(ti)}" />
+                            </div>
+                            <div class="btn-normal" title="Editar">
+                                <i class="uil uil-pen"></i>
+                                <h:commandButton class="btn" value="Editar" action="#{tipo_itemController.seleccionarItem(ti)}" />
+                            </div>
+
+
+
+                        </p:column>
+                    </p:dataTable>
+                </div>
+
+
+            </div>
+        </section>
     </h:body>
-    
-       
+
+
 
 </html>

@@ -106,58 +106,64 @@
                                 #{est.estudiante.segundoApellido}
                             </p:column>
                             <p:column headerText="Valoracion General">
-                                <p:inputNumber  disabled="true" value="#{evaluacionController.notaFIntegrante(proyectoAulaController.integranteMatricula(est))}" size="4"  minValue="0" maxValue="5" />
+                                #{evaluacionController.notaFIntegrante(proyectoAulaController.integranteMatricula(est))}
 
                             </p:column>
                             <p:column headerText="Resultados">
-
-
-                                <h:commandButton value="ver" action="#{coordinadorController.verResultados(proyectoAulaController.integranteMatricula(est))}"  />
-
-
+                                <div class="btn-normal" title="Ver">
+                                    <i class="uil uil-file-search-alt" ></i>
+                                    <h:commandButton class="btn" value="." action="#{coordinadorController.verResultados(proyectoAulaController.integranteMatricula(est))}" />
+                                </div>
                             </p:column>
                         </p:dataTable>                        
                     </p:tab>
                     <p:tab title="Resultados de Aprendizaje: ">
-                        <div class="contresapre">
-                            <div class="cinfoes">
-                                <div class="contportres">
-                                    <div class="cinest">
 
-                                        <p:graphicImage value="/Imagenes/Perfiles/#{matriculaController.matricula.estudiante.imagenPerfil()}" style="width: 80px;height: 80px "  />
-                                        <h:outputText  value="#{matriculaController.matricula.estudiante.toString()}" />
-
+                        <div class="btn-normal inline-flex border-none" title="Volver">
+                            <i class="ri-arrow-left-line text-xl"></i>
+                            <h:commandButton class="btn" value="volver" action="#{coordinadorController.volverEstudiantesSeccion()}" />
+                        </div>
+                        <div class=" flex justify-content-center align-items-center gap-2 mb-2">
+                            <div class="w-8rem border-circle overflow-hidden flex ">
+                                <p:graphicImage value="/Imagenes/Perfiles/#{matriculaController.matricula.estudiante.imagenPerfil()}" class="img"  />
+                            </div>
+                        </div>
+                        <div class="info-proyecto">
+                            <div class="info-tittle">Infórmacion del Estudiante</div>
+                            <div class="info-data">
+                                <div class="info-data-item">
+                                    <div>
+                                        <i class="ri-qr-code-line"></i>
+                                        Nombre Completo:
                                     </div>
-                                    <div class="cvgen">
-                                        Nota General:
-                                        <p:inputNumber  disabled="true" value="#{evaluacionController.notaFIntegrante(matriculaController.integrante)}" size="4"  minValue="0" maxValue="5" />
+                                    <p>#{matriculaController.matricula.estudiante.toString()}</p>
 
-
-                                    </div>
-                                    <div class="cvol">
-                                        <h:commandButton value="volver" action="#{coordinadorController.volverEstudiantesSeccion()}" />
-
-
-                                    </div>
                                 </div>
-
+                                <div class="info-data-item">
+                                    <div>
+                                        <i class="ri-medal-2-line"></i>
+                                        Nota General:
+                                    </div>
+                                    <p>#{evaluacionController.notaFIntegrante(matriculaController.integrante)}</p>
+                                </div>
                             </div>
-                            <div class="cres">
-                                <p:dataGrid var="asi" columns="1" value="#{matriculaController.resultados}">
-                                    <p:panel header="Asignatura: #{asi.asignatura.nombre} - Profesor: #{asi.asignatura.profesor.toString()}">                                
-                                        <p:dataTable var="val" value="#{asi.valoraciones}">
-                                            <p:column  style="height: 70px">                                             
-                                                <h:outputText  title="#{val.criterio.criterio.descripcion}" value="#{val.criterio.criterio.descripcion}"  />
-                                            </p:column>
-                                            <p:column  style="height: 70px">                                             
-                                                <h:outputText  title="#{val.criterio.criterio.descripcion}" value="#{val.valor}"  />
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:panel>
-                                </p:dataGrid>
+                            <div class="espaceador"></div>
+                        </div>
+                        <div class="cres">
+                            <p:accordionPanel var="asi"  value="#{matriculaController.resultados}">
+                                <p:tab title="Asignatura: #{asi.asignatura.nombre} - Profesor: #{asi.asignatura.profesor.toString()}">                                
+                                    <p:dataTable var="val" value="#{asi.valoraciones}">
+                                        <p:column headerText="Criterio"  style="width: 80%; text-align: left">                                             
+                                            <h:outputText  title="#{val.criterio.criterio.descripcion}" value="#{val.criterio.criterio.descripcion}"  />
+                                        </p:column>
+                                        <p:column headerText="Nota"  style="height: 70px">                                             
+                                            <h:outputText  title="#{val.criterio.criterio.descripcion}" value="#{val.valor}"  />
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:tab>
+                            </p:accordionPanel>
 
 
-                            </div>
                         </div>
 
                     </p:tab>
