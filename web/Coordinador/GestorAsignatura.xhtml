@@ -17,7 +17,7 @@
                     <h3 class="text-2xl ">Gestor Asignaturas</h3>
                     <small class="block mb-4 text-gray-600">un área de conocimiento se refiere a una disciplina académica o campo de estudio específico que abarca un conjunto de conocimientos, métodos y enfoques relacionados.</small>  
                     <div class="espaceador"></div>
-                    
+
                 </div>
 
                 <p:tabView  scrollable="true" activeIndex="#{asignaturaController.activeIndex}">
@@ -71,11 +71,11 @@
                                     <h:commandButton   class="btn" value="Abrir" action="#{asignaturaController.seleccionarSemestre(sem,1)}" />
                                 </div>
                             </p:dataViewGridItem>
-                            
+
                         </p:dataView>
-                        
-                        
-                     
+
+
+
                     </p:tab>
                     <p:tab  title="Area">
                         <div class="relative pb-2 mb-2">
@@ -162,13 +162,17 @@
 
                             </div>
                         </div>
-                        <div class="btns-container justify-content-end">
-                            <div class="btn-c">   
-                                <label>Guardar</label>
-                                <h:commandButton id="salsem" class="btn" value="Guardar" action="#{asignaturaController.reistrarAsignatura()}" />                              
-                            </div>
-                        </div>
 
+                        <h:form>
+                            <div class="btns-container justify-content-end">
+                                <div class="btn-c">   
+                                    <label>Guardar</label>
+                                    <p:defaultCommand target="salsem" />
+                                    <h:commandButton id="salsem" class="btn" value="Guardar" action="#{asignaturaController.reistrarAsignatura()}" />                              
+                                </div>
+                            </div>
+                        </h:form>
+                        
                         <p:dataTable rows="8" paginator="true" scrollable="true" style="font-size: 10pt" var="asig" value="#{asignaturaController.asignaturasp}">
                             <p:column headerText="Codigo">
                                 #{asig.codigo}
@@ -225,7 +229,7 @@
                 grid-template-columns: repeat(1, 1fr);
             }
         }  
-        
+
     </style>
 
 

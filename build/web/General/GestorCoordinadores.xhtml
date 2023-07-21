@@ -82,14 +82,15 @@
                     </div>
                 </p:card>
 
-
+                <h:form>
                 <div class="btns-container" style="justify-content: right">
                     <div class="btn-s">
                         <label>Registrar</label>
-                        <p:commandButton   class="btn" action="#{coordinadorController.registrar()}" value="Registrar" />  
+                        <p:defaultCommand target="submitCoordinador" />
+                        <h:commandButton id="submitCoordinador" class="btn" action="#{coordinadorController.registrar()}" value="Registrar" />
                     </div>
                 </div>
-
+                </h:form>
                 
                 <div class="card mb-4">
                     <div class="relative pb-2">
@@ -200,4 +201,3 @@
         }
     </style>
 </xhtml>
-

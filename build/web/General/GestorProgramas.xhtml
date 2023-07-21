@@ -79,15 +79,15 @@
                     </div>
                 </div>
 
-
-                <div class="btns-container justify-content-end">
-                    <div class="btn-s">
-                        <label>Registrar</label>
-                        <h:commandButton class="btn"  value="registrar" action="#{programaController.registrar()}" />
+                <h:form>
+                    <div class="btns-container justify-content-end">
+                        <div class="btn-s">
+                            <label>Registrar</label>
+                            <p:defaultCommand target="submitPrograma" />                            
+                            <h:commandButton id="submitPrograma" class="btn"  value="registrar" action="#{programaController.registrar()}" />
+                        </div>
                     </div>
-                </div>
-
-
+                </h:form>
                 <div class="card mb-4">
                     <div class="relative pb-4">
                         <h3 class="text-2xl ">Programas Creados</h3>

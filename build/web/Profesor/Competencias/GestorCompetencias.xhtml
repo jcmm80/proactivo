@@ -10,11 +10,13 @@
     <h:body>
         <p:tabView activeIndex="#{competenciasController.activeIndex}">
             <p:tab  title="Competencias">
-                <div class="flex relative justify-content-end align-items-center p-2 gap-1 font-bold text-sm" style="color: var(--first-color-p)">
-                    +
-                    <label >Agrear</label>
-                    <h:commandButton value="Agregar" title="Agregar Competencia" class="btn" action="#{competenciasController.irCrearCompetencia()}"/>
-                </div>
+                <h:form>
+                    <div class="flex relative justify-content-end align-items-center p-2 gap-1 font-bold text-sm" style="color: var(--first-color-p)">
+                        <label >Agregar</label>
+                        <p:defaultCommand target="submitCompetencia" />
+                        <h:commandButton id="submitCompetencia" value="Agregar" title="Agregar Competencia" class="btn" action="#{competenciasController.irCrearCompetencia()}"/>
+                    </div>
+                </h:form>
                 <p:dataTable class="tabla-reporte" var="comp" value="#{competenciasController.competenciasXUnidad}" >
                     <p:column headerText="Horas">
                         #{comp.horas}

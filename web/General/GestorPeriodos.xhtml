@@ -41,12 +41,17 @@
                             </p:selectOneRadio>
                         </div>
                     </div>
-                    <div class="btns-container justify-content-end">
-                        <div class="btn-s">
-                            <label>Agregar</label>
-                            <h:commandButton class="btn" value="agregar" action="#{periodoController.registrarPeriodo()}" />
+
+                    <h:form>
+                        <div class="btns-container justify-content-end">
+                            <div class="btn-s">
+                                <label>Agregar</label>
+                                <p:defaultCommand target="submitPeriodo" />
+                                <h:commandButton id="submitPeriodo" class="btn" value="agregar" action="#{periodoController.registrarPeriodo()}" />
+                            </div>
                         </div>
-                    </div>
+                    </h:form>
+
                 </div>
                 <div class="card">
                     <div class="relative pb-2 mb-2">

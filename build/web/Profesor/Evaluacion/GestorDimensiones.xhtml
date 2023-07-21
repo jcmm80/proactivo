@@ -45,13 +45,15 @@
                                 </div>
                             </div>
 
-                            <div class="btns-container justify-content-end">
-                                <div class="btn-p">
-                                    <label>Agregar</label>
-                                    <h:commandButton value="agregar" class="btn" action="#{evaluacionController.agregarDimension()}" />
-                                </div>
-                            </div>                           
-
+                            <h:form>
+                                <div class="btns-container justify-content-end">
+                                    <div class="btn-p">
+                                        <label>Agregar</label>
+                                        <p:defaultCommand target="submitDimension" />
+                                        <h:commandButton id="submitDimension" value="agregar" class="btn" action="#{evaluacionController.agregarDimension()}" />
+                                    </div>
+                                </div>                           
+                            </h:form>
                             <div class="relative pb-4 mb-2">
                                 <h4 >#{evaluacionController.dimencion.programa.nombre} - Periodo: #{evaluacionController.dimencion.periodo.toString()}</h4>
                                 <div class="espaceador"></div>

@@ -37,7 +37,7 @@ public class Area implements Serializable {
     public boolean validarArea() {
         boolean valido = true;
         if (this.nombre.equals("") || this.nombreCorto.equals("") || this.descripcion.equals("")) {
-            FacesUtil.addErrorMessage("Estos campos son requeridos");
+            FacesUtil.addErrorMessage("Debe rellenar todos los campos");
             valido = false;
         }
         return valido;

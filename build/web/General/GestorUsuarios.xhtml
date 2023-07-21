@@ -39,13 +39,16 @@
                         </div>
                     </div>
                 </p:card>
-                <div class="btns-container justify-content-end">
-                    <div class="btn-s">
-                        <label>Guardar</label>
-                        <h:commandButton class="btn" value="Guardar" action="#{usuarioController.almacenarUsuario()}" />
-                    </div>
-                </div>
 
+                <h:form>
+                    <div class="btns-container justify-content-end">
+                        <div class="btn-s">
+                            <label>Guardar</label>
+                            <p:defaultCommand target="submitUsuario" />
+                            <h:commandButton id="submitUsuario" class="btn" value="Guardar" action="#{usuarioController.almacenarUsuario()}" />
+                        </div>
+                    </div>
+                </h:form>
                 <p:separator />
                 <p:dataTable paginator="true" rows="10"  scrollable="true" var="usu" value="#{usuarioController.usuarios}">
                     <p:column headerText="Tipo de Identificacion">
@@ -68,10 +71,10 @@
                     </p:column>                  
 
                     <p:column headerText="Seleccionar">
-                            <div class="btn-normal">
-                                <i class="fa fa-hand-pointer"></i>
-                                <h:commandButton value="+" class="btn" action="#{usuarioController.seleccionarUsuario(usu)}" />
-                            </div>
+                        <div class="btn-normal">
+                            <i class="fa fa-hand-pointer"></i>
+                            <h:commandButton value="+" class="btn" action="#{usuarioController.seleccionarUsuario(usu)}" />
+                        </div>
                     </p:column>
                 </p:dataTable>
 
