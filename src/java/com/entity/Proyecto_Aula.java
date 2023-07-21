@@ -115,6 +115,25 @@ public class Proyecto_Aula implements Serializable {
         }
         return estado;
     }
+    
+    public String colorEstado() {
+        String color = "";
+        
+        if(this.estado.equals("Guardado")){
+            color = "#EEE";
+        }
+        if(this.estado.equals("Propuesta")){
+            color = "var(--first-color-c)";
+        }
+        if(this.estado.equals("Produccion")){
+            color = "var(--first-color-p)";
+        }
+        if(this.estado.equals("Aplazado")){
+            color = "var(--first-color-s)";
+        }
+        
+        return color;
+    }
 
     public boolean esvalido() {
         boolean valido = true;

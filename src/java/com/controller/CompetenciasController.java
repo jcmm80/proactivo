@@ -168,6 +168,9 @@ public class CompetenciasController implements Serializable {
         cricon.setCriterios(null);
         mostPcompetencias = false;
     }
+    public void volverAsignaturas() {
+        mostPcompetencias = false;
+    }
 
     public void irCrearCompetencia() {
         mostPcompetencia = true;
@@ -206,6 +209,7 @@ public class CompetenciasController implements Serializable {
     public void consultarCompetenciasAsignatura(Asignatura a) {
         this.asignatura = a;
         this.consultarUnidadesCompetencia(a);
+        mostPcompetencias = true;
     }
 
     /**

@@ -106,76 +106,74 @@
                             
                             <p:panel>
                                 <ui:include src="GestorCompetencias.xhtml" />
-                            </p:panel>                        
-                            <div class="mt-4" rendered="#{competenciasController.mostPcompetencia}">
-                                <div class="relative pb-2 mb-2">
-                                    <h3 class="text-2xl ">Crear Competencia</h3>
-                                    <small class="block mb-4 text-gray-600">Una evaluación es un proceso sistemático y continuo que tiene como objetivo medir el progreso, el aprendizaje y el rendimiento de los estudiantes.</small>  
-                                    <div class="espaceador"></div>
-                                </div>
-                                <p:panel>
-                                    <div class="form">
-                                        <div>
-                                            <h4 class="mb-2">Tipo de Competencia</h4>
-                                            <p:repeat  var="tcom" value="#{competenciasController.tiposcompetencia}">
-                                                <div class="btn-p ">
-                                                    <label>#{tcom.descripcion}</label>
-                                                    <h:commandButton class="btn" action="#{competenciasController.seleccionaTipoCompetencia(tcom)}" />
-                                                </div>
-                                            </p:repeat>
-                                            <small class="block">* #{competenciasController.competencia.tipo.descripcion}</small>
-                                        </div>
+                                <p:panel class="mt-4" rendered="#{competenciasController.mostPcompetencia}">
+                                    <div class="relative pb-2 mb-2">
+                                        <h3 class="text-2xl ">Crear Competencia</h3>
+                                        <small class="block mb-4 text-gray-600">Una evaluación es un proceso sistemático y continuo que tiene como objetivo medir el progreso, el aprendizaje y el rendimiento de los estudiantes.</small>  
+                                        <div class="espaceador"></div>
+                                    </div>
+                                        <div class="form">
+                                            <div>
+                                                <h4 class="mb-2">Tipo de Competencia</h4>
+                                                <p:repeat  var="tcom" value="#{competenciasController.tiposcompetencia}">
+                                                    <div class="btn-p ">
+                                                        <label>#{tcom.descripcion}</label>
+                                                        <h:commandButton class="btn" action="#{competenciasController.seleccionaTipoCompetencia(tcom)}" />
+                                                    </div>
+                                                </p:repeat>
+                                                <small class="block">* #{competenciasController.competencia.tipo.descripcion}</small>
+                                            </div>
 
-                                        <div>
-                                            <h4>Horas presenciales</h4>
-                                            <p:selectOneMenu class="w-full" id="option" value="#{competenciasController.competencia.horas}">
-                                                <f:selectItem itemLabel="1 Hora" itemValue="1"/>
-                                                <f:selectItem itemLabel="2 Horas" itemValue="2"/>
-                                                <f:selectItem itemLabel="3 Horas" itemValue="3"/>
-                                                <f:selectItem itemLabel="4 Horas" itemValue="4"/>
-                                                <f:selectItem itemLabel="5 Horas" itemValue="5"/>
-                                                <f:selectItem itemLabel="6 Horas" itemValue="6"/>
-                                                <f:selectItem itemLabel="7 Horas" itemValue="7"/>
-                                                <f:selectItem itemLabel="8 Horas" itemValue="8"/>
-                                                <f:selectItem itemLabel="9 Horas" itemValue="9"/>
-                                                <f:selectItem itemLabel="10 Horas" itemValue="10"/>
-                                            </p:selectOneMenu>
+                                            <div>
+                                                <h4>Horas presenciales</h4>
+                                                <p:selectOneMenu class="w-full" id="option" value="#{competenciasController.competencia.horas}">
+                                                    <f:selectItem itemLabel="1 Hora" itemValue="1"/>
+                                                    <f:selectItem itemLabel="2 Horas" itemValue="2"/>
+                                                    <f:selectItem itemLabel="3 Horas" itemValue="3"/>
+                                                    <f:selectItem itemLabel="4 Horas" itemValue="4"/>
+                                                    <f:selectItem itemLabel="5 Horas" itemValue="5"/>
+                                                    <f:selectItem itemLabel="6 Horas" itemValue="6"/>
+                                                    <f:selectItem itemLabel="7 Horas" itemValue="7"/>
+                                                    <f:selectItem itemLabel="8 Horas" itemValue="8"/>
+                                                    <f:selectItem itemLabel="9 Horas" itemValue="9"/>
+                                                    <f:selectItem itemLabel="10 Horas" itemValue="10"/>
+                                                </p:selectOneMenu>
+                                            </div>
+                                            <div >
+                                                <h4 class="mb-2">Tipo Entregable Relacionado</h4>
+                                                <p:repeat  var="tent" value="#{tipo_EntregableController.tipos_Entregable}">
+                                                    <div class="btn-s flex" title="#{tent.descripcion}">
+                                                        <label>#{tent.nombre}</label>
+                                                        <h:commandButton class="btn" action="#{competenciasController.seleccionarTipoEntregable(tent)}" />
+                                                    </div>
+                                                </p:repeat>
+                                                <small class="block">* #{competenciasController.competencia.tipoentregable.nombre}</small>
+                                            </div>
+                                            <div>
+                                                <h4>Estrategias</h4>
+                                                <p:inputTextarea class="w-full" value="#{competenciasController.competencia.estrategia}" />
+                                            </div>
+                                            <div>
+                                                <h4>Evidencias</h4>
+                                                <p:inputTextarea class="w-full" value="#{competenciasController.competencia.evidencia}" />
+                                            </div>
+                                            <div>
+                                                <h4>Bibliografia</h4>
+                                                <p:inputTextarea  class="w-full" value="#{competenciasController.competencia.bibliografia}" />
+                                            </div>
                                         </div>
-                                        <div >
-                                            <h4 class="mb-2">Tipo Entregable Relacionado</h4>
-                                            <p:repeat  var="tent" value="#{tipo_EntregableController.tipos_Entregable}">
-                                                <div class="btn-s flex" title="#{tent.descripcion}">
-                                                    <label>#{tent.nombre}</label>
-                                                    <h:commandButton class="btn" action="#{competenciasController.seleccionarTipoEntregable(tent)}" />
-                                                </div>
-                                            </p:repeat>
-                                            <small class="block">* #{competenciasController.competencia.tipoentregable.nombre}</small>
+                                        <div class="btns-container justify-content-between">
+                                            <div class="btn-s" title="Regresar">
+                                                <label>Atrás</label>
+                                                <h:commandButton class="btn" value="+" action="#{competenciasController.salirCrearCompetencia()}" />
+                                            </div>
+                                            <div class="btn-p" title="almacenar">
+                                                <label>Almacenar</label>
+                                                <h:commandButton class="btn" value="+" action="#{competenciasController.registrarCompetencia()}" />
+                                            </div>
                                         </div>
-                                        <div>
-                                            <h4>Estrategias</h4>
-                                            <p:inputTextarea class="w-full" value="#{competenciasController.competencia.estrategia}" />
-                                        </div>
-                                        <div>
-                                            <h4>Evidencias</h4>
-                                            <p:inputTextarea class="w-full" value="#{competenciasController.competencia.evidencia}" />
-                                        </div>
-                                        <div>
-                                            <h4>Bibliografia</h4>
-                                            <p:inputTextarea  class="w-full" value="#{competenciasController.competencia.bibliografia}" />
-                                        </div>
-                                    </div>
-                                    <div class="btns-container justify-content-between">
-                                        <div class="btn-s" title="Regresar">
-                                            <label>Atrás</label>
-                                            <h:commandButton class="btn" value="+" action="#{competenciasController.salirCrearCompetencia()}" />
-                                        </div>
-                                        <div class="btn-p" title="almacenar">
-                                            <label>Almacenar</label>
-                                            <h:commandButton class="btn" value="+" action="#{competenciasController.registrarCompetencia()}" />
-                                        </div>
-                                    </div>
                                 </p:panel>
-                            </div>
+                            </p:panel>                        
                         </div>
                     </p:panel>
 

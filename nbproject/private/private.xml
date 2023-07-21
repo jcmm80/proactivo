@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/sistemas/Desktop/proactivo/web/Profesor/Competencias/GestorCompetencias.xhtml</file>
             <file>file:/C:/Users/sistemas/Desktop/proactivo/src/java/com/utilidades/GestorImagenes.java</file>
             <file>file:/C:/Users/sistemas/Desktop/proactivo/web/resources/css/login.css</file>
@@ -70,6 +71,24 @@
             <file>file:/C:/Users/sistemas/Desktop/proactivo/web/Profesor/GestorTipo_Entregable.xhtml</file>
             <file>file:/C:/Users/sistemas/Desktop/proactivo/src/java/com/controller/EvaluacionController.java</file>
             <file>file:/C:/Users/sistemas/Desktop/proactivo/src/java/com/services/IntegranteServices.java</file>
+=======
+            <file>file:/C:/Users/jcmm/Desktop/jhonatan/Proyectos_personales/proactivoNew/web/resources/css/style-menu.css</file>
+            <file>file:/C:/Users/jcmm/Desktop/jhonatan/Proyectos_personales/proactivoNew/web/Profesor/Competencias/GestorUnidadesCompetencia.xhtml</file>
+            <file>file:/C:/Users/jcmm/Desktop/jhonatan/Proyectos_personales/proactivoNew/web/Profesor/Competencias/GestorCompetencias.xhtml</file>
+            <file>file:/C:/Users/jcmm/Desktop/jhonatan/Proyectos_personales/proactivoNew/web/Profesor/ProyectosAulaPrograma.xhtml</file>
+            <file>file:/C:/Users/jcmm/Desktop/jhonatan/Proyectos_personales/proactivoNew/web/Estudiante/Gestor_Propuestas.xhtml</file>
+            <file>file:/C:/Users/jcmm/Desktop/jhonatan/Proyectos_personales/proactivoNew/web/Profesor/GestorProfesorLider.xhtml</file>
+            <file>file:/C:/Users/jcmm/Desktop/jhonatan/Proyectos_personales/proactivoNew/web/Estudiante/Gestor_Avances.xhtml</file>
+            <file>file:/C:/Users/jcmm/Desktop/jhonatan/Proyectos_personales/proactivoNew/web/Profesor/Tutorias/RealizarTutoria.xhtml</file>
+            <file>file:/C:/Users/jcmm/Desktop/jhonatan/Proyectos_personales/proactivoNew/web/Profesor/GestorNucleos.xhtml</file>
+            <file>file:/C:/Users/jcmm/Desktop/jhonatan/Proyectos_personales/proactivoNew/web/Profesor/Tutorias/ProgramarTutoria.xhtml</file>
+            <file>file:/C:/Users/jcmm/Desktop/jhonatan/Proyectos_personales/proactivoNew/web/Profesor/Evaluacion/GestorEvaluacion.xhtml</file>
+            <file>file:/C:/Users/jcmm/Desktop/jhonatan/Proyectos_personales/proactivoNew/web/resources/css/root.css</file>
+            <file>file:/C:/Users/jcmm/Desktop/jhonatan/Proyectos_personales/proactivoNew/web/Profesor/GestorTipo_Entregable.xhtml</file>
+            <file>file:/C:/Users/jcmm/Desktop/jhonatan/Proyectos_personales/proactivoNew/web/Profesor/GestorTutorias.xhtml</file>
+            <file>file:/C:/Users/jcmm/Desktop/jhonatan/Proyectos_personales/proactivoNew/web/resources/css/style.css</file>
+            <file>file:/C:/Users/jcmm/Desktop/jhonatan/Proyectos_personales/proactivoNew/web/Profesor/Tutorias/CrearTutoria.xhtml</file>
+>>>>>>> 1f627d732de71ee43d1e3250516825b32a0f98fe
         </group>
     </open-files>
 </project-private>

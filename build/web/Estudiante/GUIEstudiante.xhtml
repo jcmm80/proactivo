@@ -1,108 +1,113 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <xhtml xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <h:head>
         <title>Facelet Title</title>
+
     </h:head>
     <h:body>
-        <header>
-            <div class="nav-up contenedor ">
-                <div class="logo-search">
-                    <a href="index.xhtml" class="logo-proac-container">
-                        <h:graphicImage class="img logo-proac" value="/resources/img/logo-azul.png"/>
-                        <p><span>Pro</span>activo</p>
-                    </a>
-
-                    <div class="buscador">
-                        <input type="search" placeholder="Search..."></input>
-                        <i class="fas fa-search input-i"></i>
-                    </div>  
+        <header class="header" id="header">
+            <nav class="nav-up container-menu">
+                <div class="nav-toggle" id="nav_toggle">
+                    <i class="ri-menu-line"></i>
                 </div>
-                <div class="perfil ">
-                    <div class="informacion-perfil">
-                        <span>Estudiante</span>
-                        <span>#{programaController.programa.nombre}</span>
-                        <span>#{estudianteController.estudiante.toString()}</span>
-                        <span>#{periodoController.periodoActual.anio}-#{periodoController.periodoActual.numero}</span>
+                <a href="index.xhtml" class="logo-proac-container">
+                    <h:graphicImage class="img logo-proac" value="/resources/img/logo-azul.png"/>
+                    <p><span>Pro</span>activo</p>
+                </a>
+                <div class="nav-search">
+                    <input type="search" placeholder="Buscar...."></input>
+                    <i class="ri-search-line"></i>
+                </div>
+                <div class="nav-unicolombo">
 
+                </div>
+                <div class="nav-profile">
+                    <div class="profile-data">
+                        Estudiante<br></br>
+                        #{estudianteController.estudiante.toString()}<br></br>
+                        #{periodoController.periodoActual.anio}-#{periodoController.periodoActual.numero}
                     </div>
-                    <div class="foto-perfil">
-                        <h:commandButton action="#{estudianteController.miperfil()}" class="mi-perfil" value="Perfil" />
-                        <div class="imagen-perfil">
-
-                            <h:graphicImage class="logo-unico" value="/Imagenes/Perfiles/#{estudianteController.estudiante.imagenPerfil()}"/>
-
-
+                    <div class="profile-img-btn">
+                        <div class="profile-img relative flex border-circle">
+                             <h:commandButton action="#{estudianteController.miperfil()}" class="btn" value="Perfil" />
+                            <h:graphicImage class="img " value="/Imagenes/Perfiles/#{estudianteController.estudiante.imagenPerfil()}"/>
                         </div>
                         <h:commandButton action="#{usuarioController.salir()}" class="log-out" value="Log out" />
+                    </div>
 
+
+                </div>
+            </nav>
+            <nav class="nav-menu" id="nav_menu">
+                <div class="nav-logos-close">
+                    <div class="nav-close" id="nav_close">
+                        <i class="ri-close-line"></i>
+                    </div>
+                    <div class="nav-search w-3">
+                        <input type="search" placeholder="Buscar...."></input>
+                        <i class="ri-search-line"></i>
                     </div>
                 </div>
-            </div>
 
 
-            <!-- Nav horizontal -->
-            <div class="nav-horizontal">
-                <nav>
-                    <div class="op"><i class="ri-lightbulb-fill"></i><h:commandLink action="#{estudianteController.g_tutoria()}" value="Tutorias"  /></div>
-                    <div class="op"><i class="fa fa-user-graduate"></i></div>
-                    <div class="op"><i class="ri-article-fill"></i><h:commandLink rendered="#{proyectoAulaController.proyecto.estadoProyecto()}" value="Proyecto de Aula" action="#{estudianteController.g_proyecto()}" /></div>
-                    <div class="op"><i class="ri-slideshow-fill"></i><h:commandLink value="Asignaturas" action="#{estudianteController.verAsignaturas()}" /></div>
-                    <div class="op"><i class="fa fa-user-tie"></i></div>
-                    <div class="op"><i class="ri-booklet-fill"></i><a href="">Notas</a></div>         
-                </nav>
-            </div>
-
-
-            <!-- Nav vertical -->
-            <div class="nav-vertical ">
-                <nav id="nav-vertical" >
-                    <div class="menu-vertical ">
-                        <div class="contenedor-mv">
-
-                            <span class="texto-menu">Menú</span>
-                        </div> 
+                <div class="nav-menu-container">
+                    <div class="nav-menu-horizontal">
+                        <h4 class="menu-tittle">Principal</h4>
+                        <ul class="nav-list-horizontal grids">
+                            <li class="nav-horizontal-item">
+                                <i class="ri-lightbulb-fill"></i>
+                                <h:commandLink action="#{estudianteController.g_tutoria()}" value="Tutorias"  />
+                            </li>
+                            <h:panelGroup layout="block" rendered="#{proyectoAulaController.proyecto.estadoProyecto()}">
+                                <li class="nav-horizontal-item">
+                                    <i class="ri-article-fill"></i>
+                                    <h:commandLink  action="#{estudianteController.g_proyecto()}" value="Proyectos de Aula"  />
+                                </li>
+                            </h:panelGroup>
+                            <li class="nav-horizontal-item">
+                                <i class="ri-slideshow-fill"></i>
+                                <h:commandLink value="Asignaturas" action="#{estudianteController.verAsignaturas()}" />
+                            </li>
+                            <li class="nav-horizontal-item">
+                                <i class="ri-booklet-fill"></i>
+                                <a href="" class="nav-down-link">Notas</a>
+                            </li>
+                        </ul>
                     </div>
-                    <h:panelGroup layout="block" rendered="#{!proyectoAulaController.proyecto.estadoProyecto()}">
-                        <div class="cop ">
-                            <div class="linea"></div>
-                            <div class="op-v"><h:commandButton rendered="#{matriculaController.matricula.habilitarProyecto()}" value="Gestionar propuesta" class="botones-v" action="#{estudianteController.g_propuesta()}"></h:commandButton></div>
-                        </div>
-                    </h:panelGroup>
-
-                    <h:panelGroup layout="block" rendered="#{proyectoAulaController.proyecto.estadoProyecto()}">
-                        <div class="cop">
-                            <div class="linea"></div>
-                            <div class="op-v"><h:commandButton value="Gestionar Proyecto" class="botones-v" action="#{estudianteController.g_proyecto()}"></h:commandButton></div>
-                        </div>
-                        <div class="cop">
-                            <div class="linea"></div>
-                            <div class="op-v"><h:commandButton value="Resultados de Aprendizaje" class="botones-v" action="#{estudianteController.verResultados()}"></h:commandButton></div>
-                        </div>
-                        
-                        <ui:include src="../General/ProgramacionProyectos.xhtml" />
-                        
-                    </h:panelGroup>
-
-                </nav>
-            </div>
-            <div class="boton-menu">
-                <i class="ri-menu-line"></i>
-            </div>
-        </header>  
+                    <div class="nav-menu-vertical">
+                        <h4 class="menu-tittle2">Menú</h4>
+                        <ul class="nav-list-vertical grids">
+                            <h:panelGroup layout="block" rendered="#{!proyectoAulaController.proyecto.estadoProyecto()}">
+                                <li class="nav-vertical-item">
+                                    <h:commandButton value="Gestionar propuesta" rendered="#{matriculaController.matricula.habilitarProyecto()}" class="nav-vertical-link" action="#{estudianteController.g_propuesta()}"></h:commandButton>
+                                </li>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block" rendered="#{proyectoAulaController.proyecto.estadoProyecto()}">
+                                <li class="nav-vertical-item">
+                                    <h:commandButton value="Gestionar Proyecto"  action="#{estudianteController.g_proyecto()}" class="nav-vertical-link" ></h:commandButton>
+                                </li>
+                                <li class="nav-vertical-item">
+                                    <h:commandButton value="Resultados de Aprendizaje"  action="#{estudianteController.verResultados()}" class="nav-vertical-link" ></h:commandButton>
+                                </li>
+                               
+                            </h:panelGroup>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <ui:include src="../General/ProgramacionProyectos.xhtml" />
 
         <ui:include src="#{estudianteController.paginaActualE}" />
 
-
-
-
         <script type="text/javascript" 
-                src="../resources/js/menu-vertical.js">
+                src="../resources/js/menu.js">
         </script>
         <script type="text/javascript" 
                 src="../resources/js/DFView.js">
@@ -110,19 +115,14 @@
 
     </h:body>
     <style>
-        .linea,
-        .nav-horizontal,
-        .menu-vertical,
+        .nav-logos-close,
+        .nav-vertical-item:before,
         .tabla-reporte thead,
-        .boton-menu{
-            background-color: var(--first-color-e);
+        body .ui-datatable thead th{
+            background-color: var(--first-color-e) !important;
         }
         body .ui-tabs.ui-tabs-top > .ui-tabs-nav li.ui-tabs-header.ui-state-active{
             border-color: var(--first-color-e);
-        }
-
-        .ui-accordion-header{
-            color: var(--first-color-e) !important;
         }
 
         .logo-proac-container span,
@@ -130,6 +130,36 @@
         {
             color: var(--first-color-e);
         }
+        @media screen and (max-width: 1005px) {
+            .nav-horizontal-item i{
+                color: var(--first-color-e) !important;
+            }
+            .nav-horizontal-item a{
+                color: var(--first-color-e) !important;
+            }
+            .menu-tittle2{
+                background-color: #fff;
+            }
+            .header{
+                background-color: var(--first-color-e);
+            }
+            .nav-vertical-link{
+                color: var(--first-color-e);
+            }
+            .menu-tittle, .menu-tittle2{
+                color: var(--first-color-e) !important;
+            }
+
+        }
+        @media screen and (min-width: 1005px) {
+            .nav-list-horizontal{
+                background-color: var(--first-color-e);
+            }
+            .menu-tittle2{
+                background-color: var(--first-color-e);
+            }
+        }
+
 
 
 

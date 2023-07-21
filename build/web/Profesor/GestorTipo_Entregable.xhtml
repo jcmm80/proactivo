@@ -11,8 +11,6 @@
         <section class="contenido-contenedor">
             <div class=" contenedor top">
                 <div class="card">
-
-
                     <div class="relative pb-2 mb-2">
                         <h3 class="text-2xl ">Gestor Tipo de Entregable</h3>
                         <small class="block mb-4 text-gray-600">Un tipo entregable se refiere a la clasificación o categoría de los diferentes elementos o documentos que se deben presentar como parte del avance del proyecto</small>  
@@ -21,8 +19,8 @@
 
                     <p:tabView>
                         <p:tab title="Elige Asinatura">
-                            <p:dataView  multiViewState="true" listIcon="pi pi-eye" var="asig" value="#{asignaturaController.asignaturas}">
-                                <p:dataViewListItem >
+                            <div class="grid-dos">
+                                <p:repeat  var="asig" value="#{asignaturaController.asignaturas}">
                                     <div class="p-4 flex justify-content-between card mb-1 responsive-flex cdppa">
                                         <h:commandButton class="btn" value="seleccionar" action="#{tipo_EntregableController.seleccionarAsignatura(asig)}" />
                                         <div>
@@ -44,14 +42,12 @@
                                             <h4>#{asig.seccion.semestre.denominacion} - #{asig.seccion.denominacion}</h4>
                                         </div>
                                     </div>
-                                </p:dataViewListItem>
-
-                            </p:dataView>
+                                </p:repeat>
+                            </div>
                         </p:tab>
                         <p:tab title="Crear TE">
                             <div class="relative pb-2 mb-2">
-                                <small class="block mb-2 text-gray-600"  >Crear Tipo De Entregable para la asignatura: <span style="color: var(--first-color-p);">#{tipo_EntregableController.asignatura.nombre}</span></small>
-
+                                <p class="block mb-2 text-gray-600"  >Crear Tipo De Entregable para la asignatura: <span style="color: var(--first-color-p);">#{tipo_EntregableController.asignatura.nombre}</span></p>
                             </div>
                             <div class="form" >
                                 <div >

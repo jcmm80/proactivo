@@ -9,49 +9,86 @@
     </h:head>
     <h:body>
         <section class="contenido-contenedor">
-            <div class="border contenedor top">
-                <h1 class="tittle">Gestor Propuestas</h1>
-                <p:accordionPanel widgetVar="basic">
+            <div class=" contenedor top">
+                <div class="relative pb-4 mb-2">
+                    <h3 class="text-2xl ">Gestor Propuesta</h3>
+                    <div class="espaceador"></div>
+                </div>
+                <p:tabView>
                     <p:tab title="Informacion Basica del Proyecto">
                         <div class="contpro">
-                            <div class="codse">
-                                <i class="uil uil-notes ic"></i>
-                                
-                                <div class="codseitem">
-                                    <h:outputText value="Codigo Proyecto" /><br></br>
-                                    <span>#{proyectoAulaController.proyecto.codigo}</span>
-                                </div>
-                                <div class="codseitem">
-                                    <h:outputText value="Semestre" /><br></br>
-                                    <span>#{proyectoAulaController.proyecto.seccion.semestre.denominacion}</span>
-                                </div>
+                            <div class="title-description-inplace">
+                                <p:inplace label="#{proyectoAulaController.proyecto.titulo}" editor="true"  class="inplace-h3" event="dblclick">
+                                    <p:inputText   placeholder="Titulo del proyeco" value="#{proyectoAulaController.proyecto.titulo}"/>
+                                </p:inplace>
+                                <p:inplace  label="Problematica del proyecto" editor="true" class="inplace-p" event="dblclick">
+                                    <p:inputTextarea placeholder="Problematica del proyecto" cols="100" value="#{proyectoAulaController.proyecto.problematica}" />
+                                </p:inplace>
                             </div>
-                            <span class="aviso">Establezca la fecha del proyecto</span>
-                            <div class="fechas codse" style="gap:20px;">
-                                <div class="input-form-200">
-                                    Fecha Inicial
-                                    <p:calendar   value="#{proyectoAulaController.proyecto.fecha_inicio}" />
-                                </div>
+                            <div class="info-proyecto">
+                                <div class="info-tittle">Infórmacion del proyecto</div>
+                                <div class="info-data">
+                                    <div class="info-data-item">
+                                        <div>
+                                            <i class="ri-qr-code-line"></i>
+                                            Código Proyecto:
+                                        </div>
+                                        <p>#{proyectoAulaController.proyecto.codigo}</p>
 
-                                <div class="input-form-200">
-                                    Fecha Finalizacion
-                                    <p:calendar   value="#{proyectoAulaController.proyecto.fecha_finalizacion}" />
-                                </div>        
+                                    </div>
+                                    <div class="info-data-item">
+                                        <div>
+                                            <i class="ri-slideshow-fill"></i>
+                                            Estado:
+                                        </div>
+                                        <div class="flex align-items-center gap-1">
+                                            <p>#{proyectoAulaController.proyecto.estado} </p><i class="ri-checkbox-blank-circle-fill" style="color: #{proyectoAulaController.proyecto.colorEstado()}"></i>
+                                        </div>
+
+                                    </div>
+                                    <div class="info-data-item">
+                                        <div>
+                                            <i class="ri-medal-2-line"></i>
+                                            Semestre:
+                                        </div>
+                                        <p>#{proyectoAulaController.proyecto.seccion.semestre.denominacion}</p>
+                                    </div>
+                                </div>
+                                <div class="espaceador"></div>
                             </div>
-                            <span class="aviso ">Titulo Del proyecto</span>
-                            <div class="fechas codse" style="gap:20px;">
-                                <p:inputText placeholder="Titulo" size="100" value="#{proyectoAulaController.proyecto.titulo}"/>
-                            </div>
-                            <span class="aviso">Problematica Del proyecto</span>
-                            <div class="fechas codse" style="gap:20px;">
-                                <p:inputTextarea placeholder="Problematica" cols="100" value="#{proyectoAulaController.proyecto.problematica}" />
+
+                            <div class="info-proyecto">
+                                <div class="info-tittle">Establezca la fecha del proyecto</div>
+                                <div class="info-data">
+                                    <div class="info-data-item">
+                                        <div>
+                                            <i class="ri-calendar-todo-fill"></i>
+                                            Fecha Inicial:
+                                        </div>
+                                        <p:calendar   value="#{proyectoAulaController.proyecto.fecha_inicio}" />
+                                    </div>
+                                    <div class="info-data-item">
+                                        <div>
+                                            <i class="ri-calendar-todo-fill"></i>
+                                            Fecha Final:
+                                        </div>
+                                        <p:calendar   value="#{proyectoAulaController.proyecto.fecha_finalizacion}" />
+                                    </div>
+                                </div>
+                                <div class="espaceador"></div>
                             </div>
                         </div>
                     </p:tab>
                     <p:tab title="Itenes del Proyecto">
-                        <h:commandButton  class="agg" rendered="#{!estudianteController.mpanelAItems}"  value="+" action="#{estudianteController.agregarItem()}" />
-                        <p:card rendered="#{estudianteController.mpanelAItems}" >                            
-                            <p:dataTable class="tabla-reporte" style="overflow-y: scroll;height: 350px"  var="ite" value="#{tipo_itemController.tipos_Items}" >
+
+                        <p:panel rendered="#{estudianteController.mpanelAItems}" >  
+
+                            <div class="btn-normal" style="margin-bottom: 1rem" title="Volver">
+                                <i class="ri-arrow-left-line"></i>
+                                <h:commandButton class="btn" value="volver" action="#{estudianteController.volverItems()}" />
+                            </div>
+
+                            <p:dataTable  style="overflow-y: scroll;height: 350px"  var="ite" value="#{tipo_itemController.tipos_Items}" >
                                 <p:column headerText="Nombre">
                                     <h:outputText title="#{ite.descripcion}" value="#{ite.nombre}" />
                                 </p:column>                            
@@ -60,43 +97,42 @@
                                         <i class="uil uil-plus" style="color: #004F9E; "></i>
                                         <h:commandButton class="icono" value="+" action="#{estudianteController.seleccionarTItem(ite)}"  />
                                     </div>
-                                    
                                 </p:column>
                             </p:dataTable>
-                            <div class="tanone" style="justify-content: flex-start; column-gap: 1rem" >
-                                <div class="btns" style="background-color: #005CB9">
-                                    <i class="uil uil-angle-left-b" ></i>
-                                    Volver
-                                    <h:commandButton class="btn" value="volver" action="#{estudianteController.volverItems()}" />
-                                </div>
-                                
+                        </p:panel>
+                        <p:panel style="margin-bottom: 2rem" rendered="#{estudianteController.mpanelItem}">
+                            <div class="title-descrip">
+                                <h3>
+                                    #{proyectoAulaController.item.tipo.nombre}
+                                </h3>
+                                <p>
+                                    <i class="ri-article-line"></i>
+                                    #{proyectoAulaController.item.tipo.descripcion}
+                                </p>
+                                <div class="espaceador"></div>
                             </div>
-                            
-                            
-                        </p:card>
-                        
-                        <p:card style="margin-bottom: 2rem" rendered="#{estudianteController.mpanelItem}">
-                            
-                             
-                            <f:facet name="title">
-                               #{proyectoAulaController.item.tipo.nombre}
-                            </f:facet>
-                                
-                            <p:inputTextarea placeholder="Escribe aquí..." class="iform" value="#{proyectoAulaController.item.contenido}" rows="4" cols="70" />
-                            <div class="tanone" style="justify-content: flex-start; column-gap: 1rem" >
-                                
-                                <div class="btns" style="background-color: #1CE63F">
+
+                            <p:inputTextarea placeholder="Escribe aquí..." widgetVar="editor1" value="#{proyectoAulaController.item.contenido}" class="h-18rem w-full" />
+                            <div class="btns-container" style="justify-content: flex-end">
+
+
+                                <div class="btn-e">
+                                    <label>Agregar</label>
                                     <i class="uil uil-check" ></i>
-                                Agregar
-                                <h:commandButton class="btn" value="." action="#{estudianteController.registrarItem()}" />
+                                    <h:commandButton class="btn" value="." action="#{estudianteController.registrarItem()}" />
                                 </div>
-                                
                             </div>
-                            
-                        </p:card>
-                        
-                        <p:card rendered="#{!estudianteController.mpanelAItems}">
-                            <p:dataTable class="tabla-reporte" var="items" value="#{proyectoAulaController.proyecto.itenes_Proyecto}">
+
+
+                        </p:panel>
+                        <p:panel rendered="#{!estudianteController.mpanelAItems}">
+                            <div class="btns-container" style="justify-content: right" title="Agregrar Item">
+                                <div class="btn-agregar">
+                                    <i class="ri-file-add-line"></i>
+                                    <h:commandButton class="btn" value="." action="#{estudianteController.agregarItem()}" />
+                                </div>
+                            </div>
+                            <p:dataTable scrollable="true" var="items" value="#{proyectoAulaController.proyecto.itenes_Proyecto}">
                                 <p:column headerText="Tipo"> 
                                     #{items.tipo.nombre}
                                 </p:column>
@@ -110,23 +146,18 @@
                                     #{items.editor.estudiante.toString()}
                                 </p:column>
                                 <p:column headerText=""> 
-                                    <div class="Acciones">
-                                        <div class="accion">
-                                            <i class="uil uil-pen" style="color: #004F9E; "></i>
-                                            <h:commandButton class="icono" value="." action="#{estudianteController.seleccionarItem(items)}" />
-                                        </div>
-                                        <div class="accion">
-                                            <i class="uil uil-trash-alt" style="color: red; "></i>
-                                            <h:commandButton class="icono" value="-" action="#{estudianteController.eliminarItem(items)}" />
-                                        </div>
+                                    <div class="btn-normal">
+                                        <i class="uil uil-pen" ></i>
+                                        <h:commandButton class="btn" value="." action="#{estudianteController.seleccionarItem(items)}" />
                                     </div>
-                                    
-                               
+                                    <div class="btn-eliminar">
+                                        <i class="uil uil-trash-alt" ></i>
+                                        <h:commandButton class="btn" value="-" action="#{estudianteController.eliminarItem(items)}" />
+                                    </div>
                                 </p:column>
                             </p:dataTable>
-                        </p:card>
+                        </p:panel>
                     </p:tab>
-                    
                     <p:tab title="Integrantes">
                         <p:dataTable class="tabla-reporte" style="text-align: left !important;" var="integ" value="#{proyectoAulaController.proyecto.integrantes}">
                             <p:column style="text-align: left !important;" headerText="Perfil">
@@ -137,15 +168,21 @@
                             </p:column>                            
                         </p:dataTable>   
                     </p:tab>
-                </p:accordionPanel>
-                 
-                <div class="tanone" >
-                    <h:commandButton class="boton" style="margin-left: 20px;" value="Cerrar" />
-                    <h:commandButton class="boton" style="margin-left: 20px;" value="Guardar" action="#{estudianteController.guardarProyectoAula()}" />
-                    <h:commandButton class="boton" style="margin-left: 20px;" value="Publicar" action="#{estudianteController.publicarProyectoAula()}" />
+                </p:tabView>
+                <div class="btns-container justify-content-end">
+                    <div class="btn-s" title="Cerrar">
+                        <label>Cerrar</label>
+                        <h:commandButton class="btn" value="cerrar" action="#{competenciasController.registrarUnidad()}" />
+                    </div>
+                    <div class="btn-p" title="Guardar">
+                        <label>Guardar</label>
+                        <h:commandButton class="btn" value="Guardar" action="#{estudianteController.guardarProyectoAula()}"  />
+                    </div>
+                    <div class="btn-c" title="Publicar">
+                        <label>Publicar</label>
+                        <h:commandButton class="btn" value="Publicar" action="#{estudianteController.publicarProyectoAula()}" />
+                    </div>
                 </div>
-
-               
 
             </div>
         </section>

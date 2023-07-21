@@ -8,36 +8,36 @@
     </h:head>
     <h:body>
         <section class="contenido-contenedor">
-            <div class="border contenedor top" >
-                <h1 class="tittle">Resultados de Aprendizaje</h1>
-                <div class="contreseva">
-                    <div class="cinfo">
-                        <p:panelGrid columns="1">
-                            <h:outputText value="Titulo Proyecto: #{proyectoAulaController.proyecto.titulo}" />
-                            <h:outputText value="Problematica: #{proyectoAulaController.proyecto.problematica}" />
-                        </p:panelGrid>
+            <div class=" contenedor top" >
+                <div class="card">
 
+                    <div class="relative pb-4 mb-2">
+                        <h3 class="text-2xl ">Resultados de Aprendizaje</h3>
+                        <div class="espaceador"></div>
                     </div>
-                    <div class="cnotf">
-                        <h:outputText value="Nota final: #{evaluacionController.notaFIntegrante(matriculaController.integrante)}" />
 
-                    </div>
+
                     <div class="ccriterios">
-                        <p:dataGrid var="asi" columns="1" value="#{matriculaController.resultados}">
-                            <p:panel header="Asignatura: #{asi.asignatura.nombre} - Profesor: #{asi.asignatura.profesor.toString()}">                                
+                        <p:accordionPanel var="asi"  value="#{matriculaController.resultados}">
+                            <p:tab title="Asignatura: #{asi.asignatura.nombre} - Profesor: #{asi.asignatura.profesor.toString()}">                                
                                 <p:dataTable var="val" value="#{asi.valoraciones}">
-                                    <p:column  style="height: 70px">                                             
+                                    <p:column headerText="Criterio" style="height: 70px">                                             
                                         <h:outputText  title="#{val.criterio.criterio.descripcion}" value="#{val.criterio.criterio.descripcion}"  />
                                     </p:column>
-                                    <p:column  style="height: 70px">                                             
+                                    <p:column headerText="Nota" style="height: 70px">                                             
                                         <h:outputText  title="#{val.criterio.criterio.descripcion}" value="#{val.valor}"  />
                                     </p:column>
                                 </p:dataTable>
-                            </p:panel>
-                        </p:dataGrid>
+                            </p:tab>
+                        </p:accordionPanel>
+                        <div class="p-3 mt-2 font-bold flex justify-content-between" style="background-color: #EEEEEE">
+                            <h4>Nota final:</h4>
+                            <h4>#{evaluacionController.notaFIntegrante(matriculaController.integrante)}</h4>
+                        </div>
 
                     </div>
                 </div>
+
             </div>
         </section>
 
@@ -50,23 +50,7 @@
 
 
     <style>
-        .contreseva {  display: grid;
-                       grid-template-columns: 85% 15%;
-                       grid-template-rows: 0.2fr 1.6fr;
-                       grid-auto-columns: 1fr;
-                       gap: 0px 0px;
-                       grid-auto-flow: row;
-                       align-content: center;
-                       grid-template-areas:
-                           "cinfo cnotf"
-                           "ccriterios ccriterios";
-        }
 
-        .cinfo { grid-area: cinfo; }
-
-        .cnotf { grid-area: cnotf; }
-
-        .ccriterios { grid-area: ccriterios; }
 
     </style>
 </html>

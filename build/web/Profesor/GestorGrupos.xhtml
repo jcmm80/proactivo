@@ -1,141 +1,171 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+<xhtml xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
 
-        
+
         <p:panel rendered="#{profesorController.mostPanelSemestres}">
             <section class="contenido-contenedor">
-                <div class="border contenedor top" >
-                    <h1 class="tittle">Gestor de grupos</h1>
-                    <p:dataGrid paginator="true"  var="sem" value="#{profesorController.semestresLider}">
-                        <div class="card img-negra">
-                            <figure >
-                                <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
-                            </figure>
-                            <div class="contenido-grid">
-                                <h2>#{sem.seccion.programa.nombre}</h2>
-                                <span>Semestre #{sem.seccion.semestre.denominacion} -  Seccion #{sem.seccion.denominacion}</span>
-                                <h3>Año #{sem.seccion.periodo.anio} - #{sem.seccion.periodo.numero}</h3>
+                <div class=" contenedor top" >
+                    <div class="relative pb-2 mb-2">
+                        <h3 class="text-2xl ">Gestor de grupos</h3>
+                        <small class="block mb-4 text-gray-600">Un grupo de proyecto es un equipo de estudiantes que trabajan juntos para abordar un proyecto específico dentro del entorno educativo de un aula. </small>  
+                        <div class="espaceador"></div>
+                    </div>
+                    <div class="card">
+                        <div class="relative pb-2 mb-2">
+                            <h3>Secciones</h3>
+                            <small class="block mb-4 text-gray-600">Secciones en las cuales eres profesor lider.</small>  
+                            <div class="espaceador"></div>
+                        </div>
+                        <p:dataView  multiViewState="true" gridIcon="pi pi-eye"  var="sem" value="#{profesorController.semestresLider}">
+                            <p:dataViewGridItem  columns="3"  >
+                                <div class="relative img-negra bg-black">
+                                    <div class="w-full h-full">
+                                        <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
+                                    </div>
+                                    <div class="contenido-grid">
+                                        <h2 class="text-white">#{sem.seccion.programa.nombre}</h2>
+                                        <span>Semestre #{sem.seccion.semestre.denominacion} -  Seccion #{sem.seccion.denominacion}</span>
+                                        <h3 class="text-white">Año #{sem.seccion.periodo.anio} - #{sem.seccion.periodo.numero}</h3>
+                                    </div>
+                                    <h:commandButton   class="btn" value="Abrir" action="#{profesorController.seleccionarLider(sem)}" />
+                                </div> 
+                            </p:dataViewGridItem>
 
-                            </div>
-                            <h:commandButton   class="btn" value="Abrir" action="#{profesorController.seleccionarLider(sem)}" />
-                        </div>  
-                    </p:dataGrid>
+                        </p:dataView>
+                    </div>
+
                 </div>
             </section>        
         </p:panel>
         <p:panel rendered="#{!profesorController.mostPanelSemestres}">
-            
             <section class="contenido-contenedor">
-                
-                <div class="border contenedor top">
-                    <div class="tanone" style="justify-content: flex-start; column-gap: 1rem" >
-                        <div class="btns" style="background-color: #005CB9">
-                            <i class="uil uil-angle-left-b" ></i>
-                            Volver
+                <div class=" contenedor top">
+                    <div class="btns-container justify-content-between m-0 mb-2">
+                        <div class="btn-normal inline-flex border-none" title="Volver">
+                            <i class="ri-arrow-left-line text-xl"></i>
                             <h:commandButton class="btn" value="volver" action="#{profesorController.volverSemestres()}" />
-                        </div>                        
+                        </div>
+                        <div class="btn-agregar inline-flex border-none " title="Volver">
+                            <label>Nuevo Grupo</label>
+                            <i class="ri-add-line"></i>
+                            <h:commandButton class="btn" value="nuevo"  action="#{proyectoAulaController.prepararNuevoProyecto()}" />
+                        </div>
                     </div>
-                    <h1 class="tittle">Gestor Grupos</h1>
-                    
-                    <div class="contproy">
-                        <h:commandButton value="nuevo" action="#{proyectoAulaController.prepararNuevoProyecto()}" />
-                        <div class="cestudiantes">
-                            <p:dataTable rows="5" class="tabla-reporte" paginator="true" style="font-size: 10pt" var="est" value="#{matriculaController.matriculasXSeccion}">
-                                <p:column filterBy="#{est.estudiante.identificacion}" headerText="Identificacion">
-                                    #{est.estudiante.identificacion}
-                                </p:column>                        
-                                <p:column filterBy="#{est.estudiante.primerNombre}" headerText="Primer Nombre">
-                                    #{est.estudiante.primerNombre}
-                                </p:column>
-                                <p:column filterBy="#{est.estudiante.segundoNombre}" headerText="Segundo Nombre">
-                                    #{est.estudiante.segundoNombre}
-                                </p:column>
-                                <p:column filterBy="#{est.estudiante.primerApellido}" headerText="Primer Apellido">
-                                    #{est.estudiante.primerApellido}
-                                </p:column>
-                                <p:column filterBy="#{est.estudiante.segundoApellido}" headerText="Segundo Apellido">
-                                    #{est.estudiante.segundoApellido}
-                                </p:column>
-                                <p:column headerText="">
-                                    <h:panelGroup rendered="#{est.habilitarVinculoGrupo()}">
-                                        <div class="Acciones">
-                                            <div class="accion">
-                                                <i class="uil uil-user-plus" style="color: #005CB9; font-weight: bold; font-size: 25px;"></i><h:commandButton class="icono" value="." action="#{proyectoAulaController.agregarIntegrante(est)}" />
+                    <div class="flex responsive-flex justify-content-between">
+
+                        <div class="card md:w-8 sm:w-full max-h-28rem ">
+                            <div class="cestudiantes">
+                                <div class="relative pb-3 mb-2">
+                                    <h4>Estudiantes Disponibles</h4>
+                                    <div class="espaceador"></div>
+                                </div>
+                                <p:dataTable rows="4" scrollHeight="200" scrollable="true" paginator="true" paginatorPosition="top" style="font-size: 10px !important" var="est" value="#{matriculaController.matriculasXSeccion}">
+                                    <p:column filterBy="#{est.estudiante.identificacion}" headerText="Identificacion">
+                                        #{est.estudiante.identificacion}
+                                    </p:column>                        
+                                    <p:column filterBy="#{est.estudiante.primerNombre}" headerText="Primer Nombre">
+                                        #{est.estudiante.primerNombre}
+                                    </p:column>
+                                    <p:column filterBy="#{est.estudiante.segundoNombre}" headerText="Segundo Nombre">
+                                        #{est.estudiante.segundoNombre}
+                                    </p:column>
+                                    <p:column filterBy="#{est.estudiante.primerApellido}" headerText="Primer Apellido">
+                                        #{est.estudiante.primerApellido}
+                                    </p:column>
+                                    <p:column filterBy="#{est.estudiante.segundoApellido}" headerText="Segundo Apellido">
+                                        #{est.estudiante.segundoApellido}
+                                    </p:column>
+                                    <p:column headerText="" >
+                                        <h:panelGroup rendered="#{est.habilitarVinculoGrupo()}">
+                                            <div class="btn-normal">
+                                                <i class="uil uil-user-plus"></i>
+                                                <i class="ri-arrow-right-line"></i>
+                                                <h:commandButton class="icono" value="." action="#{proyectoAulaController.agregarIntegrante(est)}" />
+                                            </div>
+                                        </h:panelGroup>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </div>
+                        <div class="card md:w-3 sm:w-full max-h-28rem">
+
+                            <div class="cintegrantes">
+                                <div class="relative pb-3 mb-2">
+                                    <h4>Integrantes Seleccionados</h4>
+                                    <div class="espaceador"></div>
+                                </div>
+                                <div class="flex md:flex-column sm:flex-row">
+                                    <p:repeat  var="inte" value="#{proyectoAulaController.integrantesseleccionados}">
+                                        <div class="p-2 flex gap-2 align-items-center flex-column w-full  relative">
+                                            <div class="w-3">
+                                                <p:graphicImage value="/Imagenes/Perfiles/#{inte.matricula.estudiante.imagenPerfil()}" class="img"  />
+                                            </div>
+                                            <small class=" text-center ">#{inte.matricula.estudiante.toString()}</small>
+                                            <div class="btn-eliminar absolute border-none right-0 top-0">
+                                                <i class="ri-user-unfollow-fill"></i>
+                                                <h:commandButton class="btn" value="." action="#{proyectoAulaController.quitarIntegrante(inte)}" />
+                                            </div>
+
+                                        </div>
+
+                                    </p:repeat>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btns-container justify-content-end">
+                        <div class="btn-p" title="Guardar">
+                            <label>Guardar</label>
+                            <h:commandButton class="btn" value="+" action="#{profesorController.guardarProyectoAula()}" />
+                        </div>
+                    </div>
+
+
+                    <div class="card">
+                        <div class="relative pb-3 mb-2">
+                            <h4>Grupos creados</h4>
+                            <div class="espaceador"></div>
+                        </div>
+                        <p:dataTable scrollable="true" var="proa" value="#{profesorController.proyectosSemestre}">
+                            <p:column headerText="Codigo">
+                                #{proa.codigo}
+                            </p:column>
+                            <p:column headerText="Fecha Ingreso">
+                                #{proa.fecha_ingreso}
+                            </p:column>                             
+                            <p:column headerText="Integrantes">
+                                <p:repeat var="integ" value="#{proa.integrantes}">
+                                        <div class="flex gap-1 align-items-center">
+                                            <div class="w-1 border-circle overflow-hidden flex">
+                                                <p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" class="img"  />
+                                            </div>
+                                            <small class="w-10rem" >#{integ.matricula.estudiante.toString()}</small>
+                                            <div class="btn-eliminar">
+                                                <i class="uil uil-user-times"></i><h:commandButton class="btn" value="." action="#{profesorController.desvincularIntegrante(integ,proa)}" />
                                             </div>
                                         </div>
-                                    </h:panelGroup>
-                                </p:column>
-                            </p:dataTable>
-                        </div>
-                        <div class="cintegrantes">
-                            <h1 class="aviso">Integrantes Seleccionados</h1>
-                            <p:dataGrid rows="5"   columns="5" var="inte" value="#{proyectoAulaController.integrantesseleccionados}">
-                                <div class="card estu">
-                                    <div class="imagen-est">
-                                        <p:graphicImage value="/Imagenes/Perfiles/#{inte.matricula.estudiante.imagenPerfil()}" style="max-width: 100%; height: auto"  />
+                                    </p:repeat>
+                                                            
+                            </p:column>
+                            <p:column width="150" headerText="Opciones">
+                                    <div class="btn-normal">
+                                        <i class="ri-pencil-fill"></i><h:commandButton class="btn" value="." action="#{proyectoAulaController.seleccionarProyecto(proa)}" />
                                     </div>
-                                    <h2 style="font-size: 14px; color: #005CB9">#{inte.matricula.estudiante.toString()}</h2>
-                                    <span style="color: #005CB9">ID #{inte.matricula.estudiante.identificacion}</span>
-                                    <div class="accion">
-                                        <i class="uil uil-multiply" style="color: #red"></i><h:commandButton class="icono" value="." action="#{proyectoAulaController.quitarIntegrante(inte)}" />
+                                    <div class="btn-normal">
+                                        <i class="uil uil-trash-alt"></i><h:commandButton class="btn" value="." action="#{profesorController.eliminarProyectoAula(proa)}" />
                                     </div>
-
-                                </div>
-
-                            </p:dataGrid>
-                            <div class="tanone">
-                                <h:commandButton class="boton" value="Guardar" action="#{profesorController.guardarProyectoAula()}"  />
-                            </div>
-
-                        </div>
-                        <div class="cgrupos">
-                            <h1 class="aviso">Grupos Creados Para el periodo</h1>
-                            <p:dataTable class="tabla-reporte" var="proa" value="#{profesorController.proyectosSemestre}">
-                                <p:column headerText="Codigo">
-                                    #{proa.codigo}
-                                </p:column>
-                                <p:column headerText="Fecha Ingreso">
-                                    #{proa.fecha_ingreso}
-                                </p:column>                             
-                                <p:column width="500" headerText="Integrantes">
-                                    <p:dataTable style="font-size: 10pt" var="integ" value="#{proa.integrantes}">
-                                        <p:column headerText="">
-                                            <p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" style="width: 40px;height: 40px "  />
-                                        </p:column>
-                                        <p:column width="300" headerText="">
-                                            <h:outputText  value="#{integ.matricula.estudiante.toString()}" /> 
-                                        </p:column>
-                                        <p:column headerText="">
-                                            <div class="Acciones">
-                                                <div class="accion">
-                                                    <i class="uil uil-user-times" style="color: tomato; font-weight: bold; font-size: 25px;"></i><h:commandButton class="icono" value="." action="#{profesorController.desvincularIntegrante(integ,proa)}" />
-                                                </div>
-                                            </div>  
-
-                                        </p:column>
-                                    </p:dataTable>                                 
-                                </p:column>
-                                <p:column headerText="Opciones">
-                                    <div class="Acciones">
-                                        <div class="accion">
-                                            <i class="fa fa-hand-pointer" style="color: #005CB9; font-weight: bold; font-size: 20px;"></i><h:commandButton class="icono" value="." action="#{proyectoAulaController.seleccionarProyecto(proa)}" />
-                                        </div>
-                                        <div class="accion">
-                                            <i class="uil uil-trash-alt" style="color: tomato; font-weight: bold; font-size: 20px;"></i><h:commandButton class="icono" value="." action="#{profesorController.eliminarProyectoAula(proa)}" />
-                                        </div>
-                                    </div>  
-                                </p:column>  
-                            </p:dataTable>
-                        </div>
-
+                            </p:column>  
+                        </p:dataTable>
                     </div>
+
+
                 </div>
 
             </section>
@@ -145,21 +175,9 @@
     </h:body>
 
     <style>
-        .estu{
-            display: flex;
-            flex-direction: column;
-            row-gap:.5rem;
-            align-items: center;
-            text-align: center;
-            border-right:1px solid #ddd ; 
-            padding: 10px;
-            width: 241.5px;
-        } 
-        .imagen-est{
-            width: 100px;
-            overflow: hidden;
-            border-radius: 50%;
-            box-shadow: 0 0 0 4px rgba(0,0,0,0.06);
+        .dospordos{
+            display : grid;
+            grid-template-columns: repeat(2, 1fr);
         }
     </style>
-</html>
+</xhtml>

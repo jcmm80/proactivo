@@ -20,15 +20,14 @@
                         <p:tab title="Semestres">
                             <small><i class="ri-error-warning-fill mr-1"></i>Selecciona un Semestre</small>
                             <div class="csemestres">
-                                <p:dataView  var="sem" value="#{semestreController.semestres}"  multiViewState="true" gridIcon="pi pi-eye">
-                                    <p:dataViewGridItem columns="6">
+                                <div class="grid-seis">
+                                    <p:repeat  var="sem" value="#{semestreController.semestres}">
                                         <div class=" relative p-5 flex justify-content-center align-content-center" style="background-color: #eee" >
                                             <p class="font-bold ">#{sem.denominacion}</p>
                                             <h:commandButton value="" class="btn" action="#{programaController.agregarSemestreANucleo(sem)}" />
-
                                         </div>
-                                    </p:dataViewGridItem>
-                                </p:dataView>
+                                    </p:repeat>
+                                </div>    
 
                             </div>
                         </p:tab>
@@ -41,7 +40,7 @@
                                 Semestre #{programaController.nucleo.semestre.denominacion}         
                             </div>
 
-                            <p:textEditor style="max-width: 100%" placeholder="Descripcion del Nucleo Problematico" widgetVar="editor1" value="#{programaController.nucleo.descripcion}" height="300" secure="false" />
+                            <p:inputTextarea class="w-full" placeholder="Descripcion del Nucleo Problematico" widgetVar="editor1" value="#{programaController.nucleo.descripcion}"  />
 
 
 

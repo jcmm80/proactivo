@@ -36,27 +36,27 @@
                                     </div>
                                 </p:dataViewGridItem>
                             </p:dataView>
+                         
                             <div class="relative pb-2 mb-2">
                                 <h4 class="text-2xl ">Secciones</h4>
                                 <small class="block mb-4 text-gray-600">Selecciona una seccion</small>  
                                 <div class="espaceador"></div>
                             </div>
-                            <p:dataView  multiViewState="true" gridIcon="pi pi-eye"  var="sec" value="#{profesorController.secciones}">
-                                <p:dataViewGridItem  columns="3"  >
-                                    <div class="relative img-negra bg-black">
-                                        <div class="w-full h-full">
-                                            <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
-                                        </div>
-                                        <div class="contenido-grid">
-                                            <h2 class="text-white">#{sec.programa.nombre}</h2>
-                                            <span>Semestre #{sem.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
-                                            <h3 class="text-white">Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
-                                        </div>
-                                        <h:commandButton   class="btn" value="Abrir" action="#{profesorController.obtenerProyectosSeccion(sec)}" />
-                                    </div> 
-                                </p:dataViewGridItem>
-
-                            </p:dataView>
+                            <div class="grid-cuatro">
+                                <p:repeat  var="sec" value="#{profesorController.secciones}">
+                                        <div class="relative img-negra bg-black  w-">
+                                            <div class="w-full h-full">
+                                                <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
+                                            </div>
+                                            <div class="contenido-grid">
+                                                <h2 class="text-white">#{sec.programa.nombre}</h2>
+                                                <span>Semestre #{sem.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
+                                                <h3 class="text-white">Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
+                                            </div>
+                                            <h:commandButton   class="btn" value="Abrir" action="#{profesorController.obtenerProyectosSeccion(sec)}" />
+                                        </div> 
+                                </p:repeat>
+                            </div>
 
                             <div rendered="#{!not empty profesorController.seccion}" class="card mt-2 bg-gray-600">
                                 <div class="relative pb-4 mb-2">

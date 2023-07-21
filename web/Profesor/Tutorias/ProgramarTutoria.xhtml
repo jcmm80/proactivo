@@ -7,47 +7,74 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <div class="contptutoria">
-            <div class="cproy">
-                <p:panelGrid columns="2">
-                    <h:outputText value="Codigo: #{tutoriasController.tutoria.proyecto.codigo}" />
-                    <h:outputText value="Titulo: #{tutoriasController.tutoria.proyecto.titulo}" />
-                </p:panelGrid>
+        <div class="card">
+            <div class="btn-normal inline-flex border-none" title="Volver">
+                <i class="ri-arrow-left-line text-xl"></i>
+                <h:commandButton class="btn" value="volver" action="#{profesorController.pvolverdeProgramar()}" />
             </div>
-            <div class="cfsol">
-                <p:panelGrid columns="1"> 
-                    <h:outputText value="Tutoria Solicitada el: #{tutoriasController.tutoria.fechaSolicitud}" />
-                </p:panelGrid>                                
-            </div>
-            <div class="cacc">
-                <h:commandButton value="Programar" action="#{profesorController.programarTutoria()}" />
-                <h:commandButton value="volver" action="#{profesorController.pvolverdeProgramar()}" />
-            </div>
-            <div class="ccal">
-                <p:datePicker value="#{tutoriasController.tutoria.fechaAsignacion}" inline="true" showTime="true" timeInput="true"/>
-            </div>
+            <p:tabView>
+                <p:tab title="Programar">
+                    <div class="relative pb-2 mb-2">
+                        <h3 >Programa Tutoria</h3>
+                        <p class="block mb-4  text-gray-600">Establece fecha y hora para la tutoria</p>  
+                        <div class="espaceador"></div>
+                    </div>
+                    <div class="flex w-full justify-content-center gap-4">
+                        <p:datePicker class="" value="#{tutoriasController.tutoria.fechaAsignacion}" inline="true" showTime="true" timeInput="true"/>
+                        <div class="btns-container justify-content-end">
+                            <div class="btn-p" title="Programar">
+                                <label>Programar</label>
+                                <h:commandButton class="btn" value="+" action="#{profesorController.programarTutoria()}" />
+                            </div> 
+                        </div>
+                    </div>
+                </p:tab>
+                <p:tab title="Información de la solicitud">
+                    <div class="info-proyecto">
+                        <div class="info-tittle">Infórmacion del proyecto</div>
+                        <div class="info-data">
+                            <div class="info-data-item">
+                                <div>
+                                    <i class="ri-qr-code-line"></i>
+                                    Código Proyecto:
+                                </div>
+                                <p> #{tutoriasController.tutoria.proyecto.codigo}</p>
+
+                            </div>
+                            <div class="info-data-item">
+                                <div>
+                                    <i class="ri-qr-code-line"></i>
+                                    Titulo:
+                                </div>
+                                <p> #{tutoriasController.tutoria.proyecto.titulo}</p>
+
+                            </div>
+                        </div>
+                        <div class="espaceador"></div>
+                    </div>
+                    <div class="info-proyecto">
+                        <div class="info-tittle">Información de la solicitud</div>
+                        <div class="info-data">
+                            <div class="info-data-item">
+                                <div>
+                                    <i class="ri-calendar-todo-fill"></i>
+                                    Fecha de Solicitud:
+                                </div>
+                                #{tutoriasController.tutoria.fechaSolicitud}
+                            </div>
+                        </div>
+                    </div>
+                </p:tab>
+            </p:tabView>
+
+
+
+
+
         </div>  
+
         <style>
-            .contptutoria {  display: grid;
-                             grid-template-columns: 200px 250px 200px;
-                             grid-template-rows: 150px 500px;
-                             grid-auto-columns: 1fr;
-                             gap: 0px 0px;
-                             grid-auto-flow: row;
-                             justify-items: stretch;
-                             align-items: stretch;
-                             grid-template-areas:
-                                 "cproy cproy cfsol"
-                                 "ccal ccal cacc";
-            }
 
-            .cproy { grid-area: cproy; }
-
-            .cfsol { grid-area: cfsol; }
-
-            .cacc { grid-area: cacc; }
-
-            .ccal { grid-area: ccal; }
         </style> 
     </h:body>
 </html>

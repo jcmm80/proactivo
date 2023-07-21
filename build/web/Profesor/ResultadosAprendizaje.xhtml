@@ -22,8 +22,9 @@
                                 <small class="block mb-4 text-gray-600">seleccione un semestre</small>  
                                 <div class="espaceador"></div>
                             </div>
-                            <p:dataView  multiViewState="true" gridIcon="pi pi-eye"   var="sem"  value="#{semestreController.semestres}">
-                                <p:dataViewGridItem  columns="6"  >
+                            <div class="grid-seis">
+                                
+                                <p:repeat   var="sem"  value="#{semestreController.semestres}">
                                     <div class="relative img-negra bg-black" >
                                         <div class="w-full h-full">
                                             <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
@@ -33,16 +34,17 @@
                                         </div>
                                         <h:commandButton   class="btn" value="Abrir" action="#{profesorController.seleccionarSemestrepTResultados(sem)}" />
                                     </div>
-                                </p:dataViewGridItem>
-                            </p:dataView>
+                                </p:repeat>
+                            </div>
 
                             <div class="relative mt-4 pb-2 mb-2">
                                 <h3 >Secciones</h3>
                                 <small class="block mb-4 text-gray-600">seleccione una seccion.</small>  
                                 <div class="espaceador"></div>
                             </div>
-                            <p:dataView  multiViewState="true" gridIcon="pi pi-eye"  var="sec" value="#{profesorController.secciones}">
-                                <p:dataViewGridItem  columns="4"  >
+                            <div class="grid-cuatro">
+                                
+                                <p:repeat  var="sec" value="#{profesorController.secciones}">
                                     <div class="relative img-negra bg-black">
                                         <div class="w-full h-full">
                                             <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
@@ -54,9 +56,9 @@
                                         </div>
                                         <h:commandButton   class="btn" value="Abrir" action="#{profesorController.obtenerResultadosSeccion(sec)}" />
                                     </div> 
-                                </p:dataViewGridItem>
 
-                            </p:dataView>
+                                </p:repeat>
+                            </div>
 
 
 

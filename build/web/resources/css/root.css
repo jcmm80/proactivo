@@ -95,6 +95,10 @@ h1, h2, h3, h4 {
     font-size: var(--h3-font-size);
 }
 
+p{
+    font-size: var(--normal-font-size);
+}
+
 ul {
     list-style: none;
 }
@@ -111,6 +115,22 @@ a {
 /*==================== REUSABLE CSS CLASSES ====================*/
 .section {
     padding: 2rem 0 4rem;
+}
+.grid-cuatro{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, max(230px));
+    gap: .5rem;
+    justify-content: center;
+}
+.grid-seis{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(145px , 1fr));
+    gap: .5rem;
+}
+.grid-dos{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(45% , 1fr));
+    gap: .5rem;
 }
 
 
@@ -135,8 +155,11 @@ a {
         padding-bottom: 2rem;
     }
     .responsive-flex{
-      flex-direction: column;
-      gap: .5rem;
+        flex-direction: column;
+        gap: .5rem;
+    }
+    .grid-cuatro{
+       
     }
 }
 

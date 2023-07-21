@@ -141,7 +141,7 @@
                         <p:tab title="Dimensiones en semestres">                        
                             <p:accordionPanel var="semd" value="#{evaluacionController.semestres}">
                                 <p:tab title="Semestre #{semd.denominacion}">
-                                    <div class="flex relative justify-content-end align-items-center p-2 gap-1 font-bold">
+                                    <div class="inline-flex relative  justify-content-end align-items-center p-2 gap-1 font-bold">
                                         <i class="ri-settings-5-line"></i>
                                         <label>Configurar</label>
                                         <h:commandButton value="Configurar" class="btn" action="#{evaluacionController.seleccionarSemestre(semd)}" />

@@ -17,10 +17,10 @@
                             <p:tab title="Informacion Basica del Proyecto">
                                 <div class="contpro">
                                     <div class="title-description-inplace">
-                                        <p:inplace label="Titulo del proyecto" editor="true"  class="inplace-h3" event="dblclick">
+                                        <p:inplace label="#{proyectoAulaController.proyecto.titulo}" editor="true"  class="inplace-h3" event="dblclick">
                                             <p:inputText   placeholder="Titulo del proyeco" value="#{proyectoAulaController.proyecto.titulo}"/>
                                         </p:inplace>
-                                        <p:inplace  label="Problematica del proyecto" editor="true" class="inplace-p" event="dblclick">
+                                        <p:inplace  label="#{proyectoAulaController.proyecto.problematica}" editor="true" class="inplace-p" event="dblclick">
                                             <p:inputTextarea placeholder="Problematica del proyecto" cols="100" value="#{proyectoAulaController.proyecto.problematica}" />
                                         </p:inplace>
                                     </div>
@@ -33,6 +33,16 @@
                                                     Código Proyecto:
                                                 </div>
                                                 <p>#{proyectoAulaController.proyecto.codigo}</p>
+
+                                            </div>
+                                            <div class="info-data-item">
+                                                <div>
+                                                    <i class="ri-slideshow-fill"></i>
+                                                    Estado:
+                                                </div>
+                                                <div class="flex align-items-center gap-1">
+                                                    <p>#{proyectoAulaController.proyecto.estado} </p><i class="ri-checkbox-blank-circle-fill" style="color: #{proyectoAulaController.proyecto.colorEstado()}"></i>
+                                                </div>
 
                                             </div>
                                             <div class="info-data-item">
@@ -101,7 +111,7 @@
                                         <div class="espaceador"></div>
                                     </div>
 
-                                    <p:textEditor placeholder="Escribe aquí..." widgetVar="editor1" value="#{proyectoAulaController.item.contenido}" height="300" secure="false" />
+                                    <p:inputTextarea placeholder="Escribe aquí..." class="w-full min-h-8rem"  value="#{proyectoAulaController.item.contenido}"   />
                                     <div class="btns-container" style="justify-content: flex-end">
 
 
@@ -135,15 +145,13 @@
                                             #{items.editor.estudiante.toString()}
                                         </p:column>
                                         <p:column headerText=""> 
-                                            <div class="Acciones">
-                                                <div class="accion">
-                                                    <i class="uil uil-pen" style="color: #004F9E; "></i>
-                                                    <h:commandButton class="icono" value="." action="#{estudianteController.seleccionarItem(items)}" />
-                                                </div>
-                                                <div class="accion">
-                                                    <i class="uil uil-trash-alt" style="color: red; "></i>
-                                                    <h:commandButton class="icono" value="-" action="#{estudianteController.eliminarItem(items)}" />
-                                                </div>
+                                            <div class="btn-normal">
+                                                <i class="uil uil-pen" ></i>
+                                                <h:commandButton class="btn" value="." action="#{estudianteController.seleccionarItem(items)}" />
+                                            </div>
+                                            <div class="btn-eliminar">
+                                                <i class="uil uil-trash-alt" ></i>
+                                                <h:commandButton class="btn" value="-" action="#{estudianteController.eliminarItem(items)}" />
                                             </div>
                                         </p:column>
                                     </p:dataTable>

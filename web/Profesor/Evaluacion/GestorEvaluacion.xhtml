@@ -17,6 +17,11 @@
                 </div>
                 <p:tabView activeIndex="#{evaluacionController.indTavEvaluacion}" scrollable="true">
                     <p:tab title="Seccion">
+                        <div class="relative pb-2 mb-2">
+                            <h3 >Mis Secciones</h3>
+                            <p class="block mb-4 text-gray-600">Selecciona una seccion para configurar la evalución</p>  
+                            <div class="espaceador"></div>
+                        </div>
                         <p:dataView  multiViewState="true" gridIcon="pi pi-eye"  var="sem" value="#{profesorController.semestresLider}">
                             <p:dataViewGridItem  columns="3"  >
                                 <div class="relative img-negra bg-black">
@@ -24,68 +29,107 @@
                                         <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
                                     </div>
                                     <div class="contenido-grid text-white">
-                                       <h2>#{sem.seccion.programa.nombre}</h2>
+                                        <h2 class="text-white">#{sem.seccion.programa.nombre}</h2>
                                         <span>Semestre #{sem.seccion.semestre.denominacion} -  Seccion #{sem.seccion.denominacion}</span>
-                                        <h3>Año #{sem.seccion.periodo.anio} - #{sem.seccion.periodo.numero}</h3>
+                                        <h3 class="text-white">Año #{sem.seccion.periodo.anio} - #{sem.seccion.periodo.numero}</h3>
                                     </div>
                                     <h:commandButton   class="btn" value="Abrir" action="#{profesorController.seleccionarSeccionLider(sem)}" />
                                 </div> 
                             </p:dataViewGridItem>
-                            
+
                         </p:dataView>
 
 
                     </p:tab>
                     <p:tab title="Asignaturas a Evaluar">
-                        <p:panel>
-                            <p:dataGrid var="asigs" value="#{evaluacionController.asignaturasSeccion}">
-                                <p:panel>
-                                    <div class="cdppa">
-                                        <h:commandButton class="cdpbtn" value="seleccionar" action="#{evaluacionController.seleccionarAsignatura(asigs)}" />
-                                        <div class="id-carta"><span>#{asigs.codigo}</span></div>
-                                        <div class="img-nombre">
-                                            <div ><p:graphicImage value="/Imagenes/Asignaturas/iasignatura.png" style="width: 80px;height: 80px; margin-left: 5px; border-radius: 50px;"  /> </div>
-                                            <div style="margin-left: 10px;">
-                                                <h:outputText value="#{asigs.nombre}" /><br></br>
-                                                <h:outputText value="Creditos: #{asigs.creditos}" /><br></br>
-                                                <h:outputText value="#{asigs.area.nombre}" /><br></br>
-                                                <h:outputText value="#{asigs.seccion.semestre.denominacion} - #{asigs.seccion.denominacion}" /><br></br>
-                                                <h:outputText value="#{asigs.profesor.toString()}" />
-                                            </div> 
+                        <div class="flex justify-content-between gap-4 responsive-flex">
+                            <div class="md:w-5 sm:w-full">
+                                <div class="relative pb-3 mb-2">
+                                    <h3 >Asignaturas Vinculadas</h3>
+                                    <div class="espaceador"></div>
+                                </div>
+                                <p:dataView  multiViewState="true" listIcon="pi pi-eye" var="asig" value="#{evaluacionController.asignaturasSeccion}">
+                                    <p:dataViewListItem >
+                                        <div class="p-4 flex justify-content-between card mb-1 responsive-flex cdppa">
+                                            <h:commandButton class="btn" value="seleccionar"  action="#{evaluacionController.seleccionarAsignatura(asig)}" />
+                                            <div>
+                                                <div class="mb-2">
+                                                    <h4>Asignatura</h4>
+                                                    <p>#{asig.nombre}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <h4><i class="fas fa-credit-card mr-1"></i>créditos : #{asig.creditos}</h4> 
+                                                </div>
+
+                                                <div >
+                                                    <small>#{asig.area.nombre}</small>
+                                                </div>
+
+                                            </div>
+                                            <div class="flex flex-column gap-2">
+                                                <small>#{asigs.profesor.toString()}</small>
+                                                <h4>#{asig.seccion.semestre.denominacion} - #{asig.seccion.denominacion}</h4>
+                                            </div>
                                         </div>
-                                        <div class="contrato-carta"><span>#{asigs.seccion.programa.nombre}</span></div>
-                                    </div>
-                                </p:panel>
-                            </p:dataGrid>
-                            <p:dataTable var="asige" value="#{evaluacionController.asignaturasEvaluacion}">
-                                <p:column>
-                                    #{asige.nombre}
-                                </p:column>
-                                <p:column>
-                                    #{asige.profesor.toString()}
-                                </p:column>
-                                <p:column>
-                                    #{asige.seccion.getSeccion()}
-                                </p:column>
-                                <p:column>
-                                    <h:commandButton value="x" action="#{evaluacionController.quitarAsignatura(asige)}" />
-                                </p:column>
-                            </p:dataTable>
-                            <h:commandButton value="continuar" action="#{evaluacionController.irDimensiones()}" />
-                        </p:panel>
+                                    </p:dataViewListItem>
+                                </p:dataView>
+                            </div>
+                            <div class="md:w-7 sm:w-full">
+
+                                <div class="relative pb-3 mb-2">
+                                    <h3 >Asignaturas Seleccionadas</h3>
+                                    <div class="espaceador"></div>
+                                </div>
+                                <p:dataTable var="asige" value="#{evaluacionController.asignaturasEvaluacion}">
+                                    <p:column>
+                                        #{asige.nombre}
+                                    </p:column>
+                                    <p:column>
+                                        #{asige.profesor.toString()}
+                                    </p:column>
+                                    <p:column>
+                                        #{asige.seccion.getSeccion()}
+                                    </p:column>
+                                    <p:column>
+                                        <div class="btn-eliminar" title="Deseleccionar asignatura">
+                                            <i class="ri-close-line"></i>
+                                            <h:commandButton class="btn" value="+" action="#{evaluacionController.quitarAsignatura(asige)}" />
+                                        </div>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </div>
+                        <div class="btns-container justify-content-end">
+                            <div class="btn-p" title="continuar">
+                                <label>continuar</label>
+                                <h:commandButton class="btn" value="+" action="#{evaluacionController.irDimensiones()}" />
+                            </div>
+                        </div>
                     </p:tab>
                     <p:tab title="Dimensiones">
+
                         <div class="conteval">
                             <div class="cdime">
-                                <p:dataGrid paginator="true" var="dim"  columns="1" value="#{evaluacionController.dimencionesPeriodoNoGlobales}" >
-                                    <div class="card img-negra">
-                                        <figure >
-                                            <h:graphicImage style="max-width: 100%; height: auto;  " value="/resources/img/imgsemestres.jpg"/> 
-                                        </figure>
+                                <p:dataViewGridItem  columns="3"  >
+                                    <div class="relative img-negra bg-black">
+
                                         <div class="contenido-grid">
-                                            <h2>#{dim.nombre}</h2>
+                                            <h2 >#{sem.programa.nombre}</h2>
+                                            <span>Semestre #{sem.semestre.denominacion} -  Seccion #{sem.denominacion}</span>
+                                            <h3 >Año #{sem.periodo.anio} - #{sem.periodo.numero}</h3>
+                                        </div>
+                                        <h:commandButton   class="btn" value="Abrir" action="#{profesorController.seleccionarSeccionLider(sem)}" />
+                                    </div> 
+                                </p:dataViewGridItem>
+                                <p:dataGrid paginator="true" var="dim"  columns="1" value="#{evaluacionController.dimencionesPeriodoNoGlobales}" >
+                                    <div class="relative img-negra bg-black">
+                                        <div class="w-full h-full">
+                                            <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
+                                        </div>
+                                        <div class="contenido-grid">
+                                            <h2 class="text-white">#{dim.nombre}</h2>
                                             <span>#{dim.descripcion}</span>
-                                            <h3>Porcentaje #{dim.porcentaje}%</h3>
+                                            <h3 class="text-white">Porcentaje #{dim.porcentaje}%</h3>
                                         </div>
                                         <h:commandButton   class="btn" value="Abrir" action="#{evaluacionController.seleccionarDimension(dim)}" />
                                     </div> 
@@ -194,7 +238,6 @@
 
 
 
-                <h:commandButton value="volver" action="#{profesorController.volverSeccionesdesdeEvaluacion()}" />
 
             </div>
         </section>     
