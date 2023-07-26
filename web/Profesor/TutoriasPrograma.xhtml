@@ -18,11 +18,11 @@
                         <p:tab title="semestre-seccion">
                             <div class="relative  pb-2 mb-2">
                                 <h3 >Semestres</h3>
-                                <small class="block mb-4 text-gray-600">seleccione un semestre</small>  
+                                <p class="block mb-4 text-gray-600">seleccione un semestre</p>  
                                 <div class="espaceador"></div>
                             </div>
-                            <p:dataView  multiViewState="true" gridIcon="pi pi-eye"   var="sem"  value="#{semestreController.semestres}">
-                                <p:dataViewGridItem  columns="6"  >
+                            <div class="grid-seis">
+                                <p:repeat   var="sem"  value="#{semestreController.semestres}">
                                     <div class="relative img-negra bg-black" >
                                         <div class="w-full h-full">
                                             <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
@@ -32,15 +32,15 @@
                                         </div>
                                         <h:commandButton   class="btn" value="Abrir" action="#{profesorController.seleccionarSemestrepTRTutorias(sem)}"/>
                                     </div>
-                                </p:dataViewGridItem>
-                            </p:dataView> 
+                                </p:repeat>  
+                            </div>
                             <div class="relative mt-4 pb-2 mb-2">
                                 <h3 >Secciones</h3>
-                                <small class="block mb-4 text-gray-600">seleccione una seccion.</small>  
+                                <p class="block mb-4 text-gray-600">seleccione una seccion.</p>  
                                 <div class="espaceador"></div>
                             </div>
-                            <p:dataView  multiViewState="true" gridIcon="pi pi-eye"  var="sec" value="#{profesorController.secciones}">
-                                <p:dataViewGridItem  columns="4"  >
+                            <div class="grid-cuatro">
+                                <p:repeat  var="sec" value="#{profesorController.secciones}">
                                     <div class="relative img-negra bg-black">
                                         <div class="w-full h-full">
                                             <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
@@ -52,9 +52,9 @@
                                         </div>
                                         <h:commandButton   class="btn" value="Abrir" action="#{profesorController.obtenerTutoriasSeccion(sec)}" />
                                     </div> 
-                                </p:dataViewGridItem>
-                            </p:dataView>
-                            <div class="card mt-2 bg-gray-600">
+                                </p:repeat>
+                            </div>
+                            <div class="mt-4">
                                 <div class="relative pb-4 mb-2">
                                     <h4 >Tutorias por seccion</h4>
                                     <div class="espaceador"></div>
@@ -65,7 +65,7 @@
                             </div>
                         </p:tab>
                         <p:tab rendered="#{not empty profesorController.seccion}" title="Tutorias, Seccion: #{profesorController.seccion.getSeccion()}">
-                            <div class="card mt-2 bg-gray-600">
+                            <div >
                                 <div class="relative pb-4 mb-2">
                                     <h4 >Tutorias por Asignatura</h4>
                                     <div class="espaceador"></div>
@@ -74,8 +74,8 @@
                                     <p:chart type="bar" class="img" model="#{reportesController.barMProyectosxSignaturas}" />
                                 </div>
                             </div>
-                            <p:dataView  multiViewState="true" listIcon="pi pi-eye" var="asig" value="#{asignaturaController.asignaturas}">
-                                <p:dataViewListItem >
+                            <div class="grid-dos mt-2">
+                                <p:repeat var="asig" value="#{asignaturaController.asignaturas}">
                                     <div class="p-4 flex justify-content-between card mb-1 responsive-flex cdppa">
                                         <h:commandButton class="btn" value="seleccionar" action="#{tutoriasController.obtenerTutoriasAsignatura(asig)}" />
                                         <div>
@@ -97,22 +97,22 @@
                                             <h4>#{asig.seccion.semestre.denominacion} - #{asig.seccion.denominacion}</h4>
                                         </div>
                                     </div>
-                                </p:dataViewListItem>
 
-                            </p:dataView>
+                                </p:repeat>
+                            </div>
 
 
                             <p:dataTable class="mt-4" scrollable="true" var="tut" value="#{tutoriasController.tutoriasAsignatura}" >
                                 <p:column headerText="codigo">
                                     #{tut.proyecto.codigo}
                                 </p:column>
-                                <p:column headerText="Integrantes">
+                                <p:column width="20%" headerText="Integrantes">
                                     <p:repeat var="integ" value="#{tut.proyecto.integrantes}">
                                         <div class="flex gap-1 align-items-center">
-                                            <div class="w-1 border-circle overflow-hidden flex">
+                                            <div class="w-2 border-circle overflow-hidden flex">
                                                 <p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" class="img"  />
                                             </div>
-                                            <small>#{integ.matricula.estudiante.toString()}</small>
+                                            <small class="text-left w-full">#{integ.matricula.estudiante.toString()}</small>
                                         </div>
                                     </p:repeat>
                                 </p:column>
@@ -126,23 +126,23 @@
                                     <div class="btn-p">
                                         <i class="ri-eye-line"></i>
                                         <label>Ver</label>
-                                        <p:commandButton value="Show" class="btn" type="button" icon="pi pi-external-link" onclick="PF('#{tut.recomendaciones}').show()"/>
+                                        <p:commandButton value="Show" class="btn" type="button"  onclick="PF('#{tut.recomendaciones}#{tut.id}').show()"/>
                                     </div>
-                                    <p:dialog widgetVar="#{tut.recomendaciones}" minHeight="40" width="350" showEffect="fade">
+                                    <p:dialog widgetVar="#{tut.recomendaciones}#{tut.id}"  minHeight="40" width="350" showEffect="fade">
                                         <p class="m-0">#{tut.recomendaciones}</p>
                                     </p:dialog>
                                 </p:column>
                                 <p:column headerText="Compromisos">
-                                    <div class="btn-p">
+                                    <div class="btn-s">
                                         <i class="ri-eye-line"></i>
                                         <label>Ver</label>
                                         <p:commandButton value="Show" class="btn" type="button" icon="pi pi-external-link" onclick="PF('#{tut.compromisos}').show()"/>
                                     </div>
-                                    <p:dialog widgetVar="#{tut.compromisos}" minHeight="40" width="350" showEffect="fade">
+                                    <p:dialog widgetVar="#{tut.compromisos}"  minHeight="40" width="350" showEffect="fade">
                                         <p class="m-0">#{tut.compromisos}</p>
                                     </p:dialog>
                                 </p:column>
-                                <p:column headerText="Estado">
+                                <p:column style="color: var(--first-color-p)" class="font-bold" headerText="Estado">
                                     #{tut.estado}
                                 </p:column>
                             </p:dataTable>  
@@ -154,33 +154,51 @@
                             <p:chart type="bar"  model="#{reportesController.barTutoriasxSemestre}">
 
                             </p:chart>
-                            <p:dataTable class="mt-4" var="tut" value="#{tutoriasController.tutorias}" >
-                                <p:column>
+                            <div class="relative pb-4 mb-2 mt-4">
+                                <h4 >Todas las tutorias</h4>
+                                <div class="espaceador"></div>
+                            </div>
+                            <p:dataTable  scrollable="true" paginator="true" rows="5" var="tut" value="#{tutoriasController.tutorias}" >
+                                 <p:column headerText="codigo">
                                     #{tut.proyecto.codigo}
                                 </p:column>
-                                <p:column width="340">
-                                    <p:dataTable style="font-size: 10pt" var="integ" value="#{tut.proyecto.integrantes}">
-                                        <p:column width="40" headerText="">
-                                            <p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" style="width: 40px;height: 40px "  />
-                                        </p:column>
-                                        <p:column width="300" headerText="Integrantes">
-                                            <h:outputText  value="#{integ.matricula.estudiante.toString()}" /> 
-                                        </p:column>  
-                                    </p:dataTable>  
+                                <p:column width="20%" headerText="Integrantes">
+                                    <p:repeat var="integ" value="#{tut.proyecto.integrantes}">
+                                        <div class="flex gap-1 align-items-center">
+                                            <div class="w-2 border-circle overflow-hidden flex">
+                                                <p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" class="img"  />
+                                            </div>
+                                            <small class="text-left w-full">#{integ.matricula.estudiante.toString()}</small>
+                                        </div>
+                                    </p:repeat>
                                 </p:column>
-                                <p:column>
+                                <p:column headerText="Solicitud">
                                     #{tut.fechaSolicitud}
                                 </p:column>
-                                <p:column>
+                                <p:column headerText="Ejecución">
                                     #{tut.fechaEjecucion}
                                 </p:column>
-                                <p:column>
-                                    #{tut.recomendaciones}
+                                <p:column headerText="Recomendaciones">
+                                    <div class="btn-p">
+                                        <i class="ri-eye-line"></i>
+                                        <label>Ver</label>
+                                        <p:commandButton value="Show" class="btn" type="button"  onclick="PF('#{tut.recomendaciones}#{tut.id}').show()"/>
+                                    </div>
+                                    <p:dialog widgetVar="#{tut.recomendaciones}#{tut.id}"  minHeight="40" width="350" showEffect="fade">
+                                        <p class="m-0">#{tut.recomendaciones}</p>
+                                    </p:dialog>
                                 </p:column>
-                                <p:column>
-                                    #{tut.recomendaciones}
+                                <p:column headerText="Compromisos">
+                                    <div class="btn-s">
+                                        <i class="ri-eye-line"></i>
+                                        <label>Ver</label>
+                                        <p:commandButton value="Show" class="btn" type="button" icon="pi pi-external-link" onclick="PF('#{tut.compromisos}').show()"/>
+                                    </div>
+                                    <p:dialog widgetVar="#{tut.compromisos}"  minHeight="40" width="350" showEffect="fade">
+                                        <p class="m-0">#{tut.compromisos}</p>
+                                    </p:dialog>
                                 </p:column>
-                                <p:column>
+                                <p:column style="color: var(--first-color-p)" class="font-bold" headerText="Estado">
                                     #{tut.estado}
                                 </p:column>
                             </p:dataTable>  

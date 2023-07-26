@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <xhtml xmlns="http://www.w3.org/1999/xhtml"
        xmlns:h="http://xmlns.jcp.org/jsf/html"
-       xmlns:p="http://primefaces.org/ui">
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -12,19 +13,21 @@
         <p:panel rendered="#{profesorController.mostPanelSemestres}">
             <section class="contenido-contenedor">
                 <div class=" contenedor top" >
-                    <div class="relative pb-2 mb-2">
-                        <h3 class="text-2xl ">Gestor de grupos</h3>
-                        <small class="block mb-4 text-gray-600">Un grupo de proyecto es un equipo de estudiantes que trabajan juntos para abordar un proyecto específico dentro del entorno educativo de un aula. </small>  
-                        <div class="espaceador"></div>
-                    </div>
                     <div class="card">
+                        <div class="relative pb-2 mb-2">
+                            <h3 class="text-2xl ">Gestor de grupos</h3>
+                            <small class="block mb-4 text-gray-600">Un grupo de proyecto es un equipo de estudiantes que trabajan juntos para abordar un proyecto específico dentro del entorno educativo de un aula. </small>  
+                            <div class="espaceador"></div>
+                        </div>
+
                         <div class="relative pb-2 mb-2">
                             <h3>Secciones</h3>
                             <small class="block mb-4 text-gray-600">Secciones en las cuales eres profesor lider.</small>  
                             <div class="espaceador"></div>
                         </div>
-                        <p:dataView  multiViewState="true" gridIcon="pi pi-eye"  var="sem" value="#{profesorController.semestresLider}">
-                            <p:dataViewGridItem  columns="3"  >
+                        <div class="grid-cuatro">
+
+                            <ui:repeat  var="sem" value="#{profesorController.semestresLider}">
                                 <div class="relative img-negra bg-black">
                                     <div class="w-full h-full">
                                         <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
@@ -36,9 +39,9 @@
                                     </div>
                                     <h:commandButton   class="btn" value="Abrir" action="#{profesorController.seleccionarLider(sem)}" />
                                 </div> 
-                            </p:dataViewGridItem>
 
-                        </p:dataView>
+                            </ui:repeat>
+                        </div>
                     </div>
 
                 </div>
@@ -142,25 +145,25 @@
                             </p:column>                             
                             <p:column headerText="Integrantes">
                                 <p:repeat var="integ" value="#{proa.integrantes}">
-                                        <div class="flex gap-1 align-items-center">
-                                            <div class="w-1 border-circle overflow-hidden flex">
-                                                <p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" class="img"  />
-                                            </div>
-                                            <small class="w-10rem" >#{integ.matricula.estudiante.toString()}</small>
-                                            <div class="btn-eliminar">
-                                                <i class="uil uil-user-times"></i><h:commandButton class="btn" value="." action="#{profesorController.desvincularIntegrante(integ,proa)}" />
-                                            </div>
+                                    <div class="flex gap-1 align-items-center">
+                                        <div class="w-1 border-circle overflow-hidden flex">
+                                            <p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" class="img"  />
                                         </div>
-                                    </p:repeat>
-                                                            
+                                        <small class="w-10rem" >#{integ.matricula.estudiante.toString()}</small>
+                                        <div class="btn-eliminar">
+                                            <i class="uil uil-user-times"></i><h:commandButton class="btn" value="." action="#{profesorController.desvincularIntegrante(integ,proa)}" />
+                                        </div>
+                                    </div>
+                                </p:repeat>
+
                             </p:column>
                             <p:column width="150" headerText="Opciones">
-                                    <div class="btn-normal">
-                                        <i class="ri-pencil-fill"></i><h:commandButton class="btn" value="." action="#{proyectoAulaController.seleccionarProyecto(proa)}" />
-                                    </div>
-                                    <div class="btn-normal">
-                                        <i class="uil uil-trash-alt"></i><h:commandButton class="btn" value="." action="#{profesorController.eliminarProyectoAula(proa)}" />
-                                    </div>
+                                <div class="btn-normal">
+                                    <i class="ri-pencil-fill"></i><h:commandButton class="btn" value="." action="#{proyectoAulaController.seleccionarProyecto(proa)}" />
+                                </div>
+                                <div class="btn-normal">
+                                    <i class="uil uil-trash-alt"></i><h:commandButton class="btn" value="." action="#{profesorController.eliminarProyectoAula(proa)}" />
+                                </div>
                             </p:column>  
                         </p:dataTable>
                     </div>

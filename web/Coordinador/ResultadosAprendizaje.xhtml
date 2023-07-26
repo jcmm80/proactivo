@@ -9,165 +9,167 @@
     <h:body>
         <section class="contenido-contenedor">
             <div class=" contenedor top">
-                <div class="relative pb-4 mb-2">
-                    <h3 class="text-lg ">Resultados de Aprendizaje</h3>
-                    <div class="espaceador"></div>
-                </div>   
-                <p:tabView activeIndex="#{coordinadorController.activeIRes}">
-                    <p:tab title="Programa">
-                        <p:dataTable class="tabla-reporte" var="prog" value="#{programaController.programas}">
-                            <p:column headerText="Codigo">
-                                #{prog.codigo}
-                            </p:column>
-                            <p:column headerText="Nombre">
-                                #{prog.nombreCompleto}
-                            </p:column>
-                            <p:column headerText="Seleccionar">
-                                <div class="btn-normal">
-                                    <i class="fa fa-hand-pointer" ></i>
-                                    <h:commandButton class="btn" value="+" action="#{coordinadorController.seleccionarProgramaparaResultados(prog)}" />
-                                </div>
-                            </p:column>
-                        </p:dataTable>
-                    </p:tab>                
-                    <p:tab title="Semestre - Seccion">
-                        <div class="progress-bar mb-2">
-                            <div class="progress-tittle">
-                                <i class="ri-focus-3-line"></i>
-                                Seleccionado :
-                            </div>
-                            <i class="ri-bookmark-fill"></i>
-                            <div>
-                                #{asignaturaController.programa.nombre}
-                            </div>
-                        </div>
-                        <div class="relative pb-4 mb-2">
-                            <h3 class="text-lg ">Semestres</h3>
-                            <div class="espaceador"></div>
+                <div class="card">
 
-                        </div>
-
-                        <p:dataView  multiViewState="true" gridIcon="pi pi-eye" var="sem"  value="#{semestreController.semestres}">
-                            <p:dataViewGridItem  columns="6"  >
-                                <div class="relative img-negra bg-black" >
-                                    <div class="w-full h-full">
-                                        <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
-                                    </div>
-                                    <div class="contenido">
-                                        <p>Semestre <br></br>#{sem.denominacion}</p>
-                                    </div>
-                                    <h:commandButton   class="btn" value="Abrir" action="#{coordinadorController.seleccionarSemestrepTResultados(sem)}" />
-                                </div>
-                            </p:dataViewGridItem>
-
-                        </p:dataView>
-                        <div class="mt-4">
+                    <div class="relative pb-4 mb-2">
+                        <h3 class="text-lg ">Resultados de Aprendizaje</h3>
+                        <div class="espaceador"></div>
+                    </div>   
+                    <p:tabView activeIndex="#{coordinadorController.activeIRes}">
+                        <p:tab title="Programa">
                             <div class="relative pb-4 mb-2">
-                                <h3 class="text-lg ">Secciones</h3>
+                                <h3 >Mis programas</h3>
                                 <div class="espaceador"></div>
-                            </div>   
-                            <p:dataView  multiViewState="true" gridIcon="pi pi-eye" listIcon="pi pi-bars" var="sec" value="#{coordinadorController.secciones}">
-                                <p:dataViewGridItem  columns="3"  >
-                                    <div class="relative img-negra bg-black">
+                            </div>
+                            <p:dataTable scrollable="true" var="prog" value="#{programaController.programas}">
+                                <p:column headerText="Codigo">
+                                    #{prog.codigo}
+                                </p:column>
+                                <p:column headerText="Nombre">
+                                    #{prog.nombreCompleto}
+                                </p:column>
+                                <p:column headerText="Seleccionar">
+                                    <div class="btn-normal">
+                                        <i class="fa fa-hand-pointer" ></i>
+                                        <h:commandButton class="btn" value="+" action="#{coordinadorController.seleccionarProgramaparaResultados(prog)}" />
+                                    </div>
+                                </p:column>
+                            </p:dataTable>
+                        </p:tab>                
+                        <p:tab title="Semestre - Seccion">
+                            <div class="progress-bar mb-2">
+                                <div class="progress-tittle">
+                                    <i class="ri-focus-3-line"></i>
+                                    Seleccionado :
+                                </div>
+                                <i class="ri-bookmark-fill"></i>
+                                <div>
+                                    #{asignaturaController.programa.nombre}
+                                </div>
+                            </div>
+                            <div class="relative pb-4 mb-2">
+                                <h3 >Semestres</h3>
+                            </div>
+                            <div class="grid-seis">
+                                <p:repeat var="sem"  value="#{semestreController.semestres}">
+                                    <div class="relative img-negra bg-black" >
                                         <div class="w-full h-full">
                                             <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
                                         </div>
-                                        <div class="contenido-grid">
-                                            <h2 class="text-white">#{sec.programa.nombre}</h2>
-                                            <span>Semestre #{sec.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
-                                            <h3 class="text-white">Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
+                                        <div class="contenido">
+                                            <p>Semestre <br></br>#{sem.denominacion}</p>
                                         </div>
-                                        <h:commandButton   class="btn" value="Abrir" action="#{coordinadorController.obtenerResultadosSeccion(sec)}" />
-                                    </div> 
-                                </p:dataViewGridItem>
-
-                            </p:dataView>
-                        </div> 
-                    </p:tab>
-                    <p:tab rendered="#{not empty matriculaController.seccion.semestre}" title="Estudiantes de la Seccion:#{matriculaController.seccion.getSeccion()} ">
-
-                        <p:dataTable paginator="true" rows="10" class="tabla-reporte" style="font-size: 10pt" var="est" value="#{matriculaController.matriculasXSeccion}">
-                            <p:column headerText="Tipo de Identificacion">
-                                #{est.estudiante.tipo_ide}
-                            </p:column>
-                            <p:column filterBy="#{est.estudiante.identificacion}" headerText="Identificacion">
-                                #{est.estudiante.identificacion}
-                            </p:column>
-                            <p:column filterBy="#{est.estudiante.primerNombre}" headerText="Primer Nombre">
-                                #{est.estudiante.primerNombre}
-                            </p:column>
-                            <p:column filterBy="#{est.estudiante.segundoNombre}" headerText="Segundo Nombre">
-                                #{est.estudiante.segundoNombre}
-                            </p:column>
-                            <p:column filterBy="#{est.estudiante.primerApellido}" headerText="Primer Apellido">
-                                #{est.estudiante.primerApellido}
-                            </p:column>
-                            <p:column filterBy="#{est.estudiante.segundoApellido}" headerText="Segundo Apellido">
-                                #{est.estudiante.segundoApellido}
-                            </p:column>
-                            <p:column headerText="Valoracion General">
-                                #{evaluacionController.notaFIntegrante(proyectoAulaController.integranteMatricula(est))}
-
-                            </p:column>
-                            <p:column headerText="Resultados">
-                                <div class="btn-normal" title="Ver">
-                                    <i class="uil uil-file-search-alt" ></i>
-                                    <h:commandButton class="btn" value="." action="#{coordinadorController.verResultados(proyectoAulaController.integranteMatricula(est))}" />
-                                </div>
-                            </p:column>
-                        </p:dataTable>                        
-                    </p:tab>
-                    <p:tab title="Resultados de Aprendizaje: ">
-
-                        <div class="btn-normal inline-flex border-none" title="Volver">
-                            <i class="ri-arrow-left-line text-xl"></i>
-                            <h:commandButton class="btn" value="volver" action="#{coordinadorController.volverEstudiantesSeccion()}" />
-                        </div>
-                        <div class=" flex justify-content-center align-items-center gap-2 mb-2">
-                            <div class="w-8rem border-circle overflow-hidden flex ">
-                                <p:graphicImage value="/Imagenes/Perfiles/#{matriculaController.matricula.estudiante.imagenPerfil()}" class="img"  />
-                            </div>
-                        </div>
-                        <div class="info-proyecto">
-                            <div class="info-tittle">Infórmacion del Estudiante</div>
-                            <div class="info-data">
-                                <div class="info-data-item">
-                                    <div>
-                                        <i class="ri-qr-code-line"></i>
-                                        Nombre Completo:
+                                        <h:commandButton   class="btn" value="Abrir" action="#{coordinadorController.seleccionarSemestrepTResultados(sem)}" />
                                     </div>
-                                    <p>#{matriculaController.matricula.estudiante.toString()}</p>
-
+                                </p:repeat>
+                            </div>
+                            <div class="mt-4">
+                                <div class="relative pb-4 mb-2">
+                                    <h3>Secciones</h3>
+                                    <div class="espaceador"></div>
+                                </div>   
+                                <div class="grid-cuatro">
+                                    <p:repeat var="sec" value="#{coordinadorController.secciones}">
+                                        <div class="relative img-negra bg-black">
+                                            <div class="w-full h-full">
+                                                <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
+                                            </div>
+                                            <div class="contenido-grid">
+                                                <h2 class="text-white">#{sec.programa.nombre}</h2>
+                                                <span>Semestre #{sec.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
+                                                <h3 class="text-white">Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
+                                            </div>
+                                            <h:commandButton   class="btn" value="Abrir" action="#{coordinadorController.obtenerResultadosSeccion(sec)}" />
+                                        </div> 
+                                    </p:repeat>
                                 </div>
-                                <div class="info-data-item">
-                                    <div>
-                                        <i class="ri-medal-2-line"></i>
-                                        Nota General:
+                            </div> 
+                        </p:tab>
+                        <p:tab rendered="#{not empty matriculaController.seccion.semestre}" title="Estudiantes de la Seccion:#{matriculaController.seccion.getSeccion()} ">
+
+                            <p:dataTable paginator="true" rows="10" class="tabla-reporte" style="font-size: 10pt" var="est" value="#{matriculaController.matriculasXSeccion}">
+                                <p:column headerText="Tipo de Identificacion">
+                                    #{est.estudiante.tipo_ide}
+                                </p:column>
+                                <p:column filterBy="#{est.estudiante.identificacion}" headerText="Identificacion">
+                                    #{est.estudiante.identificacion}
+                                </p:column>
+                                <p:column filterBy="#{est.estudiante.primerNombre}" headerText="Primer Nombre">
+                                    #{est.estudiante.primerNombre}
+                                </p:column>
+                                <p:column filterBy="#{est.estudiante.segundoNombre}" headerText="Segundo Nombre">
+                                    #{est.estudiante.segundoNombre}
+                                </p:column>
+                                <p:column filterBy="#{est.estudiante.primerApellido}" headerText="Primer Apellido">
+                                    #{est.estudiante.primerApellido}
+                                </p:column>
+                                <p:column filterBy="#{est.estudiante.segundoApellido}" headerText="Segundo Apellido">
+                                    #{est.estudiante.segundoApellido}
+                                </p:column>
+                                <p:column headerText="Valoracion General">
+                                    #{evaluacionController.notaFIntegrante(proyectoAulaController.integranteMatricula(est))}
+
+                                </p:column>
+                                <p:column headerText="Resultados">
+                                    <div class="btn-normal" title="Ver">
+                                        <i class="uil uil-file-search-alt" ></i>
+                                        <h:commandButton class="btn" value="." action="#{coordinadorController.verResultados(proyectoAulaController.integranteMatricula(est))}" />
                                     </div>
-                                    <p>#{evaluacionController.notaFIntegrante(matriculaController.integrante)}</p>
+                                </p:column>
+                            </p:dataTable>                        
+                        </p:tab>
+                        <p:tab title="Resultados de Aprendizaje: ">
+
+                            <div class="btn-normal inline-flex border-none" title="Volver">
+                                <i class="ri-arrow-left-line text-xl"></i>
+                                <h:commandButton class="btn" value="volver" action="#{coordinadorController.volverEstudiantesSeccion()}" />
+                            </div>
+                            <div class=" flex justify-content-center align-items-center gap-2 mb-2">
+                                <div class="w-8rem border-circle overflow-hidden flex ">
+                                    <p:graphicImage value="/Imagenes/Perfiles/#{matriculaController.matricula.estudiante.imagenPerfil()}" class="img"  />
                                 </div>
                             </div>
-                            <div class="espaceador"></div>
-                        </div>
-                        <div class="cres">
-                            <p:accordionPanel var="asi"  value="#{matriculaController.resultados}">
-                                <p:tab title="Asignatura: #{asi.asignatura.nombre} - Profesor: #{asi.asignatura.profesor.toString()}">                                
-                                    <p:dataTable var="val" value="#{asi.valoraciones}">
-                                        <p:column headerText="Criterio"  style="width: 80%; text-align: left">                                             
-                                            <h:outputText  title="#{val.criterio.criterio.descripcion}" value="#{val.criterio.criterio.descripcion}"  />
-                                        </p:column>
-                                        <p:column headerText="Nota"  style="height: 70px">                                             
-                                            <h:outputText  title="#{val.criterio.criterio.descripcion}" value="#{val.valor}"  />
-                                        </p:column>
-                                    </p:dataTable>
-                                </p:tab>
-                            </p:accordionPanel>
+                            <div class="info-proyecto">
+                                <div class="info-tittle">Infórmacion del Estudiante</div>
+                                <div class="info-data">
+                                    <div class="info-data-item">
+                                        <div>
+                                            <i class="ri-qr-code-line"></i>
+                                            Nombre Completo:
+                                        </div>
+                                        <p>#{matriculaController.matricula.estudiante.toString()}</p>
+
+                                    </div>
+                                    <div class="info-data-item">
+                                        <div>
+                                            <i class="ri-medal-2-line"></i>
+                                            Nota General:
+                                        </div>
+                                        <p>#{evaluacionController.notaFIntegrante(matriculaController.integrante)}</p>
+                                    </div>
+                                </div>
+                                <div class="espaceador"></div>
+                            </div>
+                            <div class="cres">
+                                <p:accordionPanel var="asi"  value="#{matriculaController.resultados}">
+                                    <p:tab title="Asignatura: #{asi.asignatura.nombre} - Profesor: #{asi.asignatura.profesor.toString()}">                                
+                                        <p:dataTable var="val" value="#{asi.valoraciones}">
+                                            <p:column headerText="Criterio"  style="width: 80%; text-align: left">                                             
+                                                <h:outputText  title="#{val.criterio.criterio.descripcion}" value="#{val.criterio.criterio.descripcion}"  />
+                                            </p:column>
+                                            <p:column headerText="Nota"  style="height: 70px">                                             
+                                                <h:outputText  title="#{val.criterio.criterio.descripcion}" value="#{val.valor}"  />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+                                </p:accordionPanel>
 
 
-                        </div>
+                            </div>
 
-                    </p:tab>
-                </p:tabView>
+                        </p:tab>
+                    </p:tabView>
+                </div>
 
             </div>
         </section>

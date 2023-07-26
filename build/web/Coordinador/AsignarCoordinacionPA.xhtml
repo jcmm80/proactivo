@@ -50,8 +50,8 @@
                         <small class=" text-gray-600 mb-2">Selecciona un coordinador</small>
                         <div class="espaceador"></div> 
                     </div>
-                    <p:dataView  multiViewState="true" gridIcon="pi pi-eye"   var="prof" value="#{profesorController.profesores}">
-                        <p:dataViewGridItem  columns="4"  >
+                    <div class="grid-cuatro">
+                        <p:repeat   var="prof" value="#{profesorController.profesores}">
                             <div class="cdppa">
                                 <h:commandButton class="cdpbtn" value="seleccionar" action="#{programaController.seleccionarCoordinadorPA(prof)}" />
                                 <div class="id-carta"><span>#{prof.identificacion}</span></div>
@@ -64,9 +64,8 @@
                                 </div>
                                 <div class="contrato-carta"><span>#{prof.tipocontrato}</span></div>
                             </div>
-                        </p:dataViewGridItem>
-                        
-                    </p:dataView>
+                        </p:repeat>
+                    </div>
                 </div>
                 <div class="btns-container justify-content-end">
                     <div class="btn-c">

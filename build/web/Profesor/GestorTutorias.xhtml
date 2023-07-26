@@ -23,31 +23,33 @@
                             <h3 >Mis Asignaturas</h3>
                             <div class="espaceador"></div>
                         </div>
-                        <p:dataView  multiViewState="true" listIcon="pi pi-eye" var="asig" value="#{asignaturaController.asignaturas}">
-                            <p:dataViewListItem >
-                                <div class="p-4 flex justify-content-between card mb-1 responsive-flex cdppa">
-                                    <h:commandButton class="btn" value="seleccionar"  action="#{profesorController.agregarAsignaturaTutoria(asig)}" />
-                                    <div>
-                                        <div class="mb-2">
-                                            <h4>Asignatura</h4>
-                                            <p>#{asig.nombre}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <h4><i class="fas fa-credit-card mr-1"></i>créditos : #{asig.creditos}</h4> 
-                                        </div>
+                        <div class="grid-dos">
+                            <ui:repeat   var="asig" value="#{asignaturaController.asignaturas}">
+                                <p:dataViewListItem >
+                                    <div class="p-4 flex justify-content-between card mb-1 responsive-flex cdppa">
+                                        <h:commandButton class="btn" value="seleccionar"  action="#{profesorController.agregarAsignaturaTutoria(asig)}" />
+                                        <div>
+                                            <div class="mb-2">
+                                                <h4>Asignatura</h4>
+                                                <p>#{asig.nombre}</p>
+                                            </div>
+                                            <div class="mb-1">
+                                                <h4><i class="fas fa-credit-card mr-1"></i>créditos : #{asig.creditos}</h4> 
+                                            </div>
 
-                                        <div >
-                                            <small>#{asig.area.nombre}</small>
-                                        </div>
+                                            <div >
+                                                <small>#{asig.area.nombre}</small>
+                                            </div>
 
+                                        </div>
+                                        <div class="flex flex-column gap-2">
+                                            <small>#{asig.seccion.programa.nombre}</small>
+                                            <h4>#{asig.seccion.semestre.denominacion} - #{asig.seccion.denominacion}</h4>
+                                        </div>
                                     </div>
-                                    <div class="flex flex-column gap-2">
-                                        <small>#{asig.seccion.programa.nombre}</small>
-                                        <h4>#{asig.seccion.semestre.denominacion} - #{asig.seccion.denominacion}</h4>
-                                    </div>
-                                </div>
-                            </p:dataViewListItem>
-                        </p:dataView>
+                                </p:dataViewListItem>
+                            </ui:repeat>
+                        </div>
                     </div>
                 </p:panel>
                 <p:panel rendered="#{profesorController.mpanelTutorias}">                   

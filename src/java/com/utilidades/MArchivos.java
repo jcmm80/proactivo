@@ -19,7 +19,10 @@ import com.services.SemestreServices;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,80 +35,82 @@ import java.util.StringTokenizer;
  *
  * @author Jcmm
  */
-public class MArchivos implements Serializable{
-    
-    private List<Estudiante> estudiantes = new LinkedList();    
+public class MArchivos implements Serializable {
+
+    private List<Estudiante> estudiantes = new LinkedList();
     private List<Semestre> semestres = new LinkedList();
     private List<Periodo> periodos = new LinkedList();
     private List<ProgramaAcademico> programas = new LinkedList();
     private List<Seccion> secciones = new LinkedList();
     private List<Matricula> matriculas = new LinkedList();
-    
+
     List<Semestre> semestresAntiguos = new LinkedList();
     List<Periodo> periodosAntiguos = new LinkedList();
     List<ProgramaAcademico> programasAntiguos = new LinkedList();
     List<Seccion> seccionesAntiguos = new LinkedList();
     List<Estudiante> estudiantesAntiguos = new LinkedList();
     List<Matricula> matriculasAnteriores = new LinkedList();
-    
+
     EstudianteServices es = new EstudianteServices();
     MatriculaServices ms = new MatriculaServices();
-    PeriodoServices ps=new PeriodoServices();
-    SemestreServices ss=new SemestreServices();
-    ProgramaAcademicoServices pas=new ProgramaAcademicoServices();
-    SeccionServices secs=new SeccionServices();
-    
+    PeriodoServices ps = new PeriodoServices();
+    SemestreServices ss = new SemestreServices();
+    ProgramaAcademicoServices pas = new ProgramaAcademicoServices();
+    SeccionServices secs = new SeccionServices();
+
     public MArchivos() {
         obtenerdatosAnteriores();
     }
-    
-    public void obtenerdatosAnteriores(){
-        semestresAntiguos=ss.consultarTodo(Semestre.class);
-        periodosAntiguos=ps.consultarTodo(Periodo.class);
-        programasAntiguos=pas.consultarTodo(ProgramaAcademico.class);
-        seccionesAntiguos=secs.consultarTodo(Seccion.class);
+
+    public void obtenerdatosAnteriores() {
+        semestresAntiguos = ss.consultarTodo(Semestre.class);
+        periodosAntiguos = ps.consultarTodo(Periodo.class);
+        programasAntiguos = pas.consultarTodo(ProgramaAcademico.class);
+        seccionesAntiguos = secs.consultarTodo(Seccion.class);
     }
-    
+
     public int ultimamatricula() {
         matriculasAnteriores = ms.consultarTodo(Matricula.class);
         return matriculasAnteriores.size();
     }
-    
+
     public int ultimoconsec() {
         estudiantesAntiguos = es.consultarTodo(Estudiante.class);
         return estudiantesAntiguos.size();
     }
-    
-    public void almacenamiento(){
-        if(periodos.size()>0){
-            for(Periodo p:periodos){
+
+    public void almacenamiento() {
+        if (periodos.size() > 0) {
+            for (Periodo p : periodos) {
                 ps.modificar(p);
             }
         }
-        if(programas.size()>0){
-            for(ProgramaAcademico pa:programas){
+        if (programas.size() > 0) {
+            for (ProgramaAcademico pa : programas) {
                 pas.modificar(pa);
             }
         }
-        if(secciones.size()>0){
-            for(Seccion s:secciones){
+        if (secciones.size() > 0) {
+            for (Seccion s : secciones) {
                 secs.modificar(s);
             }
-        }if(estudiantes.size()>0){
-            for(Estudiante e: estudiantes){
+        }
+        if (estudiantes.size() > 0) {
+            for (Estudiante e : estudiantes) {
                 es.modificar(e);
-                System.out.println("almacenado: "+e.toString());
+                System.out.println("almacenado: " + e.toString());
             }
-        }if(matriculas.size()>0){
-            for(Matricula m: matriculas){
+        }
+        if (matriculas.size() > 0) {
+            for (Matricula m : matriculas) {
                 ms.modificar(m);
-                System.out.println("Almacenada matricula para: "+m.getEstudiante().getId());
+                System.out.println("Almacenada matricula para: " + m.getEstudiante().getId());
             }
         }
     }
-    
+
     public void cargarArhivoEstudiante(String archivo) {
-        
+
         try {
             // Abrimos el archivo
             FileInputStream fstream = new FileInputStream(archivo);
@@ -114,7 +119,7 @@ public class MArchivos implements Serializable{
             // Creamos el Buffer de Lectura
             BufferedReader buffer = new BufferedReader(new InputStreamReader(entrada));
             String strLinea;
-            
+
             Estudiante estudiante;
             Semestre semestre;
             Periodo periodo;
@@ -165,13 +170,13 @@ public class MArchivos implements Serializable{
                 programa.setNombre(stn.nextToken());
                 semestre.setDenominacion(stn.nextToken());
                 programa.setNombreCompleto(programa.getNombre());
-                
+
                 seccion.setSemestre(semestre);
                 seccion.setPrograma(programa);
                 seccion.setPeriodo(periodo);
                 matricula.setSeccion(seccion);
                 matricula.setId(Long.parseLong("" + um));
-                
+
                 if (!existeSemestre(semestre)) {
                     getSemestres().add(semestre);
                 }
@@ -203,9 +208,9 @@ public class MArchivos implements Serializable{
             e.printStackTrace();
             System.err.println("Ocurrio un error: " + e.getMessage());
         }
-        
+
     }
-    
+
     public boolean existeMatricula(Matricula mat) {
         boolean existe = false;
         for (Matricula m : matriculasAnteriores) {
@@ -217,7 +222,7 @@ public class MArchivos implements Serializable{
         }
         return existe;
     }
-    
+
     public boolean existeEstudiante(Estudiante es) {
         boolean existe = false;
         for (Estudiante e : estudiantesAntiguos) {
@@ -229,18 +234,18 @@ public class MArchivos implements Serializable{
         }
         return existe;
     }
-    
+
     public boolean existeSeccion(Seccion se) {
         boolean existe = false;
         for (Seccion s : seccionesAntiguos) {
-            if (s.getId().equals(se.getId())) {                
+            if (s.getId().equals(se.getId())) {
                 existe = true;
                 break;
             }
         }
         return existe;
     }
-    
+
     public boolean existePeriodo(Periodo pe) {
         boolean existe = false;
         for (Periodo p : periodosAntiguos) {
@@ -252,7 +257,7 @@ public class MArchivos implements Serializable{
         }
         return existe;
     }
-    
+
     public boolean existePrograma(ProgramaAcademico pro) {
         boolean existe = false;
         for (ProgramaAcademico p : programasAntiguos) {
@@ -264,7 +269,7 @@ public class MArchivos implements Serializable{
         }
         return existe;
     }
-    
+
     public boolean existeSemestre(Semestre sem) {
         boolean existe = false;
         for (Semestre s : semestresAntiguos) {
@@ -275,18 +280,38 @@ public class MArchivos implements Serializable{
         }
         return existe;
     }
-    
+
     public Date convertirFecha(String fech) {
         SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
         Date fecha = null;
         try {
             fecha = formatoDelTexto.parse(fech);
-            
+
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
         return fecha;
-        
+
+    }
+
+    public void crearLicencia(String ruta, Licencias licencias) {
+        try {
+            // Crea un FileOutputStream para escribir en el archivo
+            FileOutputStream fileOutputStream = new FileOutputStream(ruta);
+
+            // Crea un ObjectOutputStream para escribir el objeto en el archivo
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+            // Escribe el objeto en el archivo
+            objectOutputStream.writeObject(licencias);
+
+            // Cierra el ObjectOutputStream
+            objectOutputStream.close();
+
+            System.out.println("Objeto guardado en el archivo correctamente.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -372,5 +397,5 @@ public class MArchivos implements Serializable{
     public void setMatriculas(List<Matricula> matriculas) {
         this.matriculas = matriculas;
     }
-    
+
 }

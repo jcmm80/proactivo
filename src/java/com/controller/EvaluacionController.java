@@ -437,7 +437,7 @@ public class EvaluacionController implements Serializable {
         } catch (java.lang.NullPointerException npe) {
             nfinal = 0;
         }
-        return nfinal;
+        return  Math.round(nfinal * 100.0) / 100.0;
     }
 
     public void consultarValoracionesXIntegrante(Integrante i) {

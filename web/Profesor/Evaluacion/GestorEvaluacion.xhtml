@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -10,46 +11,49 @@
 
         <section class="contenido-contenedor">
             <div class=" contenedor top" >
-                <div class="relative pb-2 mb-2">
-                    <h3 class="text-2xl ">Gestor de Evaluacion</h3>
-                    <small class="block mb-4 text-gray-600">Una evaluación es un proceso sistemático y continuo que tiene como objetivo medir el progreso, el aprendizaje y el rendimiento de los estudiantes.</small>  
-                    <div class="espaceador"></div>
-                </div>
-                <p:tabView activeIndex="#{evaluacionController.indTavEvaluacion}" scrollable="true">
-                    <p:tab title="Seccion">
-                        <div class="relative pb-2 mb-2">
-                            <h3 >Mis Secciones</h3>
-                            <p class="block mb-4 text-gray-600">Selecciona una seccion para configurar la evalución</p>  
-                            <div class="espaceador"></div>
-                        </div>
-                        <p:dataView  multiViewState="true" gridIcon="pi pi-eye"  var="sem" value="#{profesorController.semestresLider}">
-                            <p:dataViewGridItem  columns="3"  >
-                                <div class="relative img-negra bg-black">
-                                    <div class="w-full h-full">
-                                        <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
+                <div class="card">
+                    <div class="relative pb-2 mb-2">
+                        <h3 class="text-2xl ">Gestor de Evaluacion</h3>
+                        <small class="block mb-4 text-gray-600">El proceso tiene como objetivo,
+                            clasificar los criterios de
+                            evaluación y agruparlos por
+                            dimensiones de evaluación, para
+                            que posteriormente al tener una
+                            valoración, se puedan ponderar.</small>  
+                        <div class="espaceador"></div>
+                    </div>
+                    <p:tabView activeIndex="#{evaluacionController.indTavEvaluacion}" scrollable="true">
+                        <p:tab title="Seccion">
+                            <div class="relative pb-2 mb-2">
+                                <h3 >Mis Secciones</h3>
+                                <p class="block mb-4 text-gray-600">Selecciona una seccion para configurar la evalución</p>  
+                                <div class="espaceador"></div>
+                            </div>
+                            <div class="grid-cuatro">
+                                <p:repeat  var="sem" value="#{profesorController.semestresLider}">
+                                    <div class="relative img-negra bg-black">
+                                        <div class="w-full h-full">
+                                            <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
+                                        </div>
+                                        <div class="contenido-grid">
+                                            <h2 class="text-white">#{sem.seccion.programa.nombre}</h2>
+                                            <span>Semestre #{sem.seccion.semestre.denominacion} -  Seccion #{sem.seccion.denominacion}</span>
+                                            <h3 class="text-white">Año #{sem.seccion.periodo.anio} - #{sem.seccion.periodo.numero}</h3>
+                                        </div>
+                                        <h:commandButton   class="btn" value="Abrir" action="#{profesorController.seleccionarSeccionLider(sem)}" />
+                                    </div> 
+                                </p:repeat>
+                            </div>
+                        </p:tab>
+                        <p:tab title="Asignaturas a Evaluar">
+                            <div class="flex justify-content-between gap-4 responsive-flex">
+                                <div class="md:w-5 sm:w-full">
+                                    <div class="relative pb-3 mb-2">
+                                        <h3 >Asignaturas Vinculadas</h3>
+                                        <p class="block mb-4 text-gray-600">Selecciona las asignaturas involucradas en la evaluacion</p>  
+                                        <div class="espaceador"></div>
                                     </div>
-                                    <div class="contenido-grid text-white">
-                                        <h2 class="text-white">#{sem.seccion.programa.nombre}</h2>
-                                        <span>Semestre #{sem.seccion.semestre.denominacion} -  Seccion #{sem.seccion.denominacion}</span>
-                                        <h3 class="text-white">Año #{sem.seccion.periodo.anio} - #{sem.seccion.periodo.numero}</h3>
-                                    </div>
-                                    <h:commandButton   class="btn" value="Abrir" action="#{profesorController.seleccionarSeccionLider(sem)}" />
-                                </div> 
-                            </p:dataViewGridItem>
-
-                        </p:dataView>
-
-
-                    </p:tab>
-                    <p:tab title="Asignaturas a Evaluar">
-                        <div class="flex justify-content-between gap-4 responsive-flex">
-                            <div class="md:w-5 sm:w-full">
-                                <div class="relative pb-3 mb-2">
-                                    <h3 >Asignaturas Vinculadas</h3>
-                                    <div class="espaceador"></div>
-                                </div>
-                                <p:dataView  multiViewState="true" listIcon="pi pi-eye" var="asig" value="#{evaluacionController.asignaturasSeccion}">
-                                    <p:dataViewListItem >
+                                    <ui:repeat var="asig" value="#{evaluacionController.asignaturasSeccion}">
                                         <div class="p-4 flex justify-content-between card mb-1 responsive-flex cdppa">
                                             <h:commandButton class="btn" value="seleccionar"  action="#{evaluacionController.seleccionarAsignatura(asig)}" />
                                             <div>
@@ -64,64 +68,54 @@
                                                 <div >
                                                     <small>#{asig.area.nombre}</small>
                                                 </div>
-
                                             </div>
                                             <div class="flex flex-column gap-2">
                                                 <small>#{asigs.profesor.toString()}</small>
                                                 <h4>#{asig.seccion.semestre.denominacion} - #{asig.seccion.denominacion}</h4>
                                             </div>
                                         </div>
-                                    </p:dataViewListItem>
-                                </p:dataView>
-                            </div>
-                            <div class="md:w-7 sm:w-full">
-
-                                <div class="relative pb-3 mb-2">
-                                    <h3 >Asignaturas Seleccionadas</h3>
-                                    <div class="espaceador"></div>
+                                    </ui:repeat>
                                 </div>
-                                <p:dataTable var="asige" value="#{evaluacionController.asignaturasEvaluacion}">
-                                    <p:column>
-                                        #{asige.nombre}
-                                    </p:column>
-                                    <p:column>
-                                        #{asige.profesor.toString()}
-                                    </p:column>
-                                    <p:column>
-                                        #{asige.seccion.getSeccion()}
-                                    </p:column>
-                                    <p:column>
-                                        <div class="btn-eliminar" title="Deseleccionar asignatura">
-                                            <i class="ri-close-line"></i>
-                                            <h:commandButton class="btn" value="+" action="#{evaluacionController.quitarAsignatura(asige)}" />
-                                        </div>
-                                    </p:column>
-                                </p:dataTable>
+                                <div class="md:w-7 sm:w-full">
+                                    <div class="relative pb-3 mb-2">
+                                        <h3 >Asignaturas Seleccionadas</h3>
+                                        <p class="block mb-4 text-gray-600">Puedes quitar asignatura de la seleccion pulsando el botón de la x</p>  
+                                        <div class="espaceador"></div>
+                                    </div>
+                                    <p:dataTable var="asige" value="#{evaluacionController.asignaturasEvaluacion}">
+                                        <p:column headerText="Asignatura">
+                                            #{asige.nombre}
+                                        </p:column>
+                                        <p:column headerText="Docente">
+                                            #{asige.profesor.toString()}
+                                        </p:column>
+                                        <p:column headerText="Seccion">
+                                            #{asige.seccion.getSeccion()}
+                                        </p:column>
+                                        <p:column>
+                                            <div class="btn-eliminar" title="Deseleccionar asignatura">
+                                                <i class="ri-close-line"></i>
+                                                <h:commandButton class="btn" value="+" action="#{evaluacionController.quitarAsignatura(asige)}" />
+                                            </div>
+                                        </p:column>
+                                    </p:dataTable>
+                                </div>
                             </div>
-                        </div>
-                        <div class="btns-container justify-content-end">
-                            <div class="btn-p" title="continuar">
-                                <label>continuar</label>
-                                <h:commandButton class="btn" value="+" action="#{evaluacionController.irDimensiones()}" />
+                            <div class="btns-container justify-content-end">
+                                <div class="btn-p" title="continuar">
+                                    <label>continuar</label>
+                                    <h:commandButton class="btn" value="+" action="#{evaluacionController.irDimensiones()}" />
+                                </div>
                             </div>
-                        </div>
-                    </p:tab>
-                    <p:tab title="Dimensiones">
-
-                        <div class="conteval">
-                            <div class="cdime">
-                                <p:dataViewGridItem  columns="3"  >
-                                    <div class="relative img-negra bg-black">
-
-                                        <div class="contenido-grid">
-                                            <h2 >#{sem.programa.nombre}</h2>
-                                            <span>Semestre #{sem.semestre.denominacion} -  Seccion #{sem.denominacion}</span>
-                                            <h3 >Año #{sem.periodo.anio} - #{sem.periodo.numero}</h3>
-                                        </div>
-                                        <h:commandButton   class="btn" value="Abrir" action="#{profesorController.seleccionarSeccionLider(sem)}" />
-                                    </div> 
-                                </p:dataViewGridItem>
-                                <p:dataGrid paginator="true" var="dim"  columns="1" value="#{evaluacionController.dimencionesPeriodoNoGlobales}" >
+                        </p:tab>
+                        <p:tab title="Dimensiones">
+                            <div class="relative pb-3 mb-2">
+                                <h3 >Dimensiones</h3>
+                                <p class="block mb-2 text-gray-600">Selecciona una dimensión para establecer criterios</p>  
+                                <div class="espaceador"></div>
+                            </div>
+                            <div class="grid-cuatro">
+                                <ui:repeat  var="dim" value="#{evaluacionController.dimencionesPeriodoNoGlobales}" >
                                     <div class="relative img-negra bg-black">
                                         <div class="w-full h-full">
                                             <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
@@ -133,131 +127,141 @@
                                         </div>
                                         <h:commandButton   class="btn" value="Abrir" action="#{evaluacionController.seleccionarDimension(dim)}" />
                                     </div> 
-                                </p:dataGrid>
-
+                                </ui:repeat>
                             </div>
-                            <div class="ccrit">
-
-                                <br/><br/>Asignar: #{evaluacionController.dimencion.nombre} para los criterios? <br/>
-
-                                <p:separator/>
-
-                                <p:panel>
-                                    <p:dataTable var="dimng"  style="font-size: 7pt" value="#{evaluacionController.dimencionesPeriodoNoGlobales}">                                        
-                                        <p:column headerText="DImension" width="20%">
-                                            #{dimng.nombre}<br/>#{dimng.porcentaje}%
-                                        </p:column>
-                                        <p:column headerText="Criterios" width="70%">
-                                            <p:dataTable var="cridim" value="#{evaluacionController.criteriosXDimension(dimng)}">
-                                                <p:column headerText="Criterio Asignado">
-                                                    #{cridim.criterio.descripcion}
-                                                </p:column>
-                                                <p:column headerText="" width="10%">
-                                                    <h:commandButton value="x" action="#{evaluacionController.quitarCriterio(cridim.criterio)}" />
-                                                </p:column>
-                                            </p:dataTable>                                            
-                                        </p:column>
-                                    </p:dataTable>
-                                </p:panel>
-
-
-                                <p:panel rendered="#{!evaluacionController.dimencion.esGlobal()}">                                    
-                                    <p:dataTable rendered="#{not empty evaluacionController.criteriosSeccion}" class="tabla-reporte"  scrollable="true" scrollHeight="700" style="font-size: 7pt" var="crita" value="#{evaluacionController.criteriosSeccion}">
+                            <div class="flex responsive-flex justify-content-between gap-4 mt-4">
+                                <p:panel class="md:w-7 sm:full" rendered="#{!evaluacionController.dimencion.esGlobal()}">  
+                                    <div class="relative pb-3 mb-2">
+                                        <h3 >Criterios</h3>
+                                        <p class="block mb-2 text-gray-600">Establece Criterio a le dimensión seleccionada</p>  
+                                        <div class="espaceador"></div>
+                                    </div>
+                                    <p:dataTable  rendered="#{not empty evaluacionController.criteriosSeccion}"   scrollable="true" scrollHeight="700" style="font-size: 7pt" var="crita" value="#{evaluacionController.criteriosSeccion}">
                                         <p:column headerText="Asignatura">
                                             #{crita.competencia.unidad.asignatura.nombre}
                                         </p:column>
-                                        <p:column width="40%" headerText="Unidad de Competencia">
+                                        <p:column  headerText="Unidad de Competencia">
                                             #{crita.competencia.unidad.descripcion}
                                         </p:column>
                                         <p:column headerText="Tipo de Competencia">
                                             #{crita.competencia.tipo.descripcion}
                                         </p:column>
-                                        <p:column width="30%" headerText="Criterio">
+                                        <p:column  headerText="Criterio">
                                             #{crita.descripcion}
                                         </p:column>
                                         <p:column headerText="">
-                                            <h:commandButton value="agregar" action="#{evaluacionController.seleccionarCriterio(crita)}" />
-
+                                            <div class="btn-normal">
+                                                <i class="ri-add-line"></i>
+                                                <h:commandButton value="agregar" class="btn" action="#{evaluacionController.seleccionarCriterio(crita)}" />
+                                            </div>
                                         </p:column>
                                     </p:dataTable>    
                                 </p:panel>
-
-                            </div>
-                        </div>
-
-
-
-
-                    </p:tab>
-                    <p:tab title="Crear Evaluacion">
-                        <p:accordionPanel>
-                            <p:tab title="Criterios de Evaluación">
-                                <p:panel>
-                                    <p:dataTable var="crie"  style="font-size: 7pt" value="#{evaluacionController.criteriosevaluacionParticulares}">                                        
-                                        <p:column headerText="Criterio Evaluacion" width="80%">
-                                            #{crie.criterio.descripcion}
+                                <p:panel class="md:w-5 sm:full">
+                                    <div class="relative pb-3 mb-2">
+                                        <h3 >Criterio de Evaluación</h3>
+                                        <p class="block mb-2 text-gray-600">Asignar: <span style="color: var(--first-color-s)">#{evaluacionController.dimencion.nombre}</span> para los criterios?</p>  
+                                        <div class="espaceador"></div>
+                                    </div>
+                                    <p:dataTable var="dimng" scrollable="true" style="font-size: 7pt" value="#{evaluacionController.dimencionesPeriodoNoGlobales}">                                        
+                                        <p:column headerText="DImension" >
+                                            #{dimng.nombre} #{dimng.porcentaje}%
                                         </p:column>
-                                        <p:column headerText="Dimension">                                            
-                                            #{crie.dimension.nombre}
+                                        <p:column headerText="Criterios" >
+                                            <ui:repeat var="cridim" value="#{evaluacionController.criteriosXDimension(dimng)}">
+                                                <div class="flex justify-content-between align-items-center">
+                                                    #{cridim.criterio.descripcion}
+                                                    <div class="btn-eliminar">
+                                                        <i class="ri-close-line"></i> 
+                                                        <h:commandButton value="x" class="btn" action="#{evaluacionController.quitarCriterio(cridim.criterio)}" />
+                                                    </div>
+                                                </div>
+                                            </ui:repeat>                                         
                                         </p:column>
                                     </p:dataTable>
                                 </p:panel>
-                            </p:tab>
-                            <p:tab title="Programar Evaluacion">
-                                <p:panelGrid columns="3" rendered="#{not empty evaluacionController.evaluacion}">
-                                    <p:calendar value="#{evaluacionController.evaluacion.fechaprogramada}" />
-                                    <h:commandButton value="almacenar" rendered="#{!evaluacionController.evaluacion.habilitarEvaluacion()}" action="#{evaluacionController.almacenarCriteriosEvaluacion()}" />
-                                    <h:commandButton value="publicar" rendered="#{evaluacionController.evaluacion.habilitarPublicacion()}" action="#{evaluacionController.publicarEvaluacion()}" />
-                                </p:panelGrid>
-                                <p:panel rendered="#{evaluacionController.evaluacion.habilitarEvaluacion()}">
-                                    <p:panelGrid columns="2">
-                                        <h:outputText value="Estado:"/><h:outputText value="#{evaluacionController.evaluacion.estado}"/>
-                                        <h:outputText value="Fecha Publicacion: "/><h:outputText value="#{evaluacionController.evaluacion.fechapublicacion}"/>
-                                    </p:panelGrid>
-                                    <p:panel rendered="#{!evaluacionController.habilitarReprogramacion}">
-                                        <h:commandButton value="reprogramar" action="#{evaluacionController.almacenarCriteriosEvaluacion()}" />
+                            </div>
+                        </p:tab>
+                        <p:tab title="Crear Evaluacion">
+                            <p:accordionPanel>
+                                <p:tab title="Criterios de Evaluación">
+                                    <p:panel>
+                                        <p:dataTable var="crie"  style="font-size: 7pt" value="#{evaluacionController.criteriosevaluacionParticulares}">                                        
+                                            <p:column headerText="Criterio Evaluacion" >
+                                                #{crie.criterio.descripcion}
+                                            </p:column>
+                                            <p:column headerText="Dimension">                                            
+                                                #{crie.dimension.nombre}
+                                            </p:column>
+                                        </p:dataTable>
                                     </p:panel>
-                                </p:panel>
-
-                            </p:tab>
-
-
-                        </p:accordionPanel>
-
-
-                    </p:tab>
-
-                </p:tabView>
-
-
-
-
-
-
-
-
-
-
-
+                                </p:tab>
+                                <p:tab title="Programar Evaluacion">
+                                    <p:panel rendered="#{not empty evaluacionController.evaluacion}">
+                                        <div class="relative pb-4 mb-2">
+                                            <p class="block  text-gray-600">Establece la Fecha en la que se realizará la sustentación</p>  
+                                            <div class="espaceador"></div>
+                                        </div>
+                                        <div class="ui-inputgroup">
+                                            <div class="ui-inputgroup-addon"><i class="pi pi-calendar"></i></div>
+                                            <p:calendar value="#{evaluacionController.evaluacion.fechaprogramada}" />
+                                        </div>
+                                        <div class="btns-container justify-content-end p-0">
+                                            <h:panelGroup layout="block" rendered="#{!evaluacionController.evaluacion.habilitarEvaluacion()}">
+                                                <div class="btn-normal" title="Almacenar">
+                                                    <i class="ri-save-line"></i>
+                                                    <h:commandButton class="btn" value="+"  action="#{evaluacionController.almacenarCriteriosEvaluacion()}"  />
+                                                </div>
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" rendered="#{evaluacionController.evaluacion.habilitarPublicacion()}">
+                                                <div class="btn-p" title="Publicar">
+                                                    <label>Publicar</label>
+                                                    <h:commandButton class="btn" value="+"  action="#{evaluacionController.publicarEvaluacion()}"  />
+                                                </div>
+                                            </h:panelGroup>
+                                        </div>
+                                    </p:panel>
+                                    <p:panel rendered="#{evaluacionController.evaluacion.habilitarEvaluacion()}">
+                                        <div class="info-proyecto">
+                                            <div class="info-tittle">Infórmacion de evaluación</div>
+                                            <div class="info-data">
+                                                <div class="info-data-item">
+                                                    <div>
+                                                        <i class="ri-send-plane-2-line"></i>
+                                                        Estado:
+                                                    </div>
+                                                    <p style="color: var(--first-color-p)">#{evaluacionController.evaluacion.estado}</p>
+                                                </div>
+                                                <div class="info-data-item">
+                                                    <div>
+                                                        <i class="ri-calendar-line"></i>
+                                                        Fecha Publicacion: :
+                                                    </div>
+                                                    <p>#{evaluacionController.evaluacion.fechapublicacion}</p>
+                                                </div>
+                                            </div>
+                                            <div class="espaceador"></div>
+                                        </div>
+                                        <p:panel rendered="#{!evaluacionController.habilitarReprogramacion}">
+                                            <div class="btns-container justify-content-end">
+                                                <div class="btn-p" title="reprogramar">
+                                                    <label>reprogramar</label>
+                                                    <h:commandButton class="btn" value="+" action="#{evaluacionController.almacenarCriteriosEvaluacion()}" />
+                                                </div>
+                                            </div>
+                                        </p:panel>
+                                    </p:panel>
+                                </p:tab>
+                            </p:accordionPanel>
+                        </p:tab>
+                    </p:tabView>
+                </div>
             </div>
         </section>     
-
     </h:body>
     <style>
 
-        .conteval {  display: grid;
-                     grid-template-columns: 300px 1fr;
-                     grid-template-rows: 1fr;
-                     grid-auto-columns: 1fr;
-                     gap: 0px 0px;
-                     grid-auto-flow: row;
-                     grid-template-areas:
-                         "cdime ccrit";
-        }
 
-        .cdime { grid-area: cdime; }
-
-        .ccrit { grid-area: ccrit; }
 
 
 

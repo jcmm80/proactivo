@@ -18,26 +18,23 @@
                     </div>
                     <p:tabView>
                         <p:tab title="Evaluar">
+                                
                             <div class="flex responsive-flex">
+                                <div style="margin-top:53px">
+                                    <p:dataTable   var="cri" value="#{evaluacionController.criteriosevaluacion}">
+                                        <p:column headerText="Criterio">                                             
+                                            <p style="height: 34px" class="flex align-items-center justify-content-center">#{cri.criterio.descripcion}</p>
+                                        </p:column>
+                                    </p:dataTable>
+                                </div>
+
                                 <p:repeat  var="integ" value="#{evaluacionController.proyectoAula.integrantes}">
                                     <div class="flex flex-column justify-content-center">
                                         <div class="flex gap-2 align-items-center justify-content-center">
-                                            <div class="w-3rem"><p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" class="img"  /></div>
+                                            <div class="w-3rem "><p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" class="img h-3rem"  /></div>
                                             <div class="cnomint"> <h:outputText  value="#{integ.matricula.estudiante.toString()}" /> </div>
                                         </div>
                                         <p:dataTable var="val" value="#{integ.valoracions}">
-                                            <p:column headerText="Criterio">  
-
-                                                <div class="btn-p">
-                                                    <i class="ri-eye-line"></i>
-                                                    <label>Criterio</label>
-                                                    <p:commandButton value="Show" class="btn" type="button" icon="pi pi-external-link" onclick="PF('#{val.criterio.criterio.descripcion}').show()"/>
-                                                </div>
-                                                <p:dialog widgetVar="#{val.criterio.criterio.descripcion}" modal="true"  hideEffect="fade" resizable="false" minHeight="40" width="700" showEffect="fade">
-                                                    <p class="m-0 w-full">#{val.criterio.criterio.descripcion}</p>
-                                                </p:dialog> 
-                                                
-                                            </p:column>
                                             <p:column  headerText="Nota">                                             
                                                 <p:inputNumber  title="#{val.criterio.criterio.descripcion}" value="#{val.valor}" size="6"  minValue="0" maxValue="5" />
                                             </p:column>

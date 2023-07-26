@@ -31,7 +31,7 @@
                                 <p:column headerText="Tipo de Identificacion">
                                     #{est.tipo_ide}
                                 </p:column>
-                               <p:column headerText="estado" sortBy="#{est.estado}">
+                                <p:column headerText="estado" sortBy="#{est.estado}">
                                     #{est.estado}
                                 </p:column>
                                 <p:column filterBy="#{est.identificacion}" sortBy="#{est.identificacion}" headerText="Identificacion">
@@ -132,40 +132,39 @@
                             </p:dataTable> 
                         </p:tab>
                         <p:tab id="tmat" title="Matricular">
-
-                            <div class="relative pb-2 mb-2">
-                                <h3 class="text-lg ">Selecciona el semestre</h3>
-                                <small class="block mb-4 text-gray-600">Un semestre académico es un período de tiempo en el que se llevan a cabo cursos y actividades académicas en una institución educativa superior.</small>  
-                                <div class="espaceador"></div>
-                                <div class="progress-bar">
-                                    <div class="progress-tittle">
-                                        <i class="ri-focus-3-line"></i>
-                                        Seleccionado :
-                                    </div>
-                                    <i class="ri-user-add-fill"></i>
-                                    <div>
-                                        #{matriculaController.matricula.estudiante.toString()}
-                                    </div>
-                                    <i class="ri-bookmark-fill"></i>
-                                    <div>
-                                        #{matriculaController.matricula.seccion.programa.nombre}
-                                    </div>
-                                    <i class="ri-calendar-fill"></i>
-                                    <div>
-                                        #{matriculaController.matricula.seccion.periodo.anio}-#{matriculaController.matricula.seccion.periodo.numero}
-                                    </div>
-                                    <i class="ri-calendar-fill"></i>
-                                    <div>
+                            <div class="progress-bar">
+                                <div class="progress-tittle">
+                                    <i class="ri-focus-3-line"></i>
+                                    Seleccionado :
+                                </div>
+                                <i class="ri-user-add-fill"></i>
+                                <div>
+                                    #{matriculaController.matricula.estudiante.toString()}
+                                </div>
+                                <i class="ri-bookmark-fill"></i>
+                                <div>
+                                    #{matriculaController.matricula.seccion.programa.nombre}
+                                </div>
+                                <i class="ri-calendar-fill"></i>
+                                <div>
+                                    #{matriculaController.matricula.seccion.periodo.anio}-#{matriculaController.matricula.seccion.periodo.numero}
+                                </div>
+                                <i class="ri-calendar-fill"></i>
+                                <div>
                                     Semestre #{matriculaController.semestre.denominacion}
-                                    </div>
-                                    <i class="ri-calendar-fill"></i>
-                                    <div>
-                                        Sección #{matriculaController.seccion.denominacion}
-                                    </div>
+                                </div>
+                                <i class="ri-calendar-fill"></i>
+                                <div>
+                                    Sección #{matriculaController.seccion.denominacion}
                                 </div>
                             </div>
-                            <p:dataView  multiViewState="true" gridIcon="pi pi-eye"   var="sem"  value="#{semestreController.semestres}">
-                                <p:dataViewGridItem  columns="4"  >
+
+                            <div class="relative pb-3 mb-2 mt-2">
+                                <h3 >Semestres</h3>
+                                <div class="espaceador"></div>
+                            </div>
+                            <div class="grid-seis">
+                                <p:repeat  var="sem"  value="#{semestreController.semestres}">
                                     <div class="relative img-negra bg-black" >
                                         <div class="w-full h-full">
                                             <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
@@ -175,17 +174,15 @@
                                         </div>
                                         <h:commandButton   class="btn" value="Abrir" action="#{matriculaController.seleccionarSemestre(sem)}" />
                                     </div>
-                                </p:dataViewGridItem>
-                               
-                            </p:dataView>
+                                </p:repeat>
+                            </div>
                             <div class="mt-4">
-                                <div class="relative pb-2 mb-2">
-                                    <h3 class="text-lg ">Secciones</h3>
-                                    <small class="block mb-4 text-gray-600">una sección o curso se refiere a un grupo específico de estudiantes que cursan unas asignaturas alrededor de un núcleo problémico.</small>  
+                                <div class="relative pb-3 mb-2">
+                                    <h3 >Secciones</h3>
                                     <div class="espaceador"></div>
                                 </div>   
-                                <p:dataView  multiViewState="true" gridIcon="pi pi-eye"  var="sec" value="#{matriculaController.secciones}">
-                                    <p:dataViewGridItem  columns="3"  >
+                                <div class="grid-cuatro">
+                                    <p:repeat  var="sec" value="#{matriculaController.secciones}">
                                         <div class="relative img-negra bg-black">
                                             <div class="w-full h-full">
                                                 <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
@@ -197,9 +194,8 @@
                                             </div>
                                             <h:commandButton   class="btn" value="Abrir" action="#{matriculaController.seleccionarSeccion(sec)}" />
                                         </div> 
-                                    </p:dataViewGridItem>
-                                    
-                                </p:dataView>
+                                    </p:repeat>
+                                </div>
                             </div>
                             <div class="btns-container justify-content-end">
                                 <div class="btn-c">
@@ -224,7 +220,7 @@
         </div>
     </section>
     <style>
-       
+
         .contestsec {  display: grid;
                        grid-template-columns: 1fr;
                        grid-template-rows: 0.4fr 1.6fr;

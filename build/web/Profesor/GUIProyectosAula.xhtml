@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -11,18 +12,20 @@
 
         <section class="contenido-contenedor">
             <div class="contenedor top">
-                <div class="relative pb-4 mb-2">
-                    <h3 class="text-2xl ">Ver Proyectos</h3>
-                    <div class="espaceador"></div>
-                </div>
                 <p:panel rendered="#{profesorController.mostPanelSemestres}">
                     <div class="card">
+                        <div class="relative pb-4 mb-2">
+                            <h3 class="text-2xl ">Ver Proyectos</h3>
+                            <div class="espaceador"></div>
+                        </div>
+
                         <div class="relative pb-4 mb-2">
                             <h4 >Mis Secciones</h4>
                             <div class="espaceador"></div>
                         </div>
-                        <p:dataView  multiViewState="true" gridIcon="pi pi-eye"  var="sem" value="#{profesorController.semestresLider}">
-                            <p:dataViewGridItem  columns="3"  >
+                        <div class="grid-cuatro">
+
+                            <ui:repeat var="sem" value="#{profesorController.semestresLider}">
                                 <div class="relative img-negra bg-black">
                                     <div class="w-full h-full">
                                         <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
@@ -34,143 +37,143 @@
                                     </div>
                                     <h:commandButton   class="btn" value="Abrir" action="#{profesorController.seleccionarLider(sem)}" />
                                 </div> 
-                            </p:dataViewGridItem>
 
-                        </p:dataView>
+                            </ui:repeat>
+                        </div>
+            </div>
+                </p:panel>
+            <p:panel rendered="#{!profesorController.mostPanelSemestres}">
+
+                <p:panel rendered="#{profesorController.mostPanelProyectoAula}">
+                    <div class="btn-normal inline-flex border-none mb-4 " title="Volver">
+                        <i class="ri-arrow-left-line text-xl"></i>
+                        <h:commandButton class="btn" value="volver" action="#{profesorController.volverSemestres()}" />
+                    </div>
+                    <div class="card">
+                        <div class="relative pb-4 mb-2">
+                            <h3>Proyectos Existentes</h3>
+                            <div class="espaceador"></div>
+                        </div>
+                        <p:dataTable scrollable="true" var="proa" value="#{profesorController.proyectosSemestre}">
+                            <p:column headerText="Codigo">
+                                #{proa.codigo}
+                            </p:column>
+                            <p:column headerText="Ingreso">
+                                #{proa.fecha_ingreso}
+                            </p:column>                             
+                            <p:column  headerText="Integrantes">
+                                <p:repeat var="integ" value="#{proa.integrantes}">
+                                    <div class="flex gap-1 align-items-center">
+                                        <div class="w-2 border-circle overflow-hidden flex">
+                                            <p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" class="img"  />
+                                        </div>
+                                        <small class="w-full text-justify">#{integ.matricula.estudiante.toString()}</small>
+                                    </div>
+                                </p:repeat>                                
+                            </p:column>
+                            <p:column headerText="Opciones">
+                                <div class="btn-normal" title="Ver proyecto">
+                                    <i class="uil uil-file-search-alt" ></i><h:commandButton class="icono" value="." action="#{profesorController.consultarProyecto(proa)}" />
+                                </div>
+                            </p:column>  
+                        </p:dataTable> 
                     </div>
                 </p:panel>
-                <p:panel rendered="#{!profesorController.mostPanelSemestres}">
+                <p:panel rendered="#{!profesorController.mostPanelProyectoAula}">
+                    <p:tabView>
+                        <p:tab title="Informacion Basica del Proyecto">
+                            <div class="title-description-inplace">
+                                <p:inplace label="#{proyectoAulaController.proyecto.titulo}" editor="true"  class="inplace-h3" event="dblclick">
+                                    <p:inputText   placeholder="Titulo del proyeco" value="#{proyectoAulaController.proyecto.titulo}"/>
+                                </p:inplace>
+                                <p:inplace  label="#{proyectoAulaController.proyecto.problematica}" editor="true" class="inplace-p" event="dblclick">
+                                    <p:inputTextarea placeholder="Problematica del proyecto" cols="100" value="#{proyectoAulaController.proyecto.problematica}" />
+                                </p:inplace>
+                            </div>
+                            <div class="info-proyecto">
+                                <div class="info-tittle">Infórmacion del proyecto</div>
+                                <div class="info-data">
+                                    <div class="info-data-item">
+                                        <div>
+                                            <i class="ri-qr-code-line"></i>
+                                            Código Proyecto:
+                                        </div>
+                                        <p>#{proyectoAulaController.proyecto.codigo}</p>
 
-                    <p:panel rendered="#{profesorController.mostPanelProyectoAula}">
-                        <div class="btn-normal inline-flex border-none" title="Volver">
-                            <i class="ri-arrow-left-line text-xl"></i>
-                            <h:commandButton class="btn" value="volver" action="#{profesorController.volverSemestres()}" />
-                        </div>
-                        <div class="card">
-                            <div class="relative pb-4 mb-2">
-                                <h3>Proyectos Existentes</h3>
+                                    </div>
+                                    <div class="info-data-item">
+                                        <div>
+                                            <i class="ri-medal-2-line"></i>
+                                            Semestre:
+                                        </div>
+                                        <p>#{proyectoAulaController.proyecto.seccion.semestre.denominacion}</p>
+                                    </div>
+                                </div>
                                 <div class="espaceador"></div>
                             </div>
-                            <p:dataTable scrollable="true" var="proa" value="#{profesorController.proyectosSemestre}">
-                                <p:column headerText="Codigo">
-                                    #{proa.codigo}
+
+                            <div class="info-proyecto">
+                                <div class="info-tittle">Fecha del proyecto</div>
+                                <div class="info-data">
+                                    <div class="info-data-item">
+                                        <div>
+                                            <i class="ri-calendar-todo-fill"></i>
+                                            Fecha Inicial:
+                                        </div>
+                                        #{proyectoAulaController.proyecto.fecha_inicio}
+                                    </div>
+                                    <div class="info-data-item">
+                                        <div>
+                                            <i class="ri-calendar-todo-fill"></i>
+                                            Fecha Final:
+                                        </div>
+                                        #{proyectoAulaController.proyecto.fecha_finalizacion}
+                                    </div>
+                                </div>
+                                <div class="espaceador"></div>
+                            </div>
+
+                        </p:tab>
+                        <p:tab title="Items del Proyecto">
+                            <p:dataTable  scrollable="true" var="items" value="#{proyectoAulaController.proyecto.itenes_Proyecto}">
+                                <p:column headerText="Tipo"> 
+                                    #{items.tipo.nombre}
                                 </p:column>
-                                <p:column headerText="Ingreso">
-                                    #{proa.fecha_ingreso}
-                                </p:column>                             
-                                <p:column  headerText="Integrantes">
-                                    <p:repeat var="integ" value="#{proa.integrantes}">
-                                        <div class="flex gap-1 align-items-center">
-                                            <div class="w-2 border-circle overflow-hidden flex">
-                                                <p:graphicImage value="/Imagenes/Perfiles/#{integ.matricula.estudiante.imagenPerfil()}" class="img"  />
-                                            </div>
-                                            <small class="w-full text-justify">#{integ.matricula.estudiante.toString()}</small>
-                                        </div>
-                                    </p:repeat>                                
+                                <p:column headerText="Contenido"> 
+                                    <div class="btn-p">
+                                        <i class="ri-eye-line"></i>
+                                        <label>Ver</label>
+                                        <p:commandButton value="Show" class="btn" type="button" icon="pi pi-external-link" onclick="PF('#{items.id}').show()"/>
+                                    </div>
+                                    <p:dialog header="#{items.tipo.nombre}" widgetVar="#{items.id}" minHeight="40" width="350" showEffect="fade">
+                                        <p class="m-0">#{items.contenido}</p>
+                                    </p:dialog>
                                 </p:column>
-                                <p:column headerText="Opciones">
-                                    <div class="btn-normal" title="Ver proyecto">
-                                        <i class="uil uil-file-search-alt" ></i><h:commandButton class="icono" value="." action="#{profesorController.consultarProyecto(proa)}" />
-                                    </div>
-                                </p:column>  
-                            </p:dataTable> 
-                        </div>
-                    </p:panel>
-                    <p:panel rendered="#{!profesorController.mostPanelProyectoAula}">
-                        <p:tabView>
-                            <p:tab title="Informacion Basica del Proyecto">
-                                <div class="title-description-inplace">
-                                    <p:inplace label="#{proyectoAulaController.proyecto.titulo}" editor="true"  class="inplace-h3" event="dblclick">
-                                        <p:inputText   placeholder="Titulo del proyeco" value="#{proyectoAulaController.proyecto.titulo}"/>
-                                    </p:inplace>
-                                    <p:inplace  label="#{proyectoAulaController.proyecto.problematica}" editor="true" class="inplace-p" event="dblclick">
-                                        <p:inputTextarea placeholder="Problematica del proyecto" cols="100" value="#{proyectoAulaController.proyecto.problematica}" />
-                                    </p:inplace>
+                                <p:column headerText="Fecha Creacion"> 
+                                    #{items.fecharegistro}
+                                </p:column>
+                                <p:column headerText="Ultima Modificacion"> 
+                                    #{items.fechamodificacion}
+                                </p:column>
+                                <p:column headerText="Autor/Editor"> 
+                                    #{items.editor.estudiante.toString()}
+                                </p:column>                                
+                            </p:dataTable>
+                            <div class="btns-container justify-content-end">
+                                <div class="btn-p" title="Aprobar">
+                                    <label>Aprobar</label>
+                                    <h:commandButton class="btn" value="+" action="#{profesorController.aprobarProyectoAula()}"  />
                                 </div>
-                                <div class="info-proyecto">
-                                    <div class="info-tittle">Infórmacion del proyecto</div>
-                                    <div class="info-data">
-                                        <div class="info-data-item">
-                                            <div>
-                                                <i class="ri-qr-code-line"></i>
-                                                Código Proyecto:
-                                            </div>
-                                            <p>#{proyectoAulaController.proyecto.codigo}</p>
-
-                                        </div>
-                                        <div class="info-data-item">
-                                            <div>
-                                                <i class="ri-medal-2-line"></i>
-                                                Semestre:
-                                            </div>
-                                            <p>#{proyectoAulaController.proyecto.seccion.semestre.denominacion}</p>
-                                        </div>
-                                    </div>
-                                    <div class="espaceador"></div>
+                                <div class="btn-s" title="Aplazar">
+                                    <label>Aplazar</label>
+                                    <h:commandButton class="btn" value="+" action="#{profesorController.aplazarProyectoAula()}"  />
                                 </div>
+                            </div>
 
-                                <div class="info-proyecto">
-                                    <div class="info-tittle">Fecha del proyecto</div>
-                                    <div class="info-data">
-                                        <div class="info-data-item">
-                                            <div>
-                                                <i class="ri-calendar-todo-fill"></i>
-                                                Fecha Inicial:
-                                            </div>
-                                            #{proyectoAulaController.proyecto.fecha_inicio}
-                                        </div>
-                                        <div class="info-data-item">
-                                            <div>
-                                                <i class="ri-calendar-todo-fill"></i>
-                                                Fecha Final:
-                                            </div>
-                                            #{proyectoAulaController.proyecto.fecha_finalizacion}
-                                        </div>
-                                    </div>
-                                    <div class="espaceador"></div>
-                                </div>
-
-                            </p:tab>
-                            <p:tab title="Items del Proyecto">
-                                <p:dataTable  scrollable="true" var="items" value="#{proyectoAulaController.proyecto.itenes_Proyecto}">
-                                    <p:column headerText="Tipo"> 
-                                        #{items.tipo.nombre}
-                                    </p:column>
-                                    <p:column headerText="Contenido"> 
-                                        <div class="btn-p">
-                                            <i class="ri-eye-line"></i>
-                                            <label>Ver</label>
-                                            <p:commandButton value="Show" class="btn" type="button" icon="pi pi-external-link" onclick="PF('#{items.id}').show()"/>
-                                        </div>
-                                        <p:dialog header="#{items.tipo.nombre}" widgetVar="#{items.id}" minHeight="40" width="350" showEffect="fade">
-                                            <p class="m-0">#{items.contenido}</p>
-                                        </p:dialog>
-                                    </p:column>
-                                    <p:column headerText="Fecha Creacion"> 
-                                        #{items.fecharegistro}
-                                    </p:column>
-                                    <p:column headerText="Ultima Modificacion"> 
-                                        #{items.fechamodificacion}
-                                    </p:column>
-                                    <p:column headerText="Autor/Editor"> 
-                                        #{items.editor.estudiante.toString()}
-                                    </p:column>                                
-                                </p:dataTable>
-                                <div class="btns-container justify-content-end">
-                                    <div class="btn-p" title="Aprobar">
-                                        <label>Aprobar</label>
-                                        <h:commandButton class="btn" value="+" action="#{profesorController.aprobarProyectoAula()}"  />
-                                    </div>
-                                    <div class="btn-s" title="Aplazar">
-                                        <label>Aplazar</label>
-                                        <h:commandButton class="btn" value="+" action="#{profesorController.aplazarProyectoAula()}"  />
-                                    </div>
-                                </div>
-
-                            </p:tab>
-                        </p:tabView> 
-                    </p:panel>
+                        </p:tab>
+                    </p:tabView> 
                 </p:panel>
+            </p:panel>
             </div>
         </section>
 

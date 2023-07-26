@@ -11,37 +11,34 @@
     <h:body>
         <section class="contenido-contenedor">
             <div class="contenedor top">
-                <div class="relative pb-4 mb-2">
-                    <h3 class="text-2xl ">Asignacion Academica</h3>
-                    <div class="espaceador"></div>
-                </div>
-                <p:tabView activeIndex="#{asignaturaController.activeIndexAA}">
-                    <p:tab  title="Programa">
-                        <div class="relative pb-2 mb-2">
-                            <h3 class="text-2xl ">Programas</h3>
-                            <small class="block mb-4 text-gray-600">Selecciona un programa académico</small>  
-                            <div class="espaceador"></div>
-                        </div>
-                        <p:dataTable class="tabla-reporte" var="prog" value="#{programaController.programas}">
-                            <p:column headerText="Codigo">
-                                #{prog.codigo}
-                            </p:column>
-                            <p:column headerText="Nombre">
-                                #{prog.nombreCompleto}
-                            </p:column>
-                            <p:column headerText="Seleccionar">
-                                <div class="btn-normal">
-                                    <i class="fa fa-hand-pointer"></i>
-                                    <h:commandButton class="btn" value="+" action="#{asignaturaController.agregarPrograma(prog,2)}" />
-                                </div>
-                            </p:column>
-                        </p:dataTable>
-                    </p:tab>
-                    <p:tab title="Semestre">
-                        <div class="relative pb-2 mb-2">
-                            <h3 class="text-lg ">Semestres</h3>
-                            <small class="block mb-4 text-gray-600">Selecciona un semestre.</small>  
-                            <div class="espaceador"></div>
+                <div class="card">
+
+                    <div class="relative pb-4 mb-2">
+                        <h3 class="text-2xl ">Asignacion Academica</h3>
+                        <div class="espaceador"></div>
+                    </div>
+                    <p:tabView activeIndex="#{asignaturaController.activeIndexAA}">
+                        <p:tab  title="Programa">
+                            <div class="relative pb-3 mb-2">
+                                <h3 >Mis programas</h3>
+                                <div class="espaceador"></div>
+                            </div>
+                            <p:dataTable scrollable="true" var="prog" value="#{programaController.programas}">
+                                <p:column headerText="Codigo">
+                                    #{prog.codigo}
+                                </p:column>
+                                <p:column headerText="Nombre">
+                                    #{prog.nombreCompleto}
+                                </p:column>
+                                <p:column headerText="Seleccionar">
+                                    <div class="btn-normal">
+                                        <i class="fa fa-hand-pointer"></i>
+                                        <h:commandButton class="btn" value="+" action="#{asignaturaController.agregarPrograma(prog,2)}" />
+                                    </div>
+                                </p:column>
+                            </p:dataTable>
+                        </p:tab>
+                        <p:tab title="Semestre">
                             <div class="progress-bar">
                                 <div class="progress-tittle">
                                     <i class="ri-focus-3-line"></i>
@@ -52,127 +49,128 @@
                                     #{asignaturaController.programa.nombre}
                                 </div>
                             </div>
-                        </div>
-
-                        <p:dataView  multiViewState="true" gridIcon="pi pi-eye" var="sem"  value="#{semestreController.semestres}">
-                            <p:dataViewGridItem  columns="4"  >
-                                <div class="relative img-negra bg-black" >
-                                    <div class="w-full h-full">
-                                        <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
-                                    </div>
-                                    <div class="contenido">
-                                        <p>Semestre <br></br>#{sem.denominacion}</p>
-                                    </div>
-                                    <h:commandButton   class="btn" value="Abrir" action="#{asignaturaController.seleccionarSemestre(sem,2)}" />
-                                </div>
-                            </p:dataViewGridItem>
-
-                        </p:dataView>
-                        <div class="mt-4">
-                            <div class="relative pb-2 mb-2">
-                                <h3 class="text-lg ">Secciones</h3>
-                                <small class="block mb-4 text-gray-600">Selecciona un seccion.</small>  
-                                <div class="espaceador"></div>
-                            </div>   
-                            <p:dataView  multiViewState="true" gridIcon="pi pi-eye" listIcon="pi pi-bars" var="sec" value="#{asignaturaController.secciones}">
-                                <p:dataViewGridItem  columns="3"  >
-                                    <div class="relative img-negra bg-black">
+                            <div class="relative pb-3 mb-2 mt-2">
+                                <h3>Semestres</h3>
+                            </div>
+                            <div class="grid-seis">
+                                <p:repeat var="sem"  value="#{semestreController.semestres}">
+                                    <div class="relative img-negra bg-black" >
                                         <div class="w-full h-full">
                                             <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
                                         </div>
-                                        <div class="contenido-grid">
-                                            <h2 class="text-white">#{sec.programa.nombre}</h2>
-                                            <span>Semestre #{sec.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
-                                            <h3 class="text-white">Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
+                                        <div class="contenido">
+                                            <p>Semestre <br></br>#{sem.denominacion}</p>
                                         </div>
-                                        <h:commandButton   class="btn" value="Abrir" action="#{asignaturaController.agregarSeccion(sec)}" />
-                                    </div> 
-                                </p:dataViewGridItem>
-                            </p:dataView>
-                        </div>
-                    </p:tab>                    
-                    <p:tab  title="Asignaturas">
-
-                        <p:panel rendered="#{!asignaturaController.mostPprofesores}">
-                            <p:repeat var="asig" value="#{asignaturaController.asignaturasAA}">
-                                <div class="p-4 flex justify-content-between card mb-1 responsive-flex hover-gray cursor-pointer relative">
-                                    <div>
-                                        <div class="mb-2">
-                                            <h4>Asignatura</h4>
-                                            <p>#{asig.nombre}</p>
-                                        </div>
-                                        <div class="mb-1 ">
-                                            <h4 class="flex align-items-center"><i class="fas fa-credit-card mr-1"></i>créditos : #{asig.creditos}</h4> 
-                                        </div>
-
-
-
+                                        <h:commandButton   class="btn" value="Abrir" action="#{asignaturaController.seleccionarSemestre(sem,2)}" />
                                     </div>
-                                    <div class="flex flex-column gap-2 ">
-                                        <div class="flex gap-2 align-items-center font-bold justify-content-end">
-                                            <i class="ri-user-2-fill"></i>Profesor : #{asig.profesor.toString()}
-                                        </div>
-                                        <div class="flex gap-2 align-items-center  justify-content-end">
-                                            Sección : #{asig.seccion.semestre.denominacion} - #{asig.seccion.denominacion}
-                                        </div>
-                                    </div>
-                                    <h:commandButton value="+" class="btn" action="#{asignaturaController.seleccionarAsignatura(asig)}" />
-                                </div>
-                            </p:repeat>
-                        </p:panel>                        
-                        <p:panel rendered="#{asignaturaController.mostPprofesores}">
-                            <div class="progress-bar">
-                                <div class="btn-normal mr-2">
-                                    <i class="ri-arrow-left-line"></i>
-                                    <h:commandButton class="btn" action="#{asignaturaController.volverPanelAsignaturas()}" />  
-                                </div>
-
-                                <div class="progress-tittle">
-                                    <i class="ri-focus-3-line"></i>
-                                    Seleccionado :
-                                </div>
-                                <i class="ri-bookmark-fill"></i>
-                                <div>
-                                    #{asignaturaController.asignatura.nombre}
-                                </div>
-                                >
-                                <i class="ri-user-2-fill"></i>
-                                <div>
-                                    #{asignaturaController.asignatura.profesor.toString()}
-                                </div>
+                                </p:repeat>
                             </div>
-                            <div class="mt-2">
-                                <p>Pulsa en el ojo y selecciona un profesor</p>
-                            </div>
-                            <p:dataView  multiViewState="true" gridIcon="pi pi-eye" listIcon="pi pi-bars" var="prof" value="#{profesorController.profesores}">
-                                <p:dataViewGridItem  columns="3"  >
-                                    <div class="cdppa">
-                                        <h:commandButton class="cdpbtn" value="seleccionar" action="#{asignaturaController.seleccionarProfesor(prof)}" />
-                                        <div class="id-carta"><span>#{prof.identificacion}</span></div>
-                                        <div class="img-nombre">
-                                            <div ><p:graphicImage value="/Imagenes/Perfiles/#{prof.imagenPerfil()}" style="width: 80px;height: 80px; margin-left: 5px; border-radius: 50px;"  /> </div>
-                                            <div style="margin-left: 10px;">
-                                                <h:outputText value="#{prof.primerNombre} #{prof.segundoNombre}" /><br></br>
-                                                <h:outputText value="#{prof.primerApellido} #{prof.segundoApellido}" />
+                            <div class="mt-4">
+                                <div class="relative pb-3 mb-2">
+                                    <h3>Secciones</h3>
+                                    <div class="espaceador"></div>
+                                </div>   
+                                <div class="grid-cuatro">
+                                    <p:repeat  var="sec" value="#{asignaturaController.secciones}">
+                                        <p:dataViewGridItem  columns="3"  >
+                                            <div class="relative img-negra bg-black">
+                                                <div class="w-full h-full">
+                                                    <h:graphicImage class="img" value="/resources/img/imgsemestres.jpg"/> 
+                                                </div>
+                                                <div class="contenido-grid">
+                                                    <h2 class="text-white">#{sec.programa.nombre}</h2>
+                                                    <span>Semestre #{sec.semestre.denominacion} -  Seccion #{sec.denominacion}</span>
+                                                    <h3 class="text-white">Año #{sec.periodo.anio} - #{sec.periodo.numero}</h3>
+                                                </div>
+                                                <h:commandButton   class="btn" value="Abrir" action="#{asignaturaController.agregarSeccion(sec)}" />
                                             </div> 
-                                        </div>
-                                        <div class="contrato-carta"><span>#{prof.tipocontrato}</span></div>
-                                    </div> 
-                                </p:dataViewGridItem>
-
-                            </p:dataView>
-                            <div class="btns-container justify-content-end">
-                                <div class="btn-c">
-                                    <label>Asignar</label>
-                                    <h:commandButton class="btn" action="#{asignaturaController.asignarProfesor()}" value="Asignar" rendered="#{not empty asignaturaController.asignatura.profesor}" />
+                                        </p:dataViewGridItem>
+                                    </p:repeat>
                                 </div>
                             </div>
-                        </p:panel>
-                    </p:tab>
-                    <p:tab  title="Malla Curricular">
-                        <ui:include src="GUIMallaCurricular.xhtml" />
-                    </p:tab>
-                </p:tabView>
+                        </p:tab>                    
+                        <p:tab  title="Asignaturas">
+
+                            <p:panel rendered="#{!asignaturaController.mostPprofesores}">
+                                <p:repeat var="asig" value="#{asignaturaController.asignaturasAA}">
+                                    <div class="p-4 flex justify-content-between card mb-1 responsive-flex hover-gray cursor-pointer relative">
+                                        <div>
+                                            <div class="mb-2">
+                                                <h4>Asignatura</h4>
+                                                <p>#{asig.nombre}</p>
+                                            </div>
+                                            <div class="mb-1 ">
+                                                <h4 class="flex align-items-center"><i class="fas fa-credit-card mr-1"></i>créditos : #{asig.creditos}</h4> 
+                                            </div>
+
+
+
+                                        </div>
+                                        <div class="flex flex-column gap-2 ">
+                                            <div class="flex gap-2 align-items-center font-bold justify-content-end">
+                                                <i class="ri-user-2-fill"></i>Profesor : #{asig.profesor.toString()}
+                                            </div>
+                                            <div class="flex gap-2 align-items-center  justify-content-end">
+                                                Sección : #{asig.seccion.semestre.denominacion} - #{asig.seccion.denominacion}
+                                            </div>
+                                        </div>
+                                        <h:commandButton value="+" class="btn" action="#{asignaturaController.seleccionarAsignatura(asig)}" />
+                                    </div>
+                                </p:repeat>
+                            </p:panel>                        
+                            <p:panel rendered="#{asignaturaController.mostPprofesores}">
+                                <div class="progress-bar">
+                                    <div class="btn-normal mr-2">
+                                        <i class="ri-arrow-left-line"></i>
+                                        <h:commandButton class="btn" action="#{asignaturaController.volverPanelAsignaturas()}" />  
+                                    </div>
+
+                                    <div class="progress-tittle">
+                                        <i class="ri-focus-3-line"></i>
+                                        Seleccionado :
+                                    </div>
+                                    <i class="ri-bookmark-fill"></i>
+                                    <div>
+                                        #{asignaturaController.asignatura.nombre}
+                                    </div>
+                                    >
+                                    <i class="ri-user-2-fill"></i>
+                                    <div>
+                                        #{asignaturaController.asignatura.profesor.toString()}
+                                    </div>
+                                </div>
+                                <div class="mt-2 mb-2">
+                                    <p>Selecciona un profesor</p>
+                                </div>
+                                <div class="grid-cuatro">
+                                    <p:repeat var="prof" value="#{profesorController.profesores}">
+                                        <div class="cdppa">
+                                            <h:commandButton class="cdpbtn" value="seleccionar" action="#{asignaturaController.seleccionarProfesor(prof)}" />
+                                            <div class="id-carta"><span>#{prof.identificacion}</span></div>
+                                            <div class="img-nombre">
+                                                <div ><p:graphicImage value="/Imagenes/Perfiles/#{prof.imagenPerfil()}" style="width: 80px;height: 80px; margin-left: 5px; border-radius: 50px;"  /> </div>
+                                                <div style="margin-left: 10px;">
+                                                    <h:outputText value="#{prof.primerNombre} #{prof.segundoNombre}" /><br></br>
+                                                    <h:outputText value="#{prof.primerApellido} #{prof.segundoApellido}" />
+                                                </div> 
+                                            </div>
+                                            <div class="contrato-carta"><span>#{prof.tipocontrato}</span></div>
+                                        </div> 
+                                    </p:repeat>
+                                </div>
+                                <div class="btns-container justify-content-end">
+                                    <div class="btn-c">
+                                        <label>Asignar</label>
+                                        <h:commandButton class="btn" action="#{asignaturaController.asignarProfesor()}" value="Asignar" rendered="#{not empty asignaturaController.asignatura.profesor}" />
+                                    </div>
+                                </div>
+                            </p:panel>
+                        </p:tab>
+                        <p:tab  title="Malla Curricular">
+                            <ui:include src="GUIMallaCurricular.xhtml" />
+                        </p:tab>
+                    </p:tabView>
+                </div>
             </div>
         </section>
     </h:body>

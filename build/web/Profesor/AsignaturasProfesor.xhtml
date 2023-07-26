@@ -17,8 +17,9 @@
                         <div class="espaceador"></div>
                     </div>
                     <p:panel rendered="#{!profesorController.mostPAsignatura}">
-                        <p:dataView  multiViewState="true" listIcon="pi pi-eye" var="asig" value="#{asignaturaController.asignaturas}">
-                            <p:dataViewListItem >
+                        <div class="grid-dos">
+
+                            <ui:repeat var="asig" value="#{asignaturaController.asignaturas}">
                                 <div class="p-4 flex justify-content-between card mb-1 responsive-flex cdppa">
                                     <h:commandButton class="btn" value="seleccionar"  action="#{profesorController.seleccionarAsignatura(asig)}" />
                                     <div>
@@ -40,8 +41,8 @@
                                         <h4>#{asig.seccion.semestre.denominacion} - #{asig.seccion.denominacion}</h4>
                                     </div>
                                 </div>
-                            </p:dataViewListItem>
-                        </p:dataView>
+                            </ui:repeat>
+                        </div>
                     </p:panel>
 
                     <p:panel rendered="#{profesorController.mostPAsignatura}">
