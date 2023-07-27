@@ -40,6 +40,9 @@ public class UnidadCompetencia implements Serializable {
             if (this.asignatura.getId() < 0) {
                 FacesUtil.addErrorMessage("la unidad de competencia debe estar asociada a una asignatura");
                 valido = false;
+            }if(this.descripcion.toString().equals("")){
+                 FacesUtil.addErrorMessage("la unidad de competencia debe tener una descripción");
+                valido = false;
             }
         } catch (java.lang.NullPointerException npe) {
             valido = false;

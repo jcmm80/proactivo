@@ -198,6 +198,19 @@ public class ProfesorController implements Serializable {
         tutcon.armarAsistentes();
         paginaTutoria = "Tutorias/RealizarTutoria.xhtml";
     }
+    
+     public void parmarTutoria(Tutoria t) {
+        mpanelPTutoria = true;
+        tutcon.setTutoria(t);
+        tutcon.obtenerAsistenciaTutoria();
+        paginaTutoria = "Tutorias/RealizarTutoria.xhtml";
+    }
+    
+    
+    public void pconsultarTutoria(Tutoria t){
+        tutcon.seleccionarTutoria(t);
+        parmarTutoria(t);
+    }
 
     public void pcrearTutoria(Proyecto_Aula proyecto) {
         mpanelPTutoria = true;
@@ -512,6 +525,7 @@ public class ProfesorController implements Serializable {
 
     public void g_tutoria() {
         mpanelTutorias = false;
+        asigcon.obtenerAsignaturasXProfesor(periodo, profesor);
         paginaActualP = "/Profesor/GestorTutorias.xhtml";
     }
 
@@ -1158,6 +1172,5 @@ public class ProfesorController implements Serializable {
     public void setLideresXseccionPrograma(List<LiderPA> lideresXseccionPrograma) {
         this.lideresXseccionPrograma = lideresXseccionPrograma;
     }
-
 
 }

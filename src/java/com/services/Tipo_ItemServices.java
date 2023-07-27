@@ -13,5 +13,5 @@ import java.io.Serializable;
  * @author Jcmm
  */
 public class Tipo_ItemServices extends ImplDao<Tipo_Item, Long> implements ITipo_Item,Serializable{
-   
+  
 }

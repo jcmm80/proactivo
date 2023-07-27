@@ -8,6 +8,7 @@ package com.controller;
 import com.entity.Asignatura;
 import com.entity.Competencia;
 import com.entity.Criterio;
+import com.entity.Entregable;
 import com.entity.Profesor;
 import com.entity.TipoCompetencia;
 import com.entity.Tipo_Entregable;
@@ -15,12 +16,23 @@ import com.entity.UnidadCompetencia;
 import com.services.CompetenciaServices;
 import com.services.TipoCompetenciaServices;
 import com.services.UnidadCompetenciaServices;
+import com.utilidades.ImageUtils;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import org.primefaces.model.file.UploadedFile;
 
 /**
  *
@@ -33,7 +45,6 @@ public class CompetenciasController implements Serializable {
     private UnidadCompetencia unidad = new UnidadCompetencia();
     private Asignatura asignatura = new Asignatura();
     private Competencia competencia = new Competencia();
-  
 
     private List<UnidadCompetencia> unidadesAsignatura = new LinkedList();
     private List<UnidadCompetencia> unidades = new LinkedList();
@@ -52,11 +63,111 @@ public class CompetenciasController implements Serializable {
     private boolean mostPcompetencias;
     private boolean mostPcompetencia;
     private int activeIndex = 0;
+    private UploadedFile adocumentoAsignatura;
 
     /**
      * Creates a new instance of CompetenciasController
      */
     public CompetenciasController() {
+    }
+
+    
+    
+    public void descargar(Asignatura asignatura) throws IOException {
+//      File ficheroXLS = new File(strPathXLS);
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        String extenciona="application/pdf";
+        ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+        String path = servletContext.getRealPath("/fuente.png").replace("fuente.png", "Soportes\\Curriculos\\");
+        File origen = new File(path + asignatura.getNombre() + "." + conversor(extenciona));
+        String nombre = origen.getName();
+        File destino = new File(path + asignatura.getId() + "." + conversor(extenciona));
+        FileInputStream fis = new FileInputStream(destino);
+        byte[] bytes = new byte[1000];
+        int read = 0;
+        if (!ctx.getResponseComplete()) {
+            String fileName = origen.getName();
+            String contentType = extenciona;
+            //String contentType = "application/pdf";
+            HttpServletResponse response
+                    = (HttpServletResponse) ctx.getExternalContext().getResponse();
+            response.setContentType(contentType);
+            response.setHeader("Content-Disposition",
+                    "attachment;filename=\"" + fileName + "\"");
+            ServletOutputStream out = response.getOutputStream();
+            while ((read = fis.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+            out.flush();
+            out.close();
+            System.out.println("\nDescargado\n");
+            ctx.responseComplete();
+        }
+    }
+    
+    
+    public void subirDocumentoAsignatura() {
+        try {
+            ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+            String path = servletContext.getRealPath("/fuente.png").replace("fuente.png", "Soportes\\Curriculos\\");
+            String extencion = adocumentoAsignatura.getContentType();
+            ImageUtils.copyFile(asignatura.getId() + "." + conversor(extencion), adocumentoAsignatura.getInputStream(), path);
+        } catch (IOException ex) {
+            Logger.getLogger(CompetenciasController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+  
+
+    public String conversor(String ext) {
+        String extencion = "";
+        switch (ext.toLowerCase()) {
+            case "text/plain":
+                extencion = "txt";
+                break;
+            case "text/rtf":
+                extencion = "rtf";
+                break;
+            case "application/pdf":
+                extencion = "pdf";
+                break;
+            case "application/msword":
+                extencion = "doc";
+                break;
+            case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+                extencion = "docx";
+                break;
+            case "application/vnd.ms-excel":
+                extencion = "xls";
+                break;
+            case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+                extencion = "xlsx";
+                break;
+            case "application/vnd.ms-powerpoint":
+                extencion = "ppt";
+                break;
+            case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
+                extencion = "pptx";
+                break;
+            case "application/zip":
+                extencion = "zip";
+                break;
+            case "application/octet-stream":
+                extencion = "rar";
+                break;
+            case "application/x-7z-compressed":
+                extencion = "7z";
+                break;
+            case "application/vnd.oasis.opendocument.text":
+                extencion = "odt";
+                break;
+            case "application/vnd.oasis.opendocument.presentation":
+                extencion = "odp";
+                break;
+            case "application/vnd.oasis.opendocument.spreadsheet":
+                extencion = "ods";
+                break;
+        }
+        return extencion;
     }
 
     public void registrarUnidad() {
@@ -87,25 +198,26 @@ public class CompetenciasController implements Serializable {
         unidadesAsignatura = new LinkedList();
         for (UnidadCompetencia uc : unidades) {
             if (uc.getAsignatura().getId().equals(asignatura.getId())) {
-                if(!esglobal(uc)){
-                unidadesAsignatura.add(uc);
+                if (!esglobal(uc)) {
+                    unidadesAsignatura.add(uc);
                 }
             }
         }
     }
 
-    public boolean esglobal(UnidadCompetencia uc){
-        boolean global=false;
-        for(Criterio c:criteriosGlobales){
-            if(c.getCompetencia().getUnidad().getId().equals(uc.getId())){
-                global=true;break;
-                
+    public boolean esglobal(UnidadCompetencia uc) {
+        boolean global = false;
+        for (Criterio c : criteriosGlobales) {
+            if (c.getCompetencia().getUnidad().getId().equals(uc.getId())) {
+                global = true;
+                break;
+
             }
 //            System.out.println(uc.getId()+"  "+c.getCompetencia().getUnidad().getId()+" Es Global: "+global);
         }
         return global;
     }
-    
+
     public void consultarCompetenciasUnidad() {
         competenciasXUnidad = new LinkedList();
         for (Competencia c : competencias) {
@@ -132,9 +244,9 @@ public class CompetenciasController implements Serializable {
         unidades = uncoser.obtenerUnidadCompetenciaXAsignatura(a);
     }
 
-  public void consultarCriteriosGlobalesProfesor(Profesor p){
-      criteriosGlobales=cricon.obtenerCriteriosGlobalesProfesor(p);
-  }
+    public void consultarCriteriosGlobalesProfesor(Profesor p) {
+        criteriosGlobales = cricon.obtenerCriteriosGlobalesProfesor(p);
+    }
 
     public void eliminarUnidad(UnidadCompetencia uni) {
         uncoser.eliminar(uni);
@@ -166,9 +278,6 @@ public class CompetenciasController implements Serializable {
     public void volverUnidadesCompetencias() {
         competencia = new Competencia();
         cricon.setCriterios(null);
-        mostPcompetencias = false;
-    }
-    public void volverAsignaturas() {
         mostPcompetencias = false;
     }
 
@@ -209,7 +318,6 @@ public class CompetenciasController implements Serializable {
     public void consultarCompetenciasAsignatura(Asignatura a) {
         this.asignatura = a;
         this.consultarUnidadesCompetencia(a);
-        mostPcompetencias = true;
     }
 
     /**
@@ -392,6 +500,20 @@ public class CompetenciasController implements Serializable {
      */
     public void setCricon(CriteriosController cricon) {
         this.cricon = cricon;
+    }
+
+    /**
+     * @return the adocumentoAsignatura
+     */
+    public UploadedFile getAdocumentoAsignatura() {
+        return adocumentoAsignatura;
+    }
+
+    /**
+     * @param adocumentoAsignatura the adocumentoAsignatura to set
+     */
+    public void setAdocumentoAsignatura(UploadedFile adocumentoAsignatura) {
+        this.adocumentoAsignatura = adocumentoAsignatura;
     }
 
 }

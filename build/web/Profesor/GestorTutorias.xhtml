@@ -165,7 +165,7 @@
                                             <p:column headerText="">
                                                 <div class="btn-normal" title="Consultar">
                                                     <i class="ri-search-line"></i>
-                                                    <h:commandButton disabled="#{tuto.fueRealizada()}" class="btn" value="+" />
+                                                    <h:commandButton disabled="#{tuto.fueRealizada()}" action="#{profesorController.pconsultarTutoria(tutr)}" class="btn" value="+" />
                                                 </div>
                                             </p:column>         
                                         </p:dataTable>  

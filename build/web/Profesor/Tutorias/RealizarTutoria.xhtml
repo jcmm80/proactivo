@@ -52,9 +52,36 @@
                 </div>
             </div>
         </div>
+        
+        <div class="contImgTutoria">
+            <div class="cbimag">
+                <p:fileUpload  value="#{tutoriasController.itutoria}"  mode="simple" skinSimple="true"/>                 
+            </div>
+            <div class="cimag">
+                <p:graphicImage value="/Imagenes/Tutorias/#{tutoriasController.tutoria.imagenTutoria()}" style="max-width:100%;height: auto;"  />
+                    
+            </div>
+        </div>
 
 
         <style>
+
+            .contImgTutoria {  display: grid;
+                          grid-template-columns: 1fr 1fr;
+                          grid-template-rows: 0.2fr 1.8fr;
+                          grid-auto-columns: 1fr;
+                          gap: 0px 0px;
+                          grid-auto-flow: row;
+                          align-content: center;
+                          grid-template-areas:
+                              "cbimag cbimag"
+                              "cimag cimag";
+            }
+
+            .cbimag { grid-area: cbimag; }
+
+            .cimag { grid-area: cimag; }
+
 
         </style>
 

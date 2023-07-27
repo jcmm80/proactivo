@@ -180,12 +180,10 @@ public class MatriculaController implements Serializable {
 
     public void seleccionarSemestre(Semestre s) {
         setSemestre(s);
-        seccion.setSemestre(s);
         secciones = secser.obtenerSeccionesXSemestre_Periodo_Programa(getSemestre(), getPrograma(), getPeriodo());
     }
 
     public void seleccionarSeccion(Seccion s) {
-        setSeccion(s);
         matricula.setSeccion(s);
     }
 
@@ -205,15 +203,10 @@ public class MatriculaController implements Serializable {
         matricula.setEstado("Academica");
         matricula.setEstadoPA("Libre");
         matricula.setFecha(new Date());
-//        System.out.println(""+matricula.getId()+" "+matricula.getEstado());
+
         try {
-//            System.out.println(matricula.getSeccion().getPrograma().getNombre()+" "+matricula.getId()+" "+matricula.getEstado()+" "+matricula.getEstudiante().toString());
-//            if (mat.getId() > 0) {
-//                FacesUtil.addErrorMessage("El estudiante ya esta matriculado en la seccion: " + matricula.getSeccion().getDenominacion());
-//            } else {
-//                System.out.println(""+matricula.getId()+" "+matricula.getEstado()+" "+matricula.getEstudiante().toString());
+
             if (matricula.validarMatricula()) {
-//                    matricula.setId(null);
                 matser.modificar(matricula);
                 consultarEstudiantesMatriculadosXPeriodo(periodo);
                 matricula.getEstudiante().generarCodigo(matricula);
@@ -222,10 +215,10 @@ public class MatriculaController implements Serializable {
                 activeIndex = 0;
                 FacesUtil.addErrorMessage("Se creo una matricula para la seccion: " + matricula.getSeccion().getDenominacion());
             }
-//            }
+
 
         } catch (java.lang.NullPointerException npe) {
-//            FacesUtil.addErrorMessage("Falta informacion para registro de matricula");
+
         }
     }
 
@@ -284,8 +277,7 @@ public class MatriculaController implements Serializable {
     public void setSemestre(Semestre semestre) {
         this.semestre = semestre;
     }
-    
-   
+
     /**
      * @return the periodo
      */

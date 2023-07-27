@@ -5,8 +5,10 @@
 package com.services;
 
 import com.dao.ImplDao;
+import static com.dao.ImplDao.getEntityManagger;
 import com.entity.Asistente;
 import com.entity.Integrante;
+import com.entity.Tutoria;
 import com.implDao.IAsistente;
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -30,6 +32,23 @@ public class AsistenteServices extends ImplDao<Asistente, Long> implements IAsis
              asistencias=qu.getResultList();
                          em.getTransaction().commit();
             System.out.println("obtenerAsistenciasXProyecto");            
+         }catch(Exception ex){
+             ex.printStackTrace();
+         } 
+         return asistencias;
+    }
+     public List<Asistente> obtenerAsistenciasXTutoria(Tutoria t){
+         List<Asistente> asistencias=new LinkedList();
+         try {             
+             EntityManager em =getEntityManagger();
+             em.getTransaction().begin();      
+             String q="select asi from Asistente asi where asi.tutoria.id = ?1";        
+             System.out.println(" Consulta: "+q);
+             Query qu=em.createQuery(q)
+                     .setParameter(1, t.getId());
+             asistencias=qu.getResultList();
+                         em.getTransaction().commit();
+            System.out.println("obtenerAsistenciasXTutoria");            
          }catch(Exception ex){
              ex.printStackTrace();
          } 

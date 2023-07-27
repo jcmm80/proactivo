@@ -6,14 +6,17 @@
 package com.entity;
 
 import com.controller.FacesUtil;
+import java.io.File;
 import java.io.Serializable;
 import java.util.List;
+import javax.faces.context.FacesContext;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.servlet.ServletContext;
 
 /**
  *
@@ -68,6 +71,21 @@ public class Asignatura implements Serializable {
         return valido;
     }
 
+    
+    public boolean tieneDocumento(){
+        boolean existe=false;
+        ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+        String path = servletContext.getRealPath("/fuente.png").replace("fuente.png", "Soportes\\Curriculos\\");
+        //this.setId(Long.getLong("5"));
+        String archivo=path+this.getId()+".pdf";
+        File f=new File(archivo);
+        if(f.length()>0){
+            existe=true;
+        }
+        return existe;
+    }
+    
+    
     public Long getId() {
         return id;
     }

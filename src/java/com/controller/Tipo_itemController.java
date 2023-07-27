@@ -21,7 +21,7 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean
 @SessionScoped
-public class Tipo_itemController implements Serializable{
+public class Tipo_itemController implements Serializable {
 
     private Tipo_Item tipo_item = new Tipo_Item();
 
@@ -34,35 +34,51 @@ public class Tipo_itemController implements Serializable{
      */
     public Tipo_itemController() {
     }
-   
 
     public void registrarTipo_Item() {
-        if(getTipo_item().validar()){
-            setTipo_item(getTipiser().modificar(getTipo_item()));
-            setTipo_item(new Tipo_Item());
-            consultarTipos_Items();
-    
+        if (getTipo_item().validar()) {
+            try{
+            if (getTipo_item().getId() > 0) {
+                setTipo_item(getTipiser().modificar(getTipo_item()));
+                setTipo_item(new Tipo_Item());
+                consultarTipos_Items();
+            } 
+            }catch(java.lang.NullPointerException npe){
+                 if (!existeNombre(getTipo_item().getNombre())) {
+                    setTipo_item(getTipiser().modificar(getTipo_item()));
+                    setTipo_item(new Tipo_Item());
+                    consultarTipos_Items();
+                } else {
+                    FacesUtil.addErrorMessage("Ya existe un Tipo de Item con el nombre suministrado");
+                }
+            }
         }
     }
-    
-//    public boolean existeNombre(){
-//        
-//    }
-    
-    public void eliminartipo_Item(Tipo_Item te){
-        
-        getTipiser().eliminar(te);
-          consultarTipos_Items();   
-        
+
+    public boolean existeNombre(String nom) {
+        boolean existe = false;
+        for (Tipo_Item ti : tipos_Items) {
+            if (ti.getNombre().trim().toLowerCase().equals(nom.trim().toLowerCase())) {
+                existe = true;
+            }
+        }
+        return existe;
     }
-        
-    public void seleccionarItem(Tipo_Item ti){
+
+    public void eliminartipo_Item(Tipo_Item te) {
+
+        getTipiser().eliminar(te);
+        consultarTipos_Items();
+
+    }
+
+    public void seleccionarItem(Tipo_Item ti) {
         setTipo_item(ti);
     }
-    
-       public void consultarTipos_Items(){
-           System.out.println("consulte los tipos de item");
-           setTipos_Items(getTipiser().consultarTodo(Tipo_Item.class));
+
+    public void consultarTipos_Items() {
+        System.out.println("consulte los tipos de item");
+        setTipos_Items(getTipiser().consultarTodo(Tipo_Item.class));
     }
 
     /**
@@ -91,7 +107,7 @@ public class Tipo_itemController implements Serializable{
      */
     public void setTipiser(Tipo_ItemServices tipiser) {
         this.tipiser = tipiser;
-    }     
+    }
 
     /**
      * @return the tipos_Items
@@ -107,7 +123,4 @@ public class Tipo_itemController implements Serializable{
         this.tipos_Items = tipos_Items;
     }
 
-  
- 
-        
-    }
+}

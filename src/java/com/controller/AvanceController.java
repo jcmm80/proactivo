@@ -54,7 +54,7 @@ public class AvanceController implements Serializable {
 
     private List<Entregable> entregables = new LinkedList();
     private List<Entregable> entregablesFase = new LinkedList();
-    
+
     
     private List<Avance> avances = new LinkedList();
     private List<Avance> avancesproyecto = new LinkedList();
@@ -80,34 +80,35 @@ public class AvanceController implements Serializable {
         setMostPAvance(true);
         mostPEntregable = false;
         if (avance.getId() > 0) {
-           verEntregables(avance);
+            verEntregables(avance);
         } else {
             avance = new Avance();
             avance.setProyecto(proyecto);
             avance.setFase(f);
-            entregablesFase=new LinkedList();
+            entregablesFase = new LinkedList();
             entregable.setTipo(null);
             entregable.setAsignatura(null);
         }
     }
 
-    public void revisarEntregable(Entregable ent){
+    public void revisarEntregable(Entregable ent) {
         setMostPrevision(true);
-        entregable=ent;
+        entregable = ent;
     }
-     public void regresardeRevisar(){
+
+    public void regresardeRevisar() {
         setMostPrevision(false);
-        entregable=new Entregable();
+        entregable = new Entregable();
     }
-    
-     public void valorarEntregable(){
-         if(!entregable.getObservaciones().trim().equals("") && entregable.getPorcentajeEjecucion()>0){
-             entregable.setEstado("Revisado");
-             entregable=entrser.modificar(entregable);
-             regresardeRevisar();
-         }
-     }
-     
+
+    public void valorarEntregable() {
+        if (!entregable.getObservaciones().trim().equals("") && entregable.getPorcentajeEjecucion() > 0) {
+            entregable.setEstado("Revisado");
+            entregable = entrser.modificar(entregable);
+            regresardeRevisar();
+        }
+    }
+
      
      
     public void consultarAvances(Proyecto_Aula pa) {
@@ -115,22 +116,23 @@ public class AvanceController implements Serializable {
         avances = avanser.obtenerAvancesXProyecto(pa);
         entregables = entrser.obtenerEntregablesXProyecto(pa);
     }
-    
-    public void consultarAvancesXSeccion(Seccion s){
-        avances=avanser.obtenerAvancesXSeccion(s);
+
+    public void consultarAvancesXSeccion(Seccion s) {
+        avances = avanser.obtenerAvancesXSeccion(s);
     }
 
-    public Avance avanceFase(Fase f){
-        Avance ava=new Avance();
+    public Avance avanceFase(Fase f) {
+        Avance ava = new Avance();
         for (Avance av : avancesproyecto) {
-             if (av.getFase().getId().equals(f.getId())) {
-                 ava=av;break;
-             }
-         }
+            if (av.getFase().getId().equals(f.getId())) {
+                ava = av;
+                break;
+            }
+        }
         return ava;
     }
-    
-    public void obtenerAvancesProyecto(Proyecto_Aula pa){
+
+    public void obtenerAvancesProyecto(Proyecto_Aula pa) {
         avancesproyecto = new LinkedList();
         for (Avance av : avances) {
             if (av.getProyecto().getId().equals(pa.getId())) {
@@ -138,12 +140,12 @@ public class AvanceController implements Serializable {
             }
         }
     }
-    
+
     public void consultarAvance(Fase f) {
         try {
-            avance=new Avance();
-            avance.setProyecto(proyecto);   
-          
+            avance = new Avance();
+            avance.setProyecto(proyecto);
+
             for (Avance av : avances) {
                 System.out.println("Avance: " + av.getDescripcion() + " " + av.getFase() + "\n");
                 if (av.getFase().getId().equals(f.getId())) {
@@ -152,7 +154,7 @@ public class AvanceController implements Serializable {
                     break;
                 }
             }
-          System.out.println(""+avance.getProyecto().getCodigo());
+            System.out.println("" + avance.getProyecto().getCodigo());
         } catch (java.lang.NullPointerException npe) {
 
         }
@@ -170,7 +172,7 @@ public class AvanceController implements Serializable {
 
     public void volverFases() {
         setMostPAvance(false);
-        avance=new Avance();
+        avance = new Avance();
         resetEntregable();
     }
 
@@ -265,37 +267,37 @@ public class AvanceController implements Serializable {
     }
 
     public void desvincularEntregable(Entregable e) {
-        if(avance.getId()>0){//si ya el avance existe eliminarlo solo si no esta revisado
-            if(e.getEstado().equals("Entregado")){
+        if (avance.getId() > 0) {//si ya el avance existe eliminarlo solo si no esta revisado
+            if (e.getEstado().equals("Entregado")) {
                 avance.getEntregables().remove(e);
-                entrser.eliminar(e);                
+                entrser.eliminar(e);
             }
         }
         eliminarArchivoEntregable(e);
         entregablesFase.remove(e);
     }
 
-    public boolean avanceRegistrado(){
-        if(avance.getId()>0){
+    public boolean avanceRegistrado() {
+        if (avance.getId() > 0) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
-    
-    public void eliminarAvance(){
-        if(entregablesRevisados(avance)){
+
+    public void eliminarAvance() {
+        if (entregablesRevisados(avance)) {
             FacesUtil.addErrorMessage("No se puede eliminar un avance con entregables revisados");
-        }else{
+        } else {
             avances.remove(avance);
             avanser.eliminar(avance);
             volverFases();
         }
     }
-    
+
 
     
-     public boolean entregablesRevisados(Avance avance) {
+    public boolean entregablesRevisados(Avance avance) {
         boolean revisado = false;
         for (Entregable ent : avance.getEntregables()) {
             if (!ent.getEstado().equals("Entregado")) {
@@ -305,8 +307,8 @@ public class AvanceController implements Serializable {
         }
         return revisado;
     }
-    
-    public void almacenarAvance() {        
+
+    public void almacenarAvance() {
         if (entregablesFase.size() > 0) {
             avance.setFechaEntrega(new Date());
             avance.setEstado("Guardado");
@@ -316,7 +318,7 @@ public class AvanceController implements Serializable {
                 if (validarEntregables(avance)) {
                     avance = avanser.modificar(avance);
                     almacenarEntregables(avance);
-                    consultarAvances(avance.getProyecto()); 
+                    consultarAvances(avance.getProyecto());
                     limpiarAvance();
                 }
             }
@@ -371,13 +373,13 @@ public class AvanceController implements Serializable {
             entregable.setAvance(avance);
             entregable.setFechaEntrega(new Date());
             entregable.setEstado("Entregado");
-            entregablesFase.add(entregable); 
-            if(avance.getId()>0){//si ya el avance existe registrarlo
-                entrser.crear(entregable);  
-                consultarAvances(avance.getProyecto()); 
-            }            
+            entregablesFase.add(entregable);
+            if (avance.getId() > 0) {//si ya el avance existe registrarlo
+                entrser.crear(entregable);
+                consultarAvances(avance.getProyecto());
+            }
             entregable = new Entregable();
-            mostPEntregable = false;  
+            mostPEntregable = false;
             volverAvance();
         } else {
             FacesUtil.addWarnMessage("Debe agregar el Archivo a Adjuntar");
@@ -398,7 +400,7 @@ public class AvanceController implements Serializable {
             //int nc = aentregable.getContentType().length();
             // System.out.println("" + aentregable.getContentType());
             String extencion = aentregable.getContentType();
-            System.out.println(""+avance.getProyecto().getCodigo());
+            System.out.println("" + avance.getProyecto().getCodigo());
             String nombreArchivo = avance.getProyecto().getCodigo() + entregable.getTipo().getId() + entregable.getAsignatura().getCodigo();
             ImageUtils.copyFile(nombreArchivo + "." + conversor(extencion), aentregable.getInputStream(), path);
 //            System.out.println("" + path);
@@ -473,6 +475,39 @@ public class AvanceController implements Serializable {
             case "application/x-msdownload":
                 extencion = "exe";
                 break;
+            case "application/vnd.ms-publisher":
+                extencion = "pubx";
+                break;
+                
+            ///nuevos tipos de extensiones
+            case "application/x-7z-compressed":
+                extencion = "7z";
+                break;
+            case "application/xml":
+                extencion = "xml";
+                break;
+            case "application/vnd.oasis.opendocument.text":
+                extencion = "odt";
+                break;
+            case "application/vnd.oasis.opendocument.presentation":
+                extencion = "odp";
+                break;
+            case "application/vnd.oasis.opendocument.spreadsheet":
+                extencion = "ods";
+                break;
+            case "application/json":
+                extencion = "json";
+                break;
+            case "text/javascript":
+                extencion = "js";
+                break;
+            case "text/css":
+                extencion = "css";
+                break;
+            case "video/x-msvideo":
+                extencion = "avi";
+                break;
+
         }
         return extencion;
     }

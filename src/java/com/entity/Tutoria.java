@@ -5,9 +5,11 @@
  */
 package com.entity;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.faces.context.FacesContext;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
+import javax.servlet.ServletContext;
 
 /**
  *
@@ -55,7 +58,37 @@ public class Tutoria implements Serializable {
         this.proyecto = proyecto;
     }
 
-    
+    public String imagenTutoria() {
+        String img = "";
+        ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+        String path = servletContext.getRealPath("/imagenInicial.jpeg").replace("imagenInicial.jpeg", "Imagenes\\Tutorias\\");
+        //this.setId(Long.getLong("5"));
+        String imagen = path + this.getId() + ".jpg";
+        File f = new File(imagen);
+        //System.out.println(""+f.toString()+" "+f.exists()+" "+f.length()+" ");
+        if (f.length() > 0) {
+            img = this.getId() + ".jpg";;
+        } else {
+            img = "inotutoria.jpg";
+        }
+        return img;
+    }
+
+//    public String mensajeCorrespondencia() {
+//        String mensaje = "<h2>Notificaci&oacute;n del Proceso: "+this.estado+"</h2>\n"
+//                + "<p>Fecha:"+this.fechaSolicitud+"</p>\n"
+//                + "<p>Quien realiz&oacute; el proceso: <strong>"+this.asignatura.getProfesor().toString()+"</strong></p>\n"
+//                + "<p>------------------------------------------------------------------</p>\n"
+//                + "<p style=\"text-align: justify;\"><span style=\"color: #008000;\">Titulo del Proyecto: "+this.proyecto.getTitulo()+"</span></p>\n"
+//                + "<p style=\"text-align: justify;\"><span style=\"color: #008000;\">Descripci&oacute;n: "+this.proyecto.getProblematica()+"</span></p>\n"
+//                + "<p>------------------------------------------------------------------</p>\n"
+//                + "<p><span style=\"color: #008000;\">Integrantes:</span></p>\n";                
+//                for(Integrante i:this.proyecto.getIntegrantes()){
+//                    mensaje=mensaje+ "<p><span style=\"color: #008000;\">"+i.getMatricula().getEstudiante().toString()+"</span></p>\n";
+//                }
+//        return mensaje;
+//    }
+
     public boolean fueRealizada() {
         boolean valido = false;
         if (this.estado.equals("Realizada")) {
@@ -63,7 +96,7 @@ public class Tutoria implements Serializable {
         }
         return valido;
     }
-    
+
     public boolean validarTutoria() {
         boolean valido = true;
         if (this.asignatura.getId() <= 0) {

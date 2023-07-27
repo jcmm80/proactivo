@@ -7,8 +7,12 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-       
+
+        <div class="contcompasig">
            
+            <div class="cinfasig">#{competenciasController.asignatura.toString()}</div>
+        </div>  
+
         <div class="mb-4 overflow-hidden">
 
 
@@ -18,7 +22,14 @@
                     >
                     <i class="ri-bookmark-fill"></i><div>#{competenciasController.asignatura.nombre}</div>
                     /
-                    <div>#{competenciasController.asignatura.area.nombre}</div>
+                    <div>#{competenciasController.asignatura.area.nombre}                     
+
+
+
+                    </div>
+                    /<h:commandLink rendered="#{competenciasController.asignatura.tieneDocumento()}" action="#{competenciasController.descargar(competenciasController.asignatura)}" >
+                        <h:graphicImage class="logo-unico" value="/Imagenes/Extenciones/pdf.png" width="30px" /> Curriculo de la asignatura                                   
+                    </h:commandLink>
                 </div>
                 <div class="flex gap-2 align-items-center text-xs">                
                     <i class="ri-calendar-fill"></i><div>Semestre #{competenciasController.asignatura.seccion.semestre.denominacion}</div>
@@ -31,6 +42,26 @@
                 <h4>#{competenciasController.asignatura.profesor.toString()}</h4>
             </div>
 
+ <div class="cunid">
+                <p:accordionPanel  value="#{competenciasController.unidades}" var="unidad">
+                    <p:tab  title="#{unidad.descripcion}">
+                        <p:dataTable var="comp" value="#{unidad.competencias}" >
+                            <p:column>
+                                #{comp.tipo.descripcion}
+                            </p:column>
+                            <p:column>
+                                #{comp.evidencia}
+                            </p:column>
+                            <p:column>
+                                #{comp.estrategia}
+                            </p:column>
+                            <p:column>
+                                #{comp.bibliografia}
+                            </p:column>
+                        </p:dataTable>  
+                    </p:tab>Simcpa
+                </p:accordionPanel>    
+            </div>
 
             <div class="mt-4">
 

@@ -14,12 +14,20 @@ import com.entity.Proyecto_Aula;
 import com.entity.Tutoria;
 import com.services.AsistenteServices;
 import com.services.TutoriaServices;
+import com.utilidades.Correo;
+import com.utilidades.ImageUtils;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
+import org.primefaces.model.file.UploadedFile;
 
 /**
  *
@@ -44,6 +52,8 @@ public class TutoriasController implements Serializable {
 
     TutoriaServices tutser = new TutoriaServices();
     AsistenteServices asisser = new AsistenteServices();
+
+    private UploadedFile itutoria;
 
     /**
      * Creates a new instance of TutoriasController
@@ -104,20 +114,50 @@ public class TutoriasController implements Serializable {
             if (tutoria.getRecomendaciones().trim().length() > 0 && tutoria.getCompromisos().trim().length() > 0) {
                 tutoria = tutser.modificar(tutoria);
                 registrarAsistencia(tutoria);
+//                enviarCorrspondencia(tutoria);
+                if (itutoria.getSize() > 0) {
+                    subirSoporteTutoriar();
+
+                }
             }
         }
+    }
+
+//    public void enviarCorrspondencia(Tutoria t) {
+//        Correo correo = new Correo();
+//        correo.setAsunto("Tutoria en estado: " + t.getEstado());
+//        correo.setMensaje(t.mensajeCorrespondencia());
+//        correo.setOrigen("jcmm80@gmail.com");
+//        correo.setClave("Jcmm_1980");
+//        correo.setDestino("jcmm80@yahoo.com");
+//        correo.enviar();
+//    }
+
+    public void seleccionarTutoria(Tutoria t) {
+        tutoria = t;
     }
 
     public void registrarAsistencia(Tutoria t) {
         for (Asistente a : asistentes) {
             a.setTutoria(tutoria);
-            System.out.println(a.getEstudiante().getId()+" "+a.infoAsistencia()+" -> "+a.getTutoria().getId()+": "+a.getTutoria().getAsignatura().getNombre() );
+            System.out.println(a.getEstudiante().getId() + " " + a.infoAsistencia() + " -> " + a.getTutoria().getId() + ": " + a.getTutoria().getAsignatura().getNombre());
             asisser.crear(a);
         }
     }
 
     public void obtenerTutoriasProyecto(Proyecto_Aula pa) {
         tutorias = tutser.obtenerTutoriasXProyecto(pa);
+    }
+
+    public void subirSoporteTutoriar() {
+        try {
+            System.out.println("" + itutoria.getFileName());
+            ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+            String path = servletContext.getRealPath("/imagenInicial.jpg").replace("imagenInicial.jpg", "Imagenes\\Tutorias\\");
+            ImageUtils.copyFile(tutoria.getId() + ".jpg", itutoria.getInputStream(), path);
+        } catch (IOException ex) {
+            Logger.getLogger(TutoriasController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void armarAsistentes() {
@@ -130,6 +170,10 @@ public class TutoriasController implements Serializable {
             asistentes.add(asi);
 //            System.out.println(""+asi.getEstudiante().getMatricula().getEstudiante().toString());
         }
+    }
+
+    public void obtenerAsistenciaTutoria() {
+        asistentes = asisser.obtenerAsistenciasXTutoria(tutoria);
     }
 
     public void consultarTutoriasXAsignaturaProyecto() {
@@ -179,15 +223,15 @@ public class TutoriasController implements Serializable {
         obtenerTutoriasAsignatura(a);
     }
 
-    public void obtenerTutoriasAsignatura(Asignatura a){
-        tutoriasAsignatura=new LinkedList();
-        for(Tutoria t:tutorias){
-            if(t.getAsignatura().getId().equals(a.getId())){
+    public void obtenerTutoriasAsignatura(Asignatura a) {
+        tutoriasAsignatura = new LinkedList();
+        for (Tutoria t : tutorias) {
+            if (t.getAsignatura().getId().equals(a.getId())) {
                 tutoriasAsignatura.add(t);
             }
         }
     }
-    
+
     public void obtenerTutoriasXPeriodo(Periodo p) {
         tutorias = tutser.obtenerTutoriasXPeriodo(p);
     }
@@ -333,6 +377,20 @@ public class TutoriasController implements Serializable {
      */
     public void setTutoriasAsignatura(List<Tutoria> tutoriasAsignatura) {
         this.tutoriasAsignatura = tutoriasAsignatura;
+    }
+
+    /**
+     * @return the itutoria
+     */
+    public UploadedFile getItutoria() {
+        return itutoria;
+    }
+
+    /**
+     * @param itutoria the itutoria to set
+     */
+    public void setItutoria(UploadedFile itutoria) {
+        this.itutoria = itutoria;
     }
 
 }

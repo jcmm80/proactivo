@@ -36,7 +36,7 @@ public class ProgramaController implements Serializable {
 
     ProgramaAcademicoServices paserv = new ProgramaAcademicoServices();
     NucleoServices nucser = new NucleoServices();
-    
+
     private int activeIndex = 0;
     private int activeIcest = 0;
 
@@ -50,6 +50,17 @@ public class ProgramaController implements Serializable {
         nucleos = nucser.obtenerNucleosXPrograma(programa);
     }
 
+    public void seleccionarNucleo(Nucleo nuc){
+        this.nucleo=nuc;
+    }
+    
+    public void eliminarNucleo(Nucleo nuc){
+        if (nuc.getId() > 0) {
+            nucser.eliminar(nuc);
+            obtenerNucleosXPrograma();
+        }
+    }
+    
     public void almacenarNucleo() {
         Nucleo nucleoe = nucser.obtenerNucleoXSemestre(nucleo.getSemestre());
 
@@ -146,7 +157,7 @@ public class ProgramaController implements Serializable {
     public void setPrograma(ProgramaAcademico programa) {
         this.programa = programa;
     }
-    
+
       public void agregarPrograma(ProgramaAcademico pa) {
         setPrograma(pa);
         activeIndex = 2;

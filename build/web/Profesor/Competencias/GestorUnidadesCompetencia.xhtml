@@ -52,6 +52,19 @@
                                 </ui:repeat>
                             </div>
                         </div>
+                        
+                                <p:panelGrid columns="4">
+                                <h:outputText value="#{competenciasController.unidad.asignatura.nombre}" />
+
+                                <p:fileUpload  value="#{competenciasController.adocumentoAsignatura}"  mode="simple" skinSimple="true" accept=".pdf"/>   
+
+                                <h:commandButton value="cargar" action="#{competenciasController.subirDocumentoAsignatura()}" />
+                                
+                                <h:commandLink rendered="#{competenciasController.asignatura.tieneDocumento()}" action="#{competenciasController.descargar(competenciasController.asignatura)}" >
+                                     Curriculo de la asignatura <h:graphicImage class="logo-unico" value="/Imagenes/Extenciones/pdf.png" width="50px" />                                    
+                                </h:commandLink>
+                                
+                            </p:panelGrid>
                         <div class="card mt-2 mb-2">
                             <h4 class="mb-2">#{competenciasController.unidad.asignatura.nombre}"</h4>
                             <p:inputTextarea placeholder="Escribe aquí la descripción de la competencia..." class="w-full" value="#{competenciasController.unidad.descripcion}"  />
