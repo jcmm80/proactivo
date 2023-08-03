@@ -45,6 +45,31 @@
                         </div>
                     </p:panel>
 
+
+                    <div rendered="#{!profesorController.mostPAsignatura}" class=" relative pb-2 mb-2 mt-2" >
+                        <div class="card mt-2" style="background-color: #eee">
+                            <div class="relative pb-4 mb-2">
+                                <h4>Cargar Curriculum de #{competenciasController.unidad.asignatura.nombre}</h4>
+                                <div class="espaceador" style="background-color: #fff"></div>
+                            </div>
+                            <div class="flex align-items-center gap-2">
+                                <div>
+                                    <p:fileUpload  value="#{competenciasController.adocumentoAsignatura}"  mode="simple" skinSimple="true" accept=".pdf"/>   
+                                    <div class="btn-p">
+                                        <label>Cargar</label>
+                                        <h:commandButton value="cargar" class="btn" action="#{competenciasController.subirDocumentoAsignatura()}" />
+                                    </div>
+                                </div>
+                                <h:commandLink class="flex align-items-center gap-2" style="color:var(--text-color)" rendered="#{competenciasController.asignatura.tieneDocumento()}" action="#{competenciasController.descargar(competenciasController.asignatura)}" >
+                                    <p class="font-bold ">Curriculo de la asignatura</p> 
+                                    <div class="w-2rem"><h:graphicImage  value="/Imagenes/Extenciones/pdf.png" class="img" /></div>
+                                </h:commandLink>
+                            </div>
+
+                        </div>
+                    </div>
+
+
                     <p:panel rendered="#{profesorController.mostPAsignatura}">
 
                         <div class="progress-bar mb-4">
@@ -77,4 +102,12 @@
         </section>
 
     </h:body>
+    <style>
+        .ui-fileupload-simple .ui-button{
+            border: 1px solid var(--text-color) !important;
+            background: transparent !important;
+            color: var(--text-color) !important;
+        }
+
+    </style>
 </html>

@@ -7,15 +7,7 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-
-        <div class="contcompasig">
-           
-            <div class="cinfasig">#{competenciasController.asignatura.toString()}</div>
-        </div>  
-
         <div class="mb-4 overflow-hidden">
-
-
             <div class="flex justify-content-between align-items-center">
                 <div class="progress-bar text-xs">
                     <div class="progress-tittle"><i class="ri-hashtag"></i>#{competenciasController.asignatura.codigo}</div>
@@ -27,8 +19,8 @@
 
 
                     </div>
-                    /<h:commandLink rendered="#{competenciasController.asignatura.tieneDocumento()}" action="#{competenciasController.descargar(competenciasController.asignatura)}" >
-                        <h:graphicImage class="logo-unico" value="/Imagenes/Extenciones/pdf.png" width="30px" /> Curriculo de la asignatura                                   
+                    /<h:commandLink class="flex align-items-center gap-2" style="color: var(--text-color)" rendered="#{competenciasController.asignatura.tieneDocumento()}" action="#{competenciasController.descargar(competenciasController.asignatura)}" >
+                        <h:graphicImage  value="/Imagenes/Extenciones/pdf.png" width="30px" /> Curriculo de la asignatura                                   
                     </h:commandLink>
                 </div>
                 <div class="flex gap-2 align-items-center text-xs">                
@@ -41,28 +33,6 @@
                 <div class="w-2rem flex"><p:graphicImage class="img" value="/Imagenes/Perfiles/#{competenciasController.asignatura.profesor.imagenPerfil()}"/></div>
                 <h4>#{competenciasController.asignatura.profesor.toString()}</h4>
             </div>
-
- <div class="cunid">
-                <p:accordionPanel  value="#{competenciasController.unidades}" var="unidad">
-                    <p:tab  title="#{unidad.descripcion}">
-                        <p:dataTable var="comp" value="#{unidad.competencias}" >
-                            <p:column>
-                                #{comp.tipo.descripcion}
-                            </p:column>
-                            <p:column>
-                                #{comp.evidencia}
-                            </p:column>
-                            <p:column>
-                                #{comp.estrategia}
-                            </p:column>
-                            <p:column>
-                                #{comp.bibliografia}
-                            </p:column>
-                        </p:dataTable>  
-                    </p:tab>Simcpa
-                </p:accordionPanel>    
-            </div>
-
             <div class="mt-4">
 
                 <p:tabView scrollable="true" value="#{competenciasController.unidades}" var="unidad">

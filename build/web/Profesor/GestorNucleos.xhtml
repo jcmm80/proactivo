@@ -68,8 +68,15 @@
                                         </p:dialog>
                                     </p:column>
                                     <p:column headerText="Opciones">
-                                        <h:commandButton value="seleccionar" action="#{programaController.seleccionarNucleo(nuc)}" />
-                                        <h:commandButton value="x" action="#{programaController.eliminarNucleo(nuc)}" />
+                                        <div class="btn-normal">
+                                            <i class="fa fa-hand-pointer"></i>
+                                            <h:commandButton class="btn" value="seleccionar" action="#{programaController.seleccionarNucleo(nuc)}" />
+                                        </div>
+                                        <div class="btn-eliminar">
+                                            <i class="ri-delete-bin-line"></i>
+                                            <h:commandButton class="btn" value="Eliminar" action="#{programaController.eliminarNucleo(nuc)}" />
+                                        </div>
+
                                     </p:column>
                                 </p:dataTable>
 
